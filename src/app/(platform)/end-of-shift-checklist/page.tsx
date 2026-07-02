@@ -298,10 +298,10 @@ export default function EndOfShiftChecklistPage() {
             className={cn(
               "mt-2 text-3xl font-semibold",
               summary.completionRate >= 95
-                ? "text-emerald-700"
+                ? "text-[--cs-success]"
                 : summary.completionRate >= 85
-                  ? "text-amber-700"
-                  : "text-rose-700",
+                  ? "text-[--cs-warning]"
+                  : "text-[--cs-risk]",
             )}
           >
             {summary.completionRate}%
@@ -315,7 +315,7 @@ export default function EndOfShiftChecklistPage() {
           <div
             className={cn(
               "mt-2 text-3xl font-semibold",
-              summary.escalations === 0 ? "text-emerald-700" : "text-amber-700",
+              summary.escalations === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}
           >
             {summary.escalations}
@@ -410,18 +410,18 @@ export default function EndOfShiftChecklistPage() {
                       {END_OF_SHIFT_TYPE_LABEL[r.shift_type]}
                     </span>
                     {r.all_tasks_complete ? (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-800">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[--cs-success-soft] bg-[--cs-success-bg] px-2 py-0.5 text-xs font-medium text-[--cs-success]">
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         All complete
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[--cs-warning-soft] bg-[--cs-warning-bg] px-2 py-0.5 text-xs font-medium text-[--cs-warning]">
                         <AlertTriangle className="h-3.5 w-3.5" />
                         Outstanding
                       </span>
                     )}
                     {r.any_escalations.length > 0 && (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-medium text-rose-800">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[--cs-risk-soft] bg-[--cs-risk-bg] px-2 py-0.5 text-xs font-medium text-[--cs-risk]">
                         <AlertTriangle className="h-3.5 w-3.5" />
                         Escalation
                       </span>
@@ -463,8 +463,8 @@ export default function EndOfShiftChecklistPage() {
                       className={cn(
                         "rounded-md border p-3",
                         r.building_security_checked
-                          ? "border-emerald-200 bg-emerald-50"
-                          : "border-rose-200 bg-rose-50",
+                          ? "border-[--cs-success-soft] bg-[--cs-success-bg]"
+                          : "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
                       )}
                     >
                       <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
@@ -474,8 +474,8 @@ export default function EndOfShiftChecklistPage() {
                         className={cn(
                           "mt-1 text-sm font-semibold",
                           r.building_security_checked
-                            ? "text-emerald-800"
-                            : "text-rose-800",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {r.building_security_checked ? "Yes" : "No"}
@@ -485,8 +485,8 @@ export default function EndOfShiftChecklistPage() {
                       className={cn(
                         "rounded-md border p-3",
                         r.medication_cabinet_locked
-                          ? "border-emerald-200 bg-emerald-50"
-                          : "border-rose-200 bg-rose-50",
+                          ? "border-[--cs-success-soft] bg-[--cs-success-bg]"
+                          : "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
                       )}
                     >
                       <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
@@ -496,8 +496,8 @@ export default function EndOfShiftChecklistPage() {
                         className={cn(
                           "mt-1 text-sm font-semibold",
                           r.medication_cabinet_locked
-                            ? "text-emerald-800"
-                            : "text-rose-800",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {r.medication_cabinet_locked ? "Yes" : "No"}
@@ -507,8 +507,8 @@ export default function EndOfShiftChecklistPage() {
                       className={cn(
                         "rounded-md border p-3",
                         r.kitchen_closed
-                          ? "border-emerald-200 bg-emerald-50"
-                          : "border-rose-200 bg-rose-50",
+                          ? "border-[--cs-success-soft] bg-[--cs-success-bg]"
+                          : "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
                       )}
                     >
                       <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
@@ -518,8 +518,8 @@ export default function EndOfShiftChecklistPage() {
                         className={cn(
                           "mt-1 text-sm font-semibold",
                           r.kitchen_closed
-                            ? "text-emerald-800"
-                            : "text-rose-800",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {r.kitchen_closed ? "Yes" : "No"}
@@ -529,8 +529,8 @@ export default function EndOfShiftChecklistPage() {
                       className={cn(
                         "rounded-md border p-3",
                         r.pets_cared_for
-                          ? "border-emerald-200 bg-emerald-50"
-                          : "border-rose-200 bg-rose-50",
+                          ? "border-[--cs-success-soft] bg-[--cs-success-bg]"
+                          : "border-[--cs-risk-soft] bg-[--cs-risk-bg]",
                       )}
                     >
                       <div className="flex items-center gap-2 text-xs font-medium text-[var(--cs-text-secondary)]">
@@ -540,8 +540,8 @@ export default function EndOfShiftChecklistPage() {
                         className={cn(
                           "mt-1 text-sm font-semibold",
                           r.pets_cared_for
-                            ? "text-emerald-800"
-                            : "text-rose-800",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {r.pets_cared_for ? "Yes" : "No"}
@@ -583,9 +583,9 @@ export default function EndOfShiftChecklistPage() {
                                   className="flex items-start gap-3 px-3 py-2 text-sm"
                                 >
                                   {it.completed ? (
-                                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-emerald-600 mt-0.5" />
+                                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[--cs-success] mt-0.5" />
                                   ) : (
-                                    <XCircle className="h-4 w-4 flex-shrink-0 text-rose-600 mt-0.5" />
+                                    <XCircle className="h-4 w-4 flex-shrink-0 text-[--cs-risk] mt-0.5" />
                                   )}
                                   <div className="flex-1">
                                     <div
@@ -613,12 +613,12 @@ export default function EndOfShiftChecklistPage() {
 
                   {/* Escalations */}
                   {r.any_escalations.length > 0 && (
-                    <div className="rounded-md border border-rose-200 bg-rose-50 p-3">
-                      <h4 className="text-sm font-semibold text-rose-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-3">
+                      <h4 className="text-sm font-semibold text-[--cs-risk] flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4" /> Escalations during
                         shift
                       </h4>
-                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-rose-900">
+                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-[--cs-risk]">
                         {r.any_escalations.map((e, i) => (
                           <li key={i}>{e}</li>
                         ))}
@@ -627,18 +627,18 @@ export default function EndOfShiftChecklistPage() {
                   )}
 
                   {/* Key handover points */}
-                  <div className="rounded-md border border-indigo-200 bg-indigo-50 p-3">
-                    <h4 className="text-sm font-semibold text-indigo-900 flex items-center gap-2">
+                  <div className="rounded-md border border-[--cs-info-soft] bg-[--cs-info-bg] p-3">
+                    <h4 className="text-sm font-semibold text-[--cs-info] flex items-center gap-2">
                       <ArrowRightLeft className="h-4 w-4" /> Key handover points
                     </h4>
                     {r.key_handover_points.length > 0 ? (
-                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-indigo-900">
+                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-[--cs-info]">
                         {r.key_handover_points.map((p, i) => (
                           <li key={i}>{p}</li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-2 text-sm text-indigo-800 italic">
+                      <p className="mt-2 text-sm text-[--cs-info] italic">
                         Nothing additional handed over.
                       </p>
                     )}
@@ -677,8 +677,8 @@ export default function EndOfShiftChecklistPage() {
                         className={cn(
                           "font-medium",
                           r.handover_delivered
-                            ? "text-emerald-700"
-                            : "text-rose-700",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {r.handover_delivered ? "Yes" : "No"}
