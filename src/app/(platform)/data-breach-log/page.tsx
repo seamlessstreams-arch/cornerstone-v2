@@ -36,22 +36,22 @@ import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-acti
 /* ── helpers ───────────────────────────────────────────────────────────── */
 
 const SEVERITY_COLOURS: Record<DataBreachSeverity, string> = {
-  low: "bg-green-100 text-green-800",
-  medium: "bg-amber-100 text-amber-800",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
   high: "bg-orange-100 text-orange-800",
-  critical: "bg-red-100 text-red-800",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const RISK_COLOURS: Record<DataBreachRiskLevel, string> = {
-  low: "bg-green-100 text-green-800",
-  medium: "bg-amber-100 text-amber-800",
-  high: "bg-red-100 text-red-800",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  high: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const STATUS_COLOURS: Record<DataBreachStatus, string> = {
-  investigating: "bg-amber-100 text-amber-800",
-  closed_resolved: "bg-green-100 text-green-800",
-  reported_awaiting_ico: "bg-blue-100 text-blue-800",
+  investigating: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  closed_resolved: "bg-[--cs-success-bg] text-[--cs-success]",
+  reported_awaiting_ico: "bg-[--cs-info-bg] text-[--cs-info]",
   monitoring: "bg-purple-100 text-purple-800",
 };
 
@@ -185,10 +185,10 @@ export default function DataBreachLogPage() {
       {/* summary stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Total incidents", value: stats.total, icon: ShieldAlert, colour: "text-blue-600" },
-          { label: "Near-misses caught", value: stats.nearMisses, icon: Eye, colour: "text-amber-600" },
-          { label: "ICO-notified", value: stats.icoReported, icon: AlertTriangle, colour: stats.icoReported > 0 ? "text-red-600" : "text-gray-400" },
-          { label: "Resolved", value: stats.resolved, icon: CheckCircle2, colour: "text-green-600" },
+          { label: "Total incidents", value: stats.total, icon: ShieldAlert, colour: "text-[--cs-info]" },
+          { label: "Near-misses caught", value: stats.nearMisses, icon: Eye, colour: "text-[--cs-warning]" },
+          { label: "ICO-notified", value: stats.icoReported, icon: AlertTriangle, colour: stats.icoReported > 0 ? "text-[--cs-risk]" : "text-gray-400" },
+          { label: "Resolved", value: stats.resolved, icon: CheckCircle2, colour: "text-[--cs-success]" },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border bg-white p-4 flex items-center gap-3">
             <s.icon className={cn("h-6 w-6", s.colour)} />
@@ -201,11 +201,11 @@ export default function DataBreachLogPage() {
       </div>
 
       {/* confidentiality banner */}
-      <div className="mb-6 flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4">
-        <Lock className="h-5 w-5 text-amber-700 mt-0.5" />
+      <div className="mb-6 flex items-start gap-3 rounded-lg border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-4">
+        <Lock className="h-5 w-5 text-[--cs-warning] mt-0.5" />
         <div>
-          <p className="font-semibold text-amber-900">Confidentiality notice</p>
-          <p className="text-sm text-amber-800">
+          <p className="font-semibold text-[--cs-warning]">Confidentiality notice</p>
+          <p className="text-sm text-[--cs-warning]">
             All entries below are anonymised. Names of young people, staff and third parties are
             replaced with role identifiers. Full unredacted incident files are held securely by the
             Registered Manager and Data Protection Officer. Access is on a strict need-to-know basis
@@ -268,7 +268,7 @@ export default function DataBreachLogPage() {
                     <ShieldAlert className="h-4 w-4 text-gray-400" />
                     <h3 className="font-semibold">{DATA_BREACH_TYPE_LABEL[b.breach_type]}</h3>
                     {b.near_miss && (
-                      <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[--cs-success-bg] text-[--cs-success]">
                         Near-miss
                       </span>
                     )}
@@ -313,22 +313,22 @@ export default function DataBreachLogPage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    <span className={cn("px-2 py-1 rounded text-xs font-medium", b.reported_to_ico ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")}>
+                    <span className={cn("px-2 py-1 rounded text-xs font-medium", b.reported_to_ico ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-success-bg] text-[--cs-success]")}>
                       {b.reported_to_ico ? `ICO notified ${b.ico_reported_date || ""}${b.ico_reference ? ` · Ref ${b.ico_reference}` : ""}` : "ICO notification not required"}
                     </span>
-                    <span className={cn("px-2 py-1 rounded text-xs font-medium", b.data_subjects_notified ? "bg-blue-100 text-blue-800" : "bg-gray-100 text-gray-700")}>
+                    <span className={cn("px-2 py-1 rounded text-xs font-medium", b.data_subjects_notified ? "bg-[--cs-info-bg] text-[--cs-info]" : "bg-gray-100 text-gray-700")}>
                       {b.data_subjects_notified ? `Data subjects notified ${b.notification_date || ""}` : "Data subjects not notified"}
                     </span>
                   </div>
 
-                  <div className="rounded-md bg-amber-50 border border-amber-200 p-3">
-                    <h4 className="text-xs font-semibold text-amber-700 mb-1">Root cause analysis</h4>
-                    <p className="text-sm text-amber-800">{b.root_cause_analysis}</p>
+                  <div className="rounded-md bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-3">
+                    <h4 className="text-xs font-semibold text-[--cs-warning] mb-1">Root cause analysis</h4>
+                    <p className="text-sm text-[--cs-warning]">{b.root_cause_analysis}</p>
                   </div>
 
-                  <div className="rounded-md bg-blue-50 border border-blue-200 p-3">
-                    <h4 className="text-xs font-semibold text-blue-700 mb-1">Immediate actions taken</h4>
-                    <ul className="list-disc list-inside text-sm text-blue-800 space-y-0.5">
+                  <div className="rounded-md bg-[--cs-info-bg] border border-[--cs-info-soft] p-3">
+                    <h4 className="text-xs font-semibold text-[--cs-info] mb-1">Immediate actions taken</h4>
+                    <ul className="list-disc list-inside text-sm text-[--cs-info] space-y-0.5">
                       {b.immediate_actions_taken.map((a, i) => <li key={i}>{a}</li>)}
                     </ul>
                   </div>
@@ -340,9 +340,9 @@ export default function DataBreachLogPage() {
                         {b.lessons_learned.map((l, i) => <li key={i}>{l}</li>)}
                       </ul>
                     </div>
-                    <div className="rounded-md bg-emerald-50 border border-emerald-200 p-3">
-                      <h4 className="text-xs font-semibold text-emerald-700 mb-1">Preventive actions</h4>
-                      <ul className="list-disc list-inside text-sm text-emerald-800 space-y-0.5">
+                    <div className="rounded-md bg-[--cs-success-bg] border border-[--cs-success-soft] p-3">
+                      <h4 className="text-xs font-semibold text-[--cs-success] mb-1">Preventive actions</h4>
+                      <ul className="list-disc list-inside text-sm text-[--cs-success] space-y-0.5">
                         {(b.preventive_actions ?? []).map((p, i) => <li key={i}>{p}</li>)}
                       </ul>
                     </div>
