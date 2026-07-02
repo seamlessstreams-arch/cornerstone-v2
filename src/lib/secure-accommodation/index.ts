@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Secure Accommodation Intelligence — Public API
+// Cara Secure Accommodation Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

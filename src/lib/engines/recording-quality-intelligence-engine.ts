@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE ENGINE
+// CARA — RECORDING QUALITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses daily log recording compliance,
 // quality scores, staff recording profiles, and child mention coverage.
@@ -42,7 +42,7 @@ export interface RecordingQualityIntelligenceResult {
   staff_profiles: StaffRecordingProfile[];
   child_coverage: ChildRecordingCoverage[];
   alerts: RecordingAlert[];
-  insights: AriaRecordingInsight[];
+  insights: CaraRecordingInsight[];
 }
 
 export interface RecordingOverview {
@@ -87,7 +87,7 @@ export interface RecordingAlert {
   message: string;
 }
 
-export interface AriaRecordingInsight {
+export interface CaraRecordingInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -356,7 +356,7 @@ export function computeRecordingQualityIntelligence(input: {
   }
 
   // ── Insights ─────────────────────────────────────────────────────────
-  const insights: AriaRecordingInsight[] = [];
+  const insights: CaraRecordingInsight[] = [];
 
   // Critical: child with no entries in 7 days
   for (const cc of childCoverage) {

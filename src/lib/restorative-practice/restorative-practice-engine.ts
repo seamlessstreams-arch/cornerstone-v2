@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restorative Practice Intelligence Engine
+// Cara — Restorative Practice Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

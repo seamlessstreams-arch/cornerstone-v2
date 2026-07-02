@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Family Contact & Communication Intelligence — Public API
+// Cara Family Contact & Communication Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

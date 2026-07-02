@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- BENEFIT ENTITLEMENT & WELFARE SUPPORT SERVICE
+// CARA -- BENEFIT ENTITLEMENT & WELFARE SUPPORT SERVICE
 // Tracks benefit entitlement awareness, application support, and welfare
 // provision for care leavers and looked-after young people. Covers Universal
 // Credit, Housing Benefit, Council Tax Exemption, PIP, DLA, ESA, Carers
@@ -671,7 +671,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: BenefitEntitlementSupportRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Key-Working Intelligence Engine
+// Cara Key-Working Intelligence Engine
 //
 // Deterministic engine for evaluating key-working quality in children's homes
 // — session quality, compliance, policy governance, and staff training in

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS ENGINE
+// CARA — INCIDENT ANALYTICS ENGINE
 //
 // Pure deterministic engine that analyses incident records to produce:
 // - Period summary (totals, per-week average, trend comparison)
@@ -8,7 +8,7 @@
 // - Time-of-day and day-of-week pattern analysis
 // - Per-child incident frequency with repeat-child detection
 // - Oversight compliance (Reg 45 management review)
-// - Auto-generated ARIA pattern insights (deterministic)
+// - Auto-generated Cara pattern insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 12 — Protection of children
@@ -85,7 +85,7 @@ export interface OversightCompliance {
   compliance_rate: number; // percentage
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -98,7 +98,7 @@ export interface IncidentAnalyticsResult {
   day_patterns: DayPattern[];
   child_profiles: ChildIncidentProfile[];
   oversight: OversightCompliance;
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface IncidentAnalyticsInput {
@@ -195,12 +195,12 @@ export function computeIncidentAnalytics(
     return d.toISOString().slice(0, 10);
   })();
 
-  const incidents30d = incidents.filter((i) => i.date >= thirtyDaysAgo);
-  const incidents90d = incidents.filter((i) => i.date >= ninetyDaysAgo);
+  const incidents30d = incidents.filter((i) => i.date >= thirtyDaysAgo && i.date.slice(0, 10) <= today);
+  const incidents90d = incidents.filter((i) => i.date >= ninetyDaysAgo && i.date.slice(0, 10) <= today);
 
   // ── Period Summary ────────────────────────────────────────────────────
 
-  const recentPeriod = incidents.filter((i) => i.date >= thirtyDaysAgo).length;
+  const recentPeriod = incidents.filter((i) => i.date >= thirtyDaysAgo && i.date.slice(0, 10) <= today).length;
   const olderPeriod = incidents.filter((i) => i.date >= sixtyDaysAgo && i.date < thirtyDaysAgo).length;
 
   let trendDirection: "increasing" | "stable" | "decreasing" = "stable";
@@ -336,9 +336,9 @@ export function computeIncidentAnalytics(
     compliance_rate: complianceRate,
   };
 
-  // ── ARIA Pattern Insights ─────────────────────────────────────────────
+  // ── Cara Pattern Insights ─────────────────────────────────────────────
 
-  const insights: AriaInsight[] = [];
+  const insights: CaraInsight[] = [];
 
   // 1. Critical incidents need immediate attention
   if (severity.critical > 0) {

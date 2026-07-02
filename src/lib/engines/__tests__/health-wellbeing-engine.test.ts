@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH & WELLBEING ENGINE TESTS
+// CARA — HEALTH & WELLBEING ENGINE TESTS
 // Comprehensive unit + integration tests for Health & Wellbeing Intelligence.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -835,10 +835,10 @@ describe("Health & Wellbeing Engine — Health Alerts", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// INTEGRATION TESTS — ARIA INSIGHTS
+// INTEGRATION TESTS — Cara INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Health & Wellbeing Engine — ARIA Insights", () => {
+describe("Health & Wellbeing Engine — Cara Insights", () => {
   it("generates warning for missing health assessment", () => {
     const child = makeChild();
     const result = computeHealthWellbeing(makeInput({
@@ -984,7 +984,7 @@ describe("Health & Wellbeing Engine — ARIA Insights", () => {
 // FULL INTEGRATION TEST — OAK HOUSE SCENARIO
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Health & Wellbeing Engine — Oak House Integration", () => {
+describe("Health & Wellbeing Engine — Chamberlain House Integration", () => {
   it("produces comprehensive analysis for multi-child home", () => {
     const children: ChildInput[] = [
       { id: "yp_alex", name: "Alex", date_of_birth: "2010-06-15" },

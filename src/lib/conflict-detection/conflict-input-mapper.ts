@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION INPUT MAPPER
+// CARA — CONFLICT DETECTION INPUT MAPPER
 //
 // Builds the conflict engine's input from the store: the canonical event stream
 // (the spine, "capture once") PLUS the two time intervals the projection

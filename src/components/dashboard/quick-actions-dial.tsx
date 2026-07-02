@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK ACTIONS SPEED DIAL
+// CARA — QUICK ACTIONS SPEED DIAL
 // Floating action button that expands into the most common daily actions.
 // Positioned bottom-right on the dashboard for instant access.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -60,7 +60,7 @@ const ACTIONS: QuickAction[] = [
     label: "Handover",
     icon: ArrowRightLeft,
     href: "/handover",
-    color: "text-amber-600",
+    color: "text-[--cs-warning]",
     bgColor: "bg-amber-100 hover:bg-amber-200",
     description: "Start shift handover",
   },
@@ -68,7 +68,7 @@ const ACTIONS: QuickAction[] = [
     label: "Safeguarding",
     icon: Shield,
     href: "/safeguarding",
-    color: "text-red-600",
+    color: "text-[--cs-risk]",
     bgColor: "bg-red-100 hover:bg-red-200",
     description: "Log safeguarding concern",
   },

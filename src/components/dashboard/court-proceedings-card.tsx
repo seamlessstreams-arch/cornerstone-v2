@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COURT PROCEEDINGS CARD
+// CARA — COURT PROCEEDINGS CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function CourtProceedingsCard() {
@@ -52,20 +52,20 @@ export function CourtProceedingsCard() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_children ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Children</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.strategy_meetings_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Meetings</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.referrals_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Referrals</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.incidents_needing_oversight ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (d?.profile?.active_concerns ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.profile?.active_concerns ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.profile?.active_concerns ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Concerns</p>
+          <div className={cn("text-center rounded-lg p-2", (d?.profile?.open_incidents ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.profile?.open_incidents ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.profile?.open_incidents ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export function CourtProceedingsCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Court Proceedings Intelligence
+              Cara Court Proceedings Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

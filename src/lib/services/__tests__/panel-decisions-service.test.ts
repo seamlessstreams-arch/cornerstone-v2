@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PANEL DECISIONS SERVICE TESTS
+// CARA — PANEL DECISIONS SERVICE TESTS
 // Pure-function unit tests for panel metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 13 (leadership and management),

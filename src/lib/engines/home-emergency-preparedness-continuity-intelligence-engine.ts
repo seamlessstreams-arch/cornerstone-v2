@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY PREPAREDNESS & BUSINESS CONTINUITY ENGINE
+// CARA — HOME EMERGENCY PREPAREDNESS & BUSINESS CONTINUITY ENGINE
 // Evaluates the home's readiness for emergencies and business continuity:
 // fire drill compliance, evacuation plan currency, emergency contact accuracy,
 // business continuity planning, first aid coverage, and emergency equipment

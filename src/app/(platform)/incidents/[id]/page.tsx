@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT DETAIL PAGE
+// CARA — INCIDENT DETAIL PAGE
 // Full record for a single incident: description, immediate action, notifications,
 // oversight, linked tasks, body map, outcome and lessons learned.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -26,12 +26,12 @@ import { PERMISSIONS } from "@/lib/permissions";
 import { INCIDENT_TYPE_LABELS } from "@/lib/constants";
 import { getStaffName, getYPName, getYPById } from "@/lib/seed-data";
 import { cn, formatDate, formatRelative } from "@/lib/utils";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
-import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
-import { AriaContextLinker } from "@/components/aria/aria-context-linker";
-import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
-import { AriaOversightQuality } from "@/components/aria/aria-oversight-quality";
-import { StudioQuickActions } from "@/components/aria-studio/studio-quick-actions";
+import { CaraQuickActions } from "@/components/intelligence/cara-quick-actions";
+import { CaraUsageBadge } from "@/components/cara/cara-usage-badge";
+import { CaraContextLinker } from "@/components/cara/cara-context-linker";
+import { CaraWriteToChild } from "@/components/cara/cara-write-to-child";
+import { CaraOversightQuality } from "@/components/cara/cara-oversight-quality";
+import { StudioQuickActions } from "@/components/cara-studio/studio-quick-actions";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
@@ -39,8 +39,8 @@ import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { DOCUMENT_CATEGORY_LABELS } from "@/types/documents";
 import Link from "next/link";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Severity config ───────────────────────────────────────────────────────────
 const SEV_CONFIG: Record<string, { label: string; color: string; bg: string; badge: string; border: string }> = {
@@ -216,7 +216,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         description: `Identified from ${INCIDENT_TYPE_LABELS[incident.type]} incident. ${incident.description.slice(0, 200)}…`,
         priority,
         status: "identified",
-        aria_evidence: `Linked to incident ${incident.reference} (${incident.severity} severity).`,
+        cara_evidence: `Linked to incident ${incident.reference} (${incident.severity} severity).`,
         created_by: currentUser?.id ?? "staff_darren",
       },
       { onSuccess: () => setNeedCreated(true) }
@@ -259,11 +259,11 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
     <PageShell
       title={incident.reference}
       subtitle={`${INCIDENT_TYPE_LABELS[incident.type]} · ${formatDate(incident.date)}`}
-      ariaContext={{ pageTitle: "Incident Record", sourceType: "incident" }}
+      caraContext={{ pageTitle: "Incident Record", sourceType: "incident" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Incident Report" subtitle="Oak House — Incident Record" targetId="incident-detail-content" />
+          <PrintButton title="Incident Report" subtitle="Chamberlain House — Incident Record" targetId="incident-detail-content" />
           <SmartUploadButton
             variant="icon"
             linkedIncidentId={id}
@@ -272,7 +272,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
           <Button variant="outline" size="sm" onClick={() => router.push("/incidents")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />All Incidents
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -292,9 +292,9 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
                 <Badge className={cn("text-[10px] rounded-full border", stat.bg, stat.color)}>
                   {stat.label}
                 </Badge>
-                {incident.aria_oversight_used && (
-                  <AriaUsageBadge
-                    ariaAssisted
+                {incident.cara_oversight_used && (
+                  <CaraUsageBadge
+                    caraAssisted
                     sourceTable="incidents"
                     recordId={incident.id}
                     size="sm"
@@ -327,22 +327,22 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
           </div>
         )}
 
-        {/* ── ARIA Intelligence Strip ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence Strip ──────────────────────────────────────── */}
         {canOversight && (
-          <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]/50 px-4 py-3 flex items-center justify-between gap-3">
+          <div className="rounded-2xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)]/50 px-4 py-3 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-sm text-[var(--cs-navy)]">
-              <Sparkles className="h-4 w-4 shrink-0 text-[var(--cs-aria-gold)]" />
-              <span><strong>ARIA Intelligence</strong> — generate suggestions and oversight drafts for this incident</span>
+              <Sparkles className="h-4 w-4 shrink-0 text-[var(--cs-cara-gold)]" />
+              <span><strong>Cara Intelligence</strong> — generate suggestions and oversight drafts for this incident</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <Link href={`/aria/review?related_record_id=${incident.id}`}>
-                <Button size="sm" variant="outline" className="text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)] gap-1.5">
-                  <ClipboardCheck className="h-3.5 w-3.5" />Review with ARIA
+              <Link href={`/cara/review?related_record_id=${incident.id}`}>
+                <Button size="sm" variant="outline" className="text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)] gap-1.5">
+                  <ClipboardCheck className="h-3.5 w-3.5" />Review with Cara
                 </Button>
               </Link>
-              <Link href={`/intelligence/aria/management-oversight?incidentId=${incident.id}&severity=${incident.severity}&type=${incident.type}`}>
+              <Link href={`/intelligence/cara/management-oversight?incidentId=${incident.id}&severity=${incident.severity}&type=${incident.type}`}>
                 <Button size="sm" className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 gap-1.5">
-                  <Brain className="h-3.5 w-3.5" />Draft with ARIA
+                  <Brain className="h-3.5 w-3.5" />Draft with Cara
                 </Button>
               </Link>
             </div>
@@ -367,10 +367,10 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         {/* ── Young person ──────────────────────────────────────────────────── */}
         <div className="rounded-2xl border bg-white p-4">
           <h3 className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider mb-3 flex items-center gap-2">
-            <Heart className="h-3.5 w-3.5 text-[var(--cs-aria-gold)]" />Young Person
+            <Heart className="h-3.5 w-3.5 text-[var(--cs-cara-gold)]" />Young Person
           </h3>
           <div className="flex items-center gap-3">
-            <Avatar name={ypName} size="md" className="bg-[var(--cs-aria-gold-bg)]" />
+            <Avatar name={ypName} size="md" className="bg-[var(--cs-cara-gold-bg)]" />
             <div>
               <div className="text-sm font-semibold text-[var(--cs-navy)]">{ypName}</div>
               {yp && (
@@ -482,9 +482,9 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
             </div>
             <p className="text-sm text-[var(--cs-text-secondary)] leading-relaxed whitespace-pre-line">{incident.oversight_note}</p>
 
-            {/* ARIA Oversight Quality Check */}
+            {/* Cara Oversight Quality Check */}
             {incident.oversight_note && (
-              <AriaOversightQuality
+              <CaraOversightQuality
                 oversightText={incident.oversight_note}
                 recordType="incident"
                 recordReference={incident.reference}
@@ -555,20 +555,20 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         )}
 
         {/* ── Training Need ─────────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]/40 p-4 space-y-3">
+        <div className="rounded-2xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)]/40 p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <Brain className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <Brain className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             <span className="text-sm font-semibold text-[var(--cs-navy)]">Training Intelligence Loop</span>
           </div>
-          <p className="text-xs text-[var(--cs-aria-gold)]">
-            Create a training need linked to this incident. ARIA will generate learning resources
+          <p className="text-xs text-[var(--cs-cara-gold)]">
+            Create a training need linked to this incident. Cara will generate learning resources
             to address the underlying risk and close the loop from incident to evidence.
           </p>
           {!needCreated ? (
             <Button
               size="sm"
               variant="outline"
-              className="gap-1.5 text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]"
+              className="gap-1.5 text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]"
               onClick={handleCreateTrainingNeed}
               disabled={createNeed.isPending}
             >
@@ -579,7 +579,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-emerald-600" />
               <span className="text-sm text-emerald-700 font-medium">Training need created</span>
-              <Link href="/learning/training-needs" className="ml-auto text-xs text-[var(--cs-aria-gold)] underline hover:text-[var(--cs-navy)]">
+              <Link href="/learning/training-needs" className="ml-auto text-xs text-[var(--cs-cara-gold)] underline hover:text-[var(--cs-navy)]">
                 View in Learning Studio →
               </Link>
             </div>
@@ -639,7 +639,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* ── Writing to the Child ──────────────────────────────────────── */}
-        <AriaWriteToChild
+        <CaraWriteToChild
           source="incident"
           sourceText={incident.oversight_note || incident.description}
           sourceRecordId={incident.id}
@@ -647,14 +647,14 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
           mode="post_save"
         />
 
-        {/* ── ARIA Context Links ─────────────────────────────────────────── */}
-        <AriaContextLinker
+        {/* ── Cara Context Links ─────────────────────────────────────────── */}
+        <CaraContextLinker
           sourceTable="incidents"
           recordId={incident.id}
         />
 
-        {/* ── ARIA Quick Actions ────────────────────────────────────────────── */}
-        <AriaQuickActions
+        {/* ── Cara Quick Actions ────────────────────────────────────────────── */}
+        <CaraQuickActions
           childId={incident.child_id}
           sourceType="incident"
           sourceId={incident.id}
@@ -672,7 +672,7 @@ export default function IncidentDetailPage({ params }: { params: Promise<{ id: s
           defaultCollapsed
           className="mt-6"
         />
-        <AriaPanel
+        <CaraPanel
           mode="assist"
           pageContext="Incident Record — incident detail, witness statements, body map, Reg 40 notification, police referral, safeguarding, debrief, follow-up actions, Reg 45 evidence"
           recordType="incident"

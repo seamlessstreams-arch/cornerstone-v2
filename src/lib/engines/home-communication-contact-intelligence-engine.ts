@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNICATION & CONTACT INTELLIGENCE ENGINE
+// CARA — HOME COMMUNICATION & CONTACT INTELLIGENCE ENGINE
 // Home-level: aggregates communication book entries, correspondence,
 // contact plans, and communication profiles.
 // CHR 2015 Reg 7: "The children's views, wishes and feelings standard."
@@ -475,13 +475,13 @@ export function computeHomeCommunicationContact(
   const insights: { text: string; severity: string }[] = [];
 
   if (urgentCommBook.length >= 5)
-    insights.push({ text: `ARIA detects ${urgentCommBook.length} urgent/high-priority communication book entries in 30 days — consider whether escalation thresholds need review.`, severity: "warning" });
+    insights.push({ text: `Cara detects ${urgentCommBook.length} urgent/high-priority communication book entries in 30 days — consider whether escalation thresholds need review.`, severity: "warning" });
 
   if (overdueActions.length >= 5)
-    insights.push({ text: `ARIA flags ${overdueActions.length} overdue correspondence actions — risk of professional communication breakdown.`, severity: "critical" });
+    insights.push({ text: `Cara flags ${overdueActions.length} overdue correspondence actions — risk of professional communication breakdown.`, severity: "critical" });
 
   if (contactPlanCoverage >= 90 && profileCoverage >= 90 && commActionRate >= 90)
-    insights.push({ text: "ARIA recognises comprehensive communication governance — evidence of proactive information-sharing culture.", severity: "positive" });
+    insights.push({ text: "Cara recognises comprehensive communication governance — evidence of proactive information-sharing culture.", severity: "positive" });
 
   if (interpreterNeeded > 0)
     insights.push({ text: `${interpreterNeeded} child${interpreterNeeded > 1 ? "ren" : ""} require${interpreterNeeded === 1 ? "s" : ""} interpreter support — ensure provision is consistent and documented.`, severity: "warning" });

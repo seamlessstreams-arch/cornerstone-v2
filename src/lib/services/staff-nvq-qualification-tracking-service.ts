@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF NVQ/QCF QUALIFICATION TRACKING SERVICE
+// CARA — STAFF NVQ/QCF QUALIFICATION TRACKING SERVICE
 // Tracks NVQ/QCF qualification progress for residential childcare staff —
 // enrolment, progress monitoring, assessment status, portfolio completion,
 // Reg 32 compliance (Level 3+ within 2 years), and registration status.
@@ -207,9 +207,9 @@ export function computeNvqAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function generateNvqAriaInsights(rows: StaffNvqQualificationTrackingRow[]): string[] {
+export function generateNvqCaraInsights(rows: StaffNvqQualificationTrackingRow[]): string[] {
   const metrics = computeNvqMetrics(rows);
   const alerts = computeNvqAlerts(rows);
   const insights: string[] = [];
@@ -351,4 +351,4 @@ export async function updateStaffNvqQualificationTracking(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeNvqMetrics, computeNvqAlerts, generateNvqAriaInsights };
+export const _testing = { computeNvqMetrics, computeNvqAlerts, generateNvqCaraInsights };

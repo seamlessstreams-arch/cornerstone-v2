@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EDUCATION ACHIEVEMENT INTELLIGENCE CARD
+// CARA — HOME EDUCATION ACHIEVEMENT INTELLIGENCE CARD
 // Home-level: attendance, PEP compliance, achievements, exclusions —
 // holistic education intelligence view for the home dashboard.
 // CHR 2015 Reg 8, 29. SCCIF: "Education", "Experiences and progress."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<EducationRating, { bg: string; text: string; border:
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeEducationAchievementIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.education_rating === "inadequate" && (d.education_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      education_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.education_rating] ?? RATING_STYLES.insufficient_data;
   const hasExcl = d.attendance.exclusion_count_90d > 0;
@@ -69,7 +86,7 @@ export function HomeEducationAchievementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-emerald-500")} />
+            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-emerald-500")} />
             <span className="text-slate-900">Education</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -91,7 +108,7 @@ export function HomeEducationAchievementIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <BookOpen className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.attendance.attendance_rate >= 90 ? "text-green-600" : d.attendance.attendance_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.attendance.attendance_rate >= 90 ? "text-[--cs-success]" : d.attendance.attendance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.attendance.attendance_rate}%
                 </p>
               </div>
@@ -102,7 +119,7 @@ export function HomeEducationAchievementIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Ban className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.attendance.exclusion_count_90d === 0 ? "text-green-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.attendance.exclusion_count_90d === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                   {d.attendance.exclusion_count_90d}
                 </p>
               </div>
@@ -113,7 +130,7 @@ export function HomeEducationAchievementIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", missingPep ? "text-red-600" : "text-green-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", missingPep ? "text-[--cs-risk]" : "text-[--cs-success]")}>
                   {d.pep.total_pep_meetings_90d}
                 </p>
               </div>
@@ -124,7 +141,7 @@ export function HomeEducationAchievementIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Trophy className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.achievements.achievements_90d > 0 ? "text-green-600" : "text-slate-400")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.achievements.achievements_90d > 0 ? "text-[--cs-success]" : "text-slate-400")}>
                   {d.achievements.achievements_90d}
                 </p>
               </div>
@@ -144,7 +161,7 @@ export function HomeEducationAchievementIntelligenceCard() {
                 {d.attendance.late_count > 0 && <p>Late: <span className="font-medium text-amber-600">{d.attendance.late_count}</span></p>}
                 {d.attendance.absent_count > 0 && <p>Absent: <span className="font-medium text-red-600">{d.attendance.absent_count}</span></p>}
                 {d.attendance.excluded_count > 0 && <p>Excluded: <span className="font-medium text-red-600">{d.attendance.excluded_count}</span></p>}
-                <p>Punctuality: <span className={cn("font-medium", d.attendance.punctuality_rate >= 90 ? "text-green-600" : "text-amber-600")}>{d.attendance.punctuality_rate}%</span></p>
+                <p>Punctuality: <span className={cn("font-medium", d.attendance.punctuality_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.attendance.punctuality_rate}%</span></p>
               </div>
             </div>
 
@@ -152,10 +169,10 @@ export function HomeEducationAchievementIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">PEP & Progress</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>PEP coverage: <span className={cn("font-medium", missingPep ? "text-red-600" : "text-green-600")}>{d.pep.children_with_pep_90d.length}/{d.pep.children_with_pep_90d.length + d.pep.children_without_pep_90d.length}</span></p>
+                <p>PEP coverage: <span className={cn("font-medium", missingPep ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d.pep.children_with_pep_90d.length}/{d.pep.children_with_pep_90d.length + d.pep.children_without_pep_90d.length}</span></p>
                 <p>Attainment: <span className="font-medium text-slate-600">{d.achievements.attainment_records_90d}</span></p>
                 {d.achievements.concerns_90d > 0 && (
-                  <p>Concerns: <span className={cn("font-medium", d.achievements.concern_resolution_rate >= 80 ? "text-amber-600" : "text-red-600")}>{d.achievements.concerns_90d} ({d.achievements.concern_resolution_rate}% managed)</span></p>
+                  <p>Concerns: <span className={cn("font-medium", d.achievements.concern_resolution_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.achievements.concerns_90d} ({d.achievements.concern_resolution_rate}% managed)</span></p>
                 )}
               </div>
             </div>
@@ -170,7 +187,7 @@ export function HomeEducationAchievementIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -185,7 +202,7 @@ export function HomeEducationAchievementIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -212,12 +229,12 @@ export function HomeEducationAchievementIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Education Intelligence */}
+        {/* Cara Education Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Education Intelligence
+              Cara Education Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

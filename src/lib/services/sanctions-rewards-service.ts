@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS, REWARDS & CONSEQUENCE FRAMEWORK SERVICE
+// CARA — SANCTIONS, REWARDS & CONSEQUENCE FRAMEWORK SERVICE
 // Manages sanction records and reward records under CHR 2015 Reg 19 (behaviour
 // management), with cross-references to Reg 20 (restraint) and Reg 35
 // (behaviour management standards). Tracks proportionality, age-appropriateness,

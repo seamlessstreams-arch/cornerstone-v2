@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Placement Stability — Intelligence Engine
+// Cara Placement Stability — Intelligence Engine
 //
 // Deterministic engine for tracking placement stability, matching suitability,
 // disruption risk factors, and transition planning.

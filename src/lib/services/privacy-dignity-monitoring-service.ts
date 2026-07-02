@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRIVACY & DIGNITY MONITORING SERVICE
+// CARA — PRIVACY & DIGNITY MONITORING SERVICE
 // Monitors respect for children's privacy, personal space,
 // dignity in care practices, and confidentiality standards.
 // CHR 2015 Reg 21 (privacy and dignity),

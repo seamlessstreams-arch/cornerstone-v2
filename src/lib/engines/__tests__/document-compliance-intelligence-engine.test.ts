@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE · TEST SUITE
+// CARA — DOCUMENT COMPLIANCE INTELLIGENCE ENGINE · TEST SUITE
 //
 // 55+ tests covering overview, document profiles, category analysis, alerts,
-// ARIA insights, and Oak House integration.
+// Cara insights, and Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -411,9 +411,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: expired regulatory documents", () => {
     const d = makeDoc({ category: "policy", expiry_date: "2026-01-01" });
     const r = run({ documents: [d] });
@@ -488,10 +488,10 @@ describe("ARIA insights", () => {
   });
 });
 
-// ── Oak House Integration ────────────────────────────────────────────────
+// ── Chamberlain House Integration ────────────────────────────────────────────────
 
-describe("Oak House integration scenario", () => {
-  it("processes a realistic Oak House document set correctly", () => {
+describe("Chamberlain House integration scenario", () => {
+  it("processes a realistic Chamberlain House document set correctly", () => {
     const oakStaff = [
       makeStaff("staff_darren", "Darren Laville"),
       makeStaff("staff_ryan", "Ryan Thompson"),
@@ -516,7 +516,7 @@ describe("Oak House integration scenario", () => {
         tags: ["safeguarding", "mandatory"],
       }),
       makeDoc({
-        id: "doc_3", title: "Oak House — Child Protection Policy",
+        id: "doc_3", title: "Chamberlain House — Child Protection Policy",
         category: "policy", version: 4,
         requires_read_sign: true, expiry_date: "2026-08-23", // ~90d
         tags: ["policy", "safeguarding", "mandatory"],
@@ -604,7 +604,7 @@ describe("Oak House integration scenario", () => {
     // Medium: doc_4 expiring in ~30 days
     expect(r.alerts.some((a) => a.severity === "medium" && a.message.includes("expiring within 30"))).toBe(true);
 
-    // ── ARIA Insights ─────────────────────────────────────────────────
+    // ── Cara Insights ─────────────────────────────────────────────────
     // Warning: low sign-off rate
     expect(r.insights.some((i) => i.severity === "warning" && i.text.includes("sign-off rate is 29%"))).toBe(true);
 

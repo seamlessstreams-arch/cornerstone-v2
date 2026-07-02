@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOLIDAY & TRIP PLANNING INTELLIGENCE ENGINE
+// CARA — HOME HOLIDAY & TRIP PLANNING INTELLIGENCE ENGINE
 // Monitors holiday activity planning, trip risk assessment completion, consent
 // documentation, memorable experience creation, and child participation in
 // planning. Measures how well the home promotes positive experiences through

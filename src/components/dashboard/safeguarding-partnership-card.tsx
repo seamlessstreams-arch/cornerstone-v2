@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING PARTNERSHIP CARD
+// CARA — SAFEGUARDING PARTNERSHIP CARD
 // Dashboard card powered by the Safeguarding Intelligence Engine.
 // Focus: referrals, escalations, outcomes, notifiable events.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -18,9 +18,9 @@ import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligen
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -70,19 +70,19 @@ export function SafeguardingPartnershipCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", p.safeguarding_incidents_90d === 0 ? "bg-green-50" : p.safeguarding_incidents_90d <= 3 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.safeguarding_incidents_90d === 0 ? "text-green-600" : p.safeguarding_incidents_90d <= 3 ? "text-amber-600" : "text-red-600")}>{p.safeguarding_incidents_90d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.safeguarding_incidents_90d === 0 ? "text-[--cs-success]" : p.safeguarding_incidents_90d <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{p.safeguarding_incidents_90d}</p>
             <p className="text-[10px] text-muted-foreground">SG Referrals</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.incidents_needing_oversight === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.incidents_needing_oversight === 0 ? "text-green-600" : "text-red-600")}>{p.incidents_needing_oversight}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.incidents_needing_oversight === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{p.incidents_needing_oversight}</p>
             <p className="text-[10px] text-muted-foreground">Escalated</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", ne.compliance_rate >= 100 ? "bg-green-50" : ne.compliance_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-green-600" : ne.compliance_rate >= 80 ? "text-amber-600" : "text-red-600")}>{ne.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-[--cs-success]" : ne.compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{ne.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", m.children_with_episodes === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", m.children_with_episodes === 0 ? "text-green-600" : "text-amber-600")}>{m.children_with_episodes}</p>
+            <p className={cn("text-lg font-bold tabular-nums", m.children_with_episodes === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{m.children_with_episodes}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
         </div>
@@ -100,15 +100,15 @@ export function SafeguardingPartnershipCard() {
               <p className="text-[10px] text-muted-foreground">Total</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ne.notified_on_time === ne.total_events ? "text-green-600" : "text-amber-600")}>{ne.notified_on_time}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ne.notified_on_time === ne.total_events ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ne.notified_on_time}</p>
               <p className="text-[10px] text-muted-foreground">On Time</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ne.notified_late === 0 ? "text-green-600" : "text-amber-600")}>{ne.notified_late}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ne.notified_late === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ne.notified_late}</p>
               <p className="text-[10px] text-muted-foreground">Late</p>
             </div>
             <div>
-              <p className={cn("text-sm font-bold tabular-nums", ne.pending_notification === 0 ? "text-green-600" : "text-red-600")}>{ne.pending_notification}</p>
+              <p className={cn("text-sm font-bold tabular-nums", ne.pending_notification === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{ne.pending_notification}</p>
               <p className="text-[10px] text-muted-foreground">Pending</p>
             </div>
           </div>
@@ -126,13 +126,13 @@ export function SafeguardingPartnershipCard() {
           </div>
         )}
 
-        {/* ── ARIA Partnership Intelligence ───────────────────────────── */}
+        {/* ── Cara Partnership Intelligence ───────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Partnership Intelligence
+              Cara Partnership Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

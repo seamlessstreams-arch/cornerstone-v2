@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONCERN ESCALATION TRACKER
+// CARA — CONCERN ESCALATION TRACKER
 // Dashboard widget that aggregates unresolved concerns from welfare checks,
 // incidents, and safeguarding referrals. Gives RM instant visibility of
 // open concerns requiring action.
@@ -117,7 +117,7 @@ export function ConcernEscalation() {
             Open Concerns
           </CardTitle>
           {concerns.length > 0 && (
-            <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full animate-pulse">
+            <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full animate-pulse">
               {concerns.length} active
             </Badge>
           )}
@@ -147,7 +147,7 @@ export function ConcernEscalation() {
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
                         {concern.child && (
-                          <span className="text-[10px] text-[var(--cs-aria-gold)]">{concern.child}</span>
+                          <span className="text-[10px] text-[var(--cs-cara-gold)]">{concern.child}</span>
                         )}
                         <span className="text-[10px] text-[var(--cs-text-muted)]">{formatRelative(concern.date)}</span>
                       </div>

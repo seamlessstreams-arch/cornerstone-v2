@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISALS & PROBATION COMMAND CENTRE
+// CARA — APPRAISALS & PROBATION COMMAND CENTRE
 // Annual appraisals, mid-year reviews, probation assessments, and PIP tracking.
 // Team competency analysis, per-staff timeline, rating distribution,
 // and regulatory compliance tracking for Ofsted inspection readiness.
@@ -9,8 +9,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -389,13 +389,13 @@ function AppraisalRow({
             </div>
           )}
 
-          {appraisal.aria_insights && (
+          {appraisal.cara_insights && (
             <div className="rounded-lg bg-indigo-50 border border-indigo-100 px-3 py-2">
               <p className="text-[10px] font-semibold text-indigo-700 mb-0.5 flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
-                ARIA Insights
+                Cara Insights
               </p>
-              <p className="text-xs text-indigo-800 leading-relaxed">{appraisal.aria_insights}</p>
+              <p className="text-xs text-indigo-800 leading-relaxed">{appraisal.cara_insights}</p>
             </div>
           )}
 
@@ -415,7 +415,7 @@ function AppraisalRow({
               )}
             </div>
             {appraisal.linked_development_plan_id && (
-              <Link href="/workforce/aria-planner" className="text-[10px] text-indigo-600 hover:underline flex items-center gap-0.5">
+              <Link href="/workforce/cara-planner" className="text-[10px] text-indigo-600 hover:underline flex items-center gap-0.5">
                 <FileText className="h-3 w-3" />
                 Dev plan linked →
               </Link>
@@ -514,18 +514,18 @@ export default function AppraisalsPage() {
     <PageShell
       title="Appraisals & Probation"
       subtitle="Annual appraisals, mid-year reviews, probation assessments & competency tracking"
-      ariaContext={{ pageTitle: "Staff Appraisals", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Staff Appraisals", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={displayed} columns={APPRAISAL_EXPORT_COLS} filename="appraisals" />
-          <PrintButton title="Appraisals Report" subtitle="Oak House Staff Development" targetId="appraisals-content" />
+          <PrintButton title="Appraisals Report" subtitle="Chamberlain House Staff Development" targetId="appraisals-content" />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="Appraisals — appraisal document or evidence upload" />
           <Button size="sm" className="gap-1.5">
             <Plus className="h-3.5 w-3.5" />
             New Appraisal
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -646,7 +646,7 @@ export default function AppraisalsPage() {
                     "px-2.5 py-1 rounded-full text-[10px] font-medium border transition-all",
                     typeFilter === t
                       ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
-                      : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-[var(--cs-aria-gold-soft)]",
+                      : "bg-white text-[var(--cs-text-muted)] border-[var(--cs-border)] hover:border-[var(--cs-cara-gold-soft)]",
                   )}
                 >
                   {t === "all" ? "All Types" : TYPE_LABELS[t]}
@@ -728,7 +728,7 @@ export default function AppraisalsPage() {
           ILACS — Quality of Care: evidence of staff receiving regular, structured appraisal linked to professional development.
         </div>
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Staff Appraisals — annual appraisals, performance reviews, professional development, Reg 34 compliance, ILACS workforce quality evidence, management oversight, Ofsted inspection evidence"
         recordType="supervision"

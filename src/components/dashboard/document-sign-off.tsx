@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT SIGN-OFF TRACKER
+// CARA — DOCUMENT SIGN-OFF TRACKER
 // Dashboard widget showing documents requiring staff to read and sign.
 // Critical for compliance — policies, procedures, and risk assessments
 // must have evidence that all staff have read them.
@@ -76,12 +76,12 @@ function DocRow({
             {doc.title}
           </Link>
           {isExpired && (
-            <Badge className="bg-red-100 text-red-700 border-0 text-[9px] rounded-full shrink-0">
+            <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[9px] rounded-full shrink-0">
               Expired
             </Badge>
           )}
           {isExpiring && !isExpired && (
-            <Badge className="bg-amber-100 text-amber-700 border-0 text-[9px] rounded-full shrink-0">
+            <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[9px] rounded-full shrink-0">
               Expiring
             </Badge>
           )}
@@ -182,12 +182,12 @@ export function DocumentSignOff() {
           </CardTitle>
           <div className="flex items-center gap-2">
             {needsAction.length > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[10px] rounded-full">
                 {needsAction.length} to sign
               </Badge>
             )}
             {(meta?.expired ?? 0) > 0 && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
                 {meta!.expired} expired
               </Badge>
             )}

@@ -1,13 +1,14 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION TRACKER
+// CARA — EDUCATION TRACKER
 // Tracks school attendance, exclusions, PEP meetings, attainment, and
 // education placement for each young person. Supports Reg 8 (Education),
 // the Virtual School Head relationship, and Ofsted ILACS evidence.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
@@ -36,8 +37,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -198,18 +199,18 @@ export default function EducationPage() {
     <PageShell
       title="Education Tracker"
       subtitle="Attendance, attainment, PEPs, and education oversight"
-      ariaContext={{ pageTitle: "Education Tracker", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Education Tracker", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Education Tracker" subtitle="Oak House — Education Records" />
+          <PrintButton title="Education Tracker" subtitle="Chamberlain House — Education Records" />
           <ExportButton data={filtered} columns={exportCols} filename="education-tracker" />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> Add Entry
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "education", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
-    >      <AriaPanel mode="assist" pageContext="Education Tracker — attendance, attainment, Personal Education Plans, school engagement, exclusions, Children Act 1989" recordType="education_record" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
+    >      <CaraPanel mode="assist" pageContext="Education Tracker — attendance, attainment, Personal Education Plans, school engagement, exclusions, Children Act 1989" recordType="education_record" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[
           { label: "Total Entries", value: stats.total, icon: BookOpen, c: "text-blue-600" },
@@ -492,6 +493,9 @@ export default function EducationPage() {
         days={28}
         defaultCollapsed
       />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="education" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this education record" />
+      </div>
     </PageShell>
   );
 }

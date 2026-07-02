@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT QUALITY ASSURANCE INTELLIGENCE ENGINE
+// CARA — AUDIT QUALITY ASSURANCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses internal quality assurance audits to surface compliance scores,
@@ -87,7 +87,7 @@ export interface AuditAlert {
   message: string;
 }
 
-export interface AriaAuditInsight {
+export interface CaraAuditInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -97,7 +97,7 @@ export interface AuditQualityIntelligenceResult {
   audit_profiles: AuditProfile[];
   category_analysis: CategoryAnalysis[];
   alerts: AuditAlert[];
-  insights: AriaAuditInsight[];
+  insights: CaraAuditInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -292,8 +292,8 @@ export function computeAuditQualityIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaAuditInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraAuditInsight[] = [];
 
   // Critical: overdue audits
   if (overdue.length > 0) {

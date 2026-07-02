@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Environmental Quality Intelligence Engine
+// Cara Environmental Quality Intelligence Engine
 //
 // Deterministic engine for evaluating the quality, comfort, and suitability of
 // the physical environment in a children's home — personalisation, maintenance

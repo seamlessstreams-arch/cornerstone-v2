@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE ENGINE
+// CARA — HOME STAFF TRAINING & CPD COMPLIANCE INTELLIGENCE ENGINE
 // Home-level: evaluates staff training and CPD compliance including mandatory
 // training completion, CPD record quality, training needs analysis,
 // qualification tracking, and professional development planning.

@@ -131,7 +131,7 @@ export function loadNotifications(homeId: string): NotificationStream {
   }
 
   // ── Reg 40 triages pending ────────────────────────────────────────────────
-  for (const t of db.ariaReg40Triages.findAll(homeId)) {
+  for (const t of db.caraReg40Triages.findAll(homeId)) {
     if (t.status !== "pending") continue;
     built.push({
       id: `reg40_triage_pending:${t.id}`,
@@ -145,7 +145,7 @@ export function loadNotifications(homeId: string): NotificationStream {
       title: `Reg 40 triage pending: ${t.suggested_category.replace(/_/g, " ")}`,
       body: t.reasoning?.slice(0, 160) ?? "Awaiting manager decision.",
       created_at: t.created_at,
-      link_href: `/aria-studio/reg40-triage`,
+      link_href: `/cara-studio/reg40-triage`,
     });
   }
 

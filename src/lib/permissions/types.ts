@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Core Types
+// Cara Permission System — Core Types
 //
 // RBAC + ABAC permission model for children's residential care.
 // Roles define baseline access; attributes refine it contextually.
@@ -64,7 +64,7 @@ export type ResourceType =
   | "training"
   | "audit_log"
   | "permission_settings"
-  | "aria_intelligence"
+  | "cara_intelligence"
   | "quality_assurance"
   | "approval_queue"
   | "rota"

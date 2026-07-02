@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT BREAKDOWN FORECAST ENGINE
+// CARA — PLACEMENT BREAKDOWN FORECAST ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -154,7 +154,7 @@ export interface ForecastAlert {
   child_id?: string;
 }
 
-export interface AriaForecastInsight {
+export interface CaraForecastInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -163,7 +163,7 @@ export interface PlacementBreakdownForecastResult {
   overview: ForecastOverview;
   child_forecasts: ChildPlacementForecast[];
   alerts: ForecastAlert[];
-  insights: AriaForecastInsight[];
+  insights: CaraForecastInsight[];
 }
 
 // ── Scoring Constants (named for transparency & testability) ────────────────────
@@ -730,13 +730,13 @@ function buildAlerts(forecasts: ChildPlacementForecast[]): ForecastAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
 function buildInsights(
   forecasts: ChildPlacementForecast[],
   overview: ForecastOverview,
-): AriaForecastInsight[] {
-  const insights: AriaForecastInsight[] = [];
+): CaraForecastInsight[] {
+  const insights: CaraForecastInsight[] = [];
 
   if (overview.critical_count > 0 || (overview.earliest_projected_days != null && overview.earliest_projected_days <= 14)) {
     const soonest =

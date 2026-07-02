@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Regulatory Self-Assessment Intelligence — Public API
+// Cara Regulatory Self-Assessment Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

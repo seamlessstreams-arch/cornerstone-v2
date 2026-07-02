@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SELF-ESTEEM CONFIDENCE BUILDING SERVICE
+// CARA — SELF-ESTEEM CONFIDENCE BUILDING SERVICE
 // Tracks self-esteem interventions, confidence measurements,
 // progress assessments, and positive identity development.
 // CHR 2015 Reg 10(2)(a) (building self-esteem through relationships),

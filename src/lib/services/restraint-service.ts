@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PHYSICAL INTERVENTION & RESTRAINT SERVICE
+// CARA — PHYSICAL INTERVENTION & RESTRAINT SERVICE
 // Manages records of physical interventions, restrictive practices, and
 // de-escalation outcomes. Critical for Reg 19 (behaviour management),
 // Reg 20 (restraint), Reg 35 (notifiable events). Body maps, injury

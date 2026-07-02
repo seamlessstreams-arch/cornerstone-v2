@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Deployment Intelligence — Public API
+// Cara Staff Deployment Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

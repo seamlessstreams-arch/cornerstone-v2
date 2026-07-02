@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE HOOK
+// CARA — SANCTIONS & REWARDS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/sanctions-rewards-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
+// CARA — CHILD RESTRICTIVE PRACTICE INTELLIGENCE API ROUTE
 // GET /api/v1/child-restrictive-practice-intelligence?childId=yp_alex
 // Per-child engine analysing restraint episodes: frequency, duration,
 // compliance, patterns, injuries, debrief rates.
@@ -8,16 +8,22 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { getStore } from "@/lib/db/store";
 import {
   computeChildRestrictivePractice,
   type RestraintInput,
 } from "@/lib/engines/child-restrictive-practice-intelligence-engine";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const childId = searchParams.get("childId");
+
+  const identity = await getRequestIdentity(request);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   if (!childId) {
     return NextResponse.json({ error: "childId is required" }, { status: 400 });
   }

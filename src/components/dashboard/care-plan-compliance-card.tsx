@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE PLAN COMPLIANCE CARD
+// CARA — CARE PLAN COMPLIANCE CARD
 // Dashboard widget surfacing care plan health: RAG distribution, goal status,
 // LAC review deadlines, and attention-needed alerts.
 // Children's Homes Quality Standard 1 — Care and Support.
@@ -203,7 +203,7 @@ export function CarePlanComplianceCard() {
                     </span>
                     <span className={cn(
                       "text-[9px] tabular-nums shrink-0 font-medium",
-                      isOverdue ? "text-red-600" : item.days <= 14 ? "text-amber-600" : "text-[var(--cs-text-muted)]",
+                      isOverdue ? "text-[--cs-risk]" : item.days <= 14 ? "text-[--cs-warning]" : "text-[var(--cs-text-muted)]",
                     )}>
                       {isOverdue ? `${Math.abs(item.days)}d overdue` : item.days === 0 ? "today" : `in ${item.days}d`}
                     </span>

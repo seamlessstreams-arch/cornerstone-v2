@@ -22,8 +22,8 @@ import { getStaffName, getYPName } from "@/lib/seed-data";
 import { useSiblingContactProtocolRecords } from "@/hooks/use-sibling-contact-protocol-records";
 import type { SiblingContactProtocolRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── local config (icons are React.ElementType — cannot serialize) ───────── */
 
@@ -117,7 +117,7 @@ export default function SiblingsContactProtocolPage() {
     { header: "Sibling", accessor: (r) => r.sibling_name },
     { header: "Sibling Placement", accessor: (r) => r.sibling_placement },
     { header: "Location", accessor: (r) => r.sibling_location },
-    { header: "Pre-Oak House Relationship", accessor: (r) => r.relationship_pre_oak_house },
+    { header: "Pre-Chamberlain House Relationship", accessor: (r) => r.relationship_pre_oak_house },
     { header: "Current Quality", accessor: (r) => r.current_relationship_quality },
     { header: "Frequency", accessor: (r) => r.contact_frequency },
     { header: "Contact Types", accessor: (r) => r.contact_types.join("; ") },
@@ -156,12 +156,12 @@ export default function SiblingsContactProtocolPage() {
     <PageShell
       title="Siblings Contact Protocol"
       subtitle="Children Act 1989 s23(7) — sibling duty · Quality Standard 9 (Care Planning)"
-      ariaContext={{ pageTitle: "Siblings Contact Protocol", sourceType: "contact_log" }}
+      caraContext={{ pageTitle: "Siblings Contact Protocol", sourceType: "contact_log" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Siblings Contact Protocol" />
           <ExportButton data={filtered} columns={exportCols} filename="siblings-contact-protocol" />
-          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -292,9 +292,9 @@ export default function SiblingsContactProtocolPage() {
 
                 {open && (
                   <CardContent className="pt-0 space-y-5 text-sm">
-                    {/* Pre-Oak House */}
+                    {/* Pre-Chamberlain House */}
                     <section>
-                      <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Relationship before Oak House</h4>
+                      <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Relationship before Chamberlain House</h4>
                       <p className="text-[var(--cs-text-secondary)] leading-relaxed">{r.relationship_pre_oak_house}</p>
                     </section>
 
@@ -472,7 +472,7 @@ export default function SiblingsContactProtocolPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Siblings Contact Protocol — sibling contact arrangements, frequency, supervised contact, contact conditions, care plan contact evidence, LA contact agreements, Reg 45 relationship evidence"
         recordType="care_plan"

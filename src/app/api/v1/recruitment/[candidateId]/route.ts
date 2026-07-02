@@ -1,5 +1,9 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { requirePermissionAsync } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
+import { createRecruitmentAuditRecord, persistRecruitmentCandidate } from "@/lib/supabase/recruitment-persist";
 import { evaluateCandidateRules } from "@/lib/recruitment-rules";
 
 // Stages in progression order — advancing past the last element is never valid
@@ -189,8 +193,13 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ candidateId: string }> }
 ) {
+  const auth = await requirePermissionAsync(req, PERMISSIONS.MANAGE_RECRUITMENT);
+  if (auth instanceof NextResponse) return auth;
+
   const { candidateId } = await params;
-  const body = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
 
   const candidate = db.candidateProfiles.findById(candidateId);
   if (!candidate) {
@@ -237,9 +246,10 @@ export async function PATCH(
   if (!updated) {
     return NextResponse.json({ error: "Candidate not found" }, { status: 404 });
   }
+  void persistRecruitmentCandidate(updated); // best-effort write-through (no-op when off)
 
   // Write audit entry
-  db.recruitmentAudit.create({
+  createRecruitmentAuditRecord({
     candidate_id: candidateId,
     vacancy_id: updated.vacancy_id ?? undefined,
     actor_id: "staff_darren",

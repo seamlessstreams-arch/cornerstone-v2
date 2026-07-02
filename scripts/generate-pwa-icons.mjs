@@ -1,7 +1,7 @@
-// Generates the Cornerstone PWA icons from a branded SVG using sharp.
+// Generates the Cara PWA icons from a branded SVG using sharp.
 //   node scripts/generate-pwa-icons.mjs
 // Outputs to public/: icon-192.png, icon-512.png, icon-maskable.png, apple-icon.png
-// Brand: the Cornerstone logo — navy crescent "C" + house, teal plant sprig + sparkle, on cream.
+// Brand: the Cara logo — navy crescent "C" + house, teal plant sprig + sparkle, on cream.
 import sharp from "sharp";
 import { mkdirSync } from "node:fs";
 
@@ -11,7 +11,7 @@ mkdirSync(OUT, { recursive: true });
 // rounded: rounded-square corners (purpose "any"); false = full-bleed for maskable/apple.
 // scale: foreground scale (maskable/apple need a safe-zone margin).
 // Brand mark: navy crescent "C" cradling a house, with a teal plant sprig + sparkle,
-// on a cream ground — a vector rendition of the Cornerstone logo.
+// on a cream ground — a vector rendition of the Cara logo.
 function svg({ rounded, scale = 1 }) {
   const r = rounded ? 112 : 0;
   const art = `

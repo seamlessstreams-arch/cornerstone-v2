@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FAMILY & RELATIONSHIPS INTELLIGENCE ENGINE
+// CARA — FAMILY & RELATIONSHIPS INTELLIGENCE ENGINE
 // Per-child analysis of family contact quality, relationship health,
 // network engagement, and contact compliance.
 // Pure deterministic. No LLM calls, no DB access.

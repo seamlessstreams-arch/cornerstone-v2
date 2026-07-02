@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONTEXTUAL SAFEGUARDING RISK INTELLIGENCE ENGINE
+// CARA — HOME CONTEXTUAL SAFEGUARDING RISK INTELLIGENCE ENGINE
 // Pure deterministic engine: risk identification coverage, context diversity,
 // multi-agency response, protective action completeness, review compliance,
 // community mapping, and risk level distribution.

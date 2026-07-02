@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NAMED DASHBOARDS INDEX
+// CARA — NAMED DASHBOARDS INDEX
 // The 8 role dashboards, each composed entirely from the event spine.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -30,7 +30,7 @@ export default function DashboardsIndexPage() {
       subtitle="Eight role-specific views, each calculated live from the event spine — capture once, surface everywhere"
       icon={<Activity className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Dashboards", sourceType: "general" }}
+      caraContext={{ pageTitle: "Dashboards", sourceType: "general" }}
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {DASHBOARDS.map((d) => {

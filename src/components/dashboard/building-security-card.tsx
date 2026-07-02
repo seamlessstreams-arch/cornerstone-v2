@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUILDING SECURITY INTELLIGENCE CARD
+// CARA — BUILDING SECURITY INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 36, Reg 25, Reg 12.
 // SCCIF: Helped & Protected — "The home is secure."
@@ -20,16 +20,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const STATUS_STYLES: Record<string, string> = {
@@ -84,13 +84,13 @@ export function BuildingSecurityCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.check_completion_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.compliance_rate >= 90 ? "text-green-600" : "text-amber-600",
+              o.check_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.compliance_rate}%
+              {o.check_completion_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
@@ -100,7 +100,7 @@ export function BuildingSecurityCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.checks_overdue === 0 ? "text-green-600" : "text-amber-600",
+              o.checks_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.checks_overdue}
             </p>
@@ -118,7 +118,7 @@ export function BuildingSecurityCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.maintenance_urgent === 0 ? "text-green-600" : "text-red-600",
+              o.maintenance_urgent === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.maintenance_urgent}
             </p>
@@ -138,7 +138,9 @@ export function BuildingSecurityCard() {
               <div key={b.building_id} className="flex items-center justify-between rounded border p-2 text-xs">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <span className="font-medium truncate">{b.building_name}</span>
-                  <span className="text-muted-foreground">{b.compliance_rate}%</span>
+                  <span className="text-muted-foreground">
+                    {b.checks_total > 0 ? Math.round((b.checks_completed / b.checks_total) * 100) : 100}%
+                  </span>
                 </div>
                 <Badge variant="outline" className={cn("text-[10px] shrink-0", STATUS_STYLES[b.status] ?? STATUS_STYLES.operational)}>
                   {b.status}
@@ -162,7 +164,7 @@ export function BuildingSecurityCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{c.completed}/{c.total}</Badge>
                   {c.overdue > 0 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">{c.overdue} overdue</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{c.overdue} overdue</Badge>
                   )}
                 </div>
               </div>
@@ -192,13 +194,13 @@ export function BuildingSecurityCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Security Intelligence
+              Cara Security Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

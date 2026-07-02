@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME TRAUMA THERAPY INTELLIGENCE ENGINE
+// CARA — HOME TRAUMA THERAPY INTELLIGENCE ENGINE
 // Pure deterministic engine: therapy attendance, session-level mood improvement,
 // child engagement, modality diversity, escalation patterns, regulation
 // strategy use, and child voice in therapeutic process.

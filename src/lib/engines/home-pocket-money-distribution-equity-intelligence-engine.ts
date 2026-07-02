@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME POCKET MONEY DISTRIBUTION EQUITY INTELLIGENCE ENGINE
+// CARA -- HOME POCKET MONEY DISTRIBUTION EQUITY INTELLIGENCE ENGINE
 // Measures equitable distribution of pocket money across children, age-appropriate
 // amounts, timely payments, child understanding of allowances, and transparency
 // in pocket money management.

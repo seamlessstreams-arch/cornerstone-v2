@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Role-Based Rules Matrix
+// Cara Permission System — Role-Based Rules Matrix
 //
 // Defines the baseline permission rules per role. These are the starting
 // point; ABAC attributes (assignment, shift, home, delegation) refine
@@ -376,39 +376,39 @@ export const PERMISSION_RULES: PermissionRule[] = [
   },
 
   // ─────────────────────────────────────────────────────────────────────────
-  // ARIA INTELLIGENCE — Permission-aware
+  // Cara INTELLIGENCE — Permission-aware
   // ─────────────────────────────────────────────────────────────────────────
   {
     role: ["rsw", "senior_rsw", "waking_night"],
-    resourceType: "aria_intelligence",
+    resourceType: "cara_intelligence",
     actions: ["view"],
     sensitivityMax: "internal",
     requiresHomeMatch: true,
-    // Only practice-level Aria — no manager intelligence
+    // Only practice-level Cara — no manager intelligence
   },
   {
     role: ["team_leader"],
-    resourceType: "aria_intelligence",
+    resourceType: "cara_intelligence",
     actions: ["view"],
     sensitivityMax: "restricted",
     requiresHomeMatch: true,
   },
   {
     role: ["deputy_manager"],
-    resourceType: "aria_intelligence",
+    resourceType: "cara_intelligence",
     actions: ["view"],
     sensitivityMax: "confidential",
     requiresHomeMatch: true,
   },
   {
     role: ["registered_manager"],
-    resourceType: "aria_intelligence",
+    resourceType: "cara_intelligence",
     actions: ["view", "export"],
     requiresHomeMatch: true,
   },
   {
     role: ["responsible_individual", "operations_manager", "provider_owner", "super_admin"],
-    resourceType: "aria_intelligence",
+    resourceType: "cara_intelligence",
     actions: ["view", "export"],
   },
 

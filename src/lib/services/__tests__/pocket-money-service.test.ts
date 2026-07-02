@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POCKET MONEY & SAVINGS SERVICE TESTS
+// CARA — POCKET MONEY & SAVINGS SERVICE TESTS
 // Pure-function unit tests for financial metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 37 (children's money — pocket money,

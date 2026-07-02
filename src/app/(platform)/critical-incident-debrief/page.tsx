@@ -16,6 +16,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import {
   Plus, ChevronDown, ChevronUp, ArrowUpDown, AlertTriangle, CheckCircle2,
   Clock, Search, Shield, Brain, Users,
@@ -27,8 +28,8 @@ import { DEBRIEF_INCIDENT_CATEGORY_LABEL, INCIDENT_DEBRIEF_STATUS_LABEL, DEBRIEF
 import { toast } from "sonner";
 import { useCriticalIncidentDebriefRecords, useCreateCriticalIncidentDebriefRecord } from "@/hooks/use-critical-incident-debrief-records";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -100,13 +101,13 @@ export default function CriticalIncidentDebriefPage() {
     <PageShell
       title="Critical Incident Debriefs"
       subtitle="Post-Incident Learning · Reflective Practice · Continuous Improvement"
-      ariaContext={{ pageTitle: "Critical Incident Debriefs", sourceType: "incident" }}
+      caraContext={{ pageTitle: "Critical Incident Debriefs", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Critical Incident Debriefs" />
           <ExportButton data={records} columns={exportCols} filename="critical-incident-debriefs" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" />Schedule Debrief</Button>
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -352,7 +353,7 @@ export default function CriticalIncidentDebriefPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div><Label>Incident Summary *</Label><Textarea placeholder="Brief description of the incident..." value={cidForm.incident_summary} onChange={(e) => setCID("incident_summary", e.target.value)} /></div>
+            <div><Label>Incident Summary *</Label><Textarea placeholder="Brief description of the incident..." value={cidForm.incident_summary} onChange={(e) => setCID("incident_summary", e.target.value)} /><EntryAssist value={cidForm.incident_summary} onChange={(v) => setCID("incident_summary", v)} sourceRecordType="critical_incident_debrief" className="mt-1" /></div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
               <Button type="submit" disabled={createRecord.isPending}>{createRecord.isPending ? "Saving…" : "Schedule"}</Button>
@@ -366,7 +367,7 @@ export default function CriticalIncidentDebriefPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Critical Incident Debriefs — post-incident debrief, staff support, learning review, action points, reporting, Reg 40, Reg 45 evidence, trauma-informed approach, improvement plan"
         recordType="incident"

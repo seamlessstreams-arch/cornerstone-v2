@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- EATING DISORDER & DISORDERED EATING SUPPORT SERVICE
+// CARA -- EATING DISORDER & DISORDERED EATING SUPPORT SERVICE
 // Tracks assessments, specialist referrals, meal plans, monitoring regimes,
 // behavioural indicators, professional engagement, and recovery status for
 // children with eating disorders or disordered eating patterns in residential
@@ -518,7 +518,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: EatingDisorderSupportRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -845,6 +845,6 @@ export async function deleteEatingDisorderSupport(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateEatingDisorderSupport,
 };

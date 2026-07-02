@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TREND & REPEAT-PATTERN API ROUTE
+// CARA — MEDICATION ERROR TREND & REPEAT-PATTERN API ROUTE
 // GET /api/v1/medication-error-trends
 //
 // Temporal + pattern intelligence over medication errors: trend direction/rate,

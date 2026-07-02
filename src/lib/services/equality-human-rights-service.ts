@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EQUALITY & HUMAN RIGHTS SERVICE
+// CARA — EQUALITY & HUMAN RIGHTS SERVICE
 // Tracks equality impact assessments, human rights compliance,
 // protected characteristics monitoring, and discrimination prevention.
 // CHR 2015 Reg 11 (positive relationships — non-discrimination),

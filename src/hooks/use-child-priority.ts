@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PRIORITY (UNIFIED RISK) HOOK
+// CARA — CHILD PRIORITY (UNIFIED RISK) HOOK
 // React Query wrapper for /api/v1/child-priority
 // ══════════════════════════════════════════════════════════════════════════════
 

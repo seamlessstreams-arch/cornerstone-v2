@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CULTURAL IDENTITY & DIVERSITY SERVICE
+// CARA — CULTURAL IDENTITY & DIVERSITY SERVICE
 // Manages cultural identity profiles and diversity support actions for children
 // in care. CHR 2015 Reg 7 (quality of care — promoting identity), Reg 11
 // (positive relationships), Equality Act 2010 (protected characteristics),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT CARE & SAFETY INTELLIGENCE ENGINE
+// CARA — HOME NIGHT CARE & SAFETY INTELLIGENCE ENGINE
 // Home-level: aggregates night checks, handovers, night anxiety support,
 // bedtime routines, wake-up routines across all children.
 // CHR 2015 Reg 12/25: Night care and safety.
@@ -630,7 +630,7 @@ export function computeHomeNightCareSafety(
     recommendations.push({ rank: ++rank, recommendation: "Schedule reviews for all overdue night care records to maintain regulatory compliance.", urgency: "soon", regulatory_ref: "CHR 2015 Reg 12" });
   }
 
-  // ── ARIA Insights ────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────
   if (nc30.length >= 10) {
     if (distressedRate >= 15) {
       insights.push({ text: `${distressedRate}% of night checks record children as distressed — review individual night care plans and consider CAMHS referral.`, severity: "critical" });

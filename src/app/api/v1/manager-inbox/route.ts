@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX API ROUTE
+// CARA — MANAGER ACTION INBOX API ROUTE
 // GET /api/v1/manager-inbox
 //
 // One prioritised command centre: composes the canonical event stream into the
 // approvals, safeguarding alerts, high-risk events and compliance gaps a manager
-// must act on — each with reason, deadline, links, ARIA suggestion and actions.
+// must act on — each with reason, deadline, links, Cara suggestion and actions.
 // CHR 2015 Reg 13 (leadership oversight).
 // ══════════════════════════════════════════════════════════════════════════════
 

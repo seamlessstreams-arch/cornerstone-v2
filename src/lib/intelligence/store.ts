@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE LAYER IN-MEMORY STORE
+// CARA — INTELLIGENCE LAYER IN-MEMORY STORE
 //
 // Mutable in-memory collections for all intelligence entities.
-// Seeded with realistic Oak House demo data.
+// Seeded with realistic Chamberlain House demo data.
 //
 // TO CONNECT SUPABASE: replace each collection's read/write methods with
 // Supabase queries. The API route signatures stay identical.
@@ -19,14 +19,14 @@ import type {
   HomeClimateSnapshot,
   DocumentIntelligenceJob,
   ActionOutcome,
-  AriaAssessment,
-  AriaOversight,
+  CaraAssessment,
+  CaraOversight,
   KeyWorkSession,
   ChildResource,
   InteractiveSession,
-  AriaAuditEntry,
-  AriaRecommendation,
-  AriaSafeguardingFlag,
+  CaraAuditEntry,
+  CaraRecommendation,
+  CaraSafeguardingFlag,
   // RI Command Centre
   RiChallengeLog,
   RiGovernanceReport,
@@ -63,15 +63,15 @@ const intelligenceStore = {
   homeClimate: [] as HomeClimateSnapshot[],
   docJobs: [] as DocumentIntelligenceJob[],
   actionOutcomes: [] as ActionOutcome[],
-  // ARIA Intelligence module
-  ariaAssessments: [] as AriaAssessment[],
-  ariaOversight: [] as AriaOversight[],
+  // Cara Intelligence module
+  caraAssessments: [] as CaraAssessment[],
+  caraOversight: [] as CaraOversight[],
   keyWorkSessions: [] as KeyWorkSession[],
   childResources: [] as ChildResource[],
   interactiveSessions: [] as InteractiveSession[],
-  ariaAuditTrail: [] as AriaAuditEntry[],
-  ariaRecommendations: [] as AriaRecommendation[],
-  ariaSafeguardingFlags: [] as AriaSafeguardingFlag[],
+  caraAuditTrail: [] as CaraAuditEntry[],
+  caraRecommendations: [] as CaraRecommendation[],
+  caraSafeguardingFlags: [] as CaraSafeguardingFlag[],
   // RI Command Centre
   riChallengeLogs: [] as RiChallengeLog[],
   riGovernanceReports: [] as RiGovernanceReport[],
@@ -123,12 +123,12 @@ intelligenceStore.childExperience = [
     overall_score: 65,
     score_delta: null,
     narrative:
-      "Casey's first full week at Oak House. She settled cautiously — engaging with staff on her own terms and showing early signs of trust with her key worker. Education attendance was 3 out of 5 days, with one refusal linked to anxiety about peers. Health is stable. No major regulation difficulties, though she required two co-regulation episodes. Overall a cautious but positive start.",
+      "Casey's first full week at Chamberlain House. She settled cautiously — engaging with staff on her own terms and showing early signs of trust with her key worker. Education attendance was 3 out of 5 days, with one refusal linked to anxiety about peers. Health is stable. No major regulation difficulties, though she required two co-regulation episodes. Overall a cautious but positive start.",
     evidence_refs: [
       { type: "daily_log", id: "log_jas_001", date: "2026-04-01", excerpt: "Joined staff in the kitchen unprompted to help with dinner", significance: "belonging indicator" },
       { type: "incident", id: "inc_jas_001", date: "2026-04-03", excerpt: "Distressed by phone call from mother — co-regulation successful", significance: "regulation capacity noted" },
     ],
-    computed_by: "aria",
+    computed_by: "cara",
     reviewed_by: "staff_darren",
     created_at: "2026-04-06T07:00:00Z",
   },
@@ -157,7 +157,7 @@ intelligenceStore.childExperience = [
       { type: "daily_log", id: "log_jas_010", date: "2026-04-09", excerpt: "Casey said 'I actually like it here' to key worker during evening 1:1", significance: "belonging — direct voice evidence" },
       { type: "voice_record", id: "vrc_jas_001", date: "2026-04-10", excerpt: "Wants to start a creative writing club at school", significance: "education engagement and aspirations" },
     ],
-    computed_by: "aria",
+    computed_by: "cara",
     reviewed_by: null,
     created_at: "2026-04-13T07:00:00Z",
   },
@@ -186,7 +186,7 @@ intelligenceStore.childExperience = [
       { type: "incident", id: "inc_mar_001", date: "2026-04-02", excerpt: "Alex left the home for 2 hours without permission following staff redirect", significance: "regulation and boundary difficulties" },
       { type: "daily_log", id: "log_mar_003", date: "2026-04-04", excerpt: "Accepted hot chocolate from Lackson at 22:30 — first positive contact", significance: "early trust indicator" },
     ],
-    computed_by: "aria",
+    computed_by: "cara",
     reviewed_by: "staff_darren",
     created_at: "2026-04-06T07:00:00Z",
   },
@@ -214,7 +214,7 @@ intelligenceStore.childExperience = [
     evidence_refs: [
       { type: "daily_log", id: "log_mar_015", date: "2026-04-11", excerpt: "Alex helped Lackson wash the car — talked about his old dog. First sustained 1:1 conversation.", significance: "relational progress" },
     ],
-    computed_by: "aria",
+    computed_by: "cara",
     reviewed_by: null,
     created_at: "2026-04-13T07:00:00Z",
   },
@@ -240,10 +240,10 @@ intelligenceStore.childExperience = [
     narrative:
       "Jordan continues to thrive in placement. Full education attendance with a commendation from her teacher for her GCSE coursework. She is engaged with her key worker and has self-reported feeling settled and safe. One moment of anxiety around an upcoming LAC review — supported well by her key worker through preparation conversations. Jordan is a strong advocate for herself and her voice is consistently heard.",
     evidence_refs: [
-      { type: "voice_record", id: "vrc_len_001", date: "2026-04-08", excerpt: "Said she wants to stay at Oak House until she moves into supported living at 18", significance: "stability and future planning" },
+      { type: "voice_record", id: "vrc_len_001", date: "2026-04-08", excerpt: "Said she wants to stay at Chamberlain House until she moves into supported living at 18", significance: "stability and future planning" },
       { type: "daily_log", id: "log_len_008", date: "2026-04-10", excerpt: "Received GCSE commendation letter from school — shared it with the team at dinner", significance: "achievement and belonging" },
     ],
-    computed_by: "aria",
+    computed_by: "cara",
     reviewed_by: "staff_darren",
     created_at: "2026-04-13T07:00:00Z",
   },
@@ -259,7 +259,7 @@ intelligenceStore.patternAlerts = [
     alert_type: "regulation_deterioration",
     title: "Escalating dysregulation episodes — Alex",
     description:
-      "ARIA has identified three dysregulation episodes in a 7-day period, each occurring between 17:00–19:00. The pattern suggests a consistent trigger window, potentially linked to transition from school or contact-related anxiety. Without targeted intervention this pattern is likely to continue.",
+      "Cara has identified three dysregulation episodes in a 7-day period, each occurring between 17:00–19:00. The pattern suggests a consistent trigger window, potentially linked to transition from school or contact-related anxiety. Without targeted intervention this pattern is likely to continue.",
     severity: "high",
     status: "active",
     evidence_refs: [
@@ -311,7 +311,7 @@ intelligenceStore.patternAlerts = [
     alert_type: "staffing_continuity_risk",
     title: "Home-wide staffing continuity gap — peak evenings",
     description:
-      "ARIA has identified that Oak House has had 6 agency staff shifts in the past 14 days, predominantly evening shifts. Three of the four dysregulation episodes in this period occurred during agency-covered shifts. Unfamiliar staff during vulnerable evening hours is a consistent risk factor for the current resident group.",
+      "Cara has identified that Chamberlain House has had 6 agency staff shifts in the past 14 days, predominantly evening shifts. Three of the four dysregulation episodes in this period occurred during agency-covered shifts. Unfamiliar staff during vulnerable evening hours is a consistent risk factor for the current resident group.",
     severity: "high",
     status: "active",
     evidence_refs: [
@@ -366,7 +366,7 @@ intelligenceStore.interventions = [
     description:
       "From 4:45pm each day, a consistent named staff member (Lackson where possible) will meet Alex informally — not in a structured way but with activity or company — to bridge the school-to-home transition. The aim is to reduce the activation that appears to occur at this time.",
     rationale:
-      "ARIA pattern alert identified consistent dysregulation between 17:00–19:00. Transition periods are known high-risk times for young people with a history of relational trauma. Proactive co-regulation before the window opens is more effective than reactive de-escalation.",
+      "Cara pattern alert identified consistent dysregulation between 17:00–19:00. Transition periods are known high-risk times for young people with a history of relational trauma. Proactive co-regulation before the window opens is more effective than reactive de-escalation.",
     started_at: "2026-04-10",
     review_date: "2026-04-24",
     ended_at: null,
@@ -522,7 +522,7 @@ intelligenceStore.relationalRecords = [
     record_type: "preferred_adult",
     title: "Ryan — key worker and primary trusted adult",
     description:
-      "Jordan has a strong, established relationship with Ryan. She has explicitly named him as the adult she feels most comfortable with at Oak House. This relationship should be protected and prioritised, including in rota planning.",
+      "Jordan has a strong, established relationship with Ryan. She has explicitly named him as the adult she feels most comfortable with at Chamberlain House. This relationship should be protected and prioritised, including in rota planning.",
     staff_id: "staff_ryan",
     is_positive: true,
     confidence: "high",
@@ -770,10 +770,10 @@ intelligenceStore.homeClimate = [
     overall_climate_score: 77,
     climate_delta: null,
     narrative:
-      "A broadly stable week at Oak House. Staffing consistency is the principal risk factor — two agency shifts in the week. Incident frequency is within expected range for a home with a newly placed young person. No complaints. Training compliance remains strong.",
+      "A broadly stable week at Chamberlain House. Staffing consistency is the principal risk factor — two agency shifts in the week. Incident frequency is within expected range for a home with a newly placed young person. No complaints. Training compliance remains strong.",
     hotspot_times: ["Tuesday 17:00–19:00", "Thursday 21:00–22:30"],
     risk_flags: [],
-    computed_by: "aria",
+    computed_by: "cara",
     created_at: "2026-03-31T06:00:00Z",
   },
   {
@@ -795,7 +795,7 @@ intelligenceStore.homeClimate = [
       "A more challenging week. Staffing consistency has declined — four agency shifts, three in the evening window. Incident frequency is elevated, driven primarily by Alex's dysregulation pattern. Peer tension between Alex and Casey noted on two occasions. Rear gate latch maintenance issue remains outstanding.",
     hotspot_times: ["Monday 17:30–19:00", "Wednesday 17:00–19:30", "Friday 21:00–22:00"],
     risk_flags: ["agency_staff_evening_pattern", "marcus_dysregulation_peak", "maintenance_gate_outstanding"],
-    computed_by: "aria",
+    computed_by: "cara",
     created_at: "2026-04-07T06:00:00Z",
   },
   {
@@ -817,7 +817,7 @@ intelligenceStore.homeClimate = [
       "Modest recovery this week. The proactive transition support intervention for Alex appears to be having early impact — the 5pm window was calmer on 4 of 5 days. Staffing consistency remains a concern but improved slightly. Rear gate latch resolved. Casey's wellbeing is positive and Jordan continues to thrive.",
     hotspot_times: ["Wednesday 17:30–18:30"],
     risk_flags: ["agency_staff_evening_pattern"],
-    computed_by: "aria",
+    computed_by: "cara",
     created_at: "2026-04-14T06:00:00Z",
   },
 ];
@@ -853,7 +853,7 @@ intelligenceStore.docJobs = [
     placed_at: null,
     placement_ref_type: null,
     placement_ref_id: null,
-    aria_notes:
+    cara_notes:
       "High-confidence classification. Document is Casey's initial health assessment dated 5 April 2026. Two actions identified: dental appointment and immunisation review. Child voice present — Casey reported feeling 'okay' about her health. Recommend placing in Health module and creating two tasks for the identified actions.",
     created_by: "staff_darren",
     created_at: "2026-04-06T10:00:00Z",
@@ -887,7 +887,7 @@ intelligenceStore.docJobs = [
     placed_at: "2026-04-08T14:05:00Z",
     placement_ref_type: "care_form",
     placement_ref_id: "form_camhs_mar_001",
-    aria_notes:
+    cara_notes:
       "CAMHS assessment referral for Alex. Confirmed placement by manager. CAMHS triage expected within 14 days of referral date (8 April). Task created to chase if no response by 22 April.",
     created_by: "staff_darren",
     created_at: "2026-04-08T13:30:00Z",
@@ -912,7 +912,7 @@ intelligenceStore.docJobs = [
     placed_at: null,
     placement_ref_type: null,
     placement_ref_id: null,
-    aria_notes: null,
+    cara_notes: null,
     created_by: "staff_anna",
     created_at: "2026-04-19T11:00:00Z",
     updated_at: "2026-04-19T11:00:00Z",
@@ -1006,7 +1006,7 @@ intelligenceStore.actionOutcomes = [
     title: "Confirm placement stability at LAC review",
     what_was_agreed: "Advocate at the LAC review for Jordan's placement to be confirmed stable through to age 18 as per her explicit wishes.",
     why_it_matters:
-      "Jordan has experienced multiple placement breakdowns. Her voice is clear: she wants to stay at Oak House until 18. Placement stability is a fundamental protective factor for her wellbeing, education, and future.",
+      "Jordan has experienced multiple placement breakdowns. Her voice is clear: she wants to stay at Chamberlain House until 18. Placement stability is a fundamental protective factor for her wellbeing, education, and future.",
     owner_id: "staff_ryan",
     due_date: "2026-04-20",
     completed_at: "2026-04-20T15:00:00Z",
@@ -1016,7 +1016,7 @@ intelligenceStore.actionOutcomes = [
     effectiveness_notes: "Jordan's direct participation in the review and hearing the commitment made was powerful. She appeared much less anxious in the days following the review.",
     status: "completed",
     linked_evidence: [
-      { type: "voice_record", id: "vrc_len_001", description: "Jordan's expressed wish to remain at Oak House until 18" },
+      { type: "voice_record", id: "vrc_len_001", description: "Jordan's expressed wish to remain at Chamberlain House until 18" },
     ],
     should_continue: false,
     created_by: "staff_ryan",
@@ -1069,9 +1069,9 @@ intelligenceStore.actionOutcomes = [
   },
 ];
 
-// ── Seed: ARIA Assessments ────────────────────────────────────────────────────
+// ── Seed: Cara Assessments ────────────────────────────────────────────────────
 
-intelligenceStore.ariaAssessments = [
+intelligenceStore.caraAssessments = [
   {
     id: "aa_001",
     home_id: "home_oak",
@@ -1131,14 +1131,14 @@ intelligenceStore.keyWorkSessions = [
   },
 ];
 
-// ── Seed: ARIA Recommendations ─────────────────────────────────────────────────
+// ── Seed: Cara Recommendations ─────────────────────────────────────────────────
 
-intelligenceStore.ariaRecommendations = [
+intelligenceStore.caraRecommendations = [
   {
     id: "ar_001",
     home_id: "home_oak",
     child_id: "yp_casey",
-    source_type: "aria_assessment",
+    source_type: "cara_assessment",
     source_id: "aa_001",
     recommendation_type: "key_work_session",
     title: "Complete key work session on family contact",
@@ -1154,7 +1154,7 @@ intelligenceStore.ariaRecommendations = [
     id: "ar_002",
     home_id: "home_oak",
     child_id: "yp_casey",
-    source_type: "aria_assessment",
+    source_type: "cara_assessment",
     source_id: "aa_001",
     recommendation_type: "risk_assessment_update",
     title: "Update risk assessment to reflect family contact trigger",
@@ -1168,9 +1168,9 @@ intelligenceStore.ariaRecommendations = [
   },
 ];
 
-// ── Seed: ARIA Safeguarding Flags ──────────────────────────────────────────────
+// ── Seed: Cara Safeguarding Flags ──────────────────────────────────────────────
 
-intelligenceStore.ariaSafeguardingFlags = [
+intelligenceStore.caraSafeguardingFlags = [
   {
     id: "asf_001",
     home_id: "home_oak",
@@ -1200,7 +1200,7 @@ intelligenceStore.riChallengeLogs = [
     action_required: "Confirm MASH referral completed. Provide date of strategy discussion. Update risk assessment. Brief all staff on contextual safeguarding indicators.",
     action_due_date: "2026-04-16",
     status: "action_pending",
-    aria_generated: false,
+    cara_generated: false,
     created_by: "staff_darren",
     created_at: "2026-04-14T10:00:00Z",
     updated_at: "2026-04-14T10:00:00Z",
@@ -1219,7 +1219,7 @@ intelligenceStore.riChallengeLogs = [
     action_required: "Complete overdue supervisions and share signed records with RI by 21 April.",
     action_due_date: "2026-04-21",
     status: "responded",
-    aria_generated: false,
+    cara_generated: false,
     created_by: "staff_darren",
     created_at: "2026-04-13T09:30:00Z",
     updated_at: "2026-04-14T16:30:00Z",
@@ -1235,7 +1235,7 @@ intelligenceStore.riChallengeLogs = [
     action_required: "Rebook and confirm first aid training for Ryan P and Lackson M. Rebook Level 3 safeguarding for Ryan P. Adjust rota to ensure compliant cover.",
     action_due_date: "2026-05-14",
     status: "open",
-    aria_generated: false,
+    cara_generated: false,
     created_by: "staff_darren",
     created_at: "2026-04-12T11:00:00Z",
     updated_at: "2026-04-12T11:00:00Z",
@@ -1254,7 +1254,7 @@ intelligenceStore.riChallengeLogs = [
     action_required: "Complete and file formal PIR by 22 April. Review medication administration training with the staff member involved.",
     action_due_date: "2026-04-22",
     status: "responded",
-    aria_generated: false,
+    cara_generated: false,
     created_by: "staff_darren",
     created_at: "2026-04-15T09:00:00Z",
     updated_at: "2026-04-15T10:00:00Z",
@@ -1275,7 +1275,7 @@ intelligenceStore.riAlerts = [
     is_resolved: false,
     auto_generated: true,
     linked_challenge_id: "ric_001",
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-14T08:00:00Z",
   },
   {
@@ -1289,7 +1289,7 @@ intelligenceStore.riAlerts = [
     is_resolved: false,
     auto_generated: true,
     linked_challenge_id: "ric_003",
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-12T08:00:00Z",
   },
   {
@@ -1303,7 +1303,7 @@ intelligenceStore.riAlerts = [
     is_resolved: false,
     auto_generated: true,
     linked_challenge_id: "ric_002",
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-13T08:00:00Z",
   },
   {
@@ -1316,7 +1316,7 @@ intelligenceStore.riAlerts = [
     data_evidence: { restraint_count: 3, period_days: 30, de_escalation_training_current: false },
     is_resolved: false,
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-11T08:00:00Z",
   },
   // ── Historically resolved alerts (evidence for Reg 45) ───────────────────
@@ -1332,7 +1332,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_ryan",
     resolution_note: "All three staff completed accredited first aid renewal training on 20 March 2026. Certificates uploaded to compliance records.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-03-01T08:00:00Z",
   },
   {
@@ -1347,7 +1347,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_darren",
     resolution_note: "All four overdue supervisions completed by 10 March 2026. Rota adjusted to protect supervision time.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-02-28T08:00:00Z",
   },
   // ── Additional alerts for richer dataset ───────────────────────────────────
@@ -1361,7 +1361,7 @@ intelligenceStore.riAlerts = [
     data_evidence: { scheduled_date: "2026-04-18", days_overdue: 12, last_drill: "2026-03-15" },
     is_resolved: false,
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-30T07:00:00Z",
   },
   {
@@ -1375,7 +1375,7 @@ intelligenceStore.riAlerts = [
     is_resolved: false,
     auto_generated: true,
     linked_challenge_id: "ric_002",
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-28T08:00:00Z",
   },
   {
@@ -1388,7 +1388,7 @@ intelligenceStore.riAlerts = [
     data_evidence: { unchecked_entries: 7, period_days: 14, affected_staff: ["staff_anna", "staff_ryan", "staff_lackson"] },
     is_resolved: false,
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-25T09:00:00Z",
   },
   {
@@ -1401,7 +1401,7 @@ intelligenceStore.riAlerts = [
     data_evidence: { incidents: 5, period_days: 10, physical: 1, trend: "escalating" },
     is_resolved: false,
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-27T14:00:00Z",
   },
   // ── More resolved alerts for history ────────────────────────────────────────
@@ -1417,7 +1417,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_darren",
     resolution_note: "Both DBS renewal applications submitted 25 March. Confirmation received 28 March. Certificates uploaded to HR records.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-03-15T08:00:00Z",
   },
   {
@@ -1432,7 +1432,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_chervelle",
     resolution_note: "All key work sessions caught up by 20 February. Contingency key work allocation process agreed in team meeting.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-02-10T08:00:00Z",
   },
   {
@@ -1447,7 +1447,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_darren",
     resolution_note: "CAMHS referral accepted 1 April. Initial consultation 3 April. Sleep hygiene plan implemented with sensory support. Night waking reduced to 1–2 per week by 5 April.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-03-25T08:00:00Z",
   },
   {
@@ -1462,7 +1462,7 @@ intelligenceStore.riAlerts = [
     resolved_by: "staff_darren",
     resolution_note: "Handover template updated with mandatory sections. Team briefed in weekly meeting. Quality of subsequent handovers markedly improved.",
     auto_generated: true,
-    created_by: "aria",
+    created_by: "cara",
     created_at: "2026-04-01T08:00:00Z",
   },
 ];
@@ -1535,7 +1535,7 @@ intelligenceStore.reg44Visits = [
     ri_review_date: "2026-02-03T09:00:00Z",
     ri_review_by: "staff_ri",
     ri_comments: "Satisfactory first visit of the year. Actions completed promptly. Reg 45 period 1 baseline looks positive.",
-    aria_summary: "Visit 1 (Jan 2026) found the home performing satisfactorily. Two care plan updates were identified and completed within 5 working days. Safeguarding arrangements and staff practice received positive observations. No outstanding actions.",
+    cara_summary: "Visit 1 (Jan 2026) found the home performing satisfactorily. Two care plan updates were identified and completed within 5 working days. Safeguarding arrangements and staff practice received positive observations. No outstanding actions.",
     created_at: "2026-01-22T14:00:00Z",
     created_by: "staff_darren",
     updated_at: "2026-02-03T09:00:00Z",
@@ -1602,7 +1602,7 @@ intelligenceStore.reg44Visits = [
     ri_review_date: "2026-03-18T09:00:00Z",
     ri_review_by: "staff_ri",
     ri_comments: "Concerns noted. Actions are now all completed and verified. Supervision scheduling and training monitoring must remain a priority for Period 2 Reg 45. I will carry these themes into the next visit.",
-    aria_summary: "Visit 2 (Feb 2026) identified two compliance concerns: overdue supervision for 2 staff (5 weeks), and expired first aid training for 1 rostered staff member. Both were resolved by 10 March. YP voice practice noted as a positive strength.",
+    cara_summary: "Visit 2 (Feb 2026) identified two compliance concerns: overdue supervision for 2 staff (5 weeks), and expired first aid training for 1 rostered staff member. Both were resolved by 10 March. YP voice practice noted as a positive strength.",
     created_at: "2026-02-25T15:00:00Z",
     created_by: "staff_darren",
     updated_at: "2026-03-18T09:00:00Z",
@@ -1683,7 +1683,7 @@ intelligenceStore.reg44Visits = [
     ri_review_date: null,
     ri_review_by: null,
     ri_comments: null,
-    aria_summary: "Visit 3 (Mar 2026) identified two ongoing concerns: contextual safeguarding around Alex W (3 MFC episodes, strategy meeting pending) and incomplete PI de-brief records following 3 physical interventions. Environment recommendation (fire exit) was resolved quickly. Daily log quality noted as an improving strength. Two actions remain open.",
+    cara_summary: "Visit 3 (Mar 2026) identified two ongoing concerns: contextual safeguarding around Alex W (3 MFC episodes, strategy meeting pending) and incomplete PI de-brief records following 3 physical interventions. Environment recommendation (fire exit) was resolved quickly. Daily log quality noted as an improving strength. Two actions remain open.",
     created_at: "2026-04-01T09:00:00Z",
     created_by: "staff_darren",
     updated_at: "2026-04-02T14:30:00Z",
@@ -1707,7 +1707,7 @@ intelligenceStore.reg44Visits = [
     ri_review_date: null,
     ri_review_by: null,
     ri_comments: null,
-    aria_summary: null,
+    cara_summary: null,
     created_at: "2026-04-14T09:00:00Z",
     created_by: "staff_darren",
     updated_at: "2026-04-14T09:00:00Z",
@@ -1837,7 +1837,7 @@ intelligenceStore.carePlans = [
     rm_sign_off_by: "staff_darren",
     strengths_summary: "Alex is articulate, perceptive, and has strong rapport with Edward. When regulated, Alex engages well with support and shows insight into his own behaviour. School attendance is improving.",
     concerns_summary: "Three missing from care episodes in 90 days. Three physical interventions triggered by distress. Self-harm risk elevated. CAMHS not yet engaged. Contextual safeguarding concerns around criminal exploitation.",
-    aria_overview: "Alex's care plan has 5 active goals across safety, emotional wellbeing, education, health, and identity. Two goals are currently flagged as 'attention needed' (safety/MFC and self-harm). Education is on track with improving attendance. The most urgent priorities are: completing the contextual safeguarding assessment, securing CAMHS engagement, and reducing PI frequency through consistent co-regulation practice.",
+    cara_overview: "Alex's care plan has 5 active goals across safety, emotional wellbeing, education, health, and identity. Two goals are currently flagged as 'attention needed' (safety/MFC and self-harm). Education is on track with improving attendance. The most urgent priorities are: completing the contextual safeguarding assessment, securing CAMHS engagement, and reducing PI frequency through consistent co-regulation practice.",
     created_at: dFN(-180) + "T09:00:00Z",
     updated_at: dFN(-7) + "T10:00:00Z",
     created_by: "staff_darren",
@@ -1943,7 +1943,7 @@ intelligenceStore.carePlans = [
     rm_sign_off_by: "staff_darren",
     strengths_summary: "Jordan is engaging positively with placement. Strong school attendance, good relationships with staff and peers, and is using appropriate processes (complaints) to express his views. Family contact is consistent.",
     concerns_summary: "Jordan can become frustrated when decisions are made without his input. One partially upheld complaint in April 2026. Requires consistent co-regulation support and active involvement in decisions.",
-    aria_overview: "Jordan's care plan has 4 goals across education, family contact, emotional wellbeing, and health. All goals are currently on track or in progress. Education attendance is strong at 91%. The complaint raised in April was handled correctly and resolved. Next LAC review in 5 months.",
+    cara_overview: "Jordan's care plan has 4 goals across education, family contact, emotional wellbeing, and health. All goals are currently on track or in progress. Education attendance is strong at 91%. The complaint raised in April was handled correctly and resolved. Next LAC review in 5 months.",
     created_at: dFN(-160) + "T10:00:00Z",
     updated_at: dFN(-7) + "T10:00:00Z",
     created_by: "staff_darren",
@@ -2004,7 +2004,7 @@ intelligenceStore.carePlans = [
         id: "cpg_012",
         domain: "education",
         title: "Reintegrate into mainstream school or appropriate provision",
-        description: "Casey is currently not in any school placement following move to Oak House. She was excluded from her previous school. A new placement at Allestree Woodlands has been identified but not yet started.",
+        description: "Casey is currently not in any school placement following move to Chamberlain House. She was excluded from her previous school. A new placement at Allestree Woodlands has been identified but not yet started.",
         desired_outcome: "Casey starts at Allestree Woodlands by May 2026. Casey has a positive transition with a named mentor. PEP meeting held within 20 days of joining.",
         actions: [
           "Confirm start date at Allestree Woodlands with LA",
@@ -2070,7 +2070,7 @@ intelligenceStore.carePlans = [
     rm_sign_off_by: "staff_darren",
     strengths_summary: "Casey is engaging well with staff, particularly Chervelle. She is beginning to open up about her feelings and identity. Medication compliance is improving. CAMHS engagement secured for June.",
     concerns_summary: "Sleep disturbances remain frequent. School placement has only just been confirmed. CAMHS not yet started. Casey is new to placement — still building trust and settling.",
-    aria_overview: "Casey's care plan has 5 goals across health, education, emotional wellbeing, and identity. One goal is flagged as 'attention needed' (school placement start). All others are in progress. Key priorities: ensuring school start in May goes smoothly, improving sleep quality, and maintaining CAMHS engagement for June assessment.",
+    cara_overview: "Casey's care plan has 5 goals across health, education, emotional wellbeing, and identity. One goal is flagged as 'attention needed' (school placement start). All others are in progress. Key priorities: ensuring school start in May goes smoothly, improving sleep quality, and maintaining CAMHS engagement for June assessment.",
     created_at: dFN(-108) + "T09:00:00Z",
     updated_at: dFN(-5) + "T09:00:00Z",
     created_by: "staff_darren",
@@ -2125,7 +2125,7 @@ intelligenceStore.complaints = [
     ],
     includes_safeguarding_element: false,
     linked_incident_id: "inc_003",
-    aria_summary: "CMP-2026-001 (Jordan, staff conduct) was partially upheld. Investigation confirmed inappropriate tone by staff. Response sent within statutory 10 working days. Lessons learned and shared with team. Chore rota reviewed. No outstanding actions.",
+    cara_summary: "CMP-2026-001 (Jordan, staff conduct) was partially upheld. Investigation confirmed inappropriate tone by staff. Response sent within statutory 10 working days. Lessons learned and shared with team. Chore rota reviewed. No outstanding actions.",
     created_at: dFN(-14) + "T16:00:00Z",
     updated_at: dFN(-6) + "T14:30:00Z",
     created_by: "staff_darren",
@@ -2164,7 +2164,7 @@ intelligenceStore.complaints = [
     ],
     includes_safeguarding_element: true,
     linked_incident_id: "inc_001",
-    aria_summary: null,
+    cara_summary: null,
     created_at: dFN(-7) + "T11:30:00Z",
     updated_at: dFN(-5) + "T09:00:00Z",
     created_by: "staff_darren",
@@ -2205,7 +2205,7 @@ intelligenceStore.complaints = [
     ],
     includes_safeguarding_element: false,
     linked_incident_id: null,
-    aria_summary: "CMP-2026-003 (Casey, environment) was upheld. Faulty bedroom thermostat identified and repaired within 48 hours of complaint. Response sent within statutory timeframe. Maintenance escalation process improved. Closed — no outstanding actions.",
+    cara_summary: "CMP-2026-003 (Casey, environment) was upheld. Faulty bedroom thermostat identified and repaired within 48 hours of complaint. Response sent within statutory timeframe. Maintenance escalation process improved. Closed — no outstanding actions.",
     created_at: dFN(-45) + "T14:00:00Z",
     updated_at: dFN(-38) + "T15:00:00Z",
     created_by: "staff_ryan",
@@ -2253,7 +2253,7 @@ intelligenceStore.piDebriefs = [
     rm_sign_off_date: dFN(-32),
     rm_sign_off_by: "staff_darren",
     rm_comments: "PI was proportionate, technique correct, and debriefs completed within 48 hours. Learning has been documented and preventative measures added to care plan. Good practice in difficult circumstances.",
-    aria_analysis: "This PI (INC-2026-0035) was a low-risk, short-duration intervention triggered by distressing family contact. Both YP and staff debriefs were completed promptly within 48 hours and all regulatory requirements were met. The trigger has been identified and preventative measures implemented. This incident does not indicate a pattern of concerning behaviour on the part of staff.",
+    cara_analysis: "This PI (INC-2026-0035) was a low-risk, short-duration intervention triggered by distressing family contact. Both YP and staff debriefs were completed promptly within 48 hours and all regulatory requirements were met. The trigger has been identified and preventative measures implemented. This incident does not indicate a pattern of concerning behaviour on the part of staff.",
     created_at: dFN(-34) + "T11:00:00Z",
     updated_at: dFN(-32) + "T10:00:00Z",
     created_by: "staff_darren",
@@ -2296,7 +2296,7 @@ intelligenceStore.piDebriefs = [
     rm_sign_off_date: null,
     rm_sign_off_by: null,
     rm_comments: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-21) + "T09:00:00Z",
     updated_at: dFN(-21) + "T09:00:00Z",
     created_by: "staff_chervelle",
@@ -2349,7 +2349,7 @@ intelligenceStore.piDebriefs = [
     rm_sign_off_date: null,
     rm_sign_off_by: null,
     rm_comments: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-9) + "T08:30:00Z",
     updated_at: dFN(-9) + "T08:30:00Z",
     created_by: "staff_ryan",
@@ -2480,12 +2480,12 @@ intelligenceStore.contactArrangements = [
     frequency: "Monthly",
     frequency_detail: "First Saturday of each month, 13:00–16:00",
     supervision_level: "supervised",
-    location: "Oak House — family room",
+    location: "Chamberlain House — family room",
     court_ordered: false,
     court_order_reference: null,
     la_requirement: true,
     status: "under_review",
-    suspension_reason: "Pattern of post-contact distress — contact arrangement under review by social worker. ARIA pattern alert raised 18/04/2026.",
+    suspension_reason: "Pattern of post-contact distress — contact arrangement under review by social worker. Cara pattern alert raised 18/04/2026.",
     suspension_date: null,
     review_date: dFN(5),
     notes: "Key worker pre-contact check-in mandatory. 45-minute post-contact debrief with key worker. Do not schedule activities on contact day.",
@@ -2597,7 +2597,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-28) + "T16:30:00Z",
     updated_at: dFN(-27) + "T09:10:00Z",
     created_by: "staff_anna",
@@ -2634,7 +2634,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: "Contact log for Alex and Sharon (14 April 2026) indicates a significantly improved contact session compared to the previous fortnight. Preparation time with relational key worker Lackson appears to be a protective factor — Alex arrived in a regulated state and the session unfolded naturally. This supports the hypothesis in the care plan that side-by-side activity before high-stakes interactions reduces Alex's anxiety threshold. Recommend: formalise Lackson-led pre-contact preparation in the contact plan. Review Sharon's previous pattern of placement-return comments — one session without this is encouraging but not yet a trend.",
+    cara_analysis: "Contact log for Alex and Sharon (14 April 2026) indicates a significantly improved contact session compared to the previous fortnight. Preparation time with relational key worker Lackson appears to be a protective factor — Alex arrived in a regulated state and the session unfolded naturally. This supports the hypothesis in the care plan that side-by-side activity before high-stakes interactions reduces Alex's anxiety threshold. Recommend: formalise Lackson-led pre-contact preparation in the contact plan. Review Sharon's previous pattern of placement-return comments — one session without this is encouraging but not yet a trend.",
     created_at: dFN(-14) + "T16:45:00Z",
     updated_at: dFN(-13) + "T10:00:00Z",
     created_by: "staff_lackson",
@@ -2672,7 +2672,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-7) + "T18:40:00Z",
     updated_at: dFN(-7) + "T18:40:00Z",
     created_by: "staff_anna",
@@ -2689,7 +2689,7 @@ intelligenceStore.contactLogs = [
     start_time: "13:00",
     end_time: "16:00",
     duration_minutes: 180,
-    location: "Oak House — family room",
+    location: "Chamberlain House — family room",
     supervision_level: "supervised",
     supervised_by: "staff_ryan",
     outcome: "mixed",
@@ -2710,7 +2710,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: true,
     gifts_detail: "Clothing (hoodie, jeans) and perfume set — all cleared by staff and checked for appropriateness.",
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-42) + "T16:30:00Z",
     updated_at: dFN(-41) + "T09:15:00Z",
     created_by: "staff_ryan",
@@ -2726,7 +2726,7 @@ intelligenceStore.contactLogs = [
     start_time: "13:00",
     end_time: "16:00",
     duration_minutes: 180,
-    location: "Oak House — family room",
+    location: "Chamberlain House — family room",
     supervision_level: "supervised",
     supervised_by: "staff_jasmine",
     outcome: "difficult",
@@ -2736,18 +2736,18 @@ intelligenceStore.contactLogs = [
     narrative: "Casey was reluctant to attend contact and required 20 minutes of encouragement from Jasmine before agreeing to go. Contact initially awkward — Casey did not engage with Patricia's attempts at conversation. Patricia brought a takeaway which Casey appreciated and the middle hour improved. Towards the end of the session Patricia began discussing a family holiday they had taken three years ago and became upset. Casey shut down and refused to speak for the final 30 minutes. Patricia left distressed. Casey required a 35-minute co-regulation session and went to her room. She refused dinner.",
     yp_voice: "The following morning Casey said to Jasmine 'I feel like seeing her makes everything worse. But I'd feel bad if I stopped seeing her.'",
     concerns_identified: true,
-    concerns_detail: "Second consecutive contact session ending in significant post-contact distress for Casey. Pattern emerging. ARIA pattern alert to be raised. Contact arrangement review needed.",
+    concerns_detail: "Second consecutive contact session ending in significant post-contact distress for Casey. Pattern emerging. Cara pattern alert to be raised. Contact arrangement review needed.",
     safeguarding_concern: false,
     safeguarding_detail: null,
     follow_up_required: true,
-    follow_up_detail: "RM to review contact arrangement. Social worker notified. ARIA analysis requested. Casey to have key work session on contact boundaries and her choices.",
+    follow_up_detail: "RM to review contact arrangement. Social worker notified. Cara analysis requested. Casey to have key work session on contact boundaries and her choices.",
     cancelled_reason: null,
     social_worker_notified: true,
     social_worker_notified_at: dFN(-20) + "T09:00:00Z",
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: "This is the second consecutive contact session with Patricia ending in significant distress for Casey. The pattern includes Casey arriving reluctant, the session improving mid-contact, then deteriorating when Patricia introduces emotionally charged memories or expresses grief about the placement. Casey's verbatim response — feeling guilty about stopping contact — indicates she is managing her mother's emotional needs in contact rather than having her own needs met. This is a recognised dynamic in contact sessions for looked-after children and warrants an urgent review of the contact arrangement. The current format is not in Casey's best interests. Recommendation: contact plan review with LA, pre-contact therapeutic preparation for both Casey and Patricia, shorter contact sessions, and clear guidance for Patricia on what is and is not appropriate to discuss.",
+    cara_analysis: "This is the second consecutive contact session with Patricia ending in significant distress for Casey. The pattern includes Casey arriving reluctant, the session improving mid-contact, then deteriorating when Patricia introduces emotionally charged memories or expresses grief about the placement. Casey's verbatim response — feeling guilty about stopping contact — indicates she is managing her mother's emotional needs in contact rather than having her own needs met. This is a recognised dynamic in contact sessions for looked-after children and warrants an urgent review of the contact arrangement. The current format is not in Casey's best interests. Recommendation: contact plan review with LA, pre-contact therapeutic preparation for both Casey and Patricia, shorter contact sessions, and clear guidance for Patricia on what is and is not appropriate to discuss.",
     created_at: dFN(-21) + "T16:30:00Z",
     updated_at: dFN(-20) + "T11:00:00Z",
     created_by: "staff_jasmine",
@@ -2763,7 +2763,7 @@ intelligenceStore.contactLogs = [
     start_time: null,
     end_time: null,
     duration_minutes: null,
-    location: "Oak House — family room",
+    location: "Chamberlain House — family room",
     supervision_level: "supervised",
     supervised_by: null,
     outcome: "cancelled_by_yp",
@@ -2784,7 +2784,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-5) + "T12:30:00Z",
     updated_at: dFN(-5) + "T12:30:00Z",
     created_by: "staff_darren",
@@ -2822,7 +2822,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-10) + "T19:40:00Z",
     updated_at: dFN(-10) + "T19:40:00Z",
     created_by: "staff_edward",
@@ -2859,7 +2859,7 @@ intelligenceStore.contactLogs = [
     photos_shared: false,
     gifts_received: false,
     gifts_detail: null,
-    aria_analysis: null,
+    cara_analysis: null,
     created_at: dFN(-3) + "T17:30:00Z",
     updated_at: dFN(-3) + "T17:30:00Z",
     created_by: "staff_edward",
@@ -2880,7 +2880,7 @@ intelligenceStore.trainingNeeds = [
     affected_roles: ["residential_care_worker", "senior_residential_care_worker"],
     status: "identified",
     linked_ri_alert_id: "ria_004",
-    aria_evidence: "3 physical interventions in 30 days (INC-2026-0038, 0041, 0043). ARIA analysis suggests earlier verbal de-escalation may have reduced risk of physical intervention in 2 of 3 incidents.",
+    cara_evidence: "3 physical interventions in 30 days (INC-2026-0038, 0041, 0043). Cara analysis suggests earlier verbal de-escalation may have reduced risk of physical intervention in 2 of 3 incidents.",
     deadline: "2026-05-10",
     created_by: "staff_darren",
     created_at: "2026-04-11T09:00:00Z",
@@ -2898,7 +2898,7 @@ intelligenceStore.trainingNeeds = [
     status: "learning_studio_sent",
     linked_ri_challenge_id: "ric_001",
     linked_ri_alert_id: "ria_001",
-    aria_evidence: "Multiple MFC episodes with contextual risk factors. Alex disclosing contact with unknown older males. MASH escalation pending. ARIA identified critical safeguarding awareness gap.",
+    cara_evidence: "Multiple MFC episodes with contextual risk factors. Alex disclosing contact with unknown older males. MASH escalation pending. Cara identified critical safeguarding awareness gap.",
     deadline: "2026-04-28",
     created_by: "staff_darren",
     created_at: "2026-04-14T10:30:00Z",
@@ -2915,7 +2915,7 @@ intelligenceStore.trainingNeeds = [
     affected_staff: ["staff_anna", "staff_ryan"],
     affected_roles: ["residential_care_worker"],
     status: "identified",
-    aria_evidence: "Casey is prescribed Fluoxetine for low mood and has had one medication refusal incident. Staff supervision notes indicate anxiety about responding to emotional crises. ARIA recommends MHFA training as a priority.",
+    cara_evidence: "Casey is prescribed Fluoxetine for low mood and has had one medication refusal incident. Staff supervision notes indicate anxiety about responding to emotional crises. Cara recommends MHFA training as a priority.",
     deadline: "2026-05-20",
     created_by: "staff_darren",
     created_at: "2026-04-10T14:00:00Z",
@@ -2934,7 +2934,7 @@ intelligenceStore.trainingNeeds = [
     status: "identified",
     linked_ri_challenge_id: "ric_004",
     linked_incident_id: "inc_002",
-    aria_evidence: "Medication error (Fluoxetine late administration) on 13 April 2026. Staff involved expressed uncertainty about error reporting process in debrief. Policy review needed.",
+    cara_evidence: "Medication error (Fluoxetine late administration) on 13 April 2026. Staff involved expressed uncertainty about error reporting process in debrief. Policy review needed.",
     deadline: "2026-05-15",
     created_by: "staff_darren",
     created_at: "2026-04-15T11:00:00Z",
@@ -3242,75 +3242,75 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Assessments ───────────────────────────────────────────────────────
-  ariaAssessments: {
-    findAll: (homeId: string): AriaAssessment[] =>
-      intelligenceStore.ariaAssessments
+  // ── Cara Assessments ───────────────────────────────────────────────────────
+  caraAssessments: {
+    findAll: (homeId: string): CaraAssessment[] =>
+      intelligenceStore.caraAssessments
         .filter((a) => a.home_id === homeId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findByChild: (childId: string): AriaAssessment[] =>
-      intelligenceStore.ariaAssessments
+    findByChild: (childId: string): CaraAssessment[] =>
+      intelligenceStore.caraAssessments
         .filter((a) => a.child_id === childId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findById: (id: string): AriaAssessment | null =>
-      intelligenceStore.ariaAssessments.find((a) => a.id === id) ?? null,
+    findById: (id: string): CaraAssessment | null =>
+      intelligenceStore.caraAssessments.find((a) => a.id === id) ?? null,
 
-    create: (data: Omit<AriaAssessment, "id" | "created_at">): AriaAssessment => {
-      const record: AriaAssessment = {
+    create: (data: Omit<CaraAssessment, "id" | "created_at">): CaraAssessment => {
+      const record: CaraAssessment = {
         ...data,
         id: generateId("aa"),
         created_at: new Date().toISOString(),
       };
-      intelligenceStore.ariaAssessments.push(record);
+      intelligenceStore.caraAssessments.push(record);
       return record;
     },
 
-    patch: (id: string, data: Partial<AriaAssessment>): AriaAssessment | null => {
-      const idx = intelligenceStore.ariaAssessments.findIndex((a) => a.id === id);
+    patch: (id: string, data: Partial<CaraAssessment>): CaraAssessment | null => {
+      const idx = intelligenceStore.caraAssessments.findIndex((a) => a.id === id);
       if (idx === -1) return null;
-      intelligenceStore.ariaAssessments[idx] = { ...intelligenceStore.ariaAssessments[idx], ...data };
-      return intelligenceStore.ariaAssessments[idx];
+      intelligenceStore.caraAssessments[idx] = { ...intelligenceStore.caraAssessments[idx], ...data };
+      return intelligenceStore.caraAssessments[idx];
     },
   },
 
-  // ── ARIA Oversight ─────────────────────────────────────────────────────────
-  ariaOversight: {
-    findAll: (homeId: string): AriaOversight[] =>
-      intelligenceStore.ariaOversight
+  // ── Cara Oversight ─────────────────────────────────────────────────────────
+  caraOversight: {
+    findAll: (homeId: string): CaraOversight[] =>
+      intelligenceStore.caraOversight
         .filter((o) => o.home_id === homeId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findByChild: (childId: string): AriaOversight[] =>
-      intelligenceStore.ariaOversight
+    findByChild: (childId: string): CaraOversight[] =>
+      intelligenceStore.caraOversight
         .filter((o) => o.child_id === childId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findById: (id: string): AriaOversight | null =>
-      intelligenceStore.ariaOversight.find((o) => o.id === id) ?? null,
+    findById: (id: string): CaraOversight | null =>
+      intelligenceStore.caraOversight.find((o) => o.id === id) ?? null,
 
-    create: (data: Omit<AriaOversight, "id" | "created_at" | "updated_at">): AriaOversight => {
+    create: (data: Omit<CaraOversight, "id" | "created_at" | "updated_at">): CaraOversight => {
       const now = new Date().toISOString();
-      const record: AriaOversight = {
+      const record: CaraOversight = {
         ...data,
         id: generateId("ao"),
         created_at: now,
         updated_at: now,
       };
-      intelligenceStore.ariaOversight.push(record);
+      intelligenceStore.caraOversight.push(record);
       return record;
     },
 
-    patch: (id: string, data: Partial<AriaOversight>): AriaOversight | null => {
-      const idx = intelligenceStore.ariaOversight.findIndex((o) => o.id === id);
+    patch: (id: string, data: Partial<CaraOversight>): CaraOversight | null => {
+      const idx = intelligenceStore.caraOversight.findIndex((o) => o.id === id);
       if (idx === -1) return null;
-      intelligenceStore.ariaOversight[idx] = {
-        ...intelligenceStore.ariaOversight[idx],
+      intelligenceStore.caraOversight[idx] = {
+        ...intelligenceStore.caraOversight[idx],
         ...data,
         updated_at: new Date().toISOString(),
       };
-      return intelligenceStore.ariaOversight[idx];
+      return intelligenceStore.caraOversight[idx];
     },
   },
 
@@ -3413,102 +3413,102 @@ export const intelligenceDb = {
     },
   },
 
-  // ── ARIA Audit Trail ───────────────────────────────────────────────────────
-  ariaAuditTrail: {
-    findAll: (homeId: string): AriaAuditEntry[] =>
-      intelligenceStore.ariaAuditTrail
+  // ── Cara Audit Trail ───────────────────────────────────────────────────────
+  caraAuditTrail: {
+    findAll: (homeId: string): CaraAuditEntry[] =>
+      intelligenceStore.caraAuditTrail
         .filter((e) => e.home_id === homeId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findByChild: (childId: string): AriaAuditEntry[] =>
-      intelligenceStore.ariaAuditTrail
+    findByChild: (childId: string): CaraAuditEntry[] =>
+      intelligenceStore.caraAuditTrail
         .filter((e) => e.child_id === childId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findById: (id: string): AriaAuditEntry | null =>
-      intelligenceStore.ariaAuditTrail.find((e) => e.id === id) ?? null,
+    findById: (id: string): CaraAuditEntry | null =>
+      intelligenceStore.caraAuditTrail.find((e) => e.id === id) ?? null,
 
-    create: (data: Omit<AriaAuditEntry, "id" | "created_at">): AriaAuditEntry => {
-      const record: AriaAuditEntry = {
+    create: (data: Omit<CaraAuditEntry, "id" | "created_at">): CaraAuditEntry => {
+      const record: CaraAuditEntry = {
         ...data,
         id: generateId("aat"),
         created_at: new Date().toISOString(),
       };
-      intelligenceStore.ariaAuditTrail.push(record);
+      intelligenceStore.caraAuditTrail.push(record);
       return record;
     },
 
-    patch: (id: string, data: Partial<AriaAuditEntry>): AriaAuditEntry | null => {
-      const idx = intelligenceStore.ariaAuditTrail.findIndex((e) => e.id === id);
+    patch: (id: string, data: Partial<CaraAuditEntry>): CaraAuditEntry | null => {
+      const idx = intelligenceStore.caraAuditTrail.findIndex((e) => e.id === id);
       if (idx === -1) return null;
-      intelligenceStore.ariaAuditTrail[idx] = { ...intelligenceStore.ariaAuditTrail[idx], ...data };
-      return intelligenceStore.ariaAuditTrail[idx];
+      intelligenceStore.caraAuditTrail[idx] = { ...intelligenceStore.caraAuditTrail[idx], ...data };
+      return intelligenceStore.caraAuditTrail[idx];
     },
   },
 
-  // ── ARIA Recommendations ───────────────────────────────────────────────────
-  ariaRecommendations: {
-    findAll: (homeId: string): AriaRecommendation[] =>
-      intelligenceStore.ariaRecommendations
+  // ── Cara Recommendations ───────────────────────────────────────────────────
+  caraRecommendations: {
+    findAll: (homeId: string): CaraRecommendation[] =>
+      intelligenceStore.caraRecommendations
         .filter((r) => r.home_id === homeId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findByChild: (childId: string): AriaRecommendation[] =>
-      intelligenceStore.ariaRecommendations
+    findByChild: (childId: string): CaraRecommendation[] =>
+      intelligenceStore.caraRecommendations
         .filter((r) => r.child_id === childId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findById: (id: string): AriaRecommendation | null =>
-      intelligenceStore.ariaRecommendations.find((r) => r.id === id) ?? null,
+    findById: (id: string): CaraRecommendation | null =>
+      intelligenceStore.caraRecommendations.find((r) => r.id === id) ?? null,
 
-    create: (data: Omit<AriaRecommendation, "id" | "created_at">): AriaRecommendation => {
-      const record: AriaRecommendation = {
+    create: (data: Omit<CaraRecommendation, "id" | "created_at">): CaraRecommendation => {
+      const record: CaraRecommendation = {
         ...data,
         id: generateId("ar"),
         created_at: new Date().toISOString(),
       };
-      intelligenceStore.ariaRecommendations.push(record);
+      intelligenceStore.caraRecommendations.push(record);
       return record;
     },
 
-    patch: (id: string, data: Partial<AriaRecommendation>): AriaRecommendation | null => {
-      const idx = intelligenceStore.ariaRecommendations.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraRecommendation>): CaraRecommendation | null => {
+      const idx = intelligenceStore.caraRecommendations.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      intelligenceStore.ariaRecommendations[idx] = { ...intelligenceStore.ariaRecommendations[idx], ...data };
-      return intelligenceStore.ariaRecommendations[idx];
+      intelligenceStore.caraRecommendations[idx] = { ...intelligenceStore.caraRecommendations[idx], ...data };
+      return intelligenceStore.caraRecommendations[idx];
     },
   },
 
-  // ── ARIA Safeguarding Flags ────────────────────────────────────────────────
-  ariaSafeguardingFlags: {
-    findAll: (homeId: string): AriaSafeguardingFlag[] =>
-      intelligenceStore.ariaSafeguardingFlags
+  // ── Cara Safeguarding Flags ────────────────────────────────────────────────
+  caraSafeguardingFlags: {
+    findAll: (homeId: string): CaraSafeguardingFlag[] =>
+      intelligenceStore.caraSafeguardingFlags
         .filter((f) => f.home_id === homeId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findByChild: (childId: string): AriaSafeguardingFlag[] =>
-      intelligenceStore.ariaSafeguardingFlags
+    findByChild: (childId: string): CaraSafeguardingFlag[] =>
+      intelligenceStore.caraSafeguardingFlags
         .filter((f) => f.child_id === childId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at)),
 
-    findById: (id: string): AriaSafeguardingFlag | null =>
-      intelligenceStore.ariaSafeguardingFlags.find((f) => f.id === id) ?? null,
+    findById: (id: string): CaraSafeguardingFlag | null =>
+      intelligenceStore.caraSafeguardingFlags.find((f) => f.id === id) ?? null,
 
-    create: (data: Omit<AriaSafeguardingFlag, "id" | "created_at">): AriaSafeguardingFlag => {
-      const record: AriaSafeguardingFlag = {
+    create: (data: Omit<CaraSafeguardingFlag, "id" | "created_at">): CaraSafeguardingFlag => {
+      const record: CaraSafeguardingFlag = {
         ...data,
         id: generateId("asf"),
         created_at: new Date().toISOString(),
       };
-      intelligenceStore.ariaSafeguardingFlags.push(record);
+      intelligenceStore.caraSafeguardingFlags.push(record);
       return record;
     },
 
-    patch: (id: string, data: Partial<AriaSafeguardingFlag>): AriaSafeguardingFlag | null => {
-      const idx = intelligenceStore.ariaSafeguardingFlags.findIndex((f) => f.id === id);
+    patch: (id: string, data: Partial<CaraSafeguardingFlag>): CaraSafeguardingFlag | null => {
+      const idx = intelligenceStore.caraSafeguardingFlags.findIndex((f) => f.id === id);
       if (idx === -1) return null;
-      intelligenceStore.ariaSafeguardingFlags[idx] = { ...intelligenceStore.ariaSafeguardingFlags[idx], ...data };
-      return intelligenceStore.ariaSafeguardingFlags[idx];
+      intelligenceStore.caraSafeguardingFlags[idx] = { ...intelligenceStore.caraSafeguardingFlags[idx], ...data };
+      return intelligenceStore.caraSafeguardingFlags[idx];
     },
   },
 

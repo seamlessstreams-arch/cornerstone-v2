@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 // POST /api/v1/comms/messages/[id]/convert
 //
 // Capture-once governance: turn a message into a FORMAL record (validated/deduped
-// once on the Cornerstone event spine) or a task, then link it back to the source
+// once on the Cara event spine) or a task, then link it back to the source
 // message so the chat shows "recorded as …" — no hidden second record. Purely
 // additive: the message is never deleted and external notifications are never sent.
 //
@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 // every conversion is attributed and audited. Frozen (held) messages are blocked.
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const user = resolveCommsUser(req);
+  const user = await resolveCommsUser(req);
   const msg = db.commsMessages.findById(id);
   if (!msg || msg.is_deleted) return NextResponse.json({ error: "Message not found" }, { status: 404 });
   if (msg.investigation_hold) {

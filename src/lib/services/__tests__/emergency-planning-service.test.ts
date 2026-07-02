@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PLANNING SERVICE TESTS
+// CARA — EMERGENCY PLANNING SERVICE TESTS
 // Pure-function tests for emergency preparedness computation, alert
 // identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

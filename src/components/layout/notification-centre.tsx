@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFICATION CENTRE
+// CARA — NOTIFICATION CENTRE
 // Dropdown panel from the Bell icon showing live alerts, overdue tasks,
 // incidents needing oversight, medication alerts, and compliance warnings.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -42,7 +42,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   incidents:    "bg-orange-50 border-orange-200",
   tasks:        "bg-blue-50 border-blue-200",
   compliance:   "bg-amber-50 border-amber-200",
-  staffing:     "bg-[var(--cs-aria-gold-bg)] border-[var(--cs-aria-gold-soft)]",
+  staffing:     "bg-[var(--cs-cara-gold-bg)] border-[var(--cs-cara-gold-soft)]",
   environment:  "bg-[var(--cs-surface)] border-[var(--cs-border)]",
   intelligence: "bg-indigo-50 border-indigo-200",
 };
@@ -277,7 +277,7 @@ export function NotificationCentre() {
         type: "success",
         icon: CheckCircle2,
         title: "All clear",
-        description: "No outstanding alerts. Oak House is running smoothly.",
+        description: "No outstanding alerts. Chamberlain House is running smoothly.",
         href: "/dashboard",
         category: "intelligence",
       });

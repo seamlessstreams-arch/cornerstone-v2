@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION ASSESSMENT CARD
+// CARA — ADMISSION ASSESSMENT CARD
 // Live data from usePlacementStability() — home metrics, children.
 // CHR 2015 Reg 36. SCCIF: Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 import { usePlacementStability } from "@/hooks/use-placement-stability";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function AdmissionAssessmentCard() {
@@ -67,15 +67,15 @@ export function AdmissionAssessmentCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", home_metrics.average_stability_score >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", home_metrics.average_stability_score >= 70 ? "text-green-600" : "text-amber-600")}>{home_metrics.average_stability_score}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", home_metrics.average_stability_score >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{home_metrics.average_stability_score}%</p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", home_metrics.children_at_risk === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", home_metrics.children_at_risk === 0 ? "text-green-600" : "text-amber-600")}>{home_metrics.children_at_risk}</p>
+            <p className={cn("text-lg font-bold tabular-nums", home_metrics.children_at_risk === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{home_metrics.children_at_risk}</p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", criticalChildren === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", criticalChildren === 0 ? "text-green-600" : "text-red-600")}>{criticalChildren}</p>
+            <p className={cn("text-lg font-bold tabular-nums", criticalChildren === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{criticalChildren}</p>
             <p className="text-[10px] text-muted-foreground">Critical</p>
           </div>
         </div>
@@ -104,13 +104,13 @@ export function AdmissionAssessmentCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Placement Intelligence
+              Cara Placement Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

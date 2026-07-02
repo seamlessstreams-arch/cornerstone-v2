@@ -44,7 +44,7 @@ function makeInput(overrides: Partial<ManagerBriefingInput> = {}): ManagerBriefi
     children_attention: [],
     total_children: 4,
     total_staff: 12,
-    home_name: "Oak House",
+    home_name: "Chamberlain House",
     today: "2026-05-26",
     ...overrides,
   };
@@ -210,7 +210,7 @@ describe("Manager Briefing Intelligence Engine", () => {
     expect(result.priority_actions[0].regulatory_ref).toBeTruthy();
   });
 
-  it("generates ARIA insights for compliance warnings", () => {
+  it("generates Cara insights for compliance warnings", () => {
     const result = computeManagerBriefing(makeInput({
       domains: [
         makeDomain({ domain: "workforce", domain_label: "Workforce", compliance_rate: 60 }),
@@ -263,7 +263,7 @@ describe("Manager Briefing Intelligence Engine", () => {
     const result = computeManagerBriefing(makeInput());
 
     expect(result.generated_at).toBe("2026-05-26");
-    expect(result.home_name).toBe("Oak House");
+    expect(result.home_name).toBe("Chamberlain House");
   });
 
   it("multi-domain child flags generate holistic review action", () => {

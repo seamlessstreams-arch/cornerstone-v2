@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE ENGINE · TEST SUITE
+// CARA — PREMISES & SAFETY INTELLIGENCE ENGINE · TEST SUITE
 //
 // 60+ tests covering overview, building profiles, check type analysis,
-// maintenance analysis, vehicle profiles, alerts, ARIA insights, and
-// Oak House integration.
+// maintenance analysis, vehicle profiles, alerts, Cara insights, and
+// Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -647,9 +647,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: expired certifications", () => {
     const b = makeBuilding({ gas_cert_expiry: "2026-01-01" });
     const r = run({ buildings: [b] });
@@ -732,13 +732,13 @@ describe("ARIA insights", () => {
   });
 });
 
-// ── Oak House Integration ────────────────────────────────────────────────
+// ── Chamberlain House Integration ────────────────────────────────────────────────
 
-describe("Oak House integration scenario", () => {
-  it("processes a realistic Oak House premises dataset correctly", () => {
+describe("Chamberlain House integration scenario", () => {
+  it("processes a realistic Chamberlain House premises dataset correctly", () => {
     const oakHouse: BuildingInput = {
       id: "bld_001",
-      name: "Oak House — Main Building",
+      name: "Chamberlain House — Main Building",
       type: "residential",
       status: "operational",
       gas_cert_expiry: "2026-12-01",
@@ -815,7 +815,7 @@ describe("Oak House integration scenario", () => {
 
     // ── Building profile ──────────────────────────────────────────────
     const bp = r.building_profiles[0];
-    expect(bp.building_name).toBe("Oak House — Main Building");
+    expect(bp.building_name).toBe("Chamberlain House — Main Building");
     expect(bp.checks_overdue).toBe(1);
     expect(bp.checks_failed).toBe(1);
     expect(bp.risk_flags).toContain("1 overdue check(s)");
@@ -842,7 +842,7 @@ describe("Oak House integration scenario", () => {
     // Medium: urgent gate lock maintenance
     expect(r.alerts.some((a) => a.severity === "medium" && a.message.includes("gate lock"))).toBe(true);
 
-    // ── ARIA Insights ─────────────────────────────────────────────────
+    // ── Cara Insights ─────────────────────────────────────────────────
     // Fire safety compliant → positive
     expect(r.insights.some((i) => i.severity === "positive" && i.text.includes("Fire safety compliance confirmed"))).toBe(true);
 

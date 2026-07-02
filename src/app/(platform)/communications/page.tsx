@@ -61,7 +61,7 @@ const DEMO_DRAFTS = [
     content: "# Handover Summary — Day Shift, 12/05/2026\n\n## Young People Updates\n### Jayden\n**Mood:** Settled, engaged with activities...",
     status: "draft" as CommunicationStatus,
     child_id: null,
-    aria_generated: true,
+    cara_generated: true,
     created_by: "Sarah Mitchell",
     created_at: "2026-05-12T14:30:00Z",
     updated_at: "2026-05-12T14:30:00Z",
@@ -73,7 +73,7 @@ const DEMO_DRAFTS = [
     content: "# Professional Update: Amara Okafor\n**To:** David Chen (SW)\n\n## Placement Overview\nAmara continues to settle well...",
     status: "review" as CommunicationStatus,
     child_id: "c2",
-    aria_generated: true,
+    cara_generated: true,
     created_by: "James Wilson",
     created_at: "2026-05-10T09:15:00Z",
     updated_at: "2026-05-11T16:45:00Z",
@@ -85,7 +85,7 @@ const DEMO_DRAFTS = [
     content: "# Regulation 44 Independent Visit\n**Date:** 28 April 2026\n\n## Summary of Visit\nVisit conducted...",
     status: "approved" as CommunicationStatus,
     child_id: null,
-    aria_generated: false,
+    cara_generated: false,
     created_by: "Independent Visitor",
     created_at: "2026-04-28T17:00:00Z",
     updated_at: "2026-05-02T10:00:00Z",
@@ -97,7 +97,7 @@ const DEMO_DRAFTS = [
     content: "# Incident Notification\n\n## Incident Summary\nAt approximately 15:30 on 11 May...",
     status: "sent" as CommunicationStatus,
     child_id: "c3",
-    aria_generated: false,
+    cara_generated: false,
     created_by: "Sarah Mitchell",
     created_at: "2026-05-11T16:00:00Z",
     updated_at: "2026-05-11T17:15:00Z",
@@ -109,8 +109,8 @@ const DEMO_DRAFTS = [
     content: "# Night Shift Briefing — 12/05/2026\n\n## Risk Alerts\n- Tyler remains on enhanced monitoring...",
     status: "draft" as CommunicationStatus,
     child_id: null,
-    aria_generated: true,
-    created_by: "ARIA",
+    cara_generated: true,
+    created_by: "Cara",
     created_at: "2026-05-12T19:30:00Z",
     updated_at: "2026-05-12T19:30:00Z",
   },
@@ -118,10 +118,10 @@ const DEMO_DRAFTS = [
     id: "d6",
     communication_type: "management_summary" as CommunicationType,
     title: "Weekly Management Summary — W/C 5 May 2026",
-    content: "# Management Summary — Oak House\n**Period:** 5–11 May 2026\n\n## Occupancy\n4/5 places occupied...",
+    content: "# Management Summary — Chamberlain House\n**Period:** 5–11 May 2026\n\n## Occupancy\n4/5 places occupied...",
     status: "sent" as CommunicationStatus,
     child_id: null,
-    aria_generated: true,
+    cara_generated: true,
     created_by: "Sarah Mitchell",
     created_at: "2026-05-11T18:00:00Z",
     updated_at: "2026-05-11T19:30:00Z",
@@ -133,7 +133,7 @@ const DEMO_DRAFTS = [
     content: "# CLA Review Meeting Brief\n**Meeting:** 15 May 2026\n\n## Meeting Context\nAnnual review...",
     status: "review" as CommunicationStatus,
     child_id: "c4",
-    aria_generated: true,
+    cara_generated: true,
     created_by: "James Wilson",
     created_at: "2026-05-09T11:00:00Z",
     updated_at: "2026-05-10T14:30:00Z",
@@ -162,11 +162,11 @@ export default function CommunicationsPage() {
     drafts: DEMO_DRAFTS.filter((d) => d.status === "draft").length,
     inReview: DEMO_DRAFTS.filter((d) => d.status === "review").length,
     sent: DEMO_DRAFTS.filter((d) => d.status === "sent").length,
-    ariaGenerated: DEMO_DRAFTS.filter((d) => d.aria_generated).length,
+    caraGenerated: DEMO_DRAFTS.filter((d) => d.cara_generated).length,
   };
 
   return (
-    <PageShell title="Communications Centre" subtitle="Professional communication drafts with ARIA writing support">
+    <PageShell title="Communications Centre" subtitle="Professional communication drafts with Cara writing support">
       <div className="space-y-6">
         {/* Stats strip */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -174,7 +174,7 @@ export default function CommunicationsPage() {
           <StatCard label="In Progress" value={stats.drafts} icon={Edit3} color="text-gray-600 bg-gray-50" />
           <StatCard label="In Review" value={stats.inReview} icon={Eye} color="text-amber-600 bg-amber-50" />
           <StatCard label="Sent" value={stats.sent} icon={Send} color="text-emerald-600 bg-emerald-50" />
-          <StatCard label="ARIA-Generated" value={stats.ariaGenerated} icon={Sparkles} color="text-violet-600 bg-violet-50" />
+          <StatCard label="Cara-Generated" value={stats.caraGenerated} icon={Sparkles} color="text-violet-600 bg-violet-50" />
         </div>
 
         {/* Actions bar */}
@@ -205,7 +205,7 @@ export default function CommunicationsPage() {
           <Card>
             <CardContent className="p-5">
               <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-violet-500" /> ARIA Communication Templates
+                <Sparkles className="h-4 w-4 text-violet-500" /> Cara Communication Templates
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {(Object.entries(COMMUNICATION_TEMPLATES) as [CommunicationType, typeof COMMUNICATION_TEMPLATES[CommunicationType]][]).map(([key, tmpl]) => {
@@ -268,11 +268,11 @@ export default function CommunicationsPage() {
                           <span>By {draft.created_by}</span>
                           <span className="text-gray-300">|</span>
                           <span>{new Date(draft.created_at).toLocaleDateString("en-GB")}</span>
-                          {draft.aria_generated && (
+                          {draft.cara_generated && (
                             <>
                               <span className="text-gray-300">|</span>
                               <span className="flex items-center gap-1 text-violet-600">
-                                <Sparkles className="h-3 w-3" /> ARIA
+                                <Sparkles className="h-3 w-3" /> Cara
                               </span>
                             </>
                           )}
@@ -335,11 +335,11 @@ export default function CommunicationsPage() {
                     <span>Created by {selected.created_by}</span>
                     <span>|</span>
                     <span>{new Date(selected.created_at).toLocaleString("en-GB")}</span>
-                    {selected.aria_generated && (
+                    {selected.cara_generated && (
                       <>
                         <span>|</span>
                         <span className="flex items-center gap-1 text-violet-600">
-                          <Sparkles className="h-3 w-3" /> ARIA-generated draft
+                          <Sparkles className="h-3 w-3" /> Cara-generated draft
                         </span>
                       </>
                     )}

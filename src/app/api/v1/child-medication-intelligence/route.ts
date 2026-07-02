@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MEDICATION INTELLIGENCE API ROUTE
+// CARA — CHILD MEDICATION INTELLIGENCE API ROUTE
 // GET /api/v1/child-medication-intelligence?childId=yp_casey
 // Per-child engine analysing medication safety: adherence, witnessing,
 // timeliness, PRN usage, stock, errors.
@@ -8,7 +8,8 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { getStore } from "@/lib/db/store";
 import {
   computeChildMedication,
@@ -17,9 +18,14 @@ import {
   type MedErrorInput,
 } from "@/lib/engines/child-medication-intelligence-engine";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const childId = searchParams.get("childId");
+
+  const identity = await getRequestIdentity(request);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   if (!childId) {
     return NextResponse.json({ error: "childId is required" }, { status: 400 });
   }

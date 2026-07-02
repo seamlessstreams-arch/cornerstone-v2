@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DICTATION BUTTON
+// CARA — DICTATION BUTTON
 // Reusable voice-input component using the Web Speech API.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -108,6 +108,20 @@ export function DictationButton({
   // continuous "record everything" entry survives the browser's pause/timeout cut-offs.
   const wantListeningRef = useRef(false);
 
+  // The recognition handlers below are bound ONCE and live for the whole dictation
+  // (including every auto-restart after a pause). Calling the props directly would
+  // freeze them at the field value from when dictation started — so each finalised
+  // phrase would overwrite everything said before it. Keeping the latest callbacks
+  // in refs means every phrase is delivered to the CURRENT handler, which appends
+  // to the up-to-date text. This is what lets staff dictate paragraphs across pauses
+  // without losing anything.
+  const onTranscriptRef = useRef(onTranscript);
+  const onInterimRef = useRef(onInterimTranscript);
+  useEffect(() => {
+    onTranscriptRef.current = onTranscript;
+    onInterimRef.current = onInterimTranscript;
+  });
+
   // ── Support check (client-side only) ────────────────────────────────────────
   useEffect(() => {
     const supported =
@@ -158,9 +172,9 @@ export function DictationButton({
       }
 
       setInterim(interimTranscript);
-      if (interimTranscript && onInterimTranscript) onInterimTranscript(interimTranscript);
+      if (interimTranscript && onInterimRef.current) onInterimRef.current(interimTranscript);
       if (finalTranscript) {
-        onTranscript(finalTranscript);
+        onTranscriptRef.current(finalTranscript);
         setInterim("");
       }
     };
@@ -292,7 +306,7 @@ export function DictationButton({
           "inline-flex items-center justify-center rounded-lg border transition-colors",
           error
             ? "border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
-            : "border-[var(--cs-border)] bg-[var(--cs-surface)] text-[var(--cs-text-muted)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold-soft)] hover:text-[var(--cs-aria-gold)]",
+            : "border-[var(--cs-border)] bg-[var(--cs-surface)] text-[var(--cs-text-muted)] hover:bg-[var(--cs-cara-gold-bg)] hover:border-[var(--cs-cara-gold-soft)] hover:text-[var(--cs-cara-gold)]",
           disabled && "opacity-40 cursor-not-allowed pointer-events-none",
           SIZE_BTN[size]
         )}

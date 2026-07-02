@@ -15,7 +15,7 @@ function ev(o: {
     summary: `${o.type} ${o.id}`, structuredTags: o.tags ?? [], evidenceCategories: ["risk management"],
     riskLevel: o.risk ?? "low", requiresApproval: !!o.approval, approvalLevel: o.approval,
     linkedDocuments: [], linkedTasks: [], linkedRisks: [], linkedNotifications: [],
-    ariaAnalysis: { themes: [], suggestedActions: o.suggestion ? [o.suggestion] : [], complianceFlags: o.flags ?? [], missingInformation: [], confidenceScore: 1 },
+    caraAnalysis: { themes: [], suggestedActions: o.suggestion ? [o.suggestion] : [], complianceFlags: o.flags ?? [], missingInformation: [], confidenceScore: 1 },
     audit: { createdAt: at(o.daysAgo ?? 2), updatedAt: at(o.daysAgo ?? 2), version: 1, changeHistory: [] },
   };
 }
@@ -59,10 +59,10 @@ describe("categorisation by precedence", () => {
   });
 });
 
-describe("ARIA suggestion, evidence links and actions", () => {
-  it("surfaces the event's ARIA suggested response and evidence categories", () => {
+describe("Cara suggestion, evidence links and actions", () => {
+  it("surfaces the event's Cara suggested response and evidence categories", () => {
     const i = run([ev({ id: "1", type: "incident", risk: "high", approval: "manager", suggestion: "Record the outcome and lessons learned" })]).items[0];
-    expect(i.aria_suggested_response).toBe("Record the outcome and lessons learned");
+    expect(i.cara_suggested_response).toBe("Record the outcome and lessons learned");
     expect(i.evidence_categories).toContain("risk management");
     expect(i.available_actions).toEqual(["approve", "request_changes", "escalate"]);
   });

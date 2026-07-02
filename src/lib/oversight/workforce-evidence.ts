@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Workforce Evidence Pack (Phase 8)
+// CARA — Workforce Evidence Pack (Phase 8)
 //
 // Assembles the oversight summary into an audit-ready, inspector-facing document
 // (sections + Reg alignment + the guarantees the engine upholds). Pure — surfaces

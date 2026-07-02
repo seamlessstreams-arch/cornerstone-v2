@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ANNUAL LEAVE SERVICE
+// CARA — STAFF ANNUAL LEAVE SERVICE
 // Manages Staff Annual Leave tracking — leave requests, approval workflow,
 // entitlement monitoring, cover arrangements, and impact on staffing levels.
 // CHR 2015 Reg 33 (employment of staff — sufficient and suitable),
@@ -233,7 +233,7 @@ export function computeStaffAnnualLeaveAlerts(
   return alerts;
 }
 
-export function generateStaffAnnualLeaveAriaInsights(
+export function generateStaffAnnualLeaveCaraInsights(
   metrics: ReturnType<typeof computeStaffAnnualLeaveMetrics>,
   alerts: ReturnType<typeof computeStaffAnnualLeaveAlerts>,
 ): string[] {
@@ -350,5 +350,5 @@ export function createStaffAnnualLeave(payload: {
 export const _testing = {
   computeStaffAnnualLeaveMetrics,
   computeStaffAnnualLeaveAlerts,
-  generateStaffAnnualLeaveAriaInsights,
+  generateStaffAnnualLeaveCaraInsights,
 };

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Home Atmosphere & Ethos Intelligence — Public API
+// Cara Home Atmosphere & Ethos Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

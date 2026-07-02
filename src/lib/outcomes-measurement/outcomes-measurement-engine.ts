@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Outcomes Measurement — Intelligence Engine
+// Cara Outcomes Measurement — Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //
-// "Is Oak House making a measurable positive difference for children?"
+// "Is Chamberlain House making a measurable positive difference for children?"
 //
 // Regulatory framework:
 //   SCCIF                — Overall effectiveness: "children are making

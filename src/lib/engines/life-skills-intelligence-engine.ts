@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE
 // Pure deterministic engine for independence readiness analysis.
 // Reg 8 (enjoyment & achievement), Reg 9 (quality of care), Reg 14 (pathway
 // planning), SCCIF Experiences & Progress.
@@ -70,7 +70,7 @@ export interface LifeSkillsAlert {
   message: string;
 }
 
-export interface AriaLifeSkillsInsight {
+export interface CaraLifeSkillsInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -80,7 +80,7 @@ export interface LifeSkillsIntelligenceResult {
   domain_averages: DomainAverage[];
   child_profiles: ChildReadinessProfile[];
   alerts: LifeSkillsAlert[];
-  insights: AriaLifeSkillsInsight[];
+  insights: CaraLifeSkillsInsight[];
 }
 
 interface EngineInput {
@@ -268,8 +268,8 @@ export function computeLifeSkillsIntelligence(input: EngineInput): LifeSkillsInt
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
-  const insights: AriaLifeSkillsInsight[] = [];
+  // ── Cara Insights ──────────────────────────────────────────────────────
+  const insights: CaraLifeSkillsInsight[] = [];
 
   // Warning: unassessed children
   if (unassessed.length > 0) {

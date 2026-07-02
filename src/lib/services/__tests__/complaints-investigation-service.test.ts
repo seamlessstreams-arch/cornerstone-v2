@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS INVESTIGATION SERVICE TESTS
+// CARA — COMPLAINTS INVESTIGATION SERVICE TESTS
 // Pure-function unit tests for complaint metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 38 (complaints — investigation and resolution),

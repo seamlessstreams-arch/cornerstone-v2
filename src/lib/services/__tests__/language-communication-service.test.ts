@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LANGUAGE & COMMUNICATION SERVICE TESTS
+// CARA — LANGUAGE & COMMUNICATION SERVICE TESTS
 // Pure-function unit tests for language/communication metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 6 (quality and purpose of care),

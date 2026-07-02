@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — APPRAISAL INTELLIGENCE ENGINE
+// CARA — APPRAISAL INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses staff appraisal compliance: completion rates, competency scores,
@@ -111,7 +111,7 @@ export interface AppraisalAlert {
   message: string;
 }
 
-export interface AriaAppraisalInsight {
+export interface CaraAppraisalInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -122,7 +122,7 @@ export interface AppraisalIntelligenceResult {
   competency_analysis: CompetencyAnalysis[];
   staff_profiles: StaffAppraisalProfile[];
   alerts: AppraisalAlert[];
-  insights: AriaAppraisalInsight[];
+  insights: CaraAppraisalInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -394,8 +394,8 @@ export function computeAppraisalIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaAppraisalInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraAppraisalInsight[] = [];
 
   // Critical: overdue
   if (overdue.length > 0) {

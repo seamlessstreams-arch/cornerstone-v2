@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENVIRONMENTAL SUSTAINABILITY & ECO-AWARENESS INTELLIGENCE ENGINE
+// CARA — HOME ENVIRONMENTAL SUSTAINABILITY & ECO-AWARENESS INTELLIGENCE ENGINE
 // Monitors the home's environmental sustainability practices including energy
 // usage tracking, recycling compliance, eco-education programmes, sustainability
 // practices, and carbon footprint monitoring.

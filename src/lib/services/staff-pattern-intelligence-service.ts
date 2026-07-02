@@ -1,13 +1,13 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PATTERN INTELLIGENCE SERVICE
-// Core ARIA engine for identifying patterns across staff practice records.
+// CARA — STAFF PATTERN INTELLIGENCE SERVICE
+// Core Cara engine for identifying patterns across staff practice records.
 // Analyses incidents, daily logs, handovers, supervision, training,
 // medication, missing episodes, restraints, complaints, rotas, sickness,
 // key work, recording timeliness, and child interaction records.
 //
 // CRITICAL PRINCIPLES:
 // — Strengths-based, fair, contextual and evidence-led
-// — ARIA suggests. Humans decide. Cornerstone evidences.
+// — Cara suggests. Humans decide. Cara evidences.
 // — Never makes HR, disciplinary or capability decisions
 // — Supports managers to think fairly, evidence clearly, act proportionately
 //

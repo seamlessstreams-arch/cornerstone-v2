@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT & PHYSICAL INTERVENTION INTELLIGENCE ENGINE
+// CARA — RESTRAINT & PHYSICAL INTERVENTION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses restraint frequency, duration, patterns, de-escalation, debrief
@@ -110,7 +110,7 @@ export interface RestraintAlert {
   message: string;
 }
 
-export interface AriaRestraintInsight {
+export interface CaraRestraintInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -122,7 +122,7 @@ export interface RestraintIntelligenceResult {
   type_breakdown: TypeBreakdown[];
   time_patterns: TimePattern[];
   alerts: RestraintAlert[];
-  insights: AriaRestraintInsight[];
+  insights: CaraRestraintInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -344,8 +344,8 @@ export function computeRestraintIntelligence(input: RestraintIntelligenceInput):
     }
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaRestraintInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraRestraintInsight[] = [];
 
   // Critical: high restraint frequency
   if (within30d.length >= 5) {

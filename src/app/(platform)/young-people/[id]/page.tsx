@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON PROFILE (redesigned)
+// CARA — YOUNG PERSON PROFILE (redesigned)
 // 15-tab profile grouped into Care · Wellbeing · Plans · Records · Intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -9,24 +9,26 @@ import React, { useState, use, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
+import { CaraPanel } from "@/components/cara/cara-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import {
-  ArrowLeft, Heart, AlertTriangle, Shield, Pill, CalendarDays,
+  ArrowLeft, Heart, AlertTriangle, Shield, Pill, CalendarDays, CalendarClock,
   GraduationCap, Phone, Mail, User, MapPin, FileText,
   Activity, Loader2, AlertCircle, ChevronRight, Clock,
   Brain, CheckCircle2, Sparkles, X, MessageCircle, Plus, Tag,
   MessageSquare, HeartHandshake, Target, BookOpen, CheckSquare,
 } from "lucide-react";
 import { ChildExperienceTab } from "@/components/intelligence/child-experience-tab";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
+import { CaraQuickActions } from "@/components/intelligence/cara-quick-actions";
 import { useYoungPerson } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { PrintButton } from "@/components/common/print-button";
+import { ChildCalendarTab } from "@/components/calendar/child-calendar-tab";
+import { ChildChronologyTab } from "@/components/young-person/child-chronology-tab";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { useDocumentIntelligence } from "@/hooks/use-doc-intelligence";
 import { api } from "@/hooks/use-api";
 import { useAuthContext } from "@/contexts/auth-context";
@@ -51,6 +53,7 @@ import { ChildHealthIntelligenceCard } from "@/components/intelligence/child-hea
 import { ChildBehaviourSafetyIntelligenceCard } from "@/components/intelligence/child-behaviour-safety-intelligence-card";
 import { ChildIndependenceIntelligenceCard } from "@/components/intelligence/child-independence-intelligence-card";
 import { ChildSafeguardingIntelligenceCard } from "@/components/intelligence/child-safeguarding-intelligence-card";
+import { ChildSafeguardingActionsCard } from "@/components/intelligence/child-safeguarding-actions-card";
 import { ChildPlacementQualityCard } from "@/components/intelligence/child-placement-quality-card";
 import { ChildMissingIntelligenceCard } from "@/components/intelligence/child-missing-intelligence-card";
 import { ChildLACReviewIntelligenceCard } from "@/components/intelligence/child-lac-review-intelligence-card";
@@ -61,6 +64,9 @@ import { ChildDailyLifeIntelligenceCard } from "@/components/intelligence/child-
 import { ChildMedicationIntelligenceCard } from "@/components/intelligence/child-medication-intelligence-card";
 import { ChildRestrictivePracticeIntelligenceCard } from "@/components/intelligence/child-restrictive-practice-intelligence-card";
 import { ChildEmotionalWellbeingIntelligenceCard } from "@/components/intelligence/child-emotional-wellbeing-intelligence-card";
+import { ChildPracticeModulesCard } from "@/components/intelligence/child-practice-modules-card";
+import { InlineRelationalPanel } from "@/components/relational-timeline/inline-relational-panel";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -136,7 +142,7 @@ function EmptyTabState({ icon: Icon, label, description, action }: {
   );
 }
 
-// ── Aria tools (previously "Intelligence") ────────────────────────────────────
+// ── Cara tools (previously "Intelligence") ────────────────────────────────────
 
 function ChildVoiceSummarySection({ childId, childName }: { childId: string; childName: string }) {
   const [generating, setGenerating] = useState(false);
@@ -147,7 +153,7 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
     setGenerating(true);
     try {
       const res = await api.post<{ data: { response?: string; parsed?: { summary?: string }; text?: string } }>(
-        "/aria",
+        "/cara",
         { mode: "voice_summary", source_content: `Child profile: ${childName}. Generate voice summary from care records.` }
       );
       const text = res.data?.response || res.data?.parsed?.summary || res.data?.text;
@@ -162,7 +168,7 @@ function ChildVoiceSummarySection({ childId, childName }: { childId: string; chi
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-emerald-900">Child Voice Summary</div>
-            <div className="text-xs text-emerald-700 mt-0.5">Aria synthesis of what {childName} has said, felt, and expressed</div>
+            <div className="text-xs text-emerald-700 mt-0.5">Cara synthesis of what {childName} has said, felt, and expressed</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-emerald-600 hover:bg-emerald-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Generating…</> : <><Sparkles className="h-3.5 w-3.5" />Generate</>}
@@ -202,7 +208,7 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
   async function generate() {
     setGenerating(true);
     try {
-      const res = await api.post<{ data: { response?: string; text?: string } }>("/aria", {
+      const res = await api.post<{ data: { response?: string; text?: string } }>("/cara", {
         mode: "what_changed",
         source_content: `Young person: ${childName}\n\nRecent incidents:\n${incidents.slice(0, 5).map((i) => `${i.date}: ${i.type} — ${i.description}`).join("\n") || "(none)"}\n\nChronology:\n${chronology.slice(0, 8).map((c) => `${c.date}: [${c.category}] ${c.title}`).join("\n") || "(none)"}\n\nDaily logs:\n${recentLog.slice(0, 5).map((l) => `${l.date} [${l.entry_type}]: ${l.content}`).join("\n") || "(none)"}`,
       });
@@ -218,7 +224,7 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-violet-900">What Has Changed?</div>
-            <div className="text-xs text-violet-700 mt-0.5">Aria analysis of progress, regression, risks and relationships over time</div>
+            <div className="text-xs text-violet-700 mt-0.5">Cara analysis of progress, regression, risks and relationships over time</div>
           </div>
           <Button onClick={generate} disabled={generating} className="bg-violet-600 hover:bg-violet-700 shrink-0 gap-1.5" size="sm">
             {generating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />Analysing…</> : <><Sparkles className="h-3.5 w-3.5" />Analyse</>}
@@ -246,11 +252,11 @@ function WhatChangedSection({ childName, incidents, chronology, recentLog }: {
 // ── Tab type ──────────────────────────────────────────────────────────────────
 
 type ProfileTab =
-  | "overview" | "daily-life" | "voice"
+  | "overview" | "daily-life" | "calendar" | "voice"
   | "health" | "medication" | "education"
   | "plans-risk" | "keywork" | "family-time" | "missing"
   | "incidents" | "outcomes" | "chronology" | "documents"
-  | "aria";
+  | "cara";
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
@@ -367,6 +373,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
       tabs: [
         { id: "overview",   label: "Overview",   icon: User },
         { id: "daily-life", label: "Daily Life",  icon: CalendarDays, count: related?.recent_log?.length || undefined },
+        { id: "calendar",   label: "Calendar",    icon: CalendarClock },
         { id: "voice",      label: "Voice",       icon: MessageSquare, count: voiceEntries.length || undefined },
       ],
     },
@@ -399,7 +406,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
     {
       label: "Intelligence",
       tabs: [
-        { id: "aria", label: "Aria", icon: Sparkles },
+        { id: "cara", label: "Cara", icon: Sparkles },
       ],
     },
   ];
@@ -411,12 +418,17 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
       showQuickCreate={false}
       recordAnything
       recordChildId={id}
-      ariaContext={{ sourceType: "child_record", sourceId: id, childId: id, childName: `${displayName} ${yp.last_name}` }}
+      caraContext={{ sourceType: "child_record", sourceId: id, childId: id, childName: `${displayName} ${yp.last_name}` }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title={`${displayName} ${yp.last_name}`} subtitle="Oak House — Young Person Profile" targetId="yp-detail-content" />
+          <PrintButton title={`${displayName} ${yp.last_name}`} subtitle="Chamberlain House — Young Person Profile" targetId="yp-detail-content" />
           <SmartUploadButton variant="icon" linkedChildId={id} uploadContext={`Young person profile — ${yp.first_name} ${yp.last_name}`} />
-          <AriaStudioQuickActionButton context={{ record_type: "keywork", record_id: id, child_id: id, home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "keywork", record_id: id, child_id: id, home_id: "home_oak" }} />
+          <Link href={`/intelligence/cara/relationship-intelligence?child=${id}`}>
+            <Button variant="outline" size="sm" className="gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-[var(--cs-cara-gold,#b45309)]" />Relationship Intelligence
+            </Button>
+          </Link>
           <Button variant="outline" size="sm" onClick={() => router.push("/young-people")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />All Young People
           </Button>
@@ -425,7 +437,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
     >
       <div id="yp-detail-content" className="space-y-4 animate-fade-in">
 
-        <AriaPanel
+        <CaraPanel
           mode="assist"
           pageContext={`Young Person Profile — ${displayName} ${yp.last_name}`}
           recordType="child_record"
@@ -632,6 +644,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               </div>
             )}
 
+            {/* Practice reasoning — Cara's read of this child across all engines */}
+            <div className="sm:col-span-2">
+              <InlinePracticeReasoning childId={id} childName={displayName} />
+            </div>
+
             {/* Child 360 Intelligence Profile */}
             <div className="sm:col-span-2">
               <Child360IntelligenceCard childId={id} />
@@ -665,6 +682,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             {/* Independence & Life Skills Intelligence */}
             <div className="sm:col-span-2">
               <ChildIndependenceIntelligenceCard childId={id} />
+            </div>
+
+            {/* Safeguarding — open actions (operational) then the analysis */}
+            <div className="sm:col-span-2">
+              <ChildSafeguardingActionsCard childId={id} childName={displayName} />
             </div>
 
             {/* Safeguarding Intelligence */}
@@ -721,6 +743,16 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
             <div className="sm:col-span-2">
               <ChildEmotionalWellbeingIntelligenceCard childId={id} />
             </div>
+
+            {/* Rights, Safety & Relationships — practice modules surfaced inline at the child record */}
+            <div className="sm:col-span-2">
+              <ChildPracticeModulesCard childId={id} />
+            </div>
+
+            {/* Relational timeline — the child's relationship story (connection / repair / rupture) */}
+            <div className="sm:col-span-2">
+              <InlineRelationalPanel childId={id} />
+            </div>
           </div>
         )}
 
@@ -765,6 +797,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               </div>
             )}
           </div>
+        )}
+
+        {/* ── Calendar ─────────────────────────────────────────────────────── */}
+        {tab === "calendar" && (
+          <ChildCalendarTab childId={id} childName={displayName} />
         )}
 
         {/* ── Voice ────────────────────────────────────────────────────────── */}
@@ -1013,9 +1050,9 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <p className="text-xs text-slate-500 mt-0.5">Individual key work record for {displayName} — Reg 36 Children&apos;s Homes Regulations 2015</p>
               </div>
               <div className="flex items-center gap-2">
-                <Link href="/intelligence/aria/keywork">
+                <Link href="/intelligence/cara/keywork">
                   <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner
+                    <Sparkles className="h-3.5 w-3.5 text-violet-500" />Cara Planner
                   </Button>
                 </Link>
                 <Button size="sm" className="gap-1.5 text-xs" onClick={() => setShowKWForm((p) => !p)}>
@@ -1090,11 +1127,11 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={MessageCircle}
                 label="No key work sessions recorded"
-                description="Log sessions here or plan them using the Aria Key Work Builder."
+                description="Log sessions here or plan them using the Cara Key Work Builder."
                 action={
                   <div className="flex items-center justify-center gap-2">
                     <Button size="sm" variant="outline" onClick={() => setShowKWForm(true)} className="gap-1.5 text-xs"><Plus className="h-3.5 w-3.5" />Log Session</Button>
-                    <Link href="/intelligence/aria/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />Aria Planner</Button></Link>
+                    <Link href="/intelligence/cara/keywork"><Button size="sm" variant="outline" className="gap-1.5 text-xs"><Sparkles className="h-3.5 w-3.5 text-violet-500" />Cara Planner</Button></Link>
                   </div>
                 }
               />
@@ -1132,10 +1169,10 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                         </div>
                       )}
                       {session.staff_reflection && <div><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-0.5">Staff Reflection</p><p className="text-xs text-slate-600 leading-relaxed">{session.staff_reflection}</p></div>}
-                      {session.aria_summary && (
+                      {session.cara_summary && (
                         <div className="rounded-xl border border-violet-100 bg-violet-50/40 px-3 py-2">
-                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Aria Summary</p>
-                          <p className="text-xs text-slate-700">{session.aria_summary}</p>
+                          <p className="text-[10px] font-semibold text-violet-600 uppercase tracking-wide mb-0.5 flex items-center gap-1"><Sparkles className="h-2.5 w-2.5" />Cara Summary</p>
+                          <p className="text-xs text-slate-700">{session.cara_summary}</p>
                         </div>
                       )}
                     </div>
@@ -1377,7 +1414,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                 <div>
                   <p className="text-sm font-semibold text-indigo-900">Placement Outcomes</p>
                   <p className="text-xs text-indigo-700 mt-0.5">
-                    Outcomes are tracked against the care plan and pathway plan. Use Aria to generate a progress summary against stated outcomes.
+                    Outcomes are tracked against the care plan and pathway plan. Use Cara to generate a progress summary against stated outcomes.
                   </p>
                 </div>
               </div>
@@ -1422,34 +1459,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
 
         {/* ── Chronology ───────────────────────────────────────────────────── */}
         {tab === "chronology" && (
-          <div className="space-y-2">
-            {!(related?.chronology as unknown[])?.length ? (
-              <EmptyTabState icon={Activity} label="No chronology entries" description="Significant events will appear here as they are recorded." />
-            ) : (
-              (related?.chronology as Array<{ id: string; date: string; time: string | null; category: string; title: string; description: string; significance: string; recorded_by: string }>)?.map((entry) => (
-                <div key={entry.id} className={cn(
-                  "rounded-2xl border bg-white p-4 border-l-4",
-                  entry.significance === "critical" ? "border-l-red-500" :
-                  entry.significance === "significant" ? "border-l-amber-500" : "border-l-slate-300"
-                )}>
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-slate-900">{entry.title}</span>
-                        {entry.significance === "critical" && <Badge variant="destructive" className="text-[9px] rounded-full">Critical</Badge>}
-                        {entry.significance === "significant" && <Badge variant="warning" className="text-[9px] rounded-full">Significant</Badge>}
-                      </div>
-                      <div className="text-xs text-slate-500 mt-0.5 capitalize">
-                        {entry.category.replace("_", " ")} · {formatDate(entry.date)}{entry.time && ` at ${entry.time}`}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">{entry.description}</p>
-                  <div className="text-[10px] text-slate-400 mt-2">Recorded by {getStaffName(entry.recorded_by)}</div>
-                </div>
-              ))
-            )}
-          </div>
+          <ChildChronologyTab childId={id} childName={displayName} />
         )}
 
         {/* ── Documents ────────────────────────────────────────────────────── */}
@@ -1467,7 +1477,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
               <EmptyTabState
                 icon={FileText}
                 label="No documents yet"
-                description="Upload placement plans, risk assessments, LAC reviews, and more — Aria will classify and extract intelligence automatically."
+                description="Upload placement plans, risk assessments, LAC reviews, and more — Cara will classify and extract intelligence automatically."
                 action={<SmartUploadButton variant="button" label="Upload First Document" linkedChildId={id} uploadContext={`${displayName} ${yp.last_name} — first document`} />}
               />
             ) : (
@@ -1505,10 +1515,10 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
-        {/* ── Aria (Intelligence) ──────────────────────────────────────────── */}
-        {tab === "aria" && (
+        {/* ── Cara (Intelligence) ──────────────────────────────────────────── */}
+        {tab === "cara" && (
           <div className="space-y-5">
-            <AriaQuickActions childId={yp.id} sourceType="young_person_profile" sourceId={yp.id} defaultOpen />
+            <CaraQuickActions childId={yp.id} sourceType="young_person_profile" sourceId={yp.id} defaultOpen />
             <ChildVoiceSummarySection childId={yp.id} childName={displayName} />
             <WhatChangedSection
               childName={displayName}
@@ -1545,7 +1555,7 @@ export default function YoungPersonPage({ params }: { params: Promise<{ id: stri
                           title: `${label} — ${displayName}'s care team`,
                           description: `Training need identified from ${displayName}'s care profile.`,
                           priority, status: "identified",
-                          aria_evidence: `Identified from YP profile: ${displayName}. Care team training need: ${label}.`,
+                          cara_evidence: `Identified from YP profile: ${displayName}. Care team training need: ${label}.`,
                         },
                         { onSuccess: () => setNeedsCreated((p) => new Set(p).add(key)) }
                       )

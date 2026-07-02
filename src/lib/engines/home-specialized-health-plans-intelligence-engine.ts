@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SPECIALIZED HEALTH PLANS INTELLIGENCE ENGINE
+// CARA — HOME SPECIALIZED HEALTH PLANS INTELLIGENCE ENGINE
 // Home-level: aggregates ADHD plans, allergy plans, asthma plans, autism plans,
 // diabetic care plans, epilepsy/seizure plans, continence plans, physio/OT plans,
 // menstrual health plans, and occupational therapy records.
@@ -610,19 +610,19 @@ export function computeHomeSpecializedHealthPlans(
   const insights: { text: string; severity: string }[] = [];
 
   if (recentSeizures >= 5)
-    insights.push({ text: `ARIA detects ${recentSeizures} recent seizures across epilepsy plans — consider joint clinical review with neurologist.`, severity: "critical" });
+    insights.push({ text: `Cara detects ${recentSeizures} recent seizures across epilepsy plans — consider joint clinical review with neurologist.`, severity: "critical" });
 
   if (diabeticFlags >= 3)
-    insights.push({ text: `ARIA flags ${diabeticFlags} diabetic care concerns — multi-disciplinary review recommended.`, severity: "warning" });
+    insights.push({ text: `Cara flags ${diabeticFlags} diabetic care concerns — multi-disciplinary review recommended.`, severity: "warning" });
 
   if (oldestOverdueDays > 180)
-    insights.push({ text: `ARIA detects health plans overdue by ${oldestOverdueDays} days — regulatory non-compliance risk.`, severity: "critical" });
+    insights.push({ text: `Cara detects health plans overdue by ${oldestOverdueDays} days — regulatory non-compliance risk.`, severity: "critical" });
 
   if (planTypesActive >= 5 && onTimeRate >= 90 && childCoverage >= 80)
-    insights.push({ text: "ARIA recognises exemplary multi-condition management — evidence of proactive health culture.", severity: "positive" });
+    insights.push({ text: "Cara recognises exemplary multi-condition management — evidence of proactive health culture.", severity: "positive" });
 
   if (therapyTotal > 0 && otReportRate < 50)
-    insights.push({ text: "ARIA notes low OT report provision rate — clinical governance improvement opportunity.", severity: "warning" });
+    insights.push({ text: "Cara notes low OT report provision rate — clinical governance improvement opportunity.", severity: "warning" });
 
   if (allergy_plans.length > 0 && allergy_plans.every(p => p.child_wears_medical_alert))
     insights.push({ text: "All children with allergies wear medical alerts — strong emergency identification practice.", severity: "positive" });

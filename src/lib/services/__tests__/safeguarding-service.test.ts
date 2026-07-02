@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING SERVICE TESTS
+// CARA — SAFEGUARDING SERVICE TESTS
 // Pure-function tests for compliance computation, overdue detection,
 // child profiles, timeline generation, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

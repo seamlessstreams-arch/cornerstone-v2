@@ -694,8 +694,8 @@ describe("Home Digital Safety Intelligence Engine", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("produces positive insight when governance is exemplary", () => {
       const r = computeHomeDigitalSafety(baseInput());
       expect(r.insights.some(i => i.severity === "positive" && i.text.includes("exemplary"))).toBe(true);

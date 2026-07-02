@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELLBEING INTELLIGENCE ENGINE
+// CARA — HOME WELLBEING INTELLIGENCE ENGINE
 // Home-level engine aggregating the emotional wellbeing of all children:
 // mood trends, sleep quality, welfare check patterns, incident impact,
 // activity engagement, and overall home "temperature."
@@ -422,7 +422,7 @@ export function computeHomeWellbeing(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: WellbeingInsight[] = [];
 
   if (temperature === "concerning") {

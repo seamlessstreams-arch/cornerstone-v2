@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT HANDOVER QUALITY SERVICE
+// CARA — SHIFT HANDOVER QUALITY SERVICE
 // Tracks the quality and completeness of shift handovers between staff
 // teams, ensuring critical information is passed on safely.
 // CHR 2015 Reg 22 (arrangements for supervision — shift handovers),

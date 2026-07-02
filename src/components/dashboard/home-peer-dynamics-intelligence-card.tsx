@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER DYNAMICS INTELLIGENCE CARD
+// CARA — HOME PEER DYNAMICS INTELLIGENCE CARD
 // Peer relationships, group atmosphere, risk management between children.
 // CHR 2015 Reg 19. SCCIF: "Children feel safe with each other."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<PeerDynamicsRating, { bg: string; text: string; bord
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomePeerDynamicsIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.peer_rating === "inadequate" && (d.peer_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      peer_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.peer_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.peer_rating === "inadequate" || d.risks.high_count > 0;
@@ -65,7 +82,7 @@ export function HomePeerDynamicsIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <UsersRound className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-violet-500")} />
+            <UsersRound className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-violet-500")} />
             <span className="text-slate-900">Peer Dynamics</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -88,7 +105,7 @@ export function HomePeerDynamicsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Handshake className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.relationships.positive_count > 0 ? "text-green-600" : "text-slate-400"
+                  d.relationships.positive_count > 0 ? "text-[--cs-success]" : "text-slate-400"
                 )}>
                   {d.relationships.positive_count}
                 </p>
@@ -101,8 +118,8 @@ export function HomePeerDynamicsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.risks.high_count > 0 ? "text-red-600" :
-                  d.risks.medium_count > 0 ? "text-amber-600" : "text-green-600"
+                  d.risks.high_count > 0 ? "text-[--cs-risk]" :
+                  d.risks.medium_count > 0 ? "text-[--cs-warning]" : "text-[--cs-success]"
                 )}>
                   {d.risks.high_count + d.risks.medium_count}
                 </p>
@@ -115,8 +132,8 @@ export function HomePeerDynamicsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Eye className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.entry_profile.positive_ratio >= 50 ? "text-green-600" :
-                  d.entry_profile.positive_ratio >= 30 ? "text-amber-600" : "text-red-600"
+                  d.entry_profile.positive_ratio >= 50 ? "text-[--cs-success]" :
+                  d.entry_profile.positive_ratio >= 30 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.entry_profile.positive_ratio}%
                 </p>
@@ -129,9 +146,9 @@ export function HomePeerDynamicsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <UsersRound className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-xs font-bold uppercase",
-                  d.group_profile.latest_atmosphere === "calm" ? "text-green-600" :
-                  d.group_profile.latest_atmosphere === "mixed" ? "text-amber-600" :
-                  d.group_profile.latest_atmosphere === "tense" ? "text-red-600" :
+                  d.group_profile.latest_atmosphere === "calm" ? "text-[--cs-success]" :
+                  d.group_profile.latest_atmosphere === "mixed" ? "text-[--cs-warning]" :
+                  d.group_profile.latest_atmosphere === "tense" ? "text-[--cs-risk]" :
                   d.group_profile.latest_atmosphere === "volatile" ? "text-red-700" : "text-slate-400"
                 )}>
                   {d.group_profile.latest_atmosphere}
@@ -151,10 +168,10 @@ export function HomePeerDynamicsIntelligenceCard() {
                 <p>Total pairs: <span className="font-medium text-slate-600">{d.relationships.total_pairs}</span></p>
                 <p>Developing: <span className="font-medium text-blue-600">{d.relationships.developing_count}</span></p>
                 <p>Strained: <span className={cn("font-medium",
-                  d.relationships.strained_count === 0 ? "text-green-600" : "text-amber-600"
+                  d.relationships.strained_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.relationships.strained_count}</span></p>
                 <p>Conflicted: <span className={cn("font-medium",
-                  d.relationships.conflicted_count === 0 ? "text-green-600" : "text-red-600"
+                  d.relationships.conflicted_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.relationships.conflicted_count}</span></p>
               </div>
             </div>
@@ -163,10 +180,10 @@ export function HomePeerDynamicsIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Entries (30d): <span className="font-medium text-slate-600">{d.entry_profile.entries_last_30_days}</span></p>
                 <p>Incidents: <span className={cn("font-medium",
-                  d.entry_profile.incidents === 0 ? "text-green-600" : "text-amber-600"
+                  d.entry_profile.incidents === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.entry_profile.incidents}</span></p>
                 <p>Reviews overdue: <span className={cn("font-medium",
-                  d.review_profile.overdue_reviews === 0 ? "text-green-600" : "text-red-600"
+                  d.review_profile.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.review_profile.overdue_reviews}</span></p>
                 <p>Strategies: <span className="font-medium text-slate-600">{d.strategy_profile.total_strategies}</span></p>
               </div>
@@ -182,7 +199,7 @@ export function HomePeerDynamicsIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -197,7 +214,7 @@ export function HomePeerDynamicsIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -224,12 +241,12 @@ export function HomePeerDynamicsIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Peer Intelligence */}
+        {/* Cara Peer Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Peer Intelligence
+              Cara Peer Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

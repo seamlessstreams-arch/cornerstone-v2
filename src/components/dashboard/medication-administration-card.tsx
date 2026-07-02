@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ADMINISTRATION INTELLIGENCE CARD
+// CARA — MEDICATION ADMINISTRATION INTELLIGENCE CARD
 // Dashboard card for medication rounds, MAR compliance, and safety.
 // CHR 2015 Reg 23, Reg 6.
 // SCCIF: Helped & Protected — "Children's medication is managed
@@ -21,16 +21,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function MedicationAdministrationCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.adherence_rate >= 90 ? "text-green-600" : o.adherence_rate >= 75 ? "text-amber-600" : "text-red-600",
+              o.adherence_rate >= 90 ? "text-[--cs-success]" : o.adherence_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.adherence_rate}%
             </p>
@@ -101,7 +101,7 @@ export function MedicationAdministrationCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.refusal_rate === 0 ? "text-green-600" : o.refusal_rate <= 5 ? "text-amber-600" : "text-red-600",
+              o.refusal_rate === 0 ? "text-[--cs-success]" : o.refusal_rate <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.refusal_rate}%
             </p>
@@ -113,7 +113,7 @@ export function MedicationAdministrationCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.missed_rate === 0 ? "text-green-600" : o.missed_rate <= 3 ? "text-amber-600" : "text-red-600",
+              o.missed_rate === 0 ? "text-[--cs-success]" : o.missed_rate <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.missed_rate}%
             </p>
@@ -146,9 +146,9 @@ export function MedicationAdministrationCard() {
                     )}>
                       {med.adherence_rate}%
                     </Badge>
-                    {med.last_admin_date && (
-                      <span className="text-[10px] text-muted-foreground whitespace-nowrap">{med.last_admin_date}</span>
-                    )}
+                    <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                      {med.administrations_30d} dose{med.administrations_30d !== 1 ? "s" : ""}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -178,13 +178,13 @@ export function MedicationAdministrationCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Intelligence ────────────────────────────── */}
+        {/* ── Cara Medication Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

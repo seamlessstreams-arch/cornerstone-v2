@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION AUDIT SERVICE
+// CARA — MEDICATION AUDIT SERVICE
 // Tracks controlled drug counts, medication storage audits, fridge
 // temperature checks, pharmacy audits, and stock reconciliation.
 // CHR 2015 Reg 23 (health — safe medication management),

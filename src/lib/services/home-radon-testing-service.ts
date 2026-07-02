@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RADON TESTING SERVICE
+// CARA — HOME RADON TESTING SERVICE
 // Tracks radon gas testing, levels, and mitigation measures for the
 // residential home. UK PHE/UKHSA radon action level compliance.
 //
@@ -294,7 +294,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function computeAriaInsights(
+export function computeCaraInsights(
   metrics: ReturnType<typeof computeMetrics>,
 ): string[] {
   const insights: string[] = [];
@@ -350,5 +350,5 @@ export function computeAriaInsights(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  computeAriaInsights,
+  computeCaraInsights,
 };

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NUTRITION & CATERING INTELLIGENCE CARD
+// CARA — HOME NUTRITION & CATERING INTELLIGENCE CARD
 // Meal plans, dietary plans, food hygiene, kitchen checks, budgets.
 // CHR 2015 Reg 9/10.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<NutritionRating, { bg: string; text: string; border:
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomeNutritionCateringIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.nutrition_rating === "inadequate" && (d.nutrition_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      nutrition_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.nutrition_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.nutrition_rating === "inadequate" || d.food_hygiene.fail_count >= 3;
@@ -65,7 +82,7 @@ export function HomeNutritionCateringIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <UtensilsCrossed className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-orange-500")} />
+            <UtensilsCrossed className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-orange-500")} />
             <span className="text-slate-900">Nutrition & Catering</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -88,8 +105,8 @@ export function HomeNutritionCateringIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.food_hygiene.pass_rate >= 95 ? "text-green-600" :
-                  d.food_hygiene.pass_rate >= 80 ? "text-blue-600" : "text-red-600"
+                  d.food_hygiene.pass_rate >= 95 ? "text-[--cs-success]" :
+                  d.food_hygiene.pass_rate >= 80 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.food_hygiene.total_checks_30d > 0 ? `${d.food_hygiene.pass_rate}%` : "—"}
                 </p>
@@ -102,8 +119,8 @@ export function HomeNutritionCateringIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Thermometer className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.kitchen.temperature_compliance_rate >= 100 ? "text-green-600" :
-                  d.kitchen.temperature_compliance_rate >= 90 ? "text-amber-600" : "text-red-600"
+                  d.kitchen.temperature_compliance_rate >= 100 ? "text-[--cs-success]" :
+                  d.kitchen.temperature_compliance_rate >= 90 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.kitchen.total_checks_30d > 0 ? `${d.kitchen.temperature_compliance_rate}%` : "—"}
                 </p>
@@ -116,8 +133,8 @@ export function HomeNutritionCateringIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Salad className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.dietary_plans.child_coverage >= 90 ? "text-green-600" :
-                  d.dietary_plans.child_coverage >= 70 ? "text-amber-600" : "text-red-600"
+                  d.dietary_plans.child_coverage >= 90 ? "text-[--cs-success]" :
+                  d.dietary_plans.child_coverage >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.dietary_plans.total_plans > 0 ? `${d.dietary_plans.child_coverage}%` : "—"}
                 </p>
@@ -130,8 +147,8 @@ export function HomeNutritionCateringIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <UtensilsCrossed className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.meal_plans.total_plans_30d >= 20 ? "text-green-600" :
-                  d.meal_plans.total_plans_30d >= 10 ? "text-blue-600" : "text-amber-600"
+                  d.meal_plans.total_plans_30d >= 20 ? "text-[--cs-success]" :
+                  d.meal_plans.total_plans_30d >= 10 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.meal_plans.total_plans_30d}
                 </p>
@@ -149,7 +166,7 @@ export function HomeNutritionCateringIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -164,7 +181,7 @@ export function HomeNutritionCateringIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -191,12 +208,12 @@ export function HomeNutritionCateringIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Nutrition Intelligence
+              Cara Nutrition Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

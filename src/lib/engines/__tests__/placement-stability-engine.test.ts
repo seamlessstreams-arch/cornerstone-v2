@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY ENGINE TESTS
+// CARA — PLACEMENT STABILITY ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -893,9 +893,9 @@ describe("computePlacementStability — insight generation", () => {
   });
 });
 
-// ── Integration: Full Oak House Scenario ────────────────────────────────────
+// ── Integration: Full Chamberlain House Scenario ────────────────────────────────────
 
-describe("computePlacementStability — Oak House integration", () => {
+describe("computePlacementStability — Chamberlain House integration", () => {
   const children: ChildInput[] = [
     {
       id: "yp_alex", first_name: "Alex", preferred_name: "Alex",

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUTY OF CANDOUR SERVICE TESTS
+// CARA — DUTY OF CANDOUR SERVICE TESTS
 // Pure-function tests for candour metrics, alert identification, constant
 // validation, and CRUD fallback behaviour when Supabase is disabled.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE ENGINE
+// CARA -- HOME SHARPS DISPOSAL & HAZARDOUS WASTE INTELLIGENCE ENGINE
 // Monitors sharps bin compliance, hazardous waste disposal, COSHH compliance,
 // clinical waste management, child safety awareness, and staff training in
 // hazardous materials handling within the children's home setting.

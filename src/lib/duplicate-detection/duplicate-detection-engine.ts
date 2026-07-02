@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION ENGINE
+// CARA — DUPLICATE DETECTION ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls, and NO
 // argless current-time calls. Accepts an injectable `today` (yyyy-mm-dd).
@@ -50,7 +50,7 @@ export interface DuplicateAlert {
   event_type?: string;
 }
 
-export interface AriaDuplicateInsight {
+export interface CaraDuplicateInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -69,7 +69,7 @@ export interface DuplicateDetectionResult {
   duplicates: SuspectedDuplicate[];
   clusters: DuplicateCluster[];
   alerts: DuplicateAlert[];
-  insights: AriaDuplicateInsight[];
+  insights: CaraDuplicateInsight[];
 }
 
 // ── Input ─────────────────────────────────────────────────────────────────────
@@ -341,14 +341,14 @@ function buildAlerts(clusters: DuplicateCluster[]): DuplicateAlert[] {
   return alerts;
 }
 
-// ── ARIA insights ─────────────────────────────────────────────────────────────
+// ── Cara insights ─────────────────────────────────────────────────────────────
 
 function buildInsights(
   overview: DuplicateOverview,
   duplicates: SuspectedDuplicate[],
   clusters: DuplicateCluster[],
-): AriaDuplicateInsight[] {
-  const insights: AriaDuplicateInsight[] = [];
+): CaraDuplicateInsight[] {
+  const insights: CaraDuplicateInsight[] = [];
 
   if (overview.suspected_duplicates === 0) {
     insights.push({

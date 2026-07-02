@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND API ROUTE
+// CARA — RECORDING QUALITY TREND API ROUTE
 // GET /api/v1/recording-quality-trend
 //
 // Weekly trajectory of recording quality (and the child's voice) — composes the

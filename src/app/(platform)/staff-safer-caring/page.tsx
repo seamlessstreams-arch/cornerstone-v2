@@ -20,8 +20,8 @@ import { useStaffSaferCaringRecords } from "@/hooks/use-staff-safer-caring-recor
 import type { StaffSaferCaringRecord, StaffSaferCaringPlanStatus } from "@/types/extended";
 import { STAFF_SAFER_CARING_PLAN_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
@@ -91,8 +91,8 @@ export default function StaffSaferCaringPage() {
 
   return (
     <PageShell title="Safer Caring Plans" subtitle="Children's Homes (England) Regulations 2015 · Schedule 1 · Safer Recruitment" 
-      ariaContext={{ pageTitle: "Safer Caring Plans", sourceType: "staff" }}
-      actions={<div className="flex items-center gap-2"><PrintButton title="Safer Caring Plans" /><ExportButton data={filtered} columns={exportCols} filename="safer-caring-plans" /><AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} /></div>}>
+      caraContext={{ pageTitle: "Safer Caring Plans", sourceType: "staff" }}
+      actions={<div className="flex items-center gap-2"><PrintButton title="Safer Caring Plans" /><ExportButton data={filtered} columns={exportCols} filename="safer-caring-plans" /><CaraStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} /></div>}>
       <div id="print-area">
         {/* ── summary stats ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -210,7 +210,7 @@ export default function StaffSaferCaringPage() {
             Plans are reviewed at least annually, or sooner if: a new child is admitted; a concern or allegation arises; the staff member&apos;s role changes; or following a significant incident. All staff must sign their plan and have it witnessed by a senior colleague.
           </p>
           <p>
-            Oak House operates a whistleblowing culture where any staff member can raise concerns about the conduct of a colleague without fear of reprisal. Concerns about professional boundaries, physical contact, or inappropriate relationships must be reported to the Registered Manager or, if the concern involves the RM, directly to the Responsible Individual or Ofsted.
+            Chamberlain House operates a whistleblowing culture where any staff member can raise concerns about the conduct of a colleague without fear of reprisal. Concerns about professional boundaries, physical contact, or inappropriate relationships must be reported to the Registered Manager or, if the concern involves the RM, directly to the Responsible Individual or Ofsted.
           </p>
         </div>
       </div>
@@ -220,7 +220,7 @@ export default function StaffSaferCaringPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Safer Caring Plans — staff individual safe caring agreements, physical boundaries, professional conduct, safeguarding obligations, allegation risk reduction, DBS, restrictions"
         recordType="safeguarding"

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
+import { requirePermissionAsync } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
 import { generateId } from "@/lib/utils";
-import { runPostSaveIntelligence } from "@/lib/aria/post-save-intelligence";
+import { runPostSaveIntelligence } from "@/lib/cara/post-save-intelligence";
 import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
 
 // Working-day calculator
@@ -35,6 +37,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requirePermissionAsync(req, PERMISSIONS.MANAGE_COMPLAINTS);
+  if (auth instanceof NextResponse) return auth;
+
   const body = await req.json();
   const dateReceived = body.date_received ?? new Date().toISOString().split("T")[0];
   const nextRef = `CMP-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900) + 100)}`;
@@ -73,7 +78,7 @@ export async function POST(req: NextRequest) {
     }],
     includes_safeguarding_element: body.includes_safeguarding_element ?? false,
     linked_incident_id:        body.linked_incident_id ?? null,
-    aria_summary:              null,
+    cara_summary:              null,
     created_by:                body.created_by ?? "staff_darren",
   });
 
@@ -103,7 +108,7 @@ export async function POST(req: NextRequest) {
     );
   } catch { /* best-effort write-through; never block complaint creation */ }
 
-  // Fire-and-forget ARIA intelligence hook (golden thread + child voice detection)
+  // Fire-and-forget Cara intelligence hook (golden thread + child voice detection)
   runPostSaveIntelligence({
     homeId: record.home_id ?? "home_oak",
     childId: record.child_id ?? null,

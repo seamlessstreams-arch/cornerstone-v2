@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADMISSION & REFERRAL INTELLIGENCE ENGINE
+// CARA — ADMISSION & REFERRAL INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses referral pipeline, impact assessments, matching decisions,
@@ -96,7 +96,7 @@ export interface AdmissionAlert {
   message: string;
 }
 
-export interface AriaAdmissionInsight {
+export interface CaraAdmissionInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -107,7 +107,7 @@ export interface AdmissionReferralIntelligenceResult {
   source_analysis: SourceAnalysis[];
   decision_analysis: DecisionAnalysis;
   alerts: AdmissionAlert[];
-  insights: AriaAdmissionInsight[];
+  insights: CaraAdmissionInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -303,8 +303,8 @@ export function computeAdmissionReferralIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaAdmissionInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraAdmissionInsight[] = [];
 
   // Critical: no beds but active pipeline
   if (availableBeds === 0 && active.length > 0) {

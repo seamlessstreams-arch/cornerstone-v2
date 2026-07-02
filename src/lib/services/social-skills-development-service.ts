@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SOCIAL SKILLS DEVELOPMENT SERVICE
+// CARA — SOCIAL SKILLS DEVELOPMENT SERVICE
 // Tracks social skills training, group work sessions,
 // communication building, and interpersonal development.
 // CHR 2015 Reg 8(2)(a)(vii) (social development),

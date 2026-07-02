@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Deprivation of Liberty Intelligence — Public API
+// Cara Deprivation of Liberty Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

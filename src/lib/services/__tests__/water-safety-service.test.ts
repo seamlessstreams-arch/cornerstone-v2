@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WATER SAFETY SERVICE TESTS
+// CARA — WATER SAFETY SERVICE TESTS
 // Pure-function tests for water safety metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

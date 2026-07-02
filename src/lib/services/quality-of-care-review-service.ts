@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY OF CARE REVIEW SERVICE
+// CARA — QUALITY OF CARE REVIEW SERVICE
 // Manages Quality of Care Reviews required by CHR 2015 Regulation 45.
 // The registered person must review the quality of care provided at least
 // every 6 months, producing a report assessing whether children are well
@@ -308,7 +308,7 @@ export function computeQualityOfCareAlerts(
   return alerts;
 }
 
-export function generateQualityOfCareAriaInsights(
+export function generateQualityOfCareCaraInsights(
   metrics: ReturnType<typeof computeQualityOfCareMetrics>,
   alerts: ReturnType<typeof computeQualityOfCareAlerts>,
 ): string[] {
@@ -367,5 +367,5 @@ export function generateQualityOfCareAriaInsights(
 export const _testing = {
   computeQualityOfCareMetrics,
   computeQualityOfCareAlerts,
-  generateQualityOfCareAriaInsights,
+  generateQualityOfCareCaraInsights,
 };

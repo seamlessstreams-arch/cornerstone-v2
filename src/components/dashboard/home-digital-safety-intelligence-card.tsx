@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL SAFETY INTELLIGENCE CARD
+// CARA — HOME DIGITAL SAFETY INTELLIGENCE CARD
 // Online safety incidents, agreements, photo & media consents.
 // KCSIE 2024: "Online safety — appropriate systems."
 // CHR 2015 Reg 12/13: "Protection of children."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<DigitalSafetyRating, { bg: string; text: string; bor
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeDigitalSafetyIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.digital_safety_rating === "inadequate" && (d.digital_safety_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      digital_safety_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.digital_safety_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.digital_safety_rating === "inadequate" || d.incidents.high_severity_count >= 3;
@@ -66,7 +83,7 @@ export function HomeDigitalSafetyIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <MonitorSmartphone className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-violet-500")} />
+            <MonitorSmartphone className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-violet-500")} />
             <span className="text-slate-900">Digital Safety</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -89,8 +106,8 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.agreements.agreement_coverage_rate >= 100 ? "text-green-600" :
-                  d.agreements.agreement_coverage_rate >= 75 ? "text-blue-600" : "text-red-600"
+                  d.agreements.agreement_coverage_rate >= 100 ? "text-[--cs-success]" :
+                  d.agreements.agreement_coverage_rate >= 75 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.agreements.agreement_coverage_rate}%
                 </p>
@@ -103,8 +120,8 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FileCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.consents.photo_consent_coverage_rate >= 100 ? "text-green-600" :
-                  d.consents.photo_consent_coverage_rate >= 75 ? "text-blue-600" : "text-red-600"
+                  d.consents.photo_consent_coverage_rate >= 100 ? "text-[--cs-success]" :
+                  d.consents.photo_consent_coverage_rate >= 75 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.consents.photo_consent_coverage_rate}%
                 </p>
@@ -117,8 +134,8 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <AlertCircle className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.incidents.total_incidents_90d === 0 ? "text-green-600" :
-                  d.incidents.total_incidents_90d <= 3 ? "text-amber-600" : "text-red-600"
+                  d.incidents.total_incidents_90d === 0 ? "text-[--cs-success]" :
+                  d.incidents.total_incidents_90d <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.incidents.total_incidents_90d}
                 </p>
@@ -131,8 +148,8 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Smartphone className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  (d.agreements.overdue_reviews + d.consents.overdue_photo_reviews) === 0 ? "text-green-600" :
-                  (d.agreements.overdue_reviews + d.consents.overdue_photo_reviews) <= 2 ? "text-amber-600" : "text-red-600"
+                  (d.agreements.overdue_reviews + d.consents.overdue_photo_reviews) === 0 ? "text-[--cs-success]" :
+                  (d.agreements.overdue_reviews + d.consents.overdue_photo_reviews) <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.agreements.overdue_reviews + d.consents.overdue_photo_reviews}
                 </p>
@@ -149,12 +166,12 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Agreements</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Signed: <span className={cn("font-medium",
-                  d.agreements.signed_rate >= 100 ? "text-green-600" : "text-amber-600"
+                  d.agreements.signed_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.agreements.signed_rate}%</span></p>
                 <p>Controls: <span className="font-medium text-slate-600">{d.agreements.with_parental_controls}</span></p>
                 <p>Avg devices: <span className="font-medium text-slate-600">{d.agreements.avg_devices_per_child}</span></p>
                 <p>Overdue: <span className={cn("font-medium",
-                  d.agreements.overdue_reviews === 0 ? "text-green-600" : "text-red-600"
+                  d.agreements.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.agreements.overdue_reviews}</span></p>
               </div>
             </div>
@@ -162,11 +179,11 @@ export function HomeDigitalSafetyIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Incidents</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Open: <span className={cn("font-medium",
-                  d.incidents.open_incidents === 0 ? "text-green-600" :
-                  d.incidents.open_incidents <= 2 ? "text-amber-600" : "text-red-600"
+                  d.incidents.open_incidents === 0 ? "text-[--cs-success]" :
+                  d.incidents.open_incidents <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.incidents.open_incidents}</span></p>
                 <p>High/Crit: <span className={cn("font-medium",
-                  d.incidents.high_severity_count === 0 ? "text-green-600" : "text-red-600"
+                  d.incidents.high_severity_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.incidents.high_severity_count}</span></p>
                 <p>Resolved: <span className="font-medium text-slate-600">{d.incidents.resolution_rate}%</span></p>
                 <p>Parents told: <span className="font-medium text-slate-600">{d.incidents.parent_notification_rate}%</span></p>
@@ -183,7 +200,7 @@ export function HomeDigitalSafetyIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -198,7 +215,7 @@ export function HomeDigitalSafetyIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -225,12 +242,12 @@ export function HomeDigitalSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Digital Safety Intelligence */}
+        {/* Cara Digital Safety Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Digital Safety Intelligence
+              Cara Digital Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

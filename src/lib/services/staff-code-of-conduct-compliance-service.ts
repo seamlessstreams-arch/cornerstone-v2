@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF CODE OF CONDUCT COMPLIANCE SERVICE
+// CARA — STAFF CODE OF CONDUCT COMPLIANCE SERVICE
 // Code of conduct acknowledgements, annual compliance reviews,
 // breach tracking, and training on professional standards.
 // CHR 2015 Reg 33 (employment — staff standards and conduct),
@@ -315,7 +315,7 @@ export function computeCodeOfConductAlerts(
   return alerts;
 }
 
-export function generateCodeOfConductAriaInsights(
+export function generateCodeOfConductCaraInsights(
   rows: StaffCodeOfConductComplianceRow[],
 ): string[] {
   const metrics = computeCodeOfConductMetrics(rows);
@@ -375,5 +375,5 @@ export function generateCodeOfConductAriaInsights(
 export const _testing = {
   computeCodeOfConductMetrics,
   computeCodeOfConductAlerts,
-  generateCodeOfConductAriaInsights,
+  generateCodeOfConductCaraInsights,
 };

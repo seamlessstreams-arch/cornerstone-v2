@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Advocacy & Representation Intelligence Engine
+// Cara — Advocacy & Representation Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses how effectively a children's home ensures children have access

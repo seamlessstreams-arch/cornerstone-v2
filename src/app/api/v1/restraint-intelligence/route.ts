@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT INTELLIGENCE API ROUTE
+// CARA — RESTRAINT INTELLIGENCE API ROUTE
 // GET /api/v1/restraint-intelligence
 // Returns physical intervention frequency, duration, patterns, compliance,
-// injury tracking, and ARIA restraint reduction intelligence.
+// injury tracking, and Cara restraint reduction intelligence.
 // Reg 20/35 — restraint as last resort, positive behaviour management.
 // ══════════════════════════════════════════════════════════════════════════════
 

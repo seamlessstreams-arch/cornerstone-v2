@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PER-CHILD CHRONOLOGY
+// CARA — PER-CHILD CHRONOLOGY
 // A complete, time-ordered record of all significant events for a child.
 // Designed for LAC reviews, Ofsted inspections and safeguarding oversight.
 // Sources: care events · incidents · missing from care · behaviour log ·
@@ -40,6 +40,10 @@ import {
   Star,
   MapPin,
   Zap,
+  Users,
+  GraduationCap,
+  Stethoscope,
+  CalendarCheck,
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
@@ -60,6 +64,10 @@ const SOURCE_LABELS: Record<ChronologyItem["source_type"], string> = {
   daily_log:        "Daily Log",
   risk_assessment:  "Risk Assessment",
   chronology_entry: "Chronology Entry",
+  family_time:      "Family Time",
+  lac_review:       "LAC Review",
+  appointment:      "Appointment",
+  education:        "Education",
 };
 
 const SOURCE_COLOURS: Record<ChronologyItem["source_type"], string> = {
@@ -71,6 +79,10 @@ const SOURCE_COLOURS: Record<ChronologyItem["source_type"], string> = {
   daily_log:        "bg-slate-50 text-slate-700 border-slate-200",
   risk_assessment:  "bg-yellow-50 text-yellow-700 border-yellow-200",
   chronology_entry: "bg-teal-50 text-teal-700 border-teal-200",
+  family_time:      "bg-pink-50 text-pink-700 border-pink-200",
+  lac_review:       "bg-indigo-50 text-indigo-700 border-indigo-200",
+  appointment:      "bg-cyan-50 text-cyan-700 border-cyan-200",
+  education:        "bg-emerald-50 text-emerald-700 border-emerald-200",
 };
 
 const SOURCE_ICONS: Record<ChronologyItem["source_type"], React.ComponentType<{ className?: string }>> = {
@@ -82,6 +94,10 @@ const SOURCE_ICONS: Record<ChronologyItem["source_type"], React.ComponentType<{ 
   daily_log:        BookOpen,
   risk_assessment:  ShieldAlert,
   chronology_entry: Star,
+  family_time:      Users,
+  lac_review:       CalendarCheck,
+  appointment:      Stethoscope,
+  education:        GraduationCap,
 };
 
 const SEVERITY_COLOURS: Record<ChronologyItem["severity"], string> = {
@@ -371,7 +387,7 @@ export default function ChildChronologyPage({
       subtitle={`Complete event timeline · ${stats?.total ?? 0} entries`}
       recordAnything
       recordChildId={id}
-      ariaContext={{
+      caraContext={{
         childId:    id,
         childName,
         pageTitle:  "Child Chronology",
@@ -405,7 +421,7 @@ export default function ChildChronologyPage({
           </Button>
           <PrintButton
             title={`${childName} — Chronology`}
-            subtitle="Cornerstone Children's Home · Confidential"
+            subtitle="Cara Children's Home · Confidential"
             size="sm"
             variant="outline"
           />
@@ -504,6 +520,10 @@ export default function ChildChronologyPage({
                       "daily_log",
                       "risk_assessment",
                       "chronology_entry",
+                      "family_time",
+                      "lac_review",
+                      "appointment",
+                      "education",
                     ] as SourceTypeFilter[]
                   ).map((t) => (
                     <button

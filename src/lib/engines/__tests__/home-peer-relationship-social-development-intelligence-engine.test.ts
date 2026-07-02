@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME PEER RELATIONSHIP & SOCIAL DEVELOPMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

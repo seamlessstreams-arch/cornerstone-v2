@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE ENGINE
+// CARA — SANCTIONS & REWARDS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses behaviour management: sanction/reward ratios, proportionality,
@@ -85,7 +85,7 @@ export interface SRAlert {
   message: string;
 }
 
-export interface AriaSRInsight {
+export interface CaraSRInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -96,7 +96,7 @@ export interface SanctionsRewardsIntelligenceResult {
   sanction_types: TypeBreakdown[];
   child_profiles: ChildBehaviourProfile[];
   alerts: SRAlert[];
-  insights: AriaSRInsight[];
+  insights: CaraSRInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -291,8 +291,8 @@ export function computeSanctionsRewardsIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaSRInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraSRInsight[] = [];
 
   // Critical: disproportionate entries
   if (disproportionateEntries.length > 0) {

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION INTELLIGENCE HOOK
+// CARA — EDUCATION INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/education-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

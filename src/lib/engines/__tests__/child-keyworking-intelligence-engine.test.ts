@@ -393,7 +393,7 @@ describe("Child Keyworking Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.urgency === "immediate")).toBe(true);
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for no sessions", () => {
     const r = computeChildKeyworking(baseInput());

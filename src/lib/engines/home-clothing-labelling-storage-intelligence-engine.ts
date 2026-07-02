@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CLOTHING LABELLING & STORAGE INTELLIGENCE ENGINE
+// CARA -- HOME CLOTHING LABELLING & STORAGE INTELLIGENCE ENGINE
 // Measures clothing labelling compliance, wardrobe storage adequacy, seasonal
 // rotation, child ownership respect, and condition monitoring across the home.
 // Pure deterministic engine -- no imports, no LLM, no external deps.

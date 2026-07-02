@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEDROOM AUDIT CARD
+// CARA — BEDROOM AUDIT CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 36, Reg 6, Reg 10.
 // SCCIF: Overall Experiences — "Children have personalised bedrooms."
@@ -18,16 +18,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function BedroomAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.checks_completed > 0 ? "text-green-600" : "text-slate-600",
+              overview.checks_completed > 0 ? "text-[--cs-success]" : "text-slate-600",
             )}>
               {overview.checks_completed}
             </p>
@@ -99,7 +99,7 @@ export function BedroomAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.checks_overdue === 0 ? "text-green-600" : "text-amber-600",
+              overview.checks_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {overview.checks_overdue}
             </p>
@@ -111,7 +111,7 @@ export function BedroomAuditCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.check_completion_rate >= 90 ? "text-green-600" : "text-amber-600",
+              overview.check_completion_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {overview.check_completion_rate}%
             </p>
@@ -141,13 +141,13 @@ export function BedroomAuditCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Bedroom Intelligence
+              Cara Bedroom Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div

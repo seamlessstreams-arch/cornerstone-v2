@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S GUIDE SERVICE TESTS
+// CARA — CHILDREN'S GUIDE SERVICE TESTS
 // Pure-function unit tests for children's guide metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 16(2)–(3) requires a children's guide
@@ -61,7 +61,7 @@ function makeGuide(overrides: Partial<ChildrensGuide> = {}): ChildrensGuide {
     id: "guide-1",
     home_id: "home-1",
     version: "1.0",
-    title: "Welcome to Oak House",
+    title: "Welcome to Chamberlain House",
     effective_date: daysAgo(30),
     review_date: daysFromNow(335),
     last_reviewed_date: daysAgo(30),

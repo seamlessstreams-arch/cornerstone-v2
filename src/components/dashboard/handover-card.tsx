@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT HANDOVER INTELLIGENCE CARD
+// CARA — SHIFT HANDOVER INTELLIGENCE CARD
 // Dashboard card powered by the Handover Continuity Intelligence Engine.
 // CHR 2015 Reg 12, 13, 34 — care continuity, leadership, staffing records.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { useHandoverContinuityIntelligence } from "@/hooks/use-handover-continui
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Quality bar helper ──────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ function QualityBar({ label, value }: { label: string; value: number }) {
       </div>
       <span className={cn(
         "w-8 text-right tabular-nums font-medium",
-        value >= 90 ? "text-green-600" : value >= 75 ? "text-amber-600" : "text-red-600",
+        value >= 90 ? "text-[--cs-success]" : value >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]",
       )}>
         {value}%
       </span>
@@ -106,7 +106,7 @@ export function HandoverCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.completion_rate >= 95 ? "text-green-600" : o.completion_rate >= 80 ? "text-amber-600" : "text-red-600",
+              o.completion_rate >= 95 ? "text-[--cs-success]" : o.completion_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.completion_rate}%
             </p>
@@ -124,7 +124,7 @@ export function HandoverCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.sign_off_rate >= 90 ? "text-green-600" : o.sign_off_rate >= 70 ? "text-amber-600" : "text-red-600",
+              o.sign_off_rate >= 90 ? "text-[--cs-success]" : o.sign_off_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.sign_off_rate}%
             </p>
@@ -153,12 +153,12 @@ export function HandoverCard() {
                   <div className="flex items-center gap-1.5">
                     <Badge className={cn(
                       "text-[10px]",
-                      h.is_completed ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700",
+                      h.is_completed ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-risk-bg] text-[--cs-risk]",
                     )}>
                       {h.is_completed ? "Complete" : "Incomplete"}
                     </Badge>
                     {h.flag_count > 0 && (
-                      <Badge className="text-[10px] bg-red-100 text-red-700">
+                      <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         {h.flag_count} flags
                       </Badge>
                     )}
@@ -183,12 +183,12 @@ export function HandoverCard() {
                 <div className="flex items-center gap-2">
                   <span className={cn(
                     "tabular-nums font-bold",
-                    c.avg_mood >= 7 ? "text-green-600" : c.avg_mood >= 5 ? "text-amber-600" : "text-red-600",
+                    c.avg_mood >= 7 ? "text-[--cs-success]" : c.avg_mood >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
                   )}>
                     {c.avg_mood.toFixed(1)}
                   </span>
                   {c.total_alerts > 0 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
                       {c.total_alerts} alerts
                     </Badge>
                   )}
@@ -239,13 +239,13 @@ export function HandoverCard() {
           </div>
         )}
 
-        {/* ── ARIA Handover Intelligence ──────────────────────────────── */}
+        {/* ── Cara Handover Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Handover Intelligence
+              Cara Handover Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

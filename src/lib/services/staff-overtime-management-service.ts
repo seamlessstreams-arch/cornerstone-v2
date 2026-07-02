@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF OVERTIME MANAGEMENT SERVICE
+// CARA — STAFF OVERTIME MANAGEMENT SERVICE
 // Tracks staff overtime hours, Working Time Regulations compliance,
 // rest break adherence, night worker protections, and authorisation status
 // for staff in children's residential homes.
@@ -198,9 +198,9 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function computeAriaInsights(rows: StaffOvertimeManagementRow[]): string[] {
+export function computeCaraInsights(rows: StaffOvertimeManagementRow[]): string[] {
   const metrics = computeMetrics(rows);
   const alerts = computeAlerts(rows);
   const insights: string[] = [];
@@ -343,4 +343,4 @@ export async function updateStaffOvertimeManagement(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeMetrics, computeAlerts, computeAriaInsights };
+export const _testing = { computeMetrics, computeAlerts, computeCaraInsights };

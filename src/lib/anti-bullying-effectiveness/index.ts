@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Anti-Bullying Effectiveness Intelligence — Public API
+// Cara Anti-Bullying Effectiveness Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

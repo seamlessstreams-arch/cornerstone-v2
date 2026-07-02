@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE CARD
+// CARA — MISSING FROM CARE INTELLIGENCE CARD
 // Dashboard card for missing episode tracking, return interviews,
-// push/pull factors, and ARIA missing intelligence (Reg 34).
+// push/pull factors, and Cara missing intelligence (Reg 34).
 // Powered by the Missing From Care Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,23 +20,23 @@ import { useMissingIntelligence } from "@/hooks/use-missing-intelligence";
 // ── Colour maps ────────────────────────────────────────────────────────────
 
 const TYPE_COLOURS: Record<string, string> = {
-  missing: "bg-red-100 text-red-700",
-  absent: "bg-amber-100 text-amber-700",
-  awol: "bg-red-100 text-red-700",
-  failed_to_return: "bg-orange-100 text-orange-700",
+  missing: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  absent: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  awol: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  failed_to_return: "bg-[--cs-warning-soft] text-[--cs-warning]",
 };
 
 const RISK_COLOURS: Record<string, string> = {
-  very_high: "bg-red-100 text-red-700",
-  high: "bg-orange-100 text-orange-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+  very_high: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "bg-[--cs-warning-soft] text-[--cs-warning]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ export function MissingFromCareCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", p.active_episodes > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.active_episodes > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.active_episodes > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {p.active_episodes}
             </p>
             <p className="text-[10px] text-muted-foreground">Active</p>
@@ -109,7 +109,7 @@ export function MissingFromCareCard() {
           >
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              p.return_interview_completion_rate >= 100 ? "text-green-600" : "text-amber-600",
+              p.return_interview_completion_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {p.return_interview_completion_rate}%
             </p>
@@ -123,7 +123,7 @@ export function MissingFromCareCard() {
           <div className="rounded-lg border-2 border-red-300 bg-red-50 p-3 flex items-start gap-2">
             <Radio className="h-4 w-4 text-red-600 shrink-0 mt-0.5 animate-pulse" />
             <div>
-              <p className="text-xs font-bold text-red-800">ACTIVE MISSING EPISODE</p>
+              <p className="text-xs font-bold text-[--cs-risk]">ACTIVE MISSING EPISODE</p>
               <p className="text-[10px] text-red-700">
                 Immediate action required — check police notification and placing authority contact.
               </p>
@@ -144,14 +144,14 @@ export function MissingFromCareCard() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{ep.child_name}</span>
-                    <Badge className={cn("text-[10px]", TYPE_COLOURS[ep.type] ?? "bg-gray-100 text-gray-600")}>
+                    <Badge className={cn("text-[10px]", TYPE_COLOURS[ep.type] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                       {ep.type}
                     </Badge>
                     <Badge className={cn("text-[10px]", RISK_COLOURS[ep.risk_level] ?? "")}>
                       {ep.risk_level}
                     </Badge>
                     {ep.contextual_safeguarding && (
-                      <Badge className="text-[10px] bg-purple-100 text-purple-700">
+                      <Badge className="text-[10px] bg-[--cs-oversight-bg] text-[--cs-oversight]">
                         <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
                         CS
                       </Badge>
@@ -173,8 +173,8 @@ export function MissingFromCareCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground">Push/Pull Factor Analysis</p>
             <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-2.5">
-                <p className="text-[10px] font-semibold text-blue-800 mb-1">Pull Factors</p>
+              <div className="rounded-lg border border-[--cs-info-soft] bg-[--cs-info-bg] p-2.5">
+                <p className="text-[10px] font-semibold text-[--cs-info] mb-1">Pull Factors</p>
                 {intel.push_pull.pull.length > 0 ? intel.push_pull.pull.map((f, i) => (
                   <div key={i} className="flex items-center justify-between text-[10px] text-blue-700">
                     <span>{f.factor.replace(/_/g, " ")}</span>
@@ -186,8 +186,8 @@ export function MissingFromCareCard() {
                   </p>
                 )}
               </div>
-              <div className="rounded-lg border border-orange-200 bg-orange-50 p-2.5">
-                <p className="text-[10px] font-semibold text-orange-800 mb-1">Push Factors</p>
+              <div className="rounded-lg border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5">
+                <p className="text-[10px] font-semibold text-[--cs-warning] mb-1">Push Factors</p>
                 {intel.push_pull.push.length > 0 ? intel.push_pull.push.map((f, i) => (
                   <div key={i} className="flex items-center justify-between text-[10px] text-orange-700">
                     <span>{f.factor.replace(/_/g, " ")}</span>
@@ -201,8 +201,8 @@ export function MissingFromCareCard() {
               </div>
             </div>
             {intel.push_pull.risk.length > 0 && (
-              <div className="rounded-lg border border-red-200 bg-red-50 p-2.5">
-                <p className="text-[10px] font-semibold text-red-800 mb-1">
+              <div className="rounded-lg border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5">
+                <p className="text-[10px] font-semibold text-[--cs-risk] mb-1">
                   <AlertTriangle className="h-3 w-3 inline mr-1" />
                   Risk Indicators
                 </p>
@@ -217,13 +217,13 @@ export function MissingFromCareCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Missing Intelligence
+              Cara Missing Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

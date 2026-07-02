@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Life Story & Identity Work Engine
+// Cara Life Story & Identity Work Engine
 //
 // Deterministic intelligence engine for evaluating life story work quality,
 // identity support, cultural connection, memory keeping, and family links.

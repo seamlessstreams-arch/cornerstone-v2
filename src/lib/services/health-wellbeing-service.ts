@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH & WELLBEING SERVICE
+// CARA — HEALTH & WELLBEING SERVICE
 // Tracks medical appointments, dental/optician visits, immunisation status,
 // emotional wellbeing (SDQ scores), CAMHS referrals, and statutory health
 // assessments. CHR 2015 Reg 23 (health and wellbeing).

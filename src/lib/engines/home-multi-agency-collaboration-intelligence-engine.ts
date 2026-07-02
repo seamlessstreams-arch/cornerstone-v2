@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MULTI-AGENCY COLLABORATION INTELLIGENCE ENGINE
+// CARA — HOME MULTI-AGENCY COLLABORATION INTELLIGENCE ENGINE
 // Tracks the quality and effectiveness of multi-agency working — LAC review
 // attendance and timeliness, social worker visit frequency, CAMHS/therapeutic
 // service engagement, education liaison, and inter-agency information sharing.

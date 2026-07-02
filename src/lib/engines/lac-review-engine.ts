@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW & PERMANENCE INTELLIGENCE ENGINE
+// CARA — LAC REVIEW & PERMANENCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses LAC (Looked-After Children) review timeliness, child participation,
@@ -107,7 +107,7 @@ export interface LACReviewAlert {
   message: string;
 }
 
-export interface AriaLACReviewInsight {
+export interface CaraLACReviewInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -119,7 +119,7 @@ export interface LACReviewResult {
   participation: ParticipationAnalysis;
   stability: StabilityOverview;
   alerts: LACReviewAlert[];
-  insights: AriaLACReviewInsight[];
+  insights: CaraLACReviewInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -312,8 +312,8 @@ export function computeLACReviewIntelligence(input: LACReviewEngineInput): LACRe
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaLACReviewInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraLACReviewInsight[] = [];
 
   // Critical: overdue reviews
   if (overdueChildren.length > 0) {

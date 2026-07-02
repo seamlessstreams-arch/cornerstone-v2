@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & LIFE SKILLS INTELLIGENCE CARD
+// CARA — HOME INDEPENDENCE & LIFE SKILLS INTELLIGENCE CARD
 // Independence assessments, cooking & baking, laundry & self-care,
 // money management, and household tasks.
 // CHR 2015 Reg 12.
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<IndependenceLifeSkillsRating, { bg: string; text: st
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.independence_rating === "inadequate" && (d.independence_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      independence_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.independence_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.independence_rating === "inadequate";
@@ -66,7 +83,7 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-indigo-500")} />
+            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-indigo-500")} />
             <span className="text-slate-900">Independence & Life Skills</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -89,8 +106,8 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.assessments.child_coverage >= 80 ? "text-green-600" :
-                  d.assessments.child_coverage >= 50 ? "text-amber-600" : "text-red-600"
+                  d.assessments.child_coverage >= 80 ? "text-[--cs-success]" :
+                  d.assessments.child_coverage >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.assessments.total_assessments > 0 ? `${d.assessments.child_coverage}%` : "—"}
                 </p>
@@ -103,8 +120,8 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ChefHat className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.cooking.independent_or_teaching_rate >= 60 ? "text-green-600" :
-                  d.cooking.independent_or_teaching_rate >= 30 ? "text-amber-600" : "text-red-600"
+                  d.cooking.independent_or_teaching_rate >= 60 ? "text-[--cs-success]" :
+                  d.cooking.independent_or_teaching_rate >= 30 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.cooking.total_records > 0 ? `${d.cooking.independent_or_teaching_rate}%` : "—"}
                 </p>
@@ -117,8 +134,8 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Wallet className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.money.confident_or_independent_rate >= 60 ? "text-green-600" :
-                  d.money.confident_or_independent_rate >= 30 ? "text-amber-600" : "text-red-600"
+                  d.money.confident_or_independent_rate >= 60 ? "text-[--cs-success]" :
+                  d.money.confident_or_independent_rate >= 30 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.money.total_records > 0 ? `${d.money.confident_or_independent_rate}%` : "—"}
                 </p>
@@ -131,8 +148,8 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <WashingMachine className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.household.avg_completion >= 80 ? "text-green-600" :
-                  d.household.avg_completion >= 50 ? "text-amber-600" : "text-red-600"
+                  d.household.avg_completion >= 80 ? "text-[--cs-success]" :
+                  d.household.avg_completion >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.household.total_tasks > 0 ? `${d.household.avg_completion}%` : "—"}
                 </p>
@@ -150,7 +167,7 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -165,7 +182,7 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -192,12 +209,12 @@ export function HomeIndependenceLifeSkillsIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Life Skills Intelligence
+              Cara Life Skills Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

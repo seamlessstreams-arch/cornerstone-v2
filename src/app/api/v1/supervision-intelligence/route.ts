@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION INTELLIGENCE API ROUTE
+// CARA — SUPERVISION INTELLIGENCE API ROUTE
 // GET /api/v1/supervision-intelligence
 // Returns supervision compliance, staff wellbeing, training status,
-// action completion, and ARIA staff development intelligence.
+// action completion, and Cara staff development intelligence.
 // Reg 33/32/29 — supervision, staff fitness, RM qualifications.
 // ══════════════════════════════════════════════════════════════════════════════
 

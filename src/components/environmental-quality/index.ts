@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Environmental Quality Intelligence — Component Exports
+// Cara Environmental Quality Intelligence — Component Exports
 // ══════════════════════════════════════════════════════════════════════════════
 
 export { EnvironmentalQualityDashboardWidget } from "./EnvironmentalQualityDashboardWidget";

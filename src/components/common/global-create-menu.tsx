@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GLOBAL CREATE MENU
+// CARA — GLOBAL CREATE MENU
 // One-click access to create any record from any page.
 // ══════════════════════════════════════════════════════════════════════════════
 

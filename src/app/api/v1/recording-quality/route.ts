@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY API ROUTE
+// CARA — RECORDING QUALITY API ROUTE
 // GET /api/v1/recording-quality
 //
 // Scores the WRITING of the home's narrative records (daily logs, incidents,

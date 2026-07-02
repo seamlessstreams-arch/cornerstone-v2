@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD ONLINE SAFETY MONITORING SERVICE
+// CARA — CHILD ONLINE SAFETY MONITORING SERVICE
 // Device checks, internet filter reviews, social media audits, app reviews,
 // screen time reviews, online incident recording, education sessions,
 // and policy reviews for children in residential care.
@@ -244,7 +244,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: ChildOnlineSafetyMonitoringRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -449,5 +449,5 @@ export async function deleteChildOnlineSafetyMonitoring(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
 };

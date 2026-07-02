@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Nutrition & Healthy Living Intelligence Engine
+// Cara Nutrition & Healthy Living Intelligence Engine
 //
 // Evaluates meal quality, dietary compliance, physical activity, health
 // promotion, and outcomes for children in residential care.

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -71,12 +71,12 @@ function IntegrationsTab() {
     { name: "Supabase",      desc: "Database & authentication backend",        icon: Database },
     { name: "BrightHR",      desc: "Legacy HR data sync via Chrome extension", icon: Zap      },
     { name: "Sage Payroll",  desc: "Payroll export integration",               icon: FileText },
-    { name: "ClearCare",     desc: "Care management data sync",                icon: Globe    },
+    { name: "DBS Update Service", desc: "Online DBS status checks",            icon: Globe    },
     { name: "Ofsted Portal", desc: "Inspection reporting and notifications",   icon: Shield   },
   ];
   const [statuses, setStatuses] = React.useState<Record<string, "connected" | "not_connected">>({
     Supabase: "connected", BrightHR: "connected",
-    "Sage Payroll": "not_connected", ClearCare: "not_connected", "Ofsted Portal": "not_connected",
+    "Sage Payroll": "not_connected", "DBS Update Service": "not_connected", "Ofsted Portal": "not_connected",
   });
   const [modal, setModal] = React.useState<string | null>(null);
   const [cfg, setCfg] = React.useState("");
@@ -210,7 +210,7 @@ function DocumentPreview({ primaryColour, secondaryColour, companyName, homeName
       </div>
       <div className="px-5 py-2 flex items-center justify-between" style={{ backgroundColor: secondaryColour + "20", borderTop: `2px solid ${secondaryColour}` }}>
         <div className="text-[10px] text-slate-500">{footerText}</div>
-        <div className="text-[10px]" style={{ color: primaryColour }}>Cornerstone</div>
+        <div className="text-[10px]" style={{ color: primaryColour }}>Cara</div>
       </div>
     </div>
   );
@@ -229,7 +229,7 @@ function BrandingTab() {
   const updateOrg    = useUpdateOrganisationBranding();
   const updateHome   = useUpdateHomeBranding();
 
-  const [sysForm, setSysForm] = useState({ primary_colour: "#1e3a5f", secondary_colour: "#2dd4bf", accent_colour: "#3b82f6", default_footer_text: "Generated securely through Cornerstone", support_email: "support@cornerstone.care" });
+  const [sysForm, setSysForm] = useState({ primary_colour: "#1e3a5f", secondary_colour: "#2dd4bf", accent_colour: "#3b82f6", default_footer_text: "Generated securely through Cara", support_email: "support@cara.care" });
   const [orgForm, setOrgForm] = useState({ company_name: "", trading_name: "", registered_provider_name: "", company_registration_number: "", ofsted_provider_reference: "", address: "", phone: "", email: "", website: "", responsible_individual_name: "", primary_colour: "", secondary_colour: "", logo_url: "", document_logo_url: "", confidentiality_notice: "" });
   const [homeForm2, setHomeForm2] = useState({ home_name: "", home_address: "", ofsted_urn: "", registered_manager_name: "", responsible_individual_name: "", emergency_contact: "", safeguarding_contact: "", lado_contact: "", local_authority_contact: "", police_contact: "", logo_override_url: "" });
   const [showAudit, setShowAudit] = useState(false);
@@ -258,7 +258,7 @@ function BrandingTab() {
               companyName={orgForm.company_name || "Your Organisation"}
               homeName={homeForm2.home_name || "Home Name"}
               registeredManagerName={homeForm2.registered_manager_name || "Manager Name"}
-              footerText={orgForm.company_name ? `Generated securely through Cornerstone on behalf of ${orgForm.company_name}` : sysForm.default_footer_text}
+              footerText={orgForm.company_name ? `Generated securely through Cara on behalf of ${orgForm.company_name}` : sysForm.default_footer_text}
             />
           </div>
           <p className="text-xs text-slate-400 mt-3">Preview updates as you edit branding settings below.</p>
@@ -350,7 +350,7 @@ function BrandingTab() {
       {/* System branding — super admin only */}
       {isSuperAdmin && (
         <Card>
-          <CardHeader><CardTitle className="flex items-center gap-2"><Palette className="h-4 w-4 text-purple-600" />Cornerstone System Branding <Badge className="text-[9px] bg-purple-100 text-purple-700 rounded-full ml-1">Super Admin</Badge></CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2"><Palette className="h-4 w-4 text-purple-600" />Cara System Branding <Badge className="text-[9px] bg-purple-100 text-purple-700 rounded-full ml-1">Super Admin</Badge></CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-3 gap-4">
               <ColourField label="System primary" value={sysForm.primary_colour} onChange={(v) => setSysForm((f) => ({ ...f, primary_colour: v }))} />
@@ -459,7 +459,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <PageShell title="Settings" subtitle="Account, home configuration, and preferences" ariaContext={{ pageTitle: "Settings", sourceType: "general" }} showQuickCreate={false} actions={<AriaStudioQuickActionButton context={{ record_type: "uploaded_document", record_id: "home_oak", home_id: "home_oak" }} />}>
+    <PageShell title="Settings" subtitle="Account, home configuration, and preferences" caraContext={{ pageTitle: "Settings", sourceType: "general" }} showQuickCreate={false} actions={<CaraStudioQuickActionButton context={{ record_type: "uploaded_document", record_id: "home_oak", home_id: "home_oak" }} />}>
       <div className="flex gap-6">
         <aside className="w-52 shrink-0">
           <nav className="space-y-0.5">
@@ -635,7 +635,7 @@ export default function SettingsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Settings — home configuration, account settings, user preferences, notification settings, branding, integration settings, system administration"
         recordType="uploaded_document"

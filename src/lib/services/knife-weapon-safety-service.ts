@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- KNIFE & WEAPON SAFETY SERVICE
+// CARA -- KNIFE & WEAPON SAFETY SERVICE
 // Tracks kitchen knife audits, sharp object checks, weapon incidents,
 // bedroom searches (with consent), communal area checks, risk assessments,
 // educational sessions, policy reviews, Reg 40 notifications, and
@@ -600,7 +600,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: KnifeWeaponSafetyRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

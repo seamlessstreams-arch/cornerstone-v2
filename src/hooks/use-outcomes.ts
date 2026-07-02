@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Outcomes Tracker Hook
+// CARA — Outcomes Tracker Hook
 // React Query wrapper for /api/v1/outcomes
 // ══════════════════════════════════════════════════════════════════════════════
 

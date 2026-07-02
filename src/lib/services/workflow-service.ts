@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ENGINE SERVICE
+// CARA — WORKFLOW ENGINE SERVICE
 // Pre-built workflow templates for regulated care processes. Step-by-step
-// progression with evidence linking, task auto-creation, and ARIA suggestions.
+// progression with evidence linking, task auto-creation, and Cara suggestions.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -49,7 +49,7 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplateDefinition[] = [
       { title: "Immediate Safety", description: "Ensure immediate safety of all young people and staff. Administer first aid if needed.", assigned_role: "team_leader", evidence_required: false, auto_create_task: false },
       { title: "Incident Recording", description: "Complete detailed incident report including body map if applicable.", assigned_role: "residential_care_worker", evidence_required: true, auto_create_task: true },
       { title: "Notifications", description: "Notify required parties: placing authority, parents/carers, Ofsted (if threshold met), LADO if applicable.", assigned_role: "registered_manager", evidence_required: true, auto_create_task: true },
-      { title: "Management Oversight", description: "Registered Manager provides written oversight within 24 hours. Consider ARIA quality check.", assigned_role: "registered_manager", evidence_required: true, auto_create_task: true, estimated_hours: 24 },
+      { title: "Management Oversight", description: "Registered Manager provides written oversight within 24 hours. Consider Cara quality check.", assigned_role: "registered_manager", evidence_required: true, auto_create_task: true, estimated_hours: 24 },
       { title: "Debrief", description: "Staff debrief and young person debrief (when appropriate). Record outcomes.", assigned_role: "deputy_manager", evidence_required: true, auto_create_task: true },
       { title: "Review & Learning", description: "Review incident for patterns, update risk assessment, identify learning points for team.", assigned_role: "registered_manager", evidence_required: true, auto_create_task: true },
     ],

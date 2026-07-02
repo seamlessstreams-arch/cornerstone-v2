@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SHIFT PATTERN MONITORING SERVICE
+// CARA — STAFF SHIFT PATTERN MONITORING SERVICE
 // Tracks shift patterns, working hours, fatigue risk, and staffing
 // levels to ensure safe care delivery.
 // CHR 2015 Reg 31 (workforce planning — sufficient, suitably qualified staff),

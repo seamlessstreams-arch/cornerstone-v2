@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE SAFETY & EMERGENCY DRILL INTELLIGENCE ENGINE
+// CARA — HOME FIRE SAFETY & EMERGENCY DRILL INTELLIGENCE ENGINE
 // Tracks fire safety compliance: fire drill frequency and evacuation times,
 // fire risk assessments, fire equipment maintenance, staff fire training,
 // and fire safety documentation.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS LOG INTELLIGENCE CARD
+// CARA — VISITORS LOG INTELLIGENCE CARD
 // Dashboard card powered by the Visitors Intelligence Engine.
 // Reg 12 (contact), Reg 22 (contact), Reg 44 (independent visits), SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { useVisitorsIntelligence } from "@/hooks/use-visitors-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ export function VisitorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.dbs_compliance_rate === 100 ? "text-green-600" : o.dbs_compliance_rate >= 90 ? "text-amber-600" : "text-red-600",
+              o.dbs_compliance_rate === 100 ? "text-[--cs-success]" : o.dbs_compliance_rate >= 90 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.dbs_compliance_rate}%
             </p>
@@ -105,7 +105,7 @@ export function VisitorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.currently_signed_in === 0 ? "text-green-600" : "text-blue-600",
+              o.currently_signed_in === 0 ? "text-[--cs-success]" : "text-blue-600",
             )}>
               {o.currently_signed_in}
             </p>
@@ -134,12 +134,12 @@ export function VisitorsCard() {
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
                   {v.status === "signed_out" ? (
-                    <Badge className="text-[10px] bg-green-100 text-green-700">
+                    <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                       <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />
                       Out
                     </Badge>
                   ) : (
-                    <Badge className="text-[10px] bg-blue-100 text-blue-700">
+                    <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">
                       <UserCheck className="h-2.5 w-2.5 mr-0.5" />
                       In
                     </Badge>
@@ -206,7 +206,7 @@ export function VisitorsCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.id_compliance_rate === 100 ? "text-green-600" : "text-amber-600",
+              o.id_compliance_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.id_compliance_rate}%
             </p>
@@ -236,13 +236,13 @@ export function VisitorsCard() {
           </div>
         )}
 
-        {/* ── ARIA Visitor Intelligence ───────────────────────────────── */}
+        {/* ── Cara Visitor Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Visitor Intelligence
+              Cara Visitor Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

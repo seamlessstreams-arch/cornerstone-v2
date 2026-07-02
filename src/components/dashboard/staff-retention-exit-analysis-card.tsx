@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETENTION & PROFILE INTELLIGENCE CARD
+// CARA — STAFF RETENTION & PROFILE INTELLIGENCE CARD
 // Dashboard card for turnover, vacancies, and workforce profile breakdown.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,9 +19,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -77,7 +77,7 @@ export function StaffRetentionExitAnalysisCard() {
             <p className="text-[10px] text-muted-foreground">Active</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", p.bank_agency === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.bank_agency === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.bank_agency === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {p.bank_agency}
             </p>
             <p className="text-[10px] text-muted-foreground">Bank/Agency</p>
@@ -139,13 +139,13 @@ export function StaffRetentionExitAnalysisCard() {
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Retention Intelligence
+              Cara Retention Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME UTILITY BILLS & COST MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME UTILITY BILLS & COST MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration (180 tests)
 // ══════════════════════════════════════════════════════════════════════════════
 

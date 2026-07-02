@@ -4,7 +4,7 @@
 // RECORD ANYTHING — universal capture entry point
 //
 // A single button (drop into any page header) that opens the free-text "just write
-// what happened" capture. Cornerstone classifies + routes it everywhere (capture once,
+// what happened" capture. Cara classifies + routes it everywhere (capture once,
 // surface everywhere). When a child is in context (a young-person page) it records
 // straight against that child; otherwise it offers a quick child picker plus a general
 // home note. Attribution uses the signed-in user, never a hardcoded staff id.
@@ -66,11 +66,11 @@ export function RecordAnythingButton({ childId, variant = "soft", className, lab
           "inline-flex items-center gap-1.5 rounded-xl px-3 min-h-[40px] text-sm font-medium transition-colors",
           variant === "solid"
             ? "bg-[var(--cs-navy)] text-white hover:bg-[var(--cs-navy-soft)]"
-            : "border border-[var(--cs-aria-gold)] text-[var(--cs-navy)] bg-[var(--cs-aria-gold-bg)] hover:bg-[var(--cs-aria-gold-bg)]/70",
+            : "border border-[var(--cs-cara-gold)] text-[var(--cs-navy)] bg-[var(--cs-cara-gold-bg)] hover:bg-[var(--cs-cara-gold-bg)]/70",
           className,
         )}
       >
-        <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+        <Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" />
         <span className="hidden sm:inline">{label}</span>
         <span className="sm:hidden">Record</span>
       </button>
@@ -99,7 +99,7 @@ function RecordAnythingBody({ childId, onClose, onDirty }: { childId?: string; o
     return (
       <>
         <DialogHeader className="pr-8">
-          <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Record a general note</DialogTitle>
+          <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" /> Record a general note</DialogTitle>
           <DialogDescription>Write what happened. We&apos;ll route it to the right place.</DialogDescription>
         </DialogHeader>
         <UniversalHomeEntry
@@ -116,8 +116,8 @@ function RecordAnythingBody({ childId, onClose, onDirty }: { childId?: string; o
     return (
       <>
         <DialogHeader className="pr-8">
-          <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Record anything</DialogTitle>
-          <DialogDescription>Write what happened — Cornerstone classifies it and routes it everywhere.</DialogDescription>
+          <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" /> Record anything</DialogTitle>
+          <DialogDescription>Write what happened — Cara classifies it and routes it everywhere.</DialogDescription>
         </DialogHeader>
         <UniversalChildEntry
           childId={picked}
@@ -150,7 +150,7 @@ function ChildPicker({ onPick }: { onPick: (id: string) => void }) {
   return (
     <>
       <DialogHeader className="pr-8">
-        <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" /> Record anything</DialogTitle>
+        <DialogTitle className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" /> Record anything</DialogTitle>
         <DialogDescription>Who is this about? Pick a young person, or record a general home note.</DialogDescription>
       </DialogHeader>
 
@@ -172,7 +172,7 @@ function ChildPicker({ onPick }: { onPick: (id: string) => void }) {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search young people…"
-          className="w-full rounded-xl border border-[var(--cs-border)] bg-white py-2 pl-9 pr-3 text-sm focus:border-[var(--cs-aria-gold)] focus:outline-none"
+          className="w-full rounded-xl border border-[var(--cs-border)] bg-white py-2 pl-9 pr-3 text-sm focus:border-[var(--cs-cara-gold)] focus:outline-none"
           autoFocus
         />
       </div>

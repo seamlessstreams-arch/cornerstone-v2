@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ON-DUTY STATUS BAR
+// CARA — ON-DUTY STATUS BAR
 // Compact, always-visible strip at the bottom of the sidebar showing
 // who is currently on shift. Essential safety feature — every staff member
 // needs to know who is in the building at any time.
@@ -68,7 +68,7 @@ export function OnDutyBar({ collapsed }: { collapsed: boolean }) {
             On Duty
           </span>
         </div>
-        <Link href="/rota" className="text-[10px] text-[var(--cs-aria-gold)]/70 hover:text-[var(--cs-aria-gold)]">
+        <Link href="/rota" className="text-[10px] text-[var(--cs-cara-gold)]/70 hover:text-[var(--cs-cara-gold)]">
           Rota
         </Link>
       </div>

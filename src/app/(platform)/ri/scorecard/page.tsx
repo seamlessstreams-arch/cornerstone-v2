@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -88,7 +88,7 @@ const METRIC_GROUPS: MetricGroup[] = [
     ],
   },
   {
-    label: "Care Quality", icon: Heart, colour: "text-[var(--cs-aria-gold)]",
+    label: "Care Quality", icon: Heart, colour: "text-[var(--cs-cara-gold)]",
     metrics: [
       { key: "medication_governance_score", label: "Medication Governance", live: true },
       { key: "care_planning_score",         label: "Care Planning",         live: true },
@@ -113,7 +113,7 @@ function clamp(v: number, min: number, max: number) { return Math.min(max, Math.
 export default function ScorecardPage() {
   const { currentUser } = useAuthContext();
   const homeId = currentUser?.home_id ?? "home_oak";
-  const [aria, setAria] = useState<StrategicResult | null>(null);
+  const [cara, setCara] = useState<StrategicResult | null>(null);
   const [loading, setLoading] = useState(false);
 
   const { data: trainingNeedsData } = useTrainingNeeds({ homeId: homeId });
@@ -157,18 +157,18 @@ export default function ScorecardPage() {
     setLoading(true);
     try {
       const res = await api.post<{ data: { parsed?: StrategicResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_strategic_analysis",
           style: "provider_summary",
-          source_content: `Oak House governance scorecard (live data). Overall: ${overallScore}/100. Risk level: ${riskLevel}. ${urgentNeeds} urgent training needs. Metrics: ${ALL_METRICS.map((m) => `${m.label}: ${(scores as unknown as Record<string, number>)[m.key]}`).join(", ")}.`,
+          source_content: `Chamberlain House governance scorecard (live data). Overall: ${overallScore}/100. Risk level: ${riskLevel}. ${urgentNeeds} urgent training needs. Metrics: ${ALL_METRICS.map((m) => `${m.label}: ${(scores as unknown as Record<string, number>)[m.key]}`).join(", ")}.`,
           page_context: "RI Governance Scorecard",
           record_type: "governance_analysis",
           user_role: "responsible_individual",
         }
       );
       const parsed = res.data?.parsed;
-      if (parsed) setAria(parsed);
+      if (parsed) setCara(parsed);
     } catch {
       // ignore
     } finally {
@@ -179,18 +179,18 @@ export default function ScorecardPage() {
   return (
     <PageShell
       title="Governance Scorecard"
-      subtitle="15 live governance metrics — Oak House"
-      ariaContext={{ pageTitle: "RI Governance Scorecard", sourceType: "general" }}
+      subtitle="15 live governance metrics — Chamberlain House"
+      caraContext={{ pageTitle: "RI Governance Scorecard", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Governance Scorecard" subtitle="Oak House — RI Report" targetId="scorecard-content" />
+          <PrintButton title="Governance Scorecard" subtitle="Chamberlain House — RI Report" targetId="scorecard-content" />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="RI Scorecard — governance evidence upload" />
           <Button size="sm" className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white" onClick={generateStrategic} disabled={loading}>
             <Sparkles className="h-3.5 w-3.5" />
-            {loading ? "Analysing…" : "ARIA Strategic Analysis"}
+            {loading ? "Analysing…" : "Cara Strategic Analysis"}
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -204,7 +204,7 @@ export default function ScorecardPage() {
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4 text-indigo-400 shrink-0" />
-              <span className="text-sm font-semibold text-white">Oak House Governance</span>
+              <span className="text-sm font-semibold text-white">Chamberlain House Governance</span>
               <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold ml-auto", riskColour)}>
                 {riskLevel.toUpperCase()} RISK
               </span>
@@ -284,21 +284,21 @@ export default function ScorecardPage() {
           })}
         </div>
 
-        {/* ARIA strategic analysis */}
-        {aria && (
+        {/* Cara strategic analysis */}
+        {cara && (
           <div className="space-y-4">
             <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-indigo-600" />
-                <p className="text-sm font-semibold text-indigo-900">ARIA Strategic Analysis</p>
+                <p className="text-sm font-semibold text-indigo-900">Cara Strategic Analysis</p>
               </div>
-              <p className="text-sm text-indigo-800 leading-relaxed">{aria.overall_governance_narrative}</p>
+              <p className="text-sm text-indigo-800 leading-relaxed">{cara.overall_governance_narrative}</p>
             </div>
             {[
-              { label: "Safeguarding", content: aria.safeguarding_analysis },
-              { label: "Outcome Evidence", content: aria.outcome_evidence },
-              { label: "Management Effectiveness", content: aria.management_effectiveness },
-              { label: "Compliance Position", content: aria.compliance_position },
+              { label: "Safeguarding", content: cara.safeguarding_analysis },
+              { label: "Outcome Evidence", content: cara.outcome_evidence },
+              { label: "Management Effectiveness", content: cara.management_effectiveness },
+              { label: "Compliance Position", content: cara.compliance_position },
             ].map(({ label, content }) => content && (
               <div key={label}>
                 <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">{label}</p>
@@ -307,11 +307,11 @@ export default function ScorecardPage() {
                 </div>
               </div>
             ))}
-            {aria.challenge_questions_for_manager?.length > 0 && (
+            {cara.challenge_questions_for_manager?.length > 0 && (
               <div>
                 <p className="text-xs font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-2">Challenge Questions for Manager</p>
                 <div className="space-y-2">
-                  {aria.challenge_questions_for_manager.map((q, i) => (
+                  {cara.challenge_questions_for_manager.map((q, i) => (
                     <div key={i} className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
                       <p className="text-sm text-amber-900 leading-relaxed">
                         <span className="font-bold mr-2">{i + 1}.</span>{q}
@@ -324,7 +324,7 @@ export default function ScorecardPage() {
           </div>
         )}
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="RI Governance Scorecard — responsible individual governance score, quality standards compliance, safeguarding performance, regulatory evidence, board reporting, Ofsted readiness, strategic analysis"
         recordType="management_oversight"

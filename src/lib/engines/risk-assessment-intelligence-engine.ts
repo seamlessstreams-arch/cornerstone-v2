@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT INTELLIGENCE ENGINE
+// CARA — RISK ASSESSMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses risk levels, trends, review compliance, mitigation effectiveness,
@@ -91,7 +91,7 @@ export interface RiskAlert {
   message: string;
 }
 
-export interface AriaRiskInsight {
+export interface CaraRiskInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -101,7 +101,7 @@ export interface RiskAssessmentIntelligenceResult {
   child_profiles: ChildRiskProfile[];
   domain_analysis: DomainAnalysis[];
   alerts: RiskAlert[];
-  insights: AriaRiskInsight[];
+  insights: CaraRiskInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -293,8 +293,8 @@ export function computeRiskAssessmentIntelligence(input: RiskAssessmentIntellige
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaRiskInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraRiskInsight[] = [];
 
   // Critical: very_high risk present
   if (veryHigh > 0) {

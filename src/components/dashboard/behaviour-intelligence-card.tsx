@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT INTELLIGENCE CARD
+// CARA — BEHAVIOUR SUPPORT INTELLIGENCE CARD
 // Dashboard card for behaviour trends, PI analysis, de-escalation success,
-// rewards/sanctions balance, and ARIA behaviour intelligence (Reg 19/20).
+// rewards/sanctions balance, and Cara behaviour intelligence (Reg 19/20).
 // Powered by the Behaviour Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -31,16 +31,16 @@ const CATEGORY_COLOURS: Record<string, string> = {
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -95,19 +95,19 @@ export function BehaviourIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Positive</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: p.de_escalation_success_rate >= 75 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", p.de_escalation_success_rate >= 75 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.de_escalation_success_rate >= 75 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {p.de_escalation_success_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">De-escalation</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", p.pi_count > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.pi_count > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.pi_count > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {p.pi_count}
             </p>
             <p className="text-[10px] text-muted-foreground">PI Events</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", rs.ratio >= 75 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", rs.ratio >= 75 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", rs.ratio >= 75 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {rs.ratio}%
             </p>
             <p className="text-[10px] text-muted-foreground">Reward Ratio</p>
@@ -152,18 +152,18 @@ export function BehaviourIntelligenceCard() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   {pi.debriefed ? (
-                    <Badge className="text-[10px] bg-green-100 text-green-700">
+                    <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                       <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />
                       Debriefed
                     </Badge>
                   ) : (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
                       No debrief
                     </Badge>
                   )}
                   {pi.injury && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">Injury</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Injury</Badge>
                   )}
                   <span className="text-muted-foreground">{pi.date}</span>
                 </div>
@@ -184,7 +184,7 @@ export function BehaviourIntelligenceCard() {
               </p>
             </div>
           </div>
-          <Badge className={cn("text-[10px]", rs.ratio >= 75 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700")}>
+          <Badge className={cn("text-[10px]", rs.ratio >= 75 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
             {rs.reward_to_sanction} ratio
           </Badge>
         </div>
@@ -211,13 +211,13 @@ export function BehaviourIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Behaviour Intelligence
+              Cara Behaviour Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

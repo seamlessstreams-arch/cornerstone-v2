@@ -334,7 +334,7 @@ describe("computeHomeWellbeing", () => {
     }
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   it("generates positive insight for thriving home", () => {
     const r = computeHomeWellbeing(baseInput());
     if (r.temperature === "thriving") {

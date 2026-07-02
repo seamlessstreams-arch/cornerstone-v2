@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RADICALISATION RISK SERVICE
+// CARA — CHILD RADICALISATION RISK SERVICE
 // Radicalisation risk assessments, Prevent referrals, Channel programme,
 // police notification, safety planning, and multi-agency coordination.
 // CHR 2015 Reg 12 (protection of children — safeguarding from radicalisation),
@@ -215,7 +215,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: ChildRadicalisationRiskRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -408,5 +408,5 @@ export async function deleteChildRadicalisationRisk(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
 };

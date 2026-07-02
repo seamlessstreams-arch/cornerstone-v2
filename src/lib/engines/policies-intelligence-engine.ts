@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES REGISTER INTELLIGENCE ENGINE
+// CARA — POLICIES REGISTER INTELLIGENCE ENGINE
 // Pure deterministic engine for policy register coverage analysis.
 // Analyses review compliance, staff acknowledgement rates, category coverage,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // Reg 38: policies and procedures — Reg 13: leadership and management
 // CHR 2015: documented policies for all key operational areas
 // ══════════════════════════════════════════════════════════════════════════════
@@ -61,7 +61,7 @@ export interface PoliciesAlert {
   message: string;
 }
 
-export interface AriaPoliciesInsight {
+export interface CaraPoliciesInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -71,7 +71,7 @@ export interface PoliciesIntelligenceResult {
   category_breakdown: PolicyCategoryBreakdown[];
   overdue_policies: OverduePolicy[];
   alerts: PoliciesAlert[];
-  insights: AriaPoliciesInsight[];
+  insights: CaraPoliciesInsight[];
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -271,7 +271,7 @@ export function computePoliciesIntelligence(input: {
 
   // ── Insights ────────────────────────────────────────────────────────────
 
-  const insights: AriaPoliciesInsight[] = [];
+  const insights: CaraPoliciesInsight[] = [];
 
   // Critical: missing required categories
   const missingCategories = ALL_CATEGORIES.filter(

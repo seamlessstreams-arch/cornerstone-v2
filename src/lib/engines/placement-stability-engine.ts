@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE ENGINE
+// CARA — PLACEMENT STABILITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates child data, daily logs, incidents,
 // missing episodes, keyworking sessions, and outcome targets to produce:
@@ -8,7 +8,7 @@
 // - Disruption risk indicators per child
 // - Wellbeing trajectory analysis (mood scores over time)
 // - Protective factors and risk factors
-// - Auto-generated ARIA placement intelligence insights (deterministic)
+// - Auto-generated Cara placement intelligence insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 5  — Engaging children (welfare paramount)
@@ -121,7 +121,7 @@ export interface DisruptionIndicator {
   detail: string;
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -131,7 +131,7 @@ export interface PlacementStabilityResult {
   home_metrics: HomeStabilityMetrics;
   wellbeing_trend: WellbeingDataPoint[];
   disruption_indicators: DisruptionIndicator[];
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface PlacementStabilityInput {
@@ -520,8 +520,8 @@ export function computePlacementStability(input: PlacementStabilityInput): Place
   const sevOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
   disruptionIndicators.sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3));
 
-  // ── ARIA Intelligence Insights ─────────────────────────────────────────
-  const insights: AriaInsight[] = [];
+  // ── Cara Intelligence Insights ─────────────────────────────────────────
+  const insights: CaraInsight[] = [];
 
   if (currentChildren.length === 0) {
     insights.push({

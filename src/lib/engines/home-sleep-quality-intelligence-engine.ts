@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SLEEP QUALITY INTELLIGENCE ENGINE
+// CARA — HOME SLEEP QUALITY INTELLIGENCE ENGINE
 // Pure deterministic engine: sleep disturbances, check compliance,
 // pattern analysis, child-specific concerns, handover quality.
 // CHR 2015 Reg 7/10: "Quality of care, positive relationships."

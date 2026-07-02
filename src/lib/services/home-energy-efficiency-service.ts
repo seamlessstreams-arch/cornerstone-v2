@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENERGY EFFICIENCY SERVICE
+// CARA — HOME ENERGY EFFICIENCY SERVICE
 // Manages energy usage monitoring, carbon reduction tracking, utility costs,
 // efficiency improvements, and sustainability measures for children's homes.
 // CHR 2015 Reg 25 (premises — suitable, well-maintained, safe environment),
@@ -323,7 +323,7 @@ export function computeEnergyEfficiencyAlerts(
   return alerts;
 }
 
-export function generateEnergyEfficiencyAriaInsights(
+export function generateEnergyEfficiencyCaraInsights(
   rows: HomeEnergyEfficiencyRow[],
 ): string[] {
   const metrics = computeEnergyEfficiencyMetrics(rows);
@@ -383,5 +383,5 @@ export function generateEnergyEfficiencyAriaInsights(
 export const _testing = {
   computeEnergyEfficiencyMetrics,
   computeEnergyEfficiencyAlerts,
-  generateEnergyEfficiencyAriaInsights,
+  generateEnergyEfficiencyCaraInsights,
 };

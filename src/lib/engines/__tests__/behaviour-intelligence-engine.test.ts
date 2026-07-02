@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR INTELLIGENCE ENGINE TESTS
+// CARA — BEHAVIOUR INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -740,7 +740,7 @@ describe("computeBehaviourIntelligence — alerts", () => {
 
 // ── computeBehaviourIntelligence — Insights ─────────────────────────────────
 
-describe("computeBehaviourIntelligence — ARIA insights", () => {
+describe("computeBehaviourIntelligence — Cara insights", () => {
   it("generates positive de-escalation insight when rate >= 75%", () => {
     const result = computeBehaviourIntelligence({
       behaviourEntries: [
@@ -839,9 +839,9 @@ describe("computeBehaviourIntelligence — ARIA insights", () => {
   });
 });
 
-// ── Full Integration Test — Oak House ───────────────────────────────────────
+// ── Full Integration Test — Chamberlain House ───────────────────────────────────────
 
-describe("computeBehaviourIntelligence — Oak House integration", () => {
+describe("computeBehaviourIntelligence — Chamberlain House integration", () => {
   const today = "2026-05-23";
   const childNameLookup = (id: string): string => {
     const names: Record<string, string> = {
@@ -852,7 +852,7 @@ describe("computeBehaviourIntelligence — Oak House integration", () => {
     return names[id] ?? "Unknown";
   };
 
-  // Realistic Oak House dataset
+  // Realistic Chamberlain House dataset
   const oakHouseInput: BehaviourEngineInput = {
     behaviourEntries: [
       // Alex — mix (high volatility)
@@ -933,7 +933,7 @@ describe("computeBehaviourIntelligence — Oak House integration", () => {
     expect(piAlert!.message).toContain("Alex W");
   });
 
-  it("generates multiple ARIA insights", () => {
+  it("generates multiple Cara insights", () => {
     const result = computeBehaviourIntelligence(oakHouseInput);
 
     expect(result.insights.length).toBeGreaterThanOrEqual(2);

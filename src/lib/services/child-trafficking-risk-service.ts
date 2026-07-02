@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD TRAFFICKING RISK SERVICE
+// CARA — CHILD TRAFFICKING RISK SERVICE
 // Trafficking risk assessments, NRM referrals, first responder notification,
 // safety planning, safe accommodation, multi-agency coordination,
 // police notification, and independent advocate engagement.
@@ -234,7 +234,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: ChildTraffickingRiskRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -435,5 +435,5 @@ export async function deleteChildTraffickingRisk(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
 };

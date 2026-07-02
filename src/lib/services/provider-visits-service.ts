@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROVIDER VISITS SERVICE
+// CARA — PROVIDER VISITS SERVICE
 // Tracks all provider-related visits: local authority social worker visits,
 // IRO visits, Reg 44 independent person visits, Ofsted inspections,
 // local authority monitoring visits, and other professional visits.

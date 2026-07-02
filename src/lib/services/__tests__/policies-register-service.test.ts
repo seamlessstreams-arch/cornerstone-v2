@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POLICIES & PROCEDURES REGISTER SERVICE TESTS
+// CARA — POLICIES & PROCEDURES REGISTER SERVICE TESTS
 // Pure-function unit tests for policy register metrics computation, policy
 // governance alert identification, constant validation, and CRUD fallback
 // behaviour (Supabase disabled). CHR 2015 Reg 38 (policies and procedures),

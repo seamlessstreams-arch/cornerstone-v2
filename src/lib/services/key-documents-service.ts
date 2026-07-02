@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DOCUMENTS SERVICE
+// CARA — KEY DOCUMENTS SERVICE
 // Tracks essential documents for each child — care plans, placement plans,
 // pathway plans, risk assessments, PEPs, health plans, and other statutory
 // documents required by regulations.

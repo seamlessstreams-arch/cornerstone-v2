@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMMUNAL AREA AUDIT SERVICE
+// CARA — COMMUNAL AREA AUDIT SERVICE
 // Tracks living spaces, kitchens, dining areas, gardens, and shared spaces
 // for cleanliness, safety, homeliness, and regulatory compliance.
 // CHR 2015 Reg 36 (fitness of premises — communal areas),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES TRACKING SERVICE TESTS
+// CARA — OUTCOMES TRACKING SERVICE TESTS
 // Pure-function unit tests for child outcome computation, home-level outcome
 // aggregation, outcome alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

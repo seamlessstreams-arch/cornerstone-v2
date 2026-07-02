@@ -606,7 +606,7 @@ describe("computeChildSafeguarding", () => {
     }
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   it("generates critical insight for critical status", () => {
     const r = computeChildSafeguarding(baseInput({
       risk_assessments: [

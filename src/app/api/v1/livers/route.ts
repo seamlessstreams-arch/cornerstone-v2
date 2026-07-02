@@ -1,3 +1,4 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import type { LiversAnalysis } from "@/types/extended";
@@ -16,8 +17,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json() as Partial<LiversAnalysis> & { user_role?: string };
-  const role = resolveLiversRole(req, body.user_role);
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data as Partial<LiversAnalysis> & { user_role?: string };
+  const role = await resolveLiversRole(req, body.user_role);
 
   if (!canPerformLiversAction(role, "analysis:create")) {
     return NextResponse.json({ error: "Forbidden for your role" }, { status: 403 });
@@ -41,8 +44,8 @@ export async function POST(req: NextRequest) {
     relational_psychological_drivers: body.relational_psychological_drivers,
     sustainability_independence_safety: body.sustainability_independence_safety,
     sustainability_rating: body.sustainability_rating,
-    aria_summary: body.aria_summary,
-    aria_confidence: body.aria_confidence,
+    cara_summary: body.cara_summary,
+    cara_confidence: body.cara_confidence,
     recommended_intervention_type: body.recommended_intervention_type,
     escalation_required: body.escalation_required ?? false,
     escalation_actions: body.escalation_actions ?? [],

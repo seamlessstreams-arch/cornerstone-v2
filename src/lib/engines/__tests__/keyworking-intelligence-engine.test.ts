@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKING INTELLIGENCE ENGINE TESTS
+// CARA — KEYWORKING INTELLIGENCE ENGINE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -416,7 +416,7 @@ describe("computeKeyworkingIntelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for overdue children", () => {
       const result = computeKeyworkingIntelligence({
         children: [makeChild("yp_1", "Alex")],
@@ -498,7 +498,7 @@ describe("computeKeyworkingIntelligence", () => {
     });
   });
 
-  describe("full Oak House integration", () => {
+  describe("full Chamberlain House integration", () => {
     it("produces comprehensive output for 3 children with 8 sessions", () => {
       const children: ChildInput[] = [
         makeChild("yp_alex", "Alex"),

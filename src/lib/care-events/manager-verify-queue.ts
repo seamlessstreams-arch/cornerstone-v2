@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Manager Verify Queue  (Milestone 29 engine)
+// CARA — Manager Verify Queue  (Milestone 29 engine)
 //
 // Read-only listing of care events sitting in `manager_review_required` (or
 // `routing_failed`) status, waiting for a manager to verify or return.
@@ -69,7 +69,7 @@ export function loadManagerVerifyQueue(homeId: string): ManagerVerifyQueue {
     (e) => e.home_id === homeId && REVIEWABLE_STATUSES.has(e.status),
   );
 
-  const allReg45 = db.ariaReg45EvidenceItems.findAll(homeId);
+  const allReg45 = db.caraReg45EvidenceItems.findAll(homeId);
   const allAnnex = db.annexAEvidenceQueue.findAll();
   const allRoutes = db.careEventRoutes.findAll();
   const allJobs = db.careEventJobs.findAll();

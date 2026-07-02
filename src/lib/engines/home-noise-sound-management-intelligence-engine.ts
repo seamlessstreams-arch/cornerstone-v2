@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME NOISE & SOUND MANAGEMENT INTELLIGENCE ENGINE
 // Monitors the home's sound environment quality including noise level monitoring,
 // quiet hours compliance, sensory-friendly environment adaptations, sound
 // insulation adequacy, and child comfort with noise levels.

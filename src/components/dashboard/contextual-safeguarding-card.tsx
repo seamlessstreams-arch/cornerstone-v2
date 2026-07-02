@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTEXTUAL SAFEGUARDING INTELLIGENCE CARD
+// CARA — CONTEXTUAL SAFEGUARDING INTELLIGENCE CARD
 // Dashboard card powered by the Contextual Safeguarding Intelligence Engine.
 // Reg 12 (protection from harm), Reg 13, Reg 34, SCCIF Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,22 +19,22 @@ import { useContextualSafeguardingIntelligence } from "@/hooks/use-contextual-sa
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RISK_LEVEL_STYLES: Record<string, string> = {
-  high: "bg-red-100 text-red-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+  high: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function ContextualSafeguardingCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.children_screened === o.total_children ? "text-green-600" : "text-red-600",
+              o.children_screened === o.total_children ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.children_screened}/{o.total_children}
             </p>
@@ -99,7 +99,7 @@ export function ContextualSafeguardingCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.high_risk_children === 0 ? "text-green-600" : "text-red-600",
+              o.high_risk_children === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.high_risk_children}
             </p>
@@ -115,7 +115,7 @@ export function ContextualSafeguardingCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue_screenings === 0 ? "text-green-600" : "text-red-600",
+              o.overdue_screenings === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue_screenings}
             </p>
@@ -137,7 +137,7 @@ export function ContextualSafeguardingCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{s.children_screened}</Badge>
                   {s.high_risk_count > 0 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                       <Radio className="h-2.5 w-2.5 mr-0.5" />
                       {s.high_risk_count} high
                     </Badge>
@@ -164,7 +164,7 @@ export function ContextualSafeguardingCard() {
                 </div>
                 <Badge className={cn(
                   "text-[10px]",
-                  RISK_LEVEL_STYLES[l.risk_level] ?? "bg-amber-100 text-amber-700",
+                  RISK_LEVEL_STYLES[l.risk_level] ?? "bg-[--cs-warning-bg] text-[--cs-warning]",
                 )}>
                   {l.risk_level}
                 </Badge>
@@ -218,13 +218,13 @@ export function ContextualSafeguardingCard() {
           </div>
         )}
 
-        {/* ── ARIA Exploitation Intelligence ──────────────────────────── */}
+        {/* ── Cara Exploitation Intelligence ──────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Exploitation Intelligence
+              Cara Exploitation Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

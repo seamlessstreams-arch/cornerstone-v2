@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE ENGINE — TESTS
+// CARA — CARE FORM INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite for the care form intelligence engine.
 // Reg 35, Reg 37, Schedule 1, SCCIF documentation quality.
@@ -365,9 +365,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical: overdue forms", () => {
     const r = run([makeForm({ due_date: "2026-05-20", status: "submitted" })]);
     const critical = r.insights.filter((i) => i.severity === "critical" && i.text.includes("past their due date"));
@@ -451,9 +451,9 @@ describe("ARIA insights", () => {
   });
 });
 
-// ── Oak House Integration ───────────────────────────────────────────────────
+// ── Chamberlain House Integration ───────────────────────────────────────────────────
 
-describe("Oak House integration", () => {
+describe("Chamberlain House integration", () => {
   const oakForms: CareFormInput[] = [
     {
       id: "form_001", title: "Alex W — Return from Missing Interview",
@@ -489,7 +489,7 @@ describe("Oak House integration", () => {
       created_at: "2026-04-17T11:00:00Z",
     },
     {
-      id: "form_004", title: "Oak House — Monthly Health & Safety Check",
+      id: "form_004", title: "Chamberlain House — Monthly Health & Safety Check",
       form_type: "health_safety_check", status: "pending_review", priority: "medium",
       linked_child_id: null, linked_staff_id: "staff_chervelle",
       linked_incident_id: null, description: "Monthly H&S walkround checklist.",
@@ -512,7 +512,7 @@ describe("Oak House integration", () => {
     },
   ];
 
-  it("produces correct overview for Oak House care form data", () => {
+  it("produces correct overview for Chamberlain House care form data", () => {
     const r = run(oakForms, STAFF);
     const o = r.overview;
 
@@ -551,7 +551,7 @@ describe("Oak House integration", () => {
     expect(o.form_types_used).toBe(5);
   });
 
-  it("fires expected alerts for Oak House data", () => {
+  it("fires expected alerts for Chamberlain House data", () => {
     const r = run(oakForms, STAFF);
 
     // Critical: 1 urgent form (form_005)
@@ -579,7 +579,7 @@ describe("Oak House integration", () => {
     expect(safeguardingLow).toHaveLength(0);
   });
 
-  it("fires expected ARIA insights for Oak House data", () => {
+  it("fires expected Cara insights for Chamberlain House data", () => {
     const r = run(oakForms, STAFF);
 
     // Critical: 4 overdue

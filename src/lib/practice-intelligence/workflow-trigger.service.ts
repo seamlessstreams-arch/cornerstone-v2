@@ -21,12 +21,12 @@ function homeId(): string {
 // ── Trigger rules engine ────────────────────────────────────────────────────
 // Maps events to suggestion generators
 
-interface TriggerRule {
+export interface TriggerRule {
   events: WorkflowTriggerEvent[];
   generate: (context: TriggerContext) => WorkflowSuggestion[];
 }
 
-interface TriggerContext {
+export interface TriggerContext {
   event: WorkflowTriggerEvent;
   sourceTable: string;
   sourceId: string;
@@ -35,7 +35,7 @@ interface TriggerContext {
   metadata: Record<string, unknown>;
 }
 
-const TRIGGER_RULES: TriggerRule[] = [
+export const TRIGGER_RULES: TriggerRule[] = [
   // Incident triggers
   {
     events: ["incident_created", "incident_updated"],
@@ -266,8 +266,11 @@ const TRIGGER_RULES: TriggerRule[] = [
     generate: (ctx) => {
       const suggestions: WorkflowSuggestion[] = [];
 
-      // Only suggest oversight if content indicates concerns
-      if (/concern|worry|risk|harm|safeguard|distress/i.test(ctx.content)) {
+      // Only suggest oversight if content indicates concerns. Word-boundaried +
+      // stem-aware so substrings don't false-trigger ("brisk", "harmonious",
+      // "harmless", "pharmacy") while real stemmed forms still match
+      // ("concerns", "concerned", "risky", "self-harm", "safeguarding").
+      if (/\b(concern(s|ed|ing)?|worr(y|ied|ies|ying)|risk(s|y|ed|ing)?|harm(s|ed|ful)?|safeguard(s|ing|ed)?|distress(ed|ing)?)\b/i.test(ctx.content)) {
         suggestions.push({
           type: "oversight",
           title: "Daily Log Review",

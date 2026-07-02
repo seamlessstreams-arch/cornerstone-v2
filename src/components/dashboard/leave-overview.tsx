@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVE OVERVIEW WIDGET
+// CARA — LEAVE OVERVIEW WIDGET
 // Compact dashboard card showing staff absences and upcoming leave.
 // Essential for managers to maintain safe staffing levels.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,11 +28,11 @@ const LEAVE_TYPE_CONFIG: Record<string, {
   label: string;
 }> = {
   annual:     { icon: Palmtree,     color: "text-emerald-600", bgColor: "bg-emerald-100", label: "Annual" },
-  sick:       { icon: Stethoscope,  color: "text-red-600",     bgColor: "bg-red-100",     label: "Sick" },
-  compassionate: { icon: Clock,     color: "text-[var(--cs-aria-gold)]",  bgColor: "bg-[var(--cs-aria-gold-bg)]",  label: "Compassionate" },
+  sick:       { icon: Stethoscope,  color: "text-[--cs-risk]",     bgColor: "bg-red-100",     label: "Sick" },
+  compassionate: { icon: Clock,     color: "text-[var(--cs-cara-gold)]",  bgColor: "bg-[var(--cs-cara-gold-bg)]",  label: "Compassionate" },
   training:   { icon: BookOpen,     color: "text-blue-600",    bgColor: "bg-blue-100",    label: "Training" },
   unpaid:     { icon: CalendarOff,  color: "text-[var(--cs-text-secondary)]",   bgColor: "bg-[var(--cs-surface)]",   label: "Unpaid" },
-  toil:       { icon: Clock,        color: "text-amber-600",   bgColor: "bg-amber-100",   label: "TOIL" },
+  toil:       { icon: Clock,        color: "text-[--cs-warning]",   bgColor: "bg-amber-100",   label: "TOIL" },
   maternity:  { icon: Clock,        color: "text-pink-600",    bgColor: "bg-pink-100",    label: "Maternity" },
   paternity:  { icon: Clock,        color: "text-sky-600",     bgColor: "bg-sky-100",     label: "Paternity" },
 };
@@ -86,7 +86,7 @@ export function LeaveOverview() {
           </CardTitle>
           <div className="flex items-center gap-2">
             {pending.length > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[10px] rounded-full">
                 {pending.length} pending
               </Badge>
             )}

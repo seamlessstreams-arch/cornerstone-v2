@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS & PROPERTY INTELLIGENCE CARD
+// CARA — POSSESSIONS & PROPERTY INTELLIGENCE CARD
 // Dashboard card powered by the Possessions Intelligence Engine.
 // Reg 20 (children's belongings), Reg 36 (records), SCCIF Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { usePossessionsIntelligence } from "@/hooks/use-possessions-intelligence
 // ���─ Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export function PossessionsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.photo_compliance_rate >= 90 ? "text-green-600" : o.photo_compliance_rate >= 70 ? "text-amber-600" : "text-red-600",
+              o.photo_compliance_rate >= 90 ? "text-[--cs-success]" : o.photo_compliance_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.photo_compliance_rate}%
             </p>
@@ -99,7 +99,7 @@ export function PossessionsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.missing_items === 0 ? "text-green-600" : "text-red-600",
+              o.missing_items === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.missing_items}
             </p>
@@ -127,7 +127,7 @@ export function PossessionsCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{c.count}</Badge>
                   {c.missing_count > 0 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">{c.missing_count} missing</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">{c.missing_count} missing</Badge>
                   )}
                 </div>
               </div>
@@ -151,11 +151,11 @@ export function PossessionsCard() {
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
                   {ci.missing_count > 0 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">{ci.missing_count} missing</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">{ci.missing_count} missing</Badge>
                   )}
                   <Badge className={cn(
                     "text-[10px]",
-                    ci.items_with_photos === ci.total_items ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700",
+                    ci.items_with_photos === ci.total_items ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]",
                   )}>
                     {ci.items_with_photos}/{ci.total_items} photos
                   </Badge>
@@ -173,13 +173,13 @@ export function PossessionsCard() {
             <p className="text-[10px] text-muted-foreground">Avg/Child</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.damaged_items > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("font-bold tabular-nums", o.damaged_items > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {o.damaged_items}
             </p>
             <p className="text-[10px] text-muted-foreground">Damaged</p>
           </div>
           <div>
-            <p className={cn("font-bold tabular-nums", o.insurance_rate >= 50 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("font-bold tabular-nums", o.insurance_rate >= 50 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.insurance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Insured</p>
@@ -208,13 +208,13 @@ export function PossessionsCard() {
           </div>
         )}
 
-        {/* ── ARIA Possessions Intelligence ───────────────────────────── */}
+        {/* ── Cara Possessions Intelligence ───────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Possessions Intelligence
+              Cara Possessions Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

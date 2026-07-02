@@ -115,7 +115,7 @@ export default function MyDayPage() {
     <PageShell
       title="My Day"
       subtitle={`${greeting}, ${displayName} — here's what needs your attention today`}
-      ariaContext={{ pageTitle: "My Day", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "My Day", sourceType: "child_record" }}
       actions={
         <PrintButton title="My Day" subtitle={`${displayName} — ${new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}`} targetId="my-day-content" />
       }
@@ -128,8 +128,8 @@ export default function MyDayPage() {
               <Sun className="h-6 w-6 text-yellow-300" />
             </div>
             <div className="flex-1">
-              <div className="text-xs font-medium text-[var(--cs-text-gentle)] mb-1">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</div>
-              <div className="text-xl font-bold">{greeting}, {displayName}</div>
+              <div suppressHydrationWarning className="text-xs font-medium text-[var(--cs-text-gentle)] mb-1">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</div>
+              <div suppressHydrationWarning className="text-xl font-bold">{greeting}, {displayName}</div>
               <div className="text-sm text-[var(--cs-text-gentle)] mt-1">
                 {myTasks.length > 0
                   ? `${myTasks.filter((t) => isDueToday(t.due_date)).length} tasks due today · ${myTasks.filter((t) => isOverdue(t.due_date, t.status)).length} overdue`
@@ -148,11 +148,11 @@ export default function MyDayPage() {
 
         {/* ── Intelligence Alert Strip ──────────────────────────────── */}
         {((patternsQuery.data?.data?.length ?? 0) > 0 || (overdueActionsQuery.data?.data?.length ?? 0) > 0) && (
-          <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-gradient-to-r from-[var(--cs-aria-gold-bg)] to-indigo-50 p-4">
+          <div className="rounded-2xl border border-[var(--cs-cara-gold-soft)] bg-gradient-to-r from-[var(--cs-cara-gold-bg)] to-indigo-50 p-4">
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--cs-aria-gold)]">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[var(--cs-cara-gold)]">
                 <Brain className="h-3.5 w-3.5" />
-                ARIA Intelligence
+                Cara Intelligence
               </div>
               <div className="flex flex-wrap items-center gap-2 flex-1">
                 {(overdueActionsQuery.data?.data?.length ?? 0) > 0 && (
@@ -175,14 +175,14 @@ export default function MyDayPage() {
                   ))
                 }
                 {(patternsQuery.data?.data?.length ?? 0) > 0 && (
-                  <span className="text-xs text-[var(--cs-aria-gold)]">
+                  <span className="text-xs text-[var(--cs-cara-gold)]">
                     {patternsQuery.data!.data.length} active pattern{patternsQuery.data!.data.length > 1 ? "s" : ""} detected
                   </span>
                 )}
               </div>
               <Link
                 href="/intelligence"
-                className="ml-auto flex items-center gap-1 rounded-full bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-soft)] transition-colors"
+                className="ml-auto flex items-center gap-1 rounded-full bg-[var(--cs-cara-gold-bg)] border border-[var(--cs-cara-gold-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--cs-cara-gold)] hover:bg-[var(--cs-cara-gold-soft)] transition-colors"
               >
                 Intelligence Hub <ChevronRight className="h-3 w-3" />
               </Link>
@@ -319,11 +319,11 @@ export default function MyDayPage() {
                     </div>
                   )}
                   {nextAppraisal && (
-                    <div className="flex items-center gap-2 text-xs rounded-xl bg-[var(--cs-aria-gold-bg)] p-3">
-                      <Target className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+                    <div className="flex items-center gap-2 text-xs rounded-xl bg-[var(--cs-cara-gold-bg)] p-3">
+                      <Target className="h-4 w-4 text-[var(--cs-cara-gold)]" />
                       <div>
                         <div className="font-medium text-[var(--cs-navy)]">Next appraisal</div>
-                        <div className="text-[var(--cs-aria-gold)]">{formatDate(nextAppraisal)}</div>
+                        <div className="text-[var(--cs-cara-gold)]">{formatDate(nextAppraisal)}</div>
                       </div>
                     </div>
                   )}

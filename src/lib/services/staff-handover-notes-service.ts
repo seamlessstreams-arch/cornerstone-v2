@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF HANDOVER NOTES SERVICE
+// CARA — STAFF HANDOVER NOTES SERVICE
 // Tracks detailed handover notes staff leave during shift changes,
 // capturing child-specific updates, medication reminders, task
 // handovers, and follow-up actions for continuity of care.

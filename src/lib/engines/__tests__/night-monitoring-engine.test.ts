@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING & WELFARE ENGINE TESTS
+// CARA — NIGHT MONITORING & WELFARE ENGINE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -375,7 +375,7 @@ describe("computeNightMonitoring", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for missing from room", () => {
       const result = computeNightMonitoring({
         children: [makeChild("yp_1", "Alex")],
@@ -450,7 +450,7 @@ describe("computeNightMonitoring", () => {
     });
   });
 
-  describe("full Oak House integration", () => {
+  describe("full Chamberlain House integration", () => {
     it("produces comprehensive output for 3 children over 2 nights", () => {
       const children: ChildInput[] = [
         makeChild("yp_alex", "Alex"),

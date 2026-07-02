@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY INTELLIGENCE HOOK
+// CARA — ADVOCACY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/advocacy-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

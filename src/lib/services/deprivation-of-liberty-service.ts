@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY & RESTRICTIONS SERVICE
+// CARA — DEPRIVATION OF LIBERTY & RESTRICTIONS SERVICE
 // Manages Deprivation of Liberty (DoL) orders and the restrictions register
 // for children in residential care. Covers court orders, inherent jurisdiction,
 // secure accommodation orders, and Liberty Protection Safeguards. Tracks all

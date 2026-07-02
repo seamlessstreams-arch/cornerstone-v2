@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NUTRITION & CATERING INTELLIGENCE ENGINE
+// CARA — HOME NUTRITION & CATERING INTELLIGENCE ENGINE
 // Home-level: aggregates meal planning, dietary plans, food hygiene,
 // kitchen checks, eating support plans, and food budgets.
 // CHR 2015 Reg 9: "Promoting good health — including nutrition."
@@ -508,7 +508,7 @@ export function computeHomeNutritionCatering(
     recommendations.push({ rank: ++rank, recommendation: "Increase meal planning frequency — regular planned menus support consistent nutrition and reduce waste.", urgency: "planned", regulatory_ref: "Reg 9" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (hygienePassRate >= 95 && kitchenPassRate >= 95 && tempCompliance >= 100 && allergenLabellingRate >= 100) {
     insights.push({ text: "Nutrition and catering governance is exemplary. Food safety, temperature control, allergen management, and kitchen hygiene all exceed thresholds. Ofsted will recognise this as outstanding nutritional care.", severity: "positive" });
   }

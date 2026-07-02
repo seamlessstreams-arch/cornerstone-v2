@@ -1,13 +1,13 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CURRICULUM BUILDER
+// CARA — CURRICULUM BUILDER
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,7 +51,7 @@ type CurriculumResult = {
 const CONTENT_TYPE_COLOURS: Record<string, string> = {
   workshop: "bg-blue-100 text-blue-700",
   self_study: "bg-slate-100 text-[var(--cs-text-secondary)]",
-  discussion: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+  discussion: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
   activity: "bg-amber-100 text-amber-700",
   assessment: "bg-emerald-100 text-emerald-700",
 };
@@ -139,7 +139,7 @@ export default function CurriculumBuilderPage() {
     setResult(null);
     try {
       const res = await api.post<{ data: { parsed?: CurriculumResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "curriculum_builder",
           style: "professional_formal",
@@ -170,7 +170,7 @@ export default function CurriculumBuilderPage() {
         content: result as unknown as Record<string, unknown>,
         raw_text: result.overview,
         status: "draft",
-        aria_generated: true,
+        cara_generated: true,
         created_by: currentUser?.id ?? "staff_darren",
       },
       { onSuccess: () => setResult(null) }
@@ -180,14 +180,14 @@ export default function CurriculumBuilderPage() {
   return (
     <PageShell
       title="Curriculum Builder"
-      subtitle="Design structured multi-module learning pathways with ARIA"
-      ariaContext={{ pageTitle: "Learning Curriculum", sourceType: "document" }}
+      subtitle="Design structured multi-module learning pathways with Cara"
+      caraContext={{ pageTitle: "Learning Curriculum", sourceType: "document" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Curriculum Builder" subtitle="Oak House — Learning Curriculum" targetId="curriculum-content" />
+          <PrintButton title="Curriculum Builder" subtitle="Chamberlain House — Learning Curriculum" targetId="curriculum-content" />
           <SmartUploadButton variant="inline" label="Upload Resource" uploadContext="Learning — Curriculum Builder upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -234,7 +234,7 @@ export default function CurriculumBuilderPage() {
             </div>
             <Button onClick={generate} disabled={!topic.trim() || generating} className="gap-1.5 bg-teal-600 hover:bg-teal-700 text-white" size="sm">
               <Sparkles className="h-3.5 w-3.5" />
-              {generating ? "Building Curriculum…" : "Build Curriculum with ARIA"}
+              {generating ? "Building Curriculum…" : "Build Curriculum with Cara"}
             </Button>
           </CardContent>
         </Card>
@@ -327,7 +327,7 @@ export default function CurriculumBuilderPage() {
           </div>
         )}
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Learning Curriculum — training curriculum structure, mandatory training topics, care skills modules, safeguarding training, children's rights, therapeutic approaches, workforce development"
         recordType="staff_training"

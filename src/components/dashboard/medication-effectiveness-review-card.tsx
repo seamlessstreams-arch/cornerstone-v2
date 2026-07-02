@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION EFFECTIVENESS REVIEW CARD
+// CARA — MEDICATION EFFECTIVENESS REVIEW CARD
 // Dashboard widget for PRN analysis, per-medication adherence, and review.
 // Powered by the Medication Intelligence Engine — live data (Reg 23/12).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Adherence bar sub-component ─────────────────────────────────────────────
@@ -47,7 +47,7 @@ function AdherenceBar({ value }: { value: number }) {
       </div>
       <span className={cn(
         "text-[10px] tabular-nums font-medium w-7 text-right",
-        value >= 95 ? "text-green-600" : value >= 80 ? "text-amber-600" : "text-red-600",
+        value >= 95 ? "text-[--cs-success]" : value >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
       )}>
         {value}%
       </span>
@@ -105,19 +105,19 @@ export function MedicationEffectivenessReviewCard() {
             <p className="text-[10px] text-muted-foreground">PRN (30d)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", prn.effectiveness_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", prn.effectiveness_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", prn.effectiveness_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {prn.effectiveness_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Effect.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.adherence_rate >= 95 ? "bg-green-50" : o.adherence_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-green-600" : o.adherence_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-[--cs-success]" : o.adherence_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {o.adherence_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Adherence</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.refusal_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.refusal_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Refused</p>
@@ -144,16 +144,16 @@ export function MedicationEffectivenessReviewCard() {
                   </Badge>
                 </div>
                 <AdherenceBar value={med.adherence_rate} />
-                {(med.refusal_count_30d > 0 || med.missed_count_30d > 0) && (
+                {(med.refusal_count > 0 || med.missed_count > 0) && (
                   <div className="flex items-center gap-2 mt-0.5">
-                    {med.refusal_count_30d > 0 && (
-                      <Badge className="text-[9px] bg-amber-100 text-amber-700">
-                        {med.refusal_count_30d} refused
+                    {med.refusal_count > 0 && (
+                      <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
+                        {med.refusal_count} refused
                       </Badge>
                     )}
-                    {med.missed_count_30d > 0 && (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">
-                        {med.missed_count_30d} missed
+                    {med.missed_count > 0 && (
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
+                        {med.missed_count} missed
                       </Badge>
                     )}
                   </div>
@@ -185,13 +185,13 @@ export function MedicationEffectivenessReviewCard() {
           </div>
         )}
 
-        {/* ── ARIA Insights ───────────────────────────────────────────── */}
+        {/* ── Cara Insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

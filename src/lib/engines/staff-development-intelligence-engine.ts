@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — STAFF DEVELOPMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses appraisals, competency profiles, development plans, qualifications,
@@ -179,7 +179,7 @@ export interface DevelopmentAlert {
   message: string;
 }
 
-export interface AriaDevelopmentInsight {
+export interface CaraDevelopmentInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -189,7 +189,7 @@ export interface StaffDevelopmentIntelligenceResult {
   staff_profiles: StaffDevelopmentProfile[];
   competency_analysis: CompetencyDomainAnalysis[];
   alerts: DevelopmentAlert[];
-  insights: AriaDevelopmentInsight[];
+  insights: CaraDevelopmentInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -521,8 +521,8 @@ export function computeStaffDevelopmentIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaDevelopmentInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraDevelopmentInsight[] = [];
 
   // Critical: overdue appraisals
   if (overdueAppraisals.length > 0 && activeStaff.length > 0) {

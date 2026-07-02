@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AROMATHERAPY & WELLBEING THERAPIES INTELLIGENCE ENGINE TESTS
+// CARA — HOME AROMATHERAPY & WELLBEING THERAPIES INTELLIGENCE ENGINE TESTS
 // 180 tests covering: output shape, empty/edge cases, metric computation,
 // scoring bonuses/penalties, rating thresholds, strengths, concerns,
 // recommendations, insights, headlines, and composite scenarios.

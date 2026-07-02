@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Care Event Patterns  (Milestone 17)
+// CARA — Care Event Patterns  (Milestone 17)
 //
-// Cross-event pattern scan over the last N days. ARIA detected — requires
+// Cross-event pattern scan over the last N days. Cara detected — requires
 // manager review. Each pattern card lists the source events for full
 // transparency.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -22,7 +22,7 @@ import {
 } from "@/hooks/use-care-event-patterns";
 import { usePromotePatternsToReg45 } from "@/hooks/use-promote-patterns-to-reg45";
 import { useAuthContext } from "@/contexts/auth-context";
-import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
+import { appRoleToCaraRole } from "@/lib/cara/cara-permissions";
 import type {
   CareEventPattern,
   CareEventPatternSeverity,
@@ -60,7 +60,7 @@ export default function CareEventPatternsPage() {
     lookbackDays, minCluster,
   });
   const { currentUser } = useAuthContext();
-  const ariaRole = appRoleToAriaRole(currentUser?.role ?? "registered_manager");
+  const caraRole = appRoleToCaraRole(currentUser?.role ?? "registered_manager");
   const promote = usePromotePatternsToReg45();
 
   const summary = data?.data;
@@ -69,7 +69,7 @@ export default function CareEventPatternsPage() {
   return (
     <PageShell
       title="Care Event Patterns"
-      subtitle="ARIA detected — requires manager review. Cross-event analysis of verified care entries to surface themes individual reviews would miss."
+      subtitle="Cara detected — requires manager review. Cross-event analysis of verified care entries to surface themes individual reviews would miss."
       actions={
         <div className="flex items-center gap-2">
           <Input
@@ -104,7 +104,7 @@ export default function CareEventPatternsPage() {
                 lookback_days: lookbackDays,
                 min_cluster: minCluster,
                 actor_id: currentUser?.id,
-                actor_role: ariaRole,
+                actor_role: caraRole,
               })
             }
             disabled={promote.isPending || (summary?.total_patterns ?? 0) === 0}

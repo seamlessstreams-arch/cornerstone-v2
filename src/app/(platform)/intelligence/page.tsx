@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTELLIGENCE HUB
+// CARA — INTELLIGENCE HUB
 // Command-centre view for managers: home climate, pattern alerts,
 // active interventions, children's voice coverage.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -9,6 +9,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
+import { FiveLayersStrip } from "@/components/intelligence/five-layers-strip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -75,25 +76,25 @@ function ClimateCardSkeleton() {
 // ─── Score colour helpers ──────────────────────────────────────────────────────
 
 function scoreColor(score: number): string {
-  if (score < 40) return "text-red-600";
-  if (score < 60) return "text-amber-600";
+  if (score < 40) return "text-[--cs-risk]";
+  if (score < 60) return "text-[--cs-warning]";
   if (score < 80) return "text-teal-600";
-  return "text-emerald-600";
+  return "text-[--cs-success]";
 }
 
 function scoreBarColor(score: number): string {
-  if (score < 40) return "bg-red-500";
-  if (score < 60) return "bg-amber-500";
+  if (score < 40) return "bg-[--cs-risk]";
+  if (score < 60) return "bg-[--cs-warning]";
   if (score < 80) return "bg-teal-500";
-  return "bg-emerald-500";
+  return "bg-[--cs-success]";
 }
 
 // ─── Delta arrow ──────────────────────────────────────────────────────────────
 
 function DeltaArrow({ delta }: { delta: number | null }) {
   if (delta === null || delta === 0) return <Minus className="h-3.5 w-3.5 text-[var(--cs-text-muted)]" />;
-  if (delta > 0) return <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />;
-  return <TrendingDown className="h-3.5 w-3.5 text-red-500" />;
+  if (delta > 0) return <TrendingUp className="h-3.5 w-3.5 text-[--cs-success]" />;
+  return <TrendingDown className="h-3.5 w-3.5 text-[--cs-risk]" />;
 }
 
 // ─── Climate Score Card ───────────────────────────────────────────────────────
@@ -161,7 +162,7 @@ function HomeClimateSection() {
 
       const now        = new Date();
       const lines: string[] = [
-        `## Oak House Home Climate Context`,
+        `## Chamberlain House Home Climate Context`,
         `Assessment date: ${now.toISOString()}`,
         `Children: Casey (yp_casey), Alex (yp_alex), Jordan (yp_jordan)`,
         "",
@@ -210,26 +211,26 @@ function HomeClimateSection() {
 
       const context = lines.join("\n");
 
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mode: "compute_home_climate",
           stream: false,
           source_content: context,
-          prompt: "Compute the current home climate scores for Oak House based on the provided intelligence data.",
+          prompt: "Compute the current home climate scores for Chamberlain House based on the provided intelligence data.",
         }),
       });
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error((err as { error?: string }).error ?? `ARIA returned ${res.status}`);
+        throw new Error((err as { error?: string }).error ?? `Cara returned ${res.status}`);
       }
 
       const json = await res.json();
       const parsed = json?.data?.parsed;
       if (!parsed || typeof parsed !== "object") {
-        throw new Error("ARIA did not return valid JSON");
+        throw new Error("Cara did not return valid JSON");
       }
 
       const periodEnd   = now.toISOString();
@@ -251,10 +252,10 @@ function HomeClimateSection() {
         maintenance_score:           Number(parsed.maintenance_score           ?? 78),
         overall_climate_score:       newScore,
         climate_delta:               prevScore !== null ? newScore - prevScore : null,
-        narrative:                   parsed.narrative ?? "ARIA climate assessment complete.",
+        narrative:                   parsed.narrative ?? "Cara climate assessment complete.",
         hotspot_times:               Array.isArray(parsed.hotspot_times) ? parsed.hotspot_times : [],
         risk_flags:                  Array.isArray(parsed.risk_flags)    ? parsed.risk_flags    : [],
-        computed_by:                 "aria",
+        computed_by:                 "cara",
       });
 
       setComputeState("success");
@@ -308,13 +309,13 @@ function HomeClimateSection() {
       </div>
 
       {isError && (
-        <div className="rounded-2xl border border-red-100 bg-red-50 p-4 flex items-center gap-2 text-xs text-red-600">
+        <div className="rounded-2xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-4 flex items-center gap-2 text-xs text-[--cs-risk]">
           <AlertCircle className="h-4 w-4 shrink-0" />Unable to load climate data
         </div>
       )}
 
       {computeState === "error" && computeError && (
-        <p className="text-[10px] text-red-600">{computeError}</p>
+        <p className="text-[10px] text-[--cs-risk]">{computeError}</p>
       )}
 
       {climate && (
@@ -328,8 +329,8 @@ function HomeClimateSection() {
           </div>
 
           {climate.narrative && (
-            <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4">
-              <div className="text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider mb-1">ARIA Analysis</div>
+            <div className="rounded-2xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] p-4">
+              <div className="text-[10px] font-semibold text-[var(--cs-cara-gold)] uppercase tracking-wider mb-1">Cara Analysis</div>
               <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{climate.narrative}</p>
             </div>
           )}
@@ -352,16 +353,16 @@ function HomeClimateSection() {
 // ─── Severity badge class ────────────────────────────────────────────────────
 
 const SEV_CLASSES: Record<string, string> = {
-  critical: "bg-red-100 text-red-800",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk]",
   high:     "bg-orange-100 text-orange-800",
-  medium:   "bg-amber-100 text-amber-800",
+  medium:   "bg-[--cs-warning-bg] text-[--cs-warning]",
   low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
 const SEV_BORDER: Record<string, string> = {
-  critical: "border-l-red-400",
+  critical: "border-l-[--cs-risk]",
   high:     "border-l-orange-400",
-  medium:   "border-l-amber-400",
+  medium:   "border-l-[--cs-warning]",
   low:      "border-l-slate-300",
 };
 
@@ -407,7 +408,7 @@ function PatternAlertsSection() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-2 text-xs text-red-500 py-4">
+          <div className="flex items-center gap-2 text-xs text-[--cs-risk] py-4">
             <AlertCircle className="h-4 w-4 shrink-0" />Unable to load pattern alerts
           </div>
         </CardContent>
@@ -422,7 +423,7 @@ function PatternAlertsSection() {
           <Brain className="h-4 w-4 text-amber-500" />
           Active Pattern Alerts
           {alerts.length > 0 && (
-            <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+            <span className="ml-auto rounded-full bg-[--cs-warning-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-warning]">
               {alerts.length}
             </span>
           )}
@@ -433,7 +434,7 @@ function PatternAlertsSection() {
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
             <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
-            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Cara is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -481,7 +482,7 @@ function PatternAlertsSection() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 px-2.5 text-xs text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                      className="h-7 px-2.5 text-xs text-[--cs-success] border-[--cs-success-soft] hover:bg-[--cs-success-bg]"
                       onClick={() => setResolvingId(resolvingId === alert.id ? null : alert.id)}
                     >
                       Resolve
@@ -553,9 +554,9 @@ function RecentInterventionsSection() {
   }, [q1.data, q2.data, q3.data]);
 
   const INT_STATUS: Record<string, string> = {
-    active: "bg-emerald-100 text-emerald-800",
-    paused: "bg-amber-100 text-amber-800",
-    under_review: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)]",
+    active: "bg-[--cs-success-bg] text-[--cs-success]",
+    paused: "bg-[--cs-warning-bg] text-[--cs-warning]",
+    under_review: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)]",
   };
 
   async function handleReview(e: React.MouseEvent, intervention: Intervention) {
@@ -576,7 +577,7 @@ function RecentInterventionsSection() {
         intervention.ended_at ? `Ended: ${intervention.ended_at}` : null,
       ].filter(Boolean).join("\n");
 
-      const res = await api.post<{ data: { response?: string; text?: string } }>("/aria", {
+      const res = await api.post<{ data: { response?: string; text?: string } }>("/cara", {
         mode: "intervention_review",
         source_content: sourceContent,
       });
@@ -637,8 +638,8 @@ function RecentInterventionsSection() {
                     <button
                       onClick={(e) => handleReview(e, intervention)}
                       disabled={reviewingId === intervention.id}
-                      title="Review with ARIA"
-                      className="flex items-center gap-1 rounded-lg bg-[var(--cs-aria-gold-bg)] hover:bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] px-2 py-1 text-[10px] font-semibold transition-colors disabled:opacity-50"
+                      title="Review with Cara"
+                      className="flex items-center gap-1 rounded-lg bg-[var(--cs-cara-gold-bg)] hover:bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] px-2 py-1 text-[10px] font-semibold transition-colors disabled:opacity-50"
                     >
                       {reviewingId === intervention.id ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -667,9 +668,9 @@ function RecentInterventionsSection() {
           >
             <div className="sticky top-0 z-10 bg-white border-b px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ClipboardList className="h-5 w-5 text-[var(--cs-aria-gold)]" />
+                <ClipboardList className="h-5 w-5 text-[var(--cs-cara-gold)]" />
                 <div>
-                  <div className="text-sm font-bold text-[var(--cs-navy)]">ARIA — Intervention Review</div>
+                  <div className="text-sm font-bold text-[var(--cs-navy)]">Cara — Intervention Review</div>
                   <div className="text-xs text-[var(--cs-text-muted)] truncate max-w-sm">{reviewTitle}</div>
                 </div>
               </div>
@@ -718,7 +719,7 @@ function VoiceCoverageSection() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
-          <MessageSquareQuote className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+          <MessageSquareQuote className="h-4 w-4 text-[var(--cs-cara-gold)]" />
           Children's Voice
         </CardTitle>
       </CardHeader>
@@ -731,17 +732,17 @@ function VoiceCoverageSection() {
         ) : (
           <div className="space-y-3">
             {recentVoice.map((record) => (
-              <div key={record.id} className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]/40 p-3 space-y-1.5">
+              <div key={record.id} className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)]/40 p-3 space-y-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="rounded-full bg-[var(--cs-aria-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-aria-gold)] capitalize">
+                  <span className="rounded-full bg-[var(--cs-cara-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-cara-gold)] capitalize">
                     {record.theme.replace("_", " ")}
                   </span>
                   {record.voice_heeded !== null && (
                     <span className={cn(
                       "flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold",
                       record.voice_heeded
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-red-100 text-red-600"
+                        ? "bg-[--cs-success-bg] text-[--cs-success]"
+                        : "bg-[--cs-risk-bg] text-[--cs-risk]"
                     )}>
                       {record.voice_heeded
                         ? <><CheckCircle2 className="h-2.5 w-2.5" />Heeded</>
@@ -781,11 +782,11 @@ const OWNER_NAMES: Record<string, string> = {
 };
 
 const STATUS_CLASSES: Record<string, string> = {
-  open:        "bg-blue-100 text-blue-800",
-  in_progress: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)]",
-  completed:   "bg-emerald-100 text-emerald-800",
-  overdue:     "bg-red-100 text-red-800",
-  stalled:     "bg-amber-100 text-amber-800",
+  open:        "bg-[--cs-info-bg] text-[--cs-info]",
+  in_progress: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)]",
+  completed:   "bg-[--cs-success-bg] text-[--cs-success]",
+  overdue:     "bg-[--cs-risk-bg] text-[--cs-risk]",
+  stalled:     "bg-[--cs-warning-bg] text-[--cs-warning]",
   cancelled:   "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
@@ -842,10 +843,10 @@ function ActionOutcomesSection() {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Target className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <Target className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Action Outcomes
             {overdueActions.length > 0 && (
-              <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700">
+              <span className="rounded-full bg-[--cs-risk-bg] px-2 py-0.5 text-[10px] font-bold text-[--cs-risk]">
                 {overdueActions.length} overdue
               </span>
             )}
@@ -859,8 +860,8 @@ function ActionOutcomesSection() {
         {overdueActions.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-1.5">
-              <AlertTriangle className="h-3 w-3 text-red-500" />
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-red-600">
+              <AlertTriangle className="h-3 w-3 text-[--cs-risk]" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[--cs-risk]">
                 Overdue
               </span>
             </div>
@@ -897,12 +898,12 @@ function ActionOutcomesSection() {
   );
 }
 
-// ─── ARIA Pattern Scanner ─────────────────────────────────────────────────────
+// ─── Cara Pattern Scanner ─────────────────────────────────────────────────────
 
 const SEV_CLASSES_SCAN: Record<string, string> = {
-  critical: "border-red-300 bg-red-50 text-red-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
   high:     "border-orange-300 bg-orange-50 text-orange-800",
-  medium:   "border-amber-300 bg-amber-50 text-amber-800",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
   low:      "border-slate-300 bg-slate-50 text-[var(--cs-text-secondary)]",
 };
 
@@ -921,7 +922,7 @@ interface ScannedPattern {
   period_end: string;
 }
 
-function AriaPatternScanSection() {
+function CaraPatternScanSection() {
   const { currentUser } = useAuthContext();
   const homeId = currentUser?.home_id ?? "home_oak";
   const [scanning, setScanning]           = useState(false);
@@ -946,7 +947,7 @@ function AriaPatternScanSection() {
     setSaveStates({});
 
     try {
-      // Build aggregate context for ARIA
+      // Build aggregate context for Cara
       const existingAlerts = alertsData?.data ?? [];
       const interventions  = interventionsData?.data ?? [];
       const actions        = actionsData?.data ?? [];
@@ -958,9 +959,9 @@ function AriaPatternScanSection() {
 
       const now = new Date();
       const lines: string[] = [
-        `## Oak House Intelligence Context`,
+        `## Chamberlain House Intelligence Context`,
         `Scan date: ${now.toISOString()}`,
-        `Home: Oak House (home_oak)`,
+        `Home: Chamberlain House (home_oak)`,
         `Children: Casey (yp_casey), Alex (yp_alex), Jordan (yp_jordan)`,
         "",
       ];
@@ -1000,7 +1001,7 @@ function AriaPatternScanSection() {
 
       const context = lines.join("\n");
 
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1013,14 +1014,14 @@ function AriaPatternScanSection() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error((err as { error?: string }).error ?? `ARIA returned ${res.status}`);
+        throw new Error((err as { error?: string }).error ?? `Cara returned ${res.status}`);
       }
 
       const json = await res.json();
       const parsed = json?.data?.parsed;
 
       if (!Array.isArray(parsed)) {
-        throw new Error("ARIA returned unexpected data — expected an array of patterns");
+        throw new Error("Cara returned unexpected data — expected an array of patterns");
       }
 
       setPatterns(parsed as ScannedPattern[]);
@@ -1055,18 +1056,18 @@ function AriaPatternScanSection() {
   }
 
   return (
-    <Card className="border-[var(--cs-aria-gold-soft)]">
+    <Card className="border-[var(--cs-cara-gold-soft)]">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <ScanSearch className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-            ARIA Pattern Scanner
+            <ScanSearch className="h-4 w-4 text-[var(--cs-cara-gold)]" />
+            Cara Pattern Scanner
           </CardTitle>
           <Button
             size="sm"
             className={cn(
               "gap-1.5 text-xs",
-              scanning ? "bg-[var(--cs-aria-gold)]" : "bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
+              scanning ? "bg-[var(--cs-cara-gold)]" : "bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
             )}
             onClick={handleScan}
             disabled={scanning}
@@ -1081,15 +1082,15 @@ function AriaPatternScanSection() {
       </CardHeader>
       <CardContent className="space-y-4">
         {!patterns && !scanning && !scanError && (
-          <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4 text-xs text-[var(--cs-aria-gold)] leading-relaxed">
-            ARIA will analyse all available intelligence data across the home — voice records,
+          <div className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] p-4 text-xs text-[var(--cs-cara-gold)] leading-relaxed">
+            Cara will analyse all available intelligence data across the home — voice records,
             interventions, action outcomes, and existing alerts — and identify significant
             patterns, emerging themes, or concerns requiring manager attention.
           </div>
         )}
 
         {scanError && (
-          <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-700">
+          <div className="flex items-center gap-2 rounded-xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] px-3 py-2.5 text-xs text-[--cs-risk]">
             <AlertTriangle className="h-4 w-4 shrink-0" />
             {scanError}
           </div>
@@ -1097,22 +1098,22 @@ function AriaPatternScanSection() {
 
         {scanning && (
           <div className="flex items-center gap-3 py-6 text-xs text-[var(--cs-text-muted)]">
-            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-aria-gold)]" />
-            ARIA is scanning intelligence data across all children…
+            <Loader2 className="h-5 w-5 animate-spin text-[var(--cs-cara-gold)]" />
+            Cara is scanning intelligence data across all children…
           </div>
         )}
 
         {patterns !== null && !scanning && (
           patterns.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-6 text-center">
-              <CheckCircle2 className="h-10 w-10 text-emerald-300" />
+              <CheckCircle2 className="h-10 w-10 text-[--cs-success]" />
               <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">No significant patterns detected</p>
-              <p className="text-xs text-[var(--cs-text-muted)]">ARIA found no new patterns requiring attention at this time.</p>
+              <p className="text-xs text-[var(--cs-text-muted)]">Cara found no new patterns requiring attention at this time.</p>
             </div>
           ) : (
             <div className="space-y-3">
               <p className="text-[11px] text-[var(--cs-text-muted)]">
-                ARIA identified <strong>{patterns.length}</strong> pattern{patterns.length !== 1 ? "s" : ""}.
+                Cara identified <strong>{patterns.length}</strong> pattern{patterns.length !== 1 ? "s" : ""}.
                 Review each and save any that are accurate to add them to active alerts.
               </p>
               {patterns.map((p, idx) => {
@@ -1130,9 +1131,9 @@ function AriaPatternScanSection() {
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className={cn(
                             "rounded-full px-2 py-0.5 text-[9px] font-bold uppercase",
-                            p.severity === "critical" ? "bg-red-200 text-red-800" :
+                            p.severity === "critical" ? "bg-[--cs-risk-bg] text-[--cs-risk]" :
                             p.severity === "high"     ? "bg-orange-200 text-orange-800" :
-                            p.severity === "medium"   ? "bg-amber-200 text-amber-700" :
+                            p.severity === "medium"   ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
                             "bg-slate-200 text-[var(--cs-text-secondary)]"
                           )}>
                             {p.severity}
@@ -1153,7 +1154,7 @@ function AriaPatternScanSection() {
                       </div>
                       <div className="shrink-0">
                         {saveState === "saved" ? (
-                          <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
+                          <span className="flex items-center gap-1 text-[10px] font-semibold text-[--cs-success]">
                             <CheckCircle2 className="h-3.5 w-3.5" />Saved
                           </span>
                         ) : (
@@ -1194,6 +1195,8 @@ export default function IntelligenceHubPage() {
       actions={<SmartUploadButton variant="inline" label="Upload Intelligence Document" uploadContext="Intelligence Hub — intelligence or evidence document upload" />}
     >
       <div className="space-y-8 animate-fade-in">
+        <FiveLayersStrip />
+
         <HomeClimateSection />
 
         <div className="grid gap-5 lg:grid-cols-2">
@@ -1206,8 +1209,8 @@ export default function IntelligenceHubPage() {
           <ActionOutcomesSection />
         </div>
 
-        {/* ARIA Pattern Scanner — full width */}
-        <AriaPatternScanSection />
+        {/* Cara Pattern Scanner — full width */}
+        <CaraPatternScanSection />
       </div>
       <CareEventsPanel
         title="Care Events — Patterns & Intelligence"

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE SERVICE TESTS
+// CARA — QUALITY ASSURANCE SERVICE TESTS
 // Pure-function unit tests for QA metrics computation, alert identification,
 // and constant validation. Covers audit ratings, improvement plans, and
 // recommendation tracking across all edge cases.

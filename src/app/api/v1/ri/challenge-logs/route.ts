@@ -1,3 +1,4 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 
@@ -15,7 +16,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const record = intelligenceDb.riChallengeLogs.create({
     home_id: body.home_id ?? "home_oak",
     title: body.title ?? "Challenge",
@@ -24,7 +27,7 @@ export async function POST(req: NextRequest) {
     challenge_text: body.challenge_text ?? "",
     escalation_level: body.escalation_level ?? "standard",
     status: body.status ?? "open",
-    aria_generated: body.aria_generated ?? false,
+    cara_generated: body.cara_generated ?? false,
     created_by: body.created_by ?? "staff_darren",
     ...body,
   });

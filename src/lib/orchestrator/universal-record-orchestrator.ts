@@ -10,7 +10,7 @@
 //   3. Create timeline event
 //   4. Generate follow-up tasks (type-specific)
 //   5. Detect alerts (safeguarding language, severity, missing info)
-//   6. Log to ARIA context
+//   6. Log to Cara context
 //   7. Return linked_updates summary
 //
 // "Enter once. Use everywhere."
@@ -23,7 +23,7 @@ import { db } from "@/lib/db/store";
 import { createTaskRecord } from "@/lib/supabase/care-records";
 import { generateId } from "@/lib/utils";
 import { recordEvent } from "@/lib/timeline/timeline-service";
-import { logInteraction } from "@/lib/aria/aria-config";
+import { logInteraction } from "@/lib/cara/cara-config";
 import { createIncident } from "@/lib/incidents/incident-orchestrator";
 import { createDailyLog } from "@/lib/daily-log/daily-log-orchestrator";
 import type { Task } from "@/types";
@@ -690,7 +690,7 @@ export function createRecord(input: CreateRecordInput): OrchestrationResult {
     linkedUpdates.push(`Alert: ${alert}`);
   }
 
-  // ── 6. Log to ARIA context ────────────────────────────────────────────────
+  // ── 6. Log to Cara context ────────────────────────────────────────────────
   logInteraction({
     user_id: input.staff_id,
     child_id: input.child_id ?? null,
@@ -708,7 +708,7 @@ export function createRecord(input: CreateRecordInput): OrchestrationResult {
     requires_review: riskLevel === "critical" || riskLevel === "high",
   });
 
-  linkedUpdates.push("ARIA intelligence context updated");
+  linkedUpdates.push("Cara intelligence context updated");
 
   // Dashboard + reports availability (implicit via store)
   linkedUpdates.push("Dashboard metrics updated");

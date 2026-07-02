@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OFSTED READINESS COMPOSITE ENGINE
+// CARA — HOME OFSTED READINESS COMPOSITE ENGINE
 // Aggregates scores from all intelligence engines into a single readiness view.
 // Maps to the four Ofsted ILACS judgement areas + overall effectiveness.
 // Pure deterministic engine. CHR 2015 Schedule 7 / Reg 44-46.

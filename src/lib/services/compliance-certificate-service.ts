@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE CERTIFICATE TRACKING SERVICE
+// CARA — COMPLIANCE CERTIFICATE TRACKING SERVICE
 // Manages gas safety certificates, electrical installation reports,
 // fire alarm service records, PAT testing, legionella risk assessments,
 // insurance certificates, and other regulatory compliance documents
@@ -293,7 +293,7 @@ export function computeComplianceCertificateAlerts(
   return alerts;
 }
 
-export function generateComplianceCertificateAriaInsights(
+export function generateComplianceCertificateCaraInsights(
   metrics: ReturnType<typeof computeComplianceCertificateMetrics>,
   alerts: ReturnType<typeof computeComplianceCertificateAlerts>,
 ): string[] {
@@ -352,5 +352,5 @@ export function generateComplianceCertificateAriaInsights(
 export const _testing = {
   computeComplianceCertificateMetrics,
   computeComplianceCertificateAlerts,
-  generateComplianceCertificateAriaInsights,
+  generateComplianceCertificateCaraInsights,
 };

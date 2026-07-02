@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sleep & Wellbeing Monitoring Intelligence Engine — Tests
+// Cara — Sleep & Wellbeing Monitoring Intelligence Engine — Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -27,7 +27,7 @@ const PERIOD_START = "2025-01-01";
 const PERIOD_END = "2025-01-31";
 const REFERENCE_DATE = "2025-02-01";
 
-// ── Oak House Demo Data — January 2025 ──────────────────────────────────────
+// ── Chamberlain House Demo Data — January 2025 ──────────────────────────────────────
 // 3 children × ~30 nights = ~90 records
 //
 // Alex (14): generally good sleeper, occasional anxiety-related insomnia, bedtime 21:30

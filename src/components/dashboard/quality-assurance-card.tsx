@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUALITY ASSURANCE INTELLIGENCE CARD
+// CARA — QUALITY ASSURANCE INTELLIGENCE CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // Reg 45 (quality of care review), SCCIF Leadership & Management.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,23 +19,23 @@ import { useQualityAssuranceIntelligence } from "@/hooks/use-quality-assurance-i
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RATING_COLOURS: Record<string, string> = {
-  Excellent: "bg-green-100 text-green-700",
-  Good: "bg-blue-100 text-blue-700",
-  "Requires Improvement": "bg-amber-100 text-amber-700",
-  Inadequate: "bg-red-100 text-red-700",
+  Excellent: "bg-[--cs-success-bg] text-[--cs-success]",
+  Good: "bg-[--cs-info-bg] text-[--cs-info]",
+  "Requires Improvement": "bg-[--cs-warning-bg] text-[--cs-warning]",
+  Inadequate: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -94,7 +94,7 @@ export function QualityAssuranceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.avg_rating_score >= 3 ? "text-green-600" : o.avg_rating_score >= 2 ? "text-amber-600" : "text-red-600",
+              o.avg_rating_score >= 3 ? "text-[--cs-success]" : o.avg_rating_score >= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.avg_rating_score.toFixed(1)}
             </p>
@@ -106,7 +106,7 @@ export function QualityAssuranceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.actions_overdue === 0 ? "text-green-600" : "text-red-600",
+              o.actions_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.actions_overdue}
             </p>
@@ -118,7 +118,7 @@ export function QualityAssuranceCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.recommendation_completion_rate >= 80 ? "text-green-600" : o.recommendation_completion_rate >= 60 ? "text-amber-600" : "text-red-600",
+              o.recommendation_completion_rate >= 80 ? "text-[--cs-success]" : o.recommendation_completion_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.recommendation_completion_rate}%
             </p>
@@ -139,7 +139,7 @@ export function QualityAssuranceCard() {
                 <span className="truncate flex-1 capitalize">{a.scope.replace(/_/g, " ")}</span>
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{a.audit_count}</Badge>
-                  <Badge className={cn("text-[10px]", RATING_COLOURS[a.avg_rating] ?? "bg-gray-100 text-gray-600")}>
+                  <Badge className={cn("text-[10px]", RATING_COLOURS[a.avg_rating] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                     <Star className="h-2.5 w-2.5 mr-0.5" />
                     {a.avg_rating}
                   </Badge>
@@ -166,7 +166,7 @@ export function QualityAssuranceCard() {
           </div>
           <div className="flex items-center justify-between text-xs">
             <span className="text-muted-foreground">Overdue</span>
-            <span className={cn("font-bold tabular-nums", o.actions_overdue > 0 ? "text-red-600" : "text-green-600")}>
+            <span className={cn("font-bold tabular-nums", o.actions_overdue > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {o.actions_overdue}
             </span>
           </div>
@@ -186,7 +186,7 @@ export function QualityAssuranceCard() {
           <div>
             <p className={cn(
               "font-bold tabular-nums",
-              o.improvements_count > o.strengths_count ? "text-amber-600" : "text-slate-700",
+              o.improvements_count > o.strengths_count ? "text-[--cs-warning]" : "text-slate-700",
             )}>
               {o.improvements_count}
             </p>
@@ -203,10 +203,10 @@ export function QualityAssuranceCard() {
               Overdue Actions
             </p>
             {intel.overdue_actions.slice(0, 3).map((a, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-red-800 truncate flex-1">{a.action}</span>
-                  <Badge className="text-[10px] bg-red-100 text-red-700 ml-1">{a.days_overdue}d</Badge>
+                  <span className="font-medium text-[--cs-risk] truncate flex-1">{a.action}</span>
+                  <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] ml-1">{a.days_overdue}d</Badge>
                 </div>
                 <p className="text-red-700 text-[10px] mt-0.5">
                   {a.audit_title} · Owner: {a.owner}
@@ -238,13 +238,13 @@ export function QualityAssuranceCard() {
           </div>
         )}
 
-        {/* ── ARIA Quality Intelligence ───────────────────────────────── */}
+        {/* ── Cara Quality Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Quality Intelligence
+              Cara Quality Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

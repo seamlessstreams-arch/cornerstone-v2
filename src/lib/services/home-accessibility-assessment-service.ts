@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACCESSIBILITY ASSESSMENT SERVICE
+// CARA — HOME ACCESSIBILITY ASSESSMENT SERVICE
 // Manages disability access assessments, reasonable adjustments, mobility aids,
 // sensory needs accommodation, and DDA/Equality Act compliance within
 // the residential home setting.
@@ -302,7 +302,7 @@ export function computeAccessibilityAlerts(
   return alerts;
 }
 
-export function generateAccessibilityAriaInsights(
+export function generateAccessibilityCaraInsights(
   metrics: ReturnType<typeof computeAccessibilityMetrics>,
   alerts: ReturnType<typeof computeAccessibilityAlerts>,
 ): string[] {
@@ -361,5 +361,5 @@ export function generateAccessibilityAriaInsights(
 export const _testing = {
   computeAccessibilityMetrics,
   computeAccessibilityAlerts,
-  generateAccessibilityAriaInsights,
+  generateAccessibilityCaraInsights,
 };

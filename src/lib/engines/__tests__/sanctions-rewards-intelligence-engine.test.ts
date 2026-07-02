@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE ENGINE — TEST SUITE
+// CARA — SANCTIONS & REWARDS INTELLIGENCE ENGINE — TEST SUITE
 // 55+ deterministic tests covering helpers, overview, type breakdowns,
-// child profiles, risk flags, alerts, ARIA insights, and Oak House integration.
+// child profiles, risk flags, alerts, Cara insights, and Chamberlain House integration.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -431,9 +431,9 @@ describe("alerts", () => {
   });
 });
 
-// ── ARIA Insights ───────────────────────────────────────────────────────────
+// ── Cara Insights ───────────────────────────────────────────────────────────
 
-describe("ARIA insights", () => {
+describe("Cara insights", () => {
   it("critical insight for disproportionate entries", () => {
     const r = run([makeSanction({ id: "s1", proportionate: false })]);
     const crit = r.insights.filter((i) => i.severity === "critical");
@@ -507,9 +507,9 @@ describe("ARIA insights", () => {
   });
 });
 
-// ── Oak House Integration ───────────────────────────────────────────────────
+// ── Chamberlain House Integration ───────────────────────────────────────────────────
 
-describe("Oak House integration", () => {
+describe("Chamberlain House integration", () => {
   // Mirrors actual store.sanctionRewards data
   const OAK_HOUSE_ENTRIES: SanctionRewardInput[] = [
     // Alex: 4 rewards, 3 sanctions

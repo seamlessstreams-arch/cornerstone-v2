@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ALLEGATION MANAGEMENT INTELLIGENCE CARD
+// CARA — ALLEGATION MANAGEMENT INTELLIGENCE CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 33; Working Together 2023.
 // SCCIF: Helped & Protected — "Allegations are managed swiftly."
@@ -17,9 +17,9 @@ import { cn } from "@/lib/utils";
 import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function AllegationManagementCard() {
@@ -62,16 +62,16 @@ export function AllegationManagementCard() {
             <p className="text-[10px] text-muted-foreground">Incidents 90d</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (profile?.open_incidents ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.open_incidents ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{profile?.open_incidents ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.open_incidents ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{profile?.open_incidents ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (profile?.incidents_needing_oversight ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (profile?.incidents_needing_oversight ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{profile?.incidents_needing_oversight ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (profile?.incidents_needing_oversight ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{profile?.incidents_needing_oversight ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Oversight</p>
           </div>
           <div className="text-center rounded-lg bg-emerald-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.outcome_documented_rate ?? 0}%</p>
-            <p className="text-[10px] text-muted-foreground">Outcome Doc</p>
+            <p className="text-lg font-bold tabular-nums text-emerald-600">{profile?.safeguarding_incidents_90d ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Safeguarding 90d</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export function AllegationManagementCard() {
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Debrief rate:</span>{" "}
-              <span className="font-semibold">{restraints?.debrief_rate ?? 0}%</span>
+              <span className="font-semibold">{restraints?.debrief_completion_rate ?? 0}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Notifiable events:</span>{" "}
@@ -98,12 +98,12 @@ export function AllegationManagementCard() {
           </div>
         </div>
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Allegation Intelligence
+              Cara Allegation Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

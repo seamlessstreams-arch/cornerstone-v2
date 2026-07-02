@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS INTELLIGENCE HOOK
+// CARA — COMPLAINTS INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/complaints-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

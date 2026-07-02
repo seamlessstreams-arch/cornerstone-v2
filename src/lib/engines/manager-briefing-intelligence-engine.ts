@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER'S INTELLIGENCE BRIEFING ENGINE
+// CARA — MANAGER'S INTELLIGENCE BRIEFING ENGINE
 //
 // Pure deterministic meta-engine — no DB calls, no side effects, no LLM calls.
 // Aggregates outputs from ALL domain intelligence engines into a single
@@ -351,13 +351,13 @@ export function computeManagerBriefing(input: ManagerBriefingInput): ManagerBrie
     message: a.message,
   }));
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: BriefingInsight[] = [];
 
   if (overallRisk === "critical") {
     insights.push({
       severity: "critical",
-      text: `ARIA Intelligence: ${totalCritical} critical alert${totalCritical !== 1 ? "s" : ""} detected across ${domainsAtRisk} domain${domainsAtRisk !== 1 ? "s" : ""}. Recommend immediate multi-domain review with deputy and safeguarding lead.`,
+      text: `Cara Intelligence: ${totalCritical} critical alert${totalCritical !== 1 ? "s" : ""} detected across ${domainsAtRisk} domain${domainsAtRisk !== 1 ? "s" : ""}. Recommend immediate multi-domain review with deputy and safeguarding lead.`,
     });
   }
 

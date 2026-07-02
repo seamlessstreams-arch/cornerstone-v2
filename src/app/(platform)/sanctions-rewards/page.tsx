@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS
+// CARA — SANCTIONS & REWARDS
 // Records positive reinforcement (rewards, praise, achievements) and
 // consequences (sanctions, boundaries) for each young person. Supports
 // Reg 11 (Positive Relationships), Reg 12 (Protection), and Quality
@@ -36,10 +36,9 @@ import {
 import { toast } from "sonner";
 import type { SanctionRewardEntry, SRDirection, SRRewardType, SRSanctionType } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
-
-
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -187,15 +186,15 @@ export default function SanctionsRewardsPage() {
     <PageShell
       title="Sanctions & Rewards"
       subtitle="Positive reinforcement and proportionate consequences"
-      ariaContext={{ pageTitle: "Sanctions & Rewards", sourceType: "care_plan" }}
+      caraContext={{ pageTitle: "Sanctions & Rewards", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Sanctions & Rewards" subtitle="Oak House — Behaviour Management" />
+          <PrintButton title="Sanctions & Rewards" subtitle="Chamberlain House — Behaviour Management" />
           <ExportButton data={filtered} columns={exportCols} filename="sanctions-rewards" />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> Add Entry
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -473,6 +472,14 @@ export default function SanctionsRewardsPage() {
             <div>
               <label htmlFor="sr-desc" className="text-sm font-medium mb-1 block">Description *</label>
               <Textarea id="sr-desc" placeholder="What happened..." value={nDesc} onChange={e => setNDesc(e.target.value)} rows={3} />
+              <WritingAssistantInline
+                value={nDesc}
+                onApplyText={setNDesc}
+                recordType="sanction_reward"
+                fieldName="description"
+                childId={nChild || undefined}
+                mode="standard"
+              />
             </div>
             <div>
               <label htmlFor="sr-context" className="text-sm font-medium mb-1 block">Context</label>

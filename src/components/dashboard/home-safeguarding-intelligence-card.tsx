@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING INTELLIGENCE CARD
+// CARA — HOME SAFEGUARDING INTELLIGENCE CARD
 // Home-level: contextual safeguarding risks, exploitation screening coverage,
 // online safety incidents, multi-agency engagement, and risk management.
 // CHR 2015 Reg 12, 13, 34. SCCIF: "Safe."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<SafeguardingRating, { bg: string; text: string; bord
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeSafeguardingIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.safeguarding_rating === "inadequate" && (d.safeguarding_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      safeguarding_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.safeguarding_rating] ?? RATING_STYLES.insufficient_data;
   const hasHighRisks = d.contextual_risk_profile.high_very_high_count > 0;
@@ -69,7 +86,7 @@ export function HomeSafeguardingIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-orange-500")} />
+            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-orange-500")} />
             <span className="text-slate-900">Safeguarding</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -92,8 +109,8 @@ export function HomeSafeguardingIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Search className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.exploitation_profile.screening_coverage >= 80 ? "text-green-600" :
-                  d.exploitation_profile.screening_coverage >= 60 ? "text-amber-600" : "text-red-600"
+                  d.exploitation_profile.screening_coverage >= 80 ? "text-[--cs-success]" :
+                  d.exploitation_profile.screening_coverage >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.exploitation_profile.screening_coverage}%
                 </p>
@@ -106,8 +123,8 @@ export function HomeSafeguardingIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.contextual_risk_profile.multi_agency_rate >= 80 ? "text-green-600" :
-                  d.contextual_risk_profile.multi_agency_rate >= 60 ? "text-amber-600" : "text-red-600"
+                  d.contextual_risk_profile.multi_agency_rate >= 80 ? "text-[--cs-success]" :
+                  d.contextual_risk_profile.multi_agency_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.contextual_risk_profile.multi_agency_rate}%
                 </p>
@@ -120,9 +137,9 @@ export function HomeSafeguardingIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Eye className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.exploitation_profile.high_risk_count === 0 ? "text-green-600" :
-                  d.exploitation_profile.safety_plan_rate === 100 ? "text-green-600" :
-                  d.exploitation_profile.safety_plan_rate >= 80 ? "text-amber-600" : "text-red-600"
+                  d.exploitation_profile.high_risk_count === 0 ? "text-[--cs-success]" :
+                  d.exploitation_profile.safety_plan_rate === 100 ? "text-[--cs-success]" :
+                  d.exploitation_profile.safety_plan_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.exploitation_profile.high_risk_count === 0 ? "N/A" : `${d.exploitation_profile.safety_plan_rate}%`}
                 </p>
@@ -135,7 +152,7 @@ export function HomeSafeguardingIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Globe className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.online_safety_profile.unresolved_high_critical === 0 ? "text-green-600" : "text-red-600"
+                  d.online_safety_profile.unresolved_high_critical === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>
                   {d.online_safety_profile.unresolved_high_critical}
                 </p>
@@ -164,8 +181,8 @@ export function HomeSafeguardingIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Exploitation</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Screened: <span className={cn("font-medium", d.exploitation_profile.screening_coverage >= 80 ? "text-green-600" : "text-amber-600")}>{d.exploitation_profile.children_screened.length}/{d.exploitation_profile.children_screened.length + d.exploitation_profile.children_not_screened.length}</span></p>
-                <p>High risk: <span className={cn("font-medium", d.exploitation_profile.high_risk_count === 0 ? "text-green-600" : "text-red-600")}>{d.exploitation_profile.high_risk_count}</span></p>
+                <p>Screened: <span className={cn("font-medium", d.exploitation_profile.screening_coverage >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.exploitation_profile.children_screened.length}/{d.exploitation_profile.children_screened.length + d.exploitation_profile.children_not_screened.length}</span></p>
+                <p>High risk: <span className={cn("font-medium", d.exploitation_profile.high_risk_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.exploitation_profile.high_risk_count}</span></p>
                 {d.exploitation_profile.children_not_screened.length > 0 && (
                   <p>Unscreened: <span className="font-medium text-amber-600">{d.exploitation_profile.children_not_screened.length}</span></p>
                 )}
@@ -180,8 +197,8 @@ export function HomeSafeguardingIntelligenceCard() {
             <p className="font-medium text-slate-700 mb-1">Online Safety (90d)</p>
             <div className="grid grid-cols-3 gap-2 text-[10px] text-muted-foreground">
               <p>Incidents: <span className="font-medium text-slate-600">{d.online_safety_profile.total_incidents_90d}</span></p>
-              <p>Discussion: <span className={cn("font-medium", d.online_safety_profile.child_discussion_rate >= 80 ? "text-green-600" : "text-amber-600")}>{d.online_safety_profile.child_discussion_rate}%</span></p>
-              <p>Follow-up: <span className={cn("font-medium", d.online_safety_profile.follow_up_rate >= 80 ? "text-green-600" : "text-amber-600")}>{d.online_safety_profile.follow_up_rate}%</span></p>
+              <p>Discussion: <span className={cn("font-medium", d.online_safety_profile.child_discussion_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.online_safety_profile.child_discussion_rate}%</span></p>
+              <p>Follow-up: <span className={cn("font-medium", d.online_safety_profile.follow_up_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.online_safety_profile.follow_up_rate}%</span></p>
             </div>
           </div>
         )}
@@ -194,7 +211,7 @@ export function HomeSafeguardingIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -209,7 +226,7 @@ export function HomeSafeguardingIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -236,12 +253,12 @@ export function HomeSafeguardingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Safeguarding Intelligence */}
+        {/* Cara Safeguarding Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safeguarding Intelligence
+              Cara Safeguarding Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,7 +1,9 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { dal } from "@/lib/db/dal";
 import { requirePermission } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
+import { auditFromRequest } from "@/lib/audit/audit-recorder";
 
 type RouteParams = { params: Promise<{ id: string }> };
 
@@ -21,7 +23,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
 export async function PATCH(req: NextRequest, { params }: RouteParams) {
   const { id } = await params;
-  const body = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
 
   // ── Action: submit ────────────────────────────────────────────────────────
   if (body.action === "submit") {
@@ -54,6 +58,15 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
   const updated = await dal.careForms.update(id, {
     ...safeBody,
     updated_by: auth.userId,
+  });
+  auditFromRequest(req, {
+    entityType: "form_submission",
+    entityId: id,
+    homeId: (form as { home_id?: string }).home_id ?? null,
+    action: "update",
+    before: form as unknown as Record<string, unknown>,
+    after: updated as unknown as Record<string, unknown>,
+    performedBy: auth.userId,
   });
   return NextResponse.json({ data: updated });
 }

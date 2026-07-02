@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE -- HOME SLIPS, TRIPS & FALLS PREVENTION INTELLIGENCE ENGINE TESTS
+// CARA -- HOME SLIPS, TRIPS & FALLS PREVENTION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

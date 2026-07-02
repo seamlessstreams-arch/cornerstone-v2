@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME YOUNG PERSON DAILY WELLBEING INTELLIGENCE ENGINE
+// CARA — HOME YOUNG PERSON DAILY WELLBEING INTELLIGENCE ENGINE
 // Home-level: aggregates daily recording patterns, mood tracking, behaviour
 // documentation quality, de-escalation practice, follow-up responsiveness,
 // and child coverage equity across all young people in the home.

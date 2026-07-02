@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PHYSICAL INTERVENTION DEBRIEF REGISTER
+// CARA — PHYSICAL INTERVENTION DEBRIEF REGISTER
 // Reg 20, Children's Homes (England) Regulations 2015
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
@@ -94,15 +95,15 @@ function PIDebriefCard({
   incident,
   onUpdateDebrief,
   onSignOff,
-  onAriaAnalysis,
-  ariaBusy,
+  onCaraAnalysis,
+  caraBusy,
 }: {
   debrief: PIDebrief;
   incident: Incident | undefined;
   onUpdateDebrief: (id: string, data: Partial<PIDebrief>) => void;
   onSignOff: (debrief: PIDebrief) => void;
-  onAriaAnalysis: (debrief: PIDebrief, incident: Incident | undefined) => void;
-  ariaBusy: string | null;
+  onCaraAnalysis: (debrief: PIDebrief, incident: Incident | undefined) => void;
+  caraBusy: string | null;
 }) {
   const [expanded, setExpanded] = useState(debrief.status !== "rm_signed_off");
   const overdue = debriefOverdue(debrief);
@@ -377,25 +378,25 @@ function PIDebriefCard({
             </div>
           )}
 
-          {/* ARIA analysis */}
-          {debrief.aria_analysis ? (
+          {/* Cara analysis */}
+          {debrief.cara_analysis ? (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Analysis</p>
               </div>
-              <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.aria_analysis}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{debrief.cara_analysis}</p>
             </div>
           ) : (
             <button
-              onClick={() => onAriaAnalysis(debrief, incident)}
-              disabled={ariaBusy === debrief.id}
+              onClick={() => onCaraAnalysis(debrief, incident)}
+              disabled={caraBusy === debrief.id}
               className="inline-flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-800 disabled:opacity-50"
             >
-              {ariaBusy === debrief.id ? (
-                <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA analysing…</>
+              {caraBusy === debrief.id ? (
+                <><Sparkles className="h-3.5 w-3.5 animate-spin" />Cara analysing…</>
               ) : (
-                <><Sparkles className="h-3.5 w-3.5" />Generate ARIA analysis</>
+                <><Sparkles className="h-3.5 w-3.5" />Generate Cara analysis</>
               )}
             </button>
           )}
@@ -453,9 +454,9 @@ export default function PIDebriefsPage() {
   const [viewTab, setViewTab]     = useState<"pending" | "completed" | "all">("pending");
   const [sortBy, setSortBy]       = useState<"date" | "duration" | "technique" | "status">("date");
 
-  // ARIA analysis
-  const [ariaBusy, setAriaBusy]   = useState<string | null>(null);
-  const [ariaError, setAriaError] = useState<string | null>(null);
+  // Cara analysis
+  const [caraBusy, setCaraBusy]   = useState<string | null>(null);
+  const [caraError, setCaraError] = useState<string | null>(null);
 
   const handleUpdateDebrief = async (id: string, data: Partial<PIDebrief>) => {
     await updateDebrief.mutateAsync({ id, data });
@@ -481,15 +482,15 @@ export default function PIDebriefsPage() {
     }
   };
 
-  const handleAriaAnalysis = async (debrief: PIDebrief, incident: Incident | undefined) => {
-    setAriaBusy(debrief.id);
-    setAriaError(null);
+  const handleCaraAnalysis = async (debrief: PIDebrief, incident: Incident | undefined) => {
+    setCaraBusy(debrief.id);
+    setCaraError(null);
     try {
       const injurySummary = debrief.injuries.length > 0
         ? debrief.injuries.map((i) => `${i.person_type}: ${i.description}${i.riddor_reportable ? " (RIDDOR reportable)" : ""}`).join("; ")
         : "None";
 
-      const prompt = `You are ARIA, a regulatory compliance AI for a children's residential home. Analyse this physical intervention debrief and provide a concise 2–3 sentence regulatory assessment covering: proportionality of the intervention, completeness of the debrief process, any outstanding compliance concerns, and any patterns or learning identified. Be precise and focused on Reg 20 compliance.
+      const prompt = `You are Cara, a regulatory compliance AI for a children's residential home. Analyse this physical intervention debrief and provide a concise 2–3 sentence regulatory assessment covering: proportionality of the intervention, completeness of the debrief process, any outstanding compliance concerns, and any patterns or learning identified. Be precise and focused on Reg 20 compliance.
 
 Incident: ${incident?.reference ?? debrief.incident_id} — ${incident?.date ?? "unknown date"}
 Young Person: ${incident ? getYPName(incident.child_id) : "unknown"}
@@ -504,7 +505,7 @@ Trigger: ${debrief.trigger_identified ?? "Not yet identified"}
 Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "No"}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "pi_debrief_analysis" },
       );
 
@@ -512,11 +513,11 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
         response?.choices?.[0]?.message?.content ??
         `${incident?.reference ?? debrief.incident_id} — ${TECHNIQUE_LABELS[debrief.technique_used]} for ${debrief.duration_minutes} min. ${debrief.yp_debrief_completed && debrief.staff_debrief_completed ? "Both YP and staff debriefs completed." : `Outstanding debriefs: ${!debrief.yp_debrief_completed ? "YP" : ""}${!debrief.yp_debrief_completed && !debrief.staff_debrief_completed ? " and " : ""}${!debrief.staff_debrief_completed ? "Staff" : ""}.`} Trigger: ${debrief.trigger_identified ?? "not yet identified"}.`;
 
-      await updateDebrief.mutateAsync({ id: debrief.id, data: { aria_analysis: analysis } });
+      await updateDebrief.mutateAsync({ id: debrief.id, data: { cara_analysis: analysis } });
     } catch {
-      setAriaError("ARIA analysis failed — please try again");
+      setCaraError("Cara analysis failed — please try again");
     } finally {
-      setAriaBusy(null);
+      setCaraBusy(null);
     }
   };
 
@@ -590,12 +591,12 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
     <PageShell
       title="PI Debrief Register"
       subtitle="Physical intervention debrief tracking — Reg 20 compliance"
-      ariaContext={{ pageTitle: "PI Debrief Register", sourceType: "pi_debrief" }}
+      caraContext={{ pageTitle: "PI Debrief Register", sourceType: "pi_debrief" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={PI_DEBRIEF_EXPORT_COLS} filename="pi-debriefs" />
-          <PrintButton title="PI Debrief Register" subtitle="Oak House — Reg 20 Compliance" targetId="pi-debriefs-content" />
+          <PrintButton title="PI Debrief Register" subtitle="Chamberlain House — Reg 20 Compliance" targetId="pi-debriefs-content" />
           <SmartUploadButton
             variant="inline"
             label="Upload PI Record"
@@ -607,7 +608,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
               Incidents
             </button>
           </Link>
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -709,12 +710,12 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
               incident={getIncident(d.incident_id)}
               onUpdateDebrief={handleUpdateDebrief}
               onSignOff={setSigningOff}
-              onAriaAnalysis={handleAriaAnalysis}
-              ariaBusy={ariaBusy}
+              onCaraAnalysis={handleCaraAnalysis}
+              caraBusy={caraBusy}
             />
           ))}
-          {ariaError && (
-            <p className="text-xs text-red-600 text-right">{ariaError}</p>
+          {caraError && (
+            <p className="text-xs text-red-600 text-right">{caraError}</p>
           )}
         </div>
       )}
@@ -751,6 +752,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
               rows={4}
               className="text-sm"
             />
+            <EntryAssist value={rmComments} onChange={setRmComments} sourceRecordType="post_incident_debrief" className="mt-1" />
           </div>
           <DialogFooter className="gap-2">
             <Button
@@ -773,7 +775,7 @@ Ofsted notification required: ${debrief.ofsted_notification_required ? "Yes" : "
         </DialogContent>
       </Dialog>
       </div>{/* close #pi-debriefs-content */}
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="PI Debrief Register — physical intervention debriefs, Reg 20 compliance, restraint records, body map, staff debrief, child debrief, follow-up actions, Ofsted evidence"
         recordType="incident"

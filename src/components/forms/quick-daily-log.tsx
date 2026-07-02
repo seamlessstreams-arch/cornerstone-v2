@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK DAILY LOG FORM
+// CARA — QUICK DAILY LOG FORM
 // Demonstrates the "Record Once" pattern. Auto-fills child name, date, home,
 // and recording staff. Progressive disclosure: essential fields first, with
 // "Add more detail" expanding additional fields. Autosaves to localStorage.
@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { useRecordOnce } from "@/contexts/record-once-context";
 import { SmartFormField } from "@/components/forms/smart-form-field";
 import { ChildContextCard } from "@/components/forms/child-context-card";
+import { InlineRelationalPanel } from "@/components/relational-timeline/inline-relational-panel";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -249,6 +250,9 @@ export function QuickDailyLog({
       {/* Child context card */}
       <ChildContextCard defaultExpanded={false} />
 
+      {/* Point-of-work: this child's relationships, kept in view as the day is recorded */}
+      <InlineRelationalPanel childId={childId} />
+
       <Card className="overflow-hidden border-[var(--cs-border)]">
         <CardHeader className="pb-3 bg-[var(--cs-surface)]/50">
           <div className="flex items-center justify-between">
@@ -330,7 +334,7 @@ export function QuickDailyLog({
                     className={cn(
                       "flex flex-col items-center gap-1 rounded-xl border-2 px-3 py-2 min-w-[56px] min-h-[48px] transition-all",
                       form.mood === m.value
-                        ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] shadow-sm"
+                        ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)] shadow-sm"
                         : "border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] hover:border-[var(--cs-border-subtle)]",
                     )}
                   >

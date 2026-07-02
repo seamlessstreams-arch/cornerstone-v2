@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DISCIPLINARY & CONDUCT INTELLIGENCE ENGINE
+// CARA — HOME STAFF DISCIPLINARY & CONDUCT INTELLIGENCE ENGINE
 // Home-level: analyses disciplinary cases, investigation quality, LADO
 // compliance, suspension management, and learning to surface intelligence
 // for registered managers.

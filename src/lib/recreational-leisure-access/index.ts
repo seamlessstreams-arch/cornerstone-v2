@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Recreational & Leisure Access Intelligence — Public API
+// Cara Recreational & Leisure Access Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — Record Locking & Amendment Tests
+// Cara Quality Ecology — Record Locking & Amendment Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

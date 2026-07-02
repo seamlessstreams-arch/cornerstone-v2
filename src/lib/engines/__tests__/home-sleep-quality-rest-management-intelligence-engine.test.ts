@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SLEEP QUALITY & REST MANAGEMENT INTELLIGENCE ENGINE — TESTS
+// CARA — HOME SLEEP QUALITY & REST MANAGEMENT INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 6 (Quality of care standard), Reg 12 (Health and wellbeing).
 // ══════════════════════════════════════════════════════════════════════════════
 

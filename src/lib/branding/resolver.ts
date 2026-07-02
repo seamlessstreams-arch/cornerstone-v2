@@ -1,11 +1,11 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BRANDING RESOLVER
+// CARA — BRANDING RESOLVER
 // Resolves the correct branding for any document or export.
 //
 // Priority (highest wins):
 //   1. Home-level override (home_branding)
 //   2. Organisation/client branding (organisation_branding)
-//   3. Cornerstone system default branding (system_branding)
+//   3. Cara system default branding (system_branding)
 //
 // This runs server-side only. Never expose raw branding secrets client-side.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -13,7 +13,7 @@
 import { db } from "@/lib/db/store";
 import type { ResolvedBranding } from "@/types/branding";
 
-// ── Default Cornerstone system branding ───────────────────────────────────────
+// ── Default Cara system branding ───────────────────────────────────────
 
 const CORNERSTONE_DEFAULTS: Omit<
   ResolvedBranding,
@@ -43,8 +43,8 @@ const CORNERSTONE_DEFAULTS: Omit<
   primary_colour: "#1e3a5f",
   secondary_colour: "#2dd4bf",
   accent_colour: "#3b82f6",
-  footer_text: "Generated securely through Cornerstone",
-  powered_by_mark: "Generated securely through Cornerstone · cornerstone.care",
+  footer_text: "Generated securely through Cara",
+  powered_by_mark: "Generated securely through Cara · cara.care",
   resolved_at: "",
   source: "system",
 };
@@ -105,7 +105,7 @@ export function resolveBranding(input: BrandingResolverInput): ResolvedBranding 
 
   // ── Organisation details ───────────────────────────────────────────────────
   const companyName =
-    (orgBranding?.company_name as string | null) ?? "Cornerstone";
+    (orgBranding?.company_name as string | null) ?? "Cara";
 
   const tradingName =
     (orgBranding?.trading_name as string | null) ?? null;
@@ -146,7 +146,7 @@ export function resolveBranding(input: BrandingResolverInput): ResolvedBranding 
     (orgBranding?.confidentiality_notice as string | null) ??
     "This document is confidential. It contains sensitive information about children in care and must not be shared without authorisation.";
 
-  const poweredByMark = `Generated securely through Cornerstone · cornerstone.care`;
+  const poweredByMark = `Generated securely through Cara · cara.care`;
 
   // ── Determine source ───────────────────────────────────────────────────────
   const source: ResolvedBranding["source"] = homeBranding
@@ -190,7 +190,7 @@ export function resolveBranding(input: BrandingResolverInput): ResolvedBranding 
 
 /**
  * Check whether key regulatory details are complete.
- * ARIA uses this to flag missing branding before finalising documents.
+ * Cara uses this to flag missing branding before finalising documents.
  */
 export interface BrandingCompleteness {
   is_complete: boolean;
@@ -204,7 +204,7 @@ export function checkBrandingCompleteness(
   const missing: string[] = [];
   const warnings: string[] = [];
 
-  if (!branding.company_name || branding.company_name === "Cornerstone") {
+  if (!branding.company_name || branding.company_name === "Cara") {
     missing.push("Organisation name");
   }
   if (!branding.registered_provider_name) {

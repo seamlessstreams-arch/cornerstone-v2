@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC HEALTH ASSESSMENT SERVICE
+// CARA — LAC HEALTH ASSESSMENT SERVICE
 // Manages Looked After Child (LAC) Health Assessments — initial and review
 // health assessments, statutory health review compliance, health action plans,
 // and specialist referral tracking.
@@ -231,7 +231,7 @@ export function computeLacHealthAssessmentAlerts(
   return alerts;
 }
 
-export function generateLacHealthAssessmentAriaInsights(
+export function generateLacHealthAssessmentCaraInsights(
   metrics: ReturnType<typeof computeLacHealthAssessmentMetrics>,
   alerts: ReturnType<typeof computeLacHealthAssessmentAlerts>,
 ): string[] {
@@ -360,5 +360,5 @@ export async function createLacHealthAssessment(payload: {
 export const _testing = {
   computeLacHealthAssessmentMetrics,
   computeLacHealthAssessmentAlerts,
-  generateLacHealthAssessmentAriaInsights,
+  generateLacHealthAssessmentCaraInsights,
 };

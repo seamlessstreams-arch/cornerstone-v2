@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PRACTICE OBSERVATION & COMPETENCY INTELLIGENCE ENGINE
+// CARA — HOME PRACTICE OBSERVATION & COMPETENCY INTELLIGENCE ENGINE
 // Pure deterministic engine: practice observation quality, outcomes, domain
 // coverage, sign-off rates, development tracking, and competency assurance.
 // CHR 2015 Reg 33: "Fitness of staff." SCCIF: "Staff competency."

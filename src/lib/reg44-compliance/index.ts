@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Reg 44 Compliance Intelligence — Public API
+// Cara Reg 44 Compliance Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

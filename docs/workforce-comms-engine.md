@@ -1,6 +1,6 @@
 # Workforce, Comms, Safe Access & Governance Engine
 
-Phased extension of Cornerstone. This document grows per phase.
+Phased extension of Cara. This document grows per phase.
 
 ## Architecture context (from inspection)
 
@@ -82,7 +82,7 @@ columns). External notifications are still never auto-sent.
 
 ### What it does
 - **Professional-language nudge** — as staff type (debounced, ≥12 words) the draft
-  is scored by the **shared ARIA recording-quality engine**
+  is scored by the **shared Cara recording-quality engine**
   (`scoreRecordingQuality`); a non-blocking tip appears when the writing is thin or
   unprofessional. Advisory only — it never blocks a send and never alters a message.
 - **Recordable-content detection** — a pure keyword heuristic flags messages that
@@ -91,7 +91,7 @@ columns). External notifications are still never auto-sent.
   suggests the right conversion. It *prompts a human*; it never auto-files.
 - **Convert message → formal record / task (capture once)** — any staff member who
   can see a message may escalate it:
-  - record types are written to the **Cornerstone event spine** via
+  - record types are written to the **Cara event spine** via
     `captureDomainEvent` (validated + de-duplicated once); the canonical-event id is
     `evt_cap_<messageId>_<action>`, so re-converting the same message to the same
     record type **upserts** rather than duplicates;

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- LETTERBOX & INDIRECT CONTACT SERVICE
+// CARA -- LETTERBOX & INDIRECT CONTACT SERVICE
 // Tracks indirect contact arrangements between looked-after children and birth
 // families or significant others, including letterbox exchanges, content screening,
 // emotional impact assessment, child wishes, therapeutic input, facilitator
@@ -603,7 +603,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: LetterboxContactRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

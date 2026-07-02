@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WELLBEING INTELLIGENCE CARD
+// CARA — HOME WELLBEING INTELLIGENCE CARD
 // Home-level: emotional temperature, mood trends, sleep quality, welfare,
-// per-child wellbeing profiles, children of concern, ARIA insights.
+// per-child wellbeing profiles, children of concern, Cara insights.
 // CHR 2015 Reg 6, 7, 34. SCCIF: "Experiences and progress of children."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -28,15 +28,15 @@ const TEMP_STYLES: Record<HomeTemperature, { bg: string; text: string; border: s
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const TREND_ICON = {
@@ -47,16 +47,16 @@ const TREND_ICON = {
 };
 
 const TREND_TEXT: Record<string, string> = {
-  improving: "text-green-600",
+  improving: "text-[--cs-success]",
   stable: "text-slate-500",
-  declining: "text-red-600",
+  declining: "text-[--cs-risk]",
   insufficient_data: "text-slate-400",
 };
 
 function moodColor(score: number): string {
-  if (score >= 7) return "text-green-600";
-  if (score >= 5) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 7) return "text-[--cs-success]";
+  if (score >= 5) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 function moodBg(score: number): string {
@@ -66,10 +66,10 @@ function moodBg(score: number): string {
 }
 
 function wellbeingColor(score: number): string {
-  if (score >= 65) return "text-green-600";
-  if (score >= 50) return "text-amber-600";
+  if (score >= 65) return "text-[--cs-success]";
+  if (score >= 50) return "text-[--cs-warning]";
   if (score >= 35) return "text-orange-600";
-  return "text-red-600";
+  return "text-[--cs-risk]";
 }
 
 function wellbeingBg(score: number): string {
@@ -144,7 +144,7 @@ export function HomeWellbeingIntelligenceCard() {
           <div className={cn("text-center rounded-lg p-2", d.sleep_overview.good_rate >= 70 ? "bg-indigo-50" : d.sleep_overview.good_rate >= 40 ? "bg-amber-50" : "bg-red-50")}>
             <div className="flex items-center justify-center gap-1">
               <Moon className={cn("h-4 w-4", d.sleep_overview.good_rate >= 70 ? "text-indigo-500" : d.sleep_overview.good_rate >= 40 ? "text-amber-500" : "text-red-500")} />
-              <p className={cn("text-lg font-bold tabular-nums", d.sleep_overview.good_rate >= 70 ? "text-indigo-600" : d.sleep_overview.good_rate >= 40 ? "text-amber-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.sleep_overview.good_rate >= 70 ? "text-indigo-600" : d.sleep_overview.good_rate >= 40 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                 {d.sleep_overview.good_rate}%
               </p>
             </div>
@@ -156,7 +156,7 @@ export function HomeWellbeingIntelligenceCard() {
           <div className="text-center rounded-lg bg-slate-50 p-2">
             <div className="flex items-center justify-center gap-1">
               <ShieldCheck className={cn("h-4 w-4", d.children_of_concern.length === 0 ? "text-green-500" : "text-red-500")} />
-              <p className={cn("text-lg font-bold tabular-nums", d.children_of_concern.length === 0 ? "text-green-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.children_of_concern.length === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                 {d.children_of_concern.length}
               </p>
             </div>
@@ -187,7 +187,7 @@ export function HomeWellbeingIntelligenceCard() {
                         <span className={cn("capitalize", TREND_TEXT[cp.mood_trend])}>{cp.mood_trend}</span>
                       )}
                       {cp.incident_count_30d > 0 && (
-                        <span className="text-red-600">{cp.incident_count_30d} incident{cp.incident_count_30d !== 1 ? "s" : ""}</span>
+                        <span className="text-[--cs-risk]">{cp.incident_count_30d} incident{cp.incident_count_30d !== 1 ? "s" : ""}</span>
                       )}
                     </div>
                   </div>
@@ -197,7 +197,7 @@ export function HomeWellbeingIntelligenceCard() {
                   {(cp.flags?.length ?? 0) > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(cp.flags ?? []).map((f, i) => (
-                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-red-100 text-red-700 border border-red-200">
+                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-[--cs-risk-bg] text-[--cs-risk] border border-red-200">
                           {f}
                         </span>
                       ))}
@@ -234,7 +234,7 @@ export function HomeWellbeingIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -249,7 +249,7 @@ export function HomeWellbeingIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -276,12 +276,12 @@ export function HomeWellbeingIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Wellbeing Insights */}
+        {/* Cara Wellbeing Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Wellbeing Intelligence
+              Cara Wellbeing Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

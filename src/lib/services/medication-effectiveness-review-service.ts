@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION EFFECTIVENESS REVIEW SERVICE
+// CARA — MEDICATION EFFECTIVENESS REVIEW SERVICE
 // Monitors medication impact, side-effect tracking, therapeutic
 // effectiveness, and ongoing medication review compliance.
 // CHR 2015 Reg 23 (health — medication management),

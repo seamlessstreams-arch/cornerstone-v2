@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD BEHAVIOUR & SAFETY INTELLIGENCE CARD
+// CARA — CHILD BEHAVIOUR & SAFETY INTELLIGENCE CARD
 // Per-child behaviour analysis: behaviour patterns, incidents, restraints,
 // missing episodes, sanctions/rewards balance, sleep quality, and BSP compliance.
 // CHR 2015 Reg 12, 19, 20, 35. SCCIF: Experiences & progress + Safety.
@@ -304,12 +304,12 @@ export function ChildBehaviourSafetyIntelligenceCard({ childId }: { childId: str
           </div>
         )}
 
-        {/* ARIA Safety Insights */}
+        {/* Cara Safety Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safety Intelligence
+              Cara Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

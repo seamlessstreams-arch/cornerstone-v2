@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PAYROLL COMPLIANCE SERVICE
+// CARA — STAFF PAYROLL COMPLIANCE SERVICE
 // Tracks payroll compliance checks, right to work verification, pension
 // auto-enrolment, and HMRC compliance for staff in children's residential homes.
 //
@@ -178,9 +178,9 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function computeAriaInsights(rows: StaffPayrollComplianceRow[]): string[] {
+export function computeCaraInsights(rows: StaffPayrollComplianceRow[]): string[] {
   const metrics = computeMetrics(rows);
   const alerts = computeAlerts(rows);
   const insights: string[] = [];
@@ -307,4 +307,4 @@ export async function updateStaffPayrollCompliance(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeMetrics, computeAlerts, computeAriaInsights };
+export const _testing = { computeMetrics, computeAlerts, computeCaraInsights };

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE ENGINE
+// CARA — REGULATORY REPORTING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses Reg 44 visit schedule compliance, Reg 45 quality of care reviews,
@@ -111,7 +111,7 @@ export interface RegulatoryAlert {
   message: string;
 }
 
-export interface AriaRegulatoryInsight {
+export interface CaraRegulatoryInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -123,7 +123,7 @@ export interface RegulatoryReportingIntelligenceResult {
   notification_compliance: NotificationCompliance;
   recommendation_tracker: RecommendationTracker;
   alerts: RegulatoryAlert[];
-  insights: AriaRegulatoryInsight[];
+  insights: CaraRegulatoryInsight[];
 }
 
 // ── Helpers (exported for unit testing) ─────────────────────────────────────
@@ -398,7 +398,7 @@ export function computeRegulatoryReportingIntelligence(
 
   // ── Insights ────────────────────────────────────────────────────────────────
 
-  const insights: AriaRegulatoryInsight[] = [];
+  const insights: CaraRegulatoryInsight[] = [];
 
   // Critical: Overdue notifications
   const lateNotifications = notifications.filter(

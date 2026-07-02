@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DIGITAL SAFETY INTELLIGENCE ENGINE
+// CARA — HOME DIGITAL SAFETY INTELLIGENCE ENGINE
 // Home-level: aggregates online safety incidents, agreements, photo consents,
 // media consents, and digital safeguarding posture across all children.
 // KCSIE 2024: "Online safety — schools/settings must have appropriate systems."
@@ -352,7 +352,7 @@ export function computeHomeDigitalSafety(
     recommendations.push({ rank: ++rank, recommendation: "Improve parent/carer notification when online safety incidents occur — partnership working is essential.", urgency: "soon", regulatory_ref: "Reg 12" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (agreementCoverageRate >= 100 && photoConsentCoverageRate >= 100 && signedRate >= 100 && totalOverdue === 0) {
     insights.push({ text: "Digital safety governance is exemplary. Every child has a signed agreement, consents are current, and reviews are on schedule. This demonstrates proactive digital safeguarding that Ofsted will recognise as outstanding.", severity: "positive" });
   }

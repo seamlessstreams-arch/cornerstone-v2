@@ -6,7 +6,7 @@ import type { TimeSavedSummary } from "@/types/extended";
 const BASELINE_MINUTES: Record<string, number> = {
   auto_fill: 5,
   linked_record: 4,
-  aria_draft: 15,
+  cara_draft: 15,
   auto_task: 5,
   auto_handover: 10,
   one_click_summary: 8,
@@ -16,7 +16,7 @@ const BASELINE_MINUTES: Record<string, number> = {
 // Simulated accumulated savings for demo purposes
 const DEMO_SAVINGS = [
   { category: "Auto-linked records", minutes: 48, count: 12 },
-  { category: "Aria-assisted drafts", minutes: 90, count: 6 },
+  { category: "Cara-assisted drafts", minutes: 90, count: 6 },
   { category: "Auto-generated tasks", minutes: 25, count: 5 },
   { category: "Auto-populated handovers", minutes: 40, count: 4 },
   { category: "Avoided duplicate entry", minutes: 36, count: 9 },

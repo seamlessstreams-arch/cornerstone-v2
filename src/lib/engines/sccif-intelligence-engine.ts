@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses self-evaluation coverage across the three SCCIF judgment areas,
@@ -69,7 +69,7 @@ export interface SCCIFAlert {
   message: string;
 }
 
-export interface AriaSCCIFInsight {
+export interface CaraSCCIFInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -80,7 +80,7 @@ export interface SCCIFIntelligenceResult {
   evidence_gaps: string[];
   action_tracker: ActionTracker;
   alerts: SCCIFAlert[];
-  insights: AriaSCCIFInsight[];
+  insights: CaraSCCIFInsight[];
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -300,7 +300,7 @@ export function computeSCCIFIntelligence(input: SCCIFIntelligenceInput): SCCIFIn
   }
 
   // ── Insights ────────────────────────────────────────────────────────────
-  const insights: AriaSCCIFInsight[] = [];
+  const insights: CaraSCCIFInsight[] = [];
 
   // Critical: Inadequate area
   for (const area of areas) {

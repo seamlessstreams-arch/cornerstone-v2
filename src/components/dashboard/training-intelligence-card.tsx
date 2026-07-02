@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING & DEVELOPMENT INTELLIGENCE CARD
+// CARA — TRAINING & DEVELOPMENT INTELLIGENCE CARD
 // Dashboard card for mandatory training compliance, DBS status,
-// supervision, and ARIA workforce intelligence (Reg 32/33).
+// supervision, and Cara workforce intelligence (Reg 32/33).
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,9 +20,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -76,25 +76,25 @@ export function TrainingIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg p-2" style={{ background: p.training_compliance_rate >= 90 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", p.training_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.training_compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {p.training_compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: p.supervision_compliance_rate >= 90 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", p.supervision_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.supervision_compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {p.supervision_compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Supervision</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", totalExpired > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpired > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpired > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {totalExpired}
             </p>
             <p className="text-[10px] text-muted-foreground">Expired</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", totalExpiring > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpiring > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpiring > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {totalExpiring}
             </p>
             <p className="text-[10px] text-muted-foreground">Expiring</p>
@@ -142,12 +142,12 @@ export function TrainingIntelligenceCard() {
             </div>
           </div>
           {dbs.expired_or_missing > 0 ? (
-            <Badge className="text-[10px] bg-red-100 text-red-700">
+            <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {dbs.expired_or_missing} action
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All clear
             </Badge>
@@ -167,24 +167,24 @@ export function TrainingIntelligenceCard() {
             </div>
           </div>
           {sup.overdue > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {sup.overdue} overdue
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All current
             </Badge>
           )}
         </div>
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Workforce Intelligence
+              Cara Workforce Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- COUNTY LINES & CRIMINAL EXPLOITATION INTELLIGENCE SERVICE
+// CARA -- COUNTY LINES & CRIMINAL EXPLOITATION INTELLIGENCE SERVICE
 // Tracks intelligence records, risk assessments, NRM referrals, safety plans,
 // police liaison, peer mapping, contextual safeguarding, and disruption
 // activities for children at risk of county lines and criminal exploitation.
@@ -503,7 +503,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: CountyLinesIntelligenceRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -822,6 +822,6 @@ export async function deleteCountyLinesIntelligence(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateCountyLinesIntelligence,
 };

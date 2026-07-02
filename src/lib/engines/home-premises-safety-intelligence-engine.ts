@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PREMISES SAFETY INTELLIGENCE ENGINE
+// CARA — HOME PREMISES SAFETY INTELLIGENCE ENGINE
 // Home-level: analyses building certifications, premises checks, vehicle
 // compliance, and maintenance responsiveness to assess premises safety.
 // CHR 2015 Reg 25. SCCIF: "Safe."

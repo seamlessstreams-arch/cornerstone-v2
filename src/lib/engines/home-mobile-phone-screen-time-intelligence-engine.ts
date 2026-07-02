@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MOBILE PHONE & SCREEN TIME INTELLIGENCE ENGINE
+// CARA — HOME MOBILE PHONE & SCREEN TIME INTELLIGENCE ENGINE
 // Monitors how well the home manages children's screen time, age-appropriate
 // content monitoring, device usage agreements, digital wellbeing support, and
 // child self-regulation of technology use.

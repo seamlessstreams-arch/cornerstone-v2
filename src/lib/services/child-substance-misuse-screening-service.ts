@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SUBSTANCE MISUSE SCREENING SERVICE
+// CARA — CHILD SUBSTANCE MISUSE SCREENING SERVICE
 // Tracks substance misuse screenings, interventions, and referrals
 // for children in residential care. Monitors risk levels, safety
 // planning, and multi-agency coordination.
@@ -220,7 +220,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function computeAriaInsights(
+export function computeCaraInsights(
   metrics: ReturnType<typeof computeMetrics>,
   alerts?: ReturnType<typeof computeAlerts>,
 ): string[] {
@@ -355,5 +355,5 @@ export async function updateChildSubstanceMisuseScreening(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  computeAriaInsights,
+  computeCaraInsights,
 };

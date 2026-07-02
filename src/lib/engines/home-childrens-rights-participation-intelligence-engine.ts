@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CHILDREN'S RIGHTS & PARTICIPATION INTELLIGENCE ENGINE
+// CARA — HOME CHILDREN'S RIGHTS & PARTICIPATION INTELLIGENCE ENGINE
 // Home-level: aggregates children's rights entries, child-led meetings,
 // feedback loops, pledges, participation entries, and advocacy records.
 // CHR 2015 Reg 7: "The children's views, wishes and feelings standard."
@@ -569,19 +569,19 @@ export function computeHomeChildrensRightsParticipation(
   const insights: { text: string; severity: string }[] = [];
 
   if (fullyMetRate >= 90 && childAcceptsRate >= 85 && childInfluenceRate >= 80)
-    insights.push({ text: "ARIA recognises a rights-respecting culture — children's views, wishes and feelings are central to home governance.", severity: "positive" });
+    insights.push({ text: "Cara recognises a rights-respecting culture — children's views, wishes and feelings are central to home governance.", severity: "positive" });
 
   if (notMet.length >= 3)
-    insights.push({ text: `ARIA flags ${notMet.length} unmet rights — pattern suggests systemic rights compliance gap.`, severity: "critical" });
+    insights.push({ text: `Cara flags ${notMet.length} unmet rights — pattern suggests systemic rights compliance gap.`, severity: "critical" });
 
   if (voiceDomains >= 5)
-    insights.push({ text: `ARIA detects child voice across ${voiceDomains} domains — evidence of embedded participation culture.`, severity: "positive" });
+    insights.push({ text: `Cara detects child voice across ${voiceDomains} domains — evidence of embedded participation culture.`, severity: "positive" });
 
   if (meetings90d.length >= 6 && total_children > 0)
     insights.push({ text: `${meetings90d.length} child-led meetings in 90 days — children are actively shaping their care experience.`, severity: "positive" });
 
   if (avgClosureDays > 30 && loops90d.length >= 5)
-    insights.push({ text: `ARIA flags average feedback closure of ${avgClosureDays} days across ${loops90d.length} loops — risk of children disengaging from feedback processes.`, severity: "warning" });
+    insights.push({ text: `Cara flags average feedback closure of ${avgClosureDays} days across ${loops90d.length} loops — risk of children disengaging from feedback processes.`, severity: "warning" });
 
   if (advocacyOverdueReviews >= 2)
     insights.push({ text: `${advocacyOverdueReviews} advocacy reviews overdue — children's independent representation may be lapsing.`, severity: "warning" });

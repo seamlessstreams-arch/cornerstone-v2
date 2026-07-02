@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MISSING EPISODE INTELLIGENCE ENGINE TESTS
+// CARA — HOME MISSING EPISODE INTELLIGENCE ENGINE TESTS
 // 160+ comprehensive vitest tests covering guard clauses, modifiers,
 // rating boundaries, output accuracy, strengths/concerns/recommendations/
 // insights, edge cases, and score clamping.

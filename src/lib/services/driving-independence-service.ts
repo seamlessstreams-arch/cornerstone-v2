@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- DRIVING LESSONS & TRANSPORT INDEPENDENCE SERVICE
+// CARA -- DRIVING LESSONS & TRANSPORT INDEPENDENCE SERVICE
 // Tracks provisional licence applications, theory and practical test preparation,
 // driving lessons, CBT (moped/scooter), car insurance research, road safety
 // education, cycling proficiency, bus/train journey planning, and travel card
@@ -625,7 +625,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: DrivingIndependenceRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

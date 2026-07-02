@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DEVELOPMENT PLAN SERVICE
-// Manages ARIA-generated evidence-based staff development plans — part of the
+// CARA — STAFF DEVELOPMENT PLAN SERVICE
+// Manages Cara-generated evidence-based staff development plans — part of the
 // Staff Development, Support and Risk Intelligence layer.
 // CHR 2015 Reg 33 (employment of staff — competence and support),
 // Reg 34 (fitness of workers), Reg 13 (leadership and management).

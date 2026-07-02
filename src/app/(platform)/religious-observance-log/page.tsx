@@ -36,8 +36,8 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { useReligiousObservanceRecords } from "@/hooks/use-religious-observance-records";
 import type { ReligiousObservanceRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────── */
 
@@ -143,12 +143,12 @@ export default function ReligiousObservanceLogPage() {
     <PageShell
       title="Religious & Belief Observance Log"
       subtitle="Recording and supporting each child's religious, spiritual or belief practices — at their pace, on their terms"
-      ariaContext={{ pageTitle: "Religious & Belief Observance Log", sourceType: "care_plan" }}
+      caraContext={{ pageTitle: "Religious & Belief Observance Log", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="religious-observance-log" />
           <PrintButton title="Religious & Belief Observance Log" />
-          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -165,7 +165,7 @@ export default function ReligiousObservanceLogPage() {
           <div>
             <p className="text-sm font-medium text-emerald-900">Respect for Every Belief — and the Right to None</p>
             <p className="text-xs text-emerald-800 mt-1">
-              Oak House supports each child&apos;s religion, spirituality or belief — including the right to no religion at all — without pressure, judgement or assumption. We follow the child&apos;s lead, draw on family and cultural knowledge with consent, and never treat any tradition as more or less valid than another. A child&apos;s spiritual life is theirs to shape; our job is to make space for it.
+              Chamberlain House supports each child&apos;s religion, spirituality or belief — including the right to no religion at all — without pressure, judgement or assumption. We follow the child&apos;s lead, draw on family and cultural knowledge with consent, and never treat any tradition as more or less valid than another. A child&apos;s spiritual life is theirs to shape; our job is to make space for it.
             </p>
           </div>
         </div>
@@ -333,7 +333,7 @@ export default function ReligiousObservanceLogPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Religious & Belief Observance Log — faith practices, prayer, worship, religious education, religious diet, religious dress, faith communities, cultural identity, care plan evidence, Reg 45"
         recordType="care_plan"

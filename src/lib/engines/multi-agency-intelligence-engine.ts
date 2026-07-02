@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE ENGINE
+// CARA — MULTI-AGENCY WORKING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses LAC review compliance, professional contact currency,
@@ -64,7 +64,7 @@ export interface MultiAgencyIntelligenceResult {
   child_engagement: ChildEngagementProfile[];
   upcoming_reviews: UpcomingReview[];
   alerts: MultiAgencyAlert[];
-  insights: AriaMultiAgencyInsight[];
+  insights: CaraMultiAgencyInsight[];
 }
 
 export interface MultiAgencyOverview {
@@ -111,7 +111,7 @@ export interface MultiAgencyAlert {
   message: string;
 }
 
-export interface AriaMultiAgencyInsight {
+export interface CaraMultiAgencyInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -377,7 +377,7 @@ export function computeMultiAgencyIntelligence(input: MultiAgencyEngineInput): M
   }
 
   // ── Insights ────────────────────────────────────────────────────────────
-  const insights: AriaMultiAgencyInsight[] = [];
+  const insights: CaraMultiAgencyInsight[] = [];
 
   // Critical: Children missing statutory professionals
   const childrenWithoutSW = children.filter(

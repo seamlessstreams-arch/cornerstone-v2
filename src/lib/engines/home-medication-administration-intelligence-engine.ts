@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MEDICATION ADMINISTRATION INTELLIGENCE ENGINE
+// CARA — HOME MEDICATION ADMINISTRATION INTELLIGENCE ENGINE
 // Home-level engine analysing medication administration compliance,
 // timeliness, witness governance, refusal management, PRN documentation,
 // and overall medicines management quality.

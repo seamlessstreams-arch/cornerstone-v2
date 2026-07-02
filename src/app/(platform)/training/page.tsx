@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAINING & COMPLIANCE
+// CARA — TRAINING & COMPLIANCE
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -30,8 +30,8 @@ import type { TrainingRecord } from "@/types";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
 import { useStaff } from "@/hooks/use-staff";
 import { cn, formatDate } from "@/lib/utils";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { api } from "@/hooks/use-api";
 import { TRAINING_CATEGORIES } from "@/lib/constants";
 import type { TrainingCategory } from "@/lib/constants";
@@ -197,7 +197,7 @@ function AddRecordDialog({ open, onClose }: { open: boolean; onClose: () => void
   );
 }
 
-// ── ARIA Compliance Report panel ──────────────────────────────────────────────
+// ── Cara Compliance Report panel ──────────────────────────────────────────────
 type ComplianceReport = {
   summary: string;
   compliance_narrative: string;
@@ -219,12 +219,12 @@ function ComplianceReportPanel({
     setLoading(true);
     try {
       const res = await api.post<{ data: { parsed?: ComplianceReport } }>(
-        "/aria",
+        "/cara",
         {
           mode: "training_needs_analysis",
           style: "provider_summary",
           source_content: [
-            `Training compliance report for Oak House.`,
+            `Training compliance report for Chamberlain House.`,
             `Overall compliance rate: ${rate}%.`,
             `Total records: ${total}. Expired: ${expired}. Expiring soon: ${expiring}.`,
             `${expired > 0 ? `${expired} mandatory training records have expired — staff should not work unsupervised until recertified.` : "No expired records."}`,
@@ -253,7 +253,7 @@ function ComplianceReportPanel({
             <Sparkles className="h-4 w-4 text-white" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-indigo-900">ARIA Compliance Report</p>
+            <p className="text-sm font-semibold text-indigo-900">Cara Compliance Report</p>
             <p className="text-xs text-indigo-600">AI narrative with risk areas and recommended actions</p>
           </div>
         </div>
@@ -419,7 +419,7 @@ export default function TrainingPage() {
     createNeed.mutate(
       {
         home_id: homeId,
-        identified_by: "aria",
+        identified_by: "cara",
         need_type: record.category === "safeguarding" ? "safeguarding"
           : record.category === "medication" ? "medication"
           : record.category === "restraint" ? "de_escalation"
@@ -428,7 +428,7 @@ export default function TrainingPage() {
         description: `${record.status === "expired" ? "Expired" : "Expiring soon"}: ${record.course_name} for ${getStaffName(record.staff_id)}. Renewal must be arranged promptly.`,
         priority,
         status: "identified",
-        aria_evidence: `Training record status: ${record.status}. Auto-generated from Training & Compliance matrix.`,
+        cara_evidence: `Training record status: ${record.status}. Auto-generated from Training & Compliance matrix.`,
         created_by: currentUser?.id ?? "staff_darren",
       },
       {
@@ -445,25 +445,25 @@ export default function TrainingPage() {
           ? `${meta.rate}% overall compliance · ${meta.expired} expired · ${meta.expiring} expiring`
           : "Loading…"
       }
-      ariaContext={{ pageTitle: "Training & Compliance", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Training & Compliance", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex gap-2">
           <ExportButton<TrainingRecord> filename="training-export" data={filtered} columns={TRAINING_EXPORT_COLS} label="Export" />
-          <PrintButton title="Training Records" subtitle="Oak House — Staff Training & Compliance" targetId="training-content" />
+          <PrintButton title="Training Records" subtitle="Chamberlain House — Staff Training & Compliance" targetId="training-content" />
           <SmartUploadButton variant="inline" label="Upload Certificate" uploadContext="Training — certificate upload" />
           <Button size="sm" className="gap-1.5" onClick={() => setShowAdd(true)}>
             <Plus className="h-3.5 w-3.5" />
             Add Record
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="training-content" className="space-y-5 animate-fade-in">
 
-        {/* ARIA panel */}
-        <AriaPanel mode="assist" pageContext="Training & Compliance — staff training records, mandatory training matrix, certificate uploads, compliance tracking" recordType="training_record" userRole="registered_manager" className="mb-2" />
+        {/* Cara panel */}
+        <CaraPanel mode="assist" pageContext="Training & Compliance — staff training records, mandatory training matrix, certificate uploads, compliance tracking" recordType="training_record" userRole="registered_manager" className="mb-2" />
 
         {/* Summary stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -534,7 +534,7 @@ export default function TrainingPage() {
           </div>
         )}
 
-        {/* ARIA Compliance Report */}
+        {/* Cara Compliance Report */}
         {meta && (
           <ComplianceReportPanel
             rate={meta.rate}

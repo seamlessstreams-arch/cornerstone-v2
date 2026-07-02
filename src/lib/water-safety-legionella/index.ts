@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Water Safety & Legionella Intelligence — Public API
+// Cara Water Safety & Legionella Intelligence — Public API
 // ==============================================================================
 
 export {

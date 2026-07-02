@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOUSE MEETING & CHILDREN'S GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME HOUSE MEETING & CHILDREN'S GOVERNANCE INTELLIGENCE ENGINE
 // Pure deterministic engine: house meeting frequency, child attendance,
 // action tracking, agenda breadth, child-raised topics, and participation.
 // CHR 2015 Reg 7: "Children's wishes and feelings." SCCIF: "Voice of child."

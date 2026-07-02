@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME QUALITY ASSURANCE INTELLIGENCE ENGINE
+// CARA — HOME QUALITY ASSURANCE INTELLIGENCE ENGINE
 // Home-level: analyses QA audit records to assess audit coverage, rating
 // trends, action plan completion, improvement culture, and governance.
 // CHR 2015 Reg 35. SCCIF: "Well-led and managed."

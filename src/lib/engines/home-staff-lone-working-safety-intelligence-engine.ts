@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF LONE WORKING SAFETY INTELLIGENCE ENGINE
+// CARA — HOME STAFF LONE WORKING SAFETY INTELLIGENCE ENGINE
 // Pure deterministic engine: risk assessment completion, check-in compliance,
 // safety protocol adherence, communication device availability, incident
 // reporting during lone working.

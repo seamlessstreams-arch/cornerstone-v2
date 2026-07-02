@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ATMOSPHERE ASSESSMENT SERVICE
+// CARA — HOME ATMOSPHERE ASSESSMENT SERVICE
 // Manages regular assessments of home warmth, belonging, relationships,
 // sense of home, children feeling safe and cared for, and overall
 // environment quality within the residential setting.
@@ -269,7 +269,7 @@ export function computeHomeAtmosphereAlerts(
   return alerts;
 }
 
-export function generateHomeAtmosphereAriaInsights(
+export function generateHomeAtmosphereCaraInsights(
   metrics: ReturnType<typeof computeHomeAtmosphereMetrics>,
   alerts: ReturnType<typeof computeHomeAtmosphereAlerts>,
 ): string[] {
@@ -328,5 +328,5 @@ export function generateHomeAtmosphereAriaInsights(
 export const _testing = {
   computeHomeAtmosphereMetrics,
   computeHomeAtmosphereAlerts,
-  generateHomeAtmosphereAriaInsights,
+  generateHomeAtmosphereCaraInsights,
 };

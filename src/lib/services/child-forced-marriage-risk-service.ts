@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD FORCED MARRIAGE RISK SERVICE
+// CARA — CHILD FORCED MARRIAGE RISK SERVICE
 // Forced marriage risk assessments, Forced Marriage Protection Orders (FMPOs),
 // multi-agency safeguarding, and specialist referral tracking
 // for children in residential care.
@@ -189,7 +189,7 @@ export function computeForcedMarriageRiskAlerts(
   return alerts;
 }
 
-export function generateForcedMarriageRiskAriaInsights(
+export function generateForcedMarriageRiskCaraInsights(
   rows: ChildForcedMarriageRiskRow[],
 ): string[] {
   const metrics = computeForcedMarriageRiskMetrics(rows);
@@ -308,5 +308,5 @@ export async function createChildForcedMarriageRisk(input: {
 export const _testing = {
   computeForcedMarriageRiskMetrics,
   computeForcedMarriageRiskAlerts,
-  generateForcedMarriageRiskAriaInsights,
+  generateForcedMarriageRiskCaraInsights,
 };

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS INTELLIGENCE ENGINE
+// CARA — POSSESSIONS INTELLIGENCE ENGINE
 // Pure deterministic engine for children's property and possessions analysis.
 // Analyses inventory completeness, photo compliance, insurance coverage,
-// missing/damaged items, and generates ARIA intelligence insights.
+// missing/damaged items, and generates Cara intelligence insights.
 // Reg 20: children's belongings must be safeguarded
 // SCCIF: evidence that children's property is respected and well-managed
 // Children Act 1989 s26: right to personal property
@@ -66,7 +66,7 @@ export interface PossessionsAlert {
   message: string;
 }
 
-export interface AriaPossessionsInsight {
+export interface CaraPossessionsInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -76,7 +76,7 @@ export interface PossessionsIntelligenceResult {
   child_inventories: ChildInventoryProfile[];
   category_breakdown: CategoryBreakdown[];
   alerts: PossessionsAlert[];
-  insights: AriaPossessionsInsight[];
+  insights: CaraPossessionsInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -115,7 +115,7 @@ export function computePossessionsIntelligence(input: {
       message: `${c.name} has no possessions logged — inventory not started`,
     }));
 
-    const insights: AriaPossessionsInsight[] = [];
+    const insights: CaraPossessionsInsight[] = [];
 
     return {
       overview: {
@@ -266,7 +266,7 @@ export function computePossessionsIntelligence(input: {
   }
 
   // ── Insights ────────────────────────────────────────────────────────────
-  const insights: AriaPossessionsInsight[] = [];
+  const insights: CaraPossessionsInsight[] = [];
 
   // Critical: missing items with no resolution
   if (missingItems > 0) {

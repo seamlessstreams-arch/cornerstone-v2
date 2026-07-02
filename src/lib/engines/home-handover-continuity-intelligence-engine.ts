@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HANDOVER CONTINUITY INTELLIGENCE ENGINE
+// CARA — HOME HANDOVER CONTINUITY INTELLIGENCE ENGINE
 // Home-level: analyses handover completion, sign-off coverage, child update
 // quality, flag tracking, and incident linkage to assess continuity of care.
 // CHR 2015 Reg 13 (Leadership & Management). SCCIF: "Well-Led."

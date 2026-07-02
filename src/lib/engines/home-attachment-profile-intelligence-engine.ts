@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ATTACHMENT PROFILE INTELLIGENCE ENGINE
+// CARA — HOME ATTACHMENT PROFILE INTELLIGENCE ENGINE
 // Pure deterministic engine: attachment profile coverage, assessment currency,
 // style distribution, relational quality, therapeutic alignment, child voice,
 // staff guidance, and protective factor identification.

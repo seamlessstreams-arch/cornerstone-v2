@@ -1,18 +1,18 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE RULES ENGINE (FIXED RULES)
+// CARA — COMPLIANCE RULES ENGINE (FIXED RULES)
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls, no
 // argless current-time reads (an injectable `today` is always used).
 //
-// This engine is DELIBERATELY SEPARATE from ARIA. ARIA suggests, prioritises and
+// This engine is DELIBERATELY SEPARATE from Cara. Cara suggests, prioritises and
 // reasons; this engine enforces. These are HARD, FIXED regulatory rules — pass or
 // fail — derived from the Children's Homes (England) Regulations 2015 and the
-// associated statutory guidance. ARIA's analysis is read as *evidence* a rule may
-// be breached (e.g. a populated complianceFlag), but ARIA is NOT the authority: a
+// associated statutory guidance. Cara's analysis is read as *evidence* a rule may
+// be breached (e.g. a populated complianceFlag), but Cara is NOT the authority: a
 // rule fails on the facts of the record, not on a model's confidence.
 //
 // Rules evaluated:
-//   (a) mandatory-info            — any event ARIA flagged for compliance → fail
+//   (a) mandatory-info            — any event Cara flagged for compliance → fail
 //   (b) approval-threshold        — high/critical event still requiring approval
 //                                    is an outstanding authorisation → fail
 //   (c) safeguarding-notification — safeguarding / missing events require a
@@ -162,11 +162,11 @@ export function computeComplianceRules(input: ComplianceRulesInput): ComplianceR
   const results: RuleResult[] = [];
 
   // ── (a) mandatory-info ────────────────────────────────────────────────────
-  // Any event ARIA flagged for compliance (non-empty complianceFlags) is a hard
-  // fail: the record is incomplete against a mandatory requirement. ARIA surfaces
+  // Any event Cara flagged for compliance (non-empty complianceFlags) is a hard
+  // fail: the record is incomplete against a mandatory requirement. Cara surfaces
   // the flag, but the FAIL is fixed — the manager must resolve it, not the model.
   for (const e of events) {
-    const flags = e.ariaAnalysis?.complianceFlags ?? [];
+    const flags = e.caraAnalysis?.complianceFlags ?? [];
     if (flags.length === 0) continue;
     const severity: RuleSeverity =
       e.riskLevel === "critical" ? "critical" : e.riskLevel === "high" ? "high" : "medium";
@@ -211,7 +211,7 @@ export function computeComplianceRules(input: ComplianceRulesInput): ComplianceR
     const outstanding = hasAnyTag(e, SAFEGUARDING_OUTSTANDING_TAGS);
     // A populated complianceFlag mentioning notification is also treated as
     // outstanding evidence the duty has not been discharged.
-    const flagOutstanding = (e.ariaAnalysis?.complianceFlags ?? []).some((f) =>
+    const flagOutstanding = (e.caraAnalysis?.complianceFlags ?? []).some((f) =>
       /notif|return home interview|local authority/i.test(f),
     );
     const isOutstanding = outstanding || flagOutstanding;
@@ -388,7 +388,7 @@ function buildInsights(results: RuleResult[], overview: ComplianceOverview): Com
       text:
         overview.rules_evaluated === 0
           ? "No compliance rules were triggered by the current records. As records accumulate this fixed-rule check will keep watching."
-          : `All ${overview.rules_evaluated} fixed compliance rule${overview.rules_evaluated === 1 ? "" : "s"} evaluated are passing. These are hard regulatory checks, separate from ARIA's suggestions — the home is currently clear on every monitored duty.`,
+          : `All ${overview.rules_evaluated} fixed compliance rule${overview.rules_evaluated === 1 ? "" : "s"} evaluated are passing. These are hard regulatory checks, separate from Cara's suggestions — the home is currently clear on every monitored duty.`,
     });
     return insights;
   }

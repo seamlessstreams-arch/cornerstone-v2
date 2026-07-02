@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COURT PROCEEDINGS SERVICE
+// CARA — COURT PROCEEDINGS SERVICE
 // Tracks court proceedings, hearings, statements, and legal representation
 // for children in care. Manages court dates, guardian involvement,
 // statement preparation, and court-directed actions.

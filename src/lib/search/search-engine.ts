@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE — FULL-TEXT SEARCH ENGINE
+// CARA — FULL-TEXT SEARCH ENGINE
 //
 // Pure deterministic search across the in-memory store.
 // Indexes children, staff, incidents, tasks, daily logs, and care events.

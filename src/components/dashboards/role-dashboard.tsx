@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ROLE DASHBOARD SHELL
+// CARA — ROLE DASHBOARD SHELL
 // Common shell for the named role dashboards: PageShell + an "all computed from
 // the event spine" note + a responsive grid of spine-derived cards.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -20,7 +20,7 @@ export function RoleDashboard({
   children: ReactNode;
 }) {
   return (
-    <PageShell title={title} subtitle={subtitle} icon={icon} showQuickCreate={false} ariaContext={{ pageTitle: title, sourceType: "general" }}>
+    <PageShell title={title} subtitle={subtitle} icon={icon} showQuickCreate={false} caraContext={{ pageTitle: title, sourceType: "general" }}>
       <div className="space-y-4">
         <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-bg)] p-4 flex gap-3">
           <Info className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />

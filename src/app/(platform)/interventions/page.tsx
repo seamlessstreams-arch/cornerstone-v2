@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERVENTIONS TRACKER
+// CARA — INTERVENTIONS TRACKER
 // Tracks active interventions for each young person — rationale, review dates,
 // effectiveness, and linked evidence. Directly supports Ofsted ILACS evidence
 // that the home takes purposeful, child-centred action when patterns emerge.
@@ -38,8 +38,8 @@ import {
   Sparkles, FileText, LinkIcon, Loader2, RefreshCw, X,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -52,11 +52,11 @@ const STATUS_LABELS: Record<InterventionStatus, string> = {
 };
 
 const STATUS_COLOUR: Record<InterventionStatus, string> = {
-  active:       "bg-emerald-50 text-emerald-700 border-emerald-200",
-  paused:       "bg-amber-50 text-amber-700 border-amber-200",
-  completed:    "bg-blue-50 text-blue-700 border-blue-200",
-  stopped:      "bg-red-50 text-red-700 border-red-200",
-  under_review: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)]",
+  active:       "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]",
+  paused:       "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]",
+  completed:    "bg-[--cs-info-bg] text-[--cs-info] border-[--cs-info-soft]",
+  stopped:      "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]",
+  under_review: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)]",
 };
 
 const STATUS_ICONS: Record<InterventionStatus, React.ElementType> = {
@@ -76,9 +76,9 @@ const OUTCOME_LABELS: Record<InterventionOutcome, string> = {
 };
 
 const OUTCOME_COLOUR: Record<InterventionOutcome, string> = {
-  working:           "bg-emerald-50 text-emerald-700 border-emerald-200",
-  not_working:       "bg-red-50 text-red-700 border-red-200",
-  partially_working: "bg-amber-50 text-amber-700 border-amber-200",
+  working:           "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]",
+  not_working:       "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]",
+  partially_working: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]",
   too_early:         "bg-slate-50 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   unknown:           "bg-slate-50 text-[var(--cs-text-muted)] border-[var(--cs-border)]",
 };
@@ -119,10 +119,10 @@ function daysUntil(dateStr: string | null): number | null {
 function reviewBadge(reviewDate: string | null): { label: string; cls: string } | null {
   const d = daysUntil(reviewDate);
   if (d === null) return null;
-  if (d < 0) return { label: `${Math.abs(d)}d overdue`, cls: "bg-red-100 text-red-700 border-red-200" };
-  if (d === 0) return { label: "Today", cls: "bg-amber-100 text-amber-700 border-amber-200" };
-  if (d <= 3) return { label: `${d}d`, cls: "bg-amber-100 text-amber-700 border-amber-200" };
-  if (d <= 7) return { label: `${d}d`, cls: "bg-blue-100 text-blue-700 border-blue-200" };
+  if (d < 0) return { label: `${Math.abs(d)}d overdue`, cls: "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]" };
+  if (d === 0) return { label: "Today", cls: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]" };
+  if (d <= 3) return { label: `${d}d`, cls: "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]" };
+  if (d <= 7) return { label: `${d}d`, cls: "bg-[--cs-info-bg] text-[--cs-info] border-[--cs-info-soft]" };
   return { label: `${d}d`, cls: "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]" };
 }
 
@@ -155,11 +155,11 @@ function InterventionCard({
     <div className={cn(
       "rounded-2xl border bg-white overflow-hidden transition-all",
       isActive && review && (daysUntil(intervention.review_date) ?? 99) < 0
-        ? "border-red-200"
+        ? "border-[--cs-risk-soft]"
         : isActive
-          ? "border-emerald-200"
+          ? "border-[--cs-success-soft]"
           : intervention.status === "paused"
-            ? "border-amber-200"
+            ? "border-[--cs-warning-soft]"
             : "border-[var(--cs-border)]",
     )}>
       {/* Header */}
@@ -167,16 +167,16 @@ function InterventionCard({
         {/* Status indicator */}
         <div className={cn(
           "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
-          isActive ? "bg-emerald-100" :
-          intervention.status === "paused" ? "bg-amber-100" :
-          intervention.status === "completed" ? "bg-blue-100" :
+          isActive ? "bg-[--cs-success-bg]" :
+          intervention.status === "paused" ? "bg-[--cs-warning-bg]" :
+          intervention.status === "completed" ? "bg-[--cs-info-bg]" :
           "bg-slate-100",
         )}>
           <StatusIcon className={cn(
             "h-4 w-4",
-            isActive ? "text-emerald-700" :
-            intervention.status === "paused" ? "text-amber-700" :
-            intervention.status === "completed" ? "text-blue-700" :
+            isActive ? "text-[--cs-success]" :
+            intervention.status === "paused" ? "text-[--cs-warning]" :
+            intervention.status === "completed" ? "text-[--cs-info]" :
             "text-[var(--cs-text-muted)]",
           )} />
         </div>
@@ -306,7 +306,7 @@ function InterventionCard({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 text-xs text-amber-700 border-amber-200 hover:bg-amber-50"
+                    className="h-7 text-xs text-[--cs-warning] border-[--cs-warning-soft] hover:bg-[--cs-warning-bg]"
                     onClick={() => onStatusChange(intervention.id, "paused")}
                     disabled={isBusy}
                   >
@@ -315,7 +315,7 @@ function InterventionCard({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 text-xs text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]"
+                    className="h-7 text-xs text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]"
                     onClick={() => onStatusChange(intervention.id, "under_review")}
                     disabled={isBusy}
                   >
@@ -344,7 +344,7 @@ function InterventionCard({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 text-xs text-red-700 border-red-200 hover:bg-red-50"
+                    className="h-7 text-xs text-[--cs-risk] border-[--cs-risk-soft] hover:bg-[--cs-risk-bg]"
                     onClick={() => onStatusChange(intervention.id, "stopped")}
                     disabled={isBusy}
                   >
@@ -373,7 +373,7 @@ function InterventionCard({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 text-xs text-red-700 border-red-200 hover:bg-red-50"
+                    className="h-7 text-xs text-[--cs-risk] border-[--cs-risk-soft] hover:bg-[--cs-risk-bg]"
                     onClick={() => onStatusChange(intervention.id, "stopped")}
                     disabled={isBusy}
                   >
@@ -461,7 +461,7 @@ function NewInterventionDialog({
         <div className="space-y-3 text-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person <span className="text-red-500">*</span></label>
+              <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Young person <span className="text-[--cs-risk]">*</span></label>
               <Select
                 value={form.child_id}
                 onValueChange={(v) => setForm((p) => ({ ...p, child_id: v }))}
@@ -488,7 +488,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Intervention title <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Intervention title <span className="text-[--cs-risk]">*</span></label>
             <Input
               value={form.title}
               onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
@@ -498,7 +498,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">What are we doing? <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">What are we doing? <span className="text-[--cs-risk]">*</span></label>
             <Textarea
               value={form.description}
               onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
@@ -509,7 +509,7 @@ function NewInterventionDialog({
           </div>
 
           <div>
-            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Why — rationale <span className="text-red-500">*</span></label>
+            <label className="text-xs text-[var(--cs-text-muted)] font-medium mb-1 block">Why — rationale <span className="text-[--cs-risk]">*</span></label>
             <Textarea
               value={form.rationale}
               onChange={(e) => setForm((p) => ({ ...p, rationale: e.target.value }))}
@@ -670,12 +670,12 @@ export default function InterventionsPage() {
     <PageShell
       title="Interventions"
       subtitle="Child-centred interventions — tracking what we are doing, why, and whether it is working"
-      ariaContext={{ pageTitle: "Interventions Tracker", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Interventions Tracker", sourceType: "child_record" }}
       quickCreateContext={{ module: "young-people", defaultTaskCategory: "young_person_plans" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={INTERVENTION_EXPORT_COLS} filename="interventions" />
-          <PrintButton title="Interventions" subtitle="Oak House — Interventions Tracker" targetId="interventions-content" />
+          <PrintButton title="Interventions" subtitle="Chamberlain House — Interventions Tracker" targetId="interventions-content" />
           <SmartUploadButton variant="inline" label="Upload" uploadContext="Interventions — evidence or supporting document upload" />
           <Button
             size="sm"
@@ -685,7 +685,7 @@ export default function InterventionsPage() {
             <Plus className="h-3.5 w-3.5" />
             New Intervention
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -698,36 +698,36 @@ export default function InterventionsPage() {
               label: "Active",
               value: activeList.length,
               icon: Activity,
-              colour: activeList.length > 0 ? "text-emerald-600" : "text-[var(--cs-text-muted)]",
-              bg: activeList.length > 0 ? "bg-emerald-50 border-emerald-100" : "bg-slate-50 border-[var(--cs-border-subtle)]",
+              colour: activeList.length > 0 ? "text-[--cs-success]" : "text-[var(--cs-text-muted)]",
+              bg: activeList.length > 0 ? "bg-[--cs-success-bg] border-[--cs-success-soft]" : "bg-slate-50 border-[var(--cs-border-subtle)]",
             },
             {
               label: "Review Due",
               value: reviewDueList.length,
               icon: AlertTriangle,
-              colour: reviewDueList.length > 0 ? "text-red-600" : "text-emerald-600",
-              bg: reviewDueList.length > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100",
+              colour: reviewDueList.length > 0 ? "text-[--cs-risk]" : "text-[--cs-success]",
+              bg: reviewDueList.length > 0 ? "bg-[--cs-risk-bg] border-[--cs-risk-soft]" : "bg-[--cs-success-bg] border-[--cs-success-soft]",
             },
             {
               label: "Working",
               value: workingCount,
               icon: TrendingUp,
-              colour: "text-emerald-600",
-              bg: "bg-emerald-50 border-emerald-100",
+              colour: "text-[--cs-success]",
+              bg: "bg-[--cs-success-bg] border-[--cs-success-soft]",
             },
             {
               label: "Not Working",
               value: notWorkingCount,
               icon: TrendingDown,
-              colour: notWorkingCount > 0 ? "text-red-600" : "text-emerald-600",
-              bg: notWorkingCount > 0 ? "bg-red-50 border-red-100" : "bg-emerald-50 border-emerald-100",
+              colour: notWorkingCount > 0 ? "text-[--cs-risk]" : "text-[--cs-success]",
+              bg: notWorkingCount > 0 ? "bg-[--cs-risk-bg] border-[--cs-risk-soft]" : "bg-[--cs-success-bg] border-[--cs-success-soft]",
             },
             {
               label: "Completed",
               value: completedList.length,
               icon: CheckCircle2,
-              colour: "text-blue-600",
-              bg: "bg-blue-50 border-blue-100",
+              colour: "text-[--cs-info]",
+              bg: "bg-[--cs-info-bg] border-[--cs-info-soft]",
             },
           ].map(({ label, value, icon: Icon, colour, bg }) => (
             <div key={label} className={cn("rounded-2xl border p-4 text-center", bg)}>
@@ -740,13 +740,13 @@ export default function InterventionsPage() {
 
         {/* ── Review due alert ─────────────────────────────────────────────── */}
         {reviewDueList.length > 0 && (
-          <div className="rounded-xl bg-red-50 border border-red-200 p-3 flex items-start gap-2.5">
-            <AlertTriangle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+          <div className="rounded-xl bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-3 flex items-start gap-2.5">
+            <AlertTriangle className="h-4 w-4 text-[--cs-risk] shrink-0 mt-0.5" />
             <div>
-              <p className="text-xs font-semibold text-red-800">
+              <p className="text-xs font-semibold text-[--cs-risk]">
                 {reviewDueList.length} intervention{reviewDueList.length !== 1 ? "s" : ""} overdue for review
               </p>
-              <p className="text-[11px] text-red-700 mt-0.5">
+              <p className="text-[11px] text-[--cs-risk] mt-0.5">
                 {reviewDueList.map((i) => `${i.title} (${getYPName(i.child_id)})`).join("; ")}
               </p>
             </div>
@@ -881,7 +881,7 @@ export default function InterventionsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Interventions Tracker — therapeutic interventions, evidence-based programmes, PACE, DDP, Theraplay, behaviour interventions, outcomes tracking, care plan evidence, Reg 45"
         recordType="direct_work"

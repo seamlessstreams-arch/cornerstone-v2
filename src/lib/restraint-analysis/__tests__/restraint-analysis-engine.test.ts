@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Restraint Analysis Intelligence Engine Tests
+// Cara — Restraint Analysis Intelligence Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -531,7 +531,7 @@ describe("buildChildRestraintProfiles", () => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("generateRestraintAnalysisIntelligence", () => {
-  // ── Oak House Demo Scenario ──────────────────────────────────────────────
+  // ── Chamberlain House Demo Scenario ──────────────────────────────────────────────
 
   const demoRecords: RestraintRecord[] = [
     // Alex — 2 restraints, well managed

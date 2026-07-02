@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD EDUCATION & LEARNING INTELLIGENCE ENGINE
+// CARA — CHILD EDUCATION & LEARNING INTELLIGENCE ENGINE
 //
 // Per-child education analysis: attendance patterns, attainment progress,
 // PEP compliance, EHCP status, exclusion history, homework engagement,
@@ -731,7 +731,7 @@ export function computeChildEducationIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: EducationInsight[] = [];
 
   if (educationHealth === "inadequate") {

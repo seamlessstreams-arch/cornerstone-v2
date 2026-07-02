@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Wellbeing Intelligence Engine
+// Cara Staff Wellbeing Intelligence Engine
 //
 // Deterministic engine for evaluating staff wellbeing support quality in
 // children's homes — supervision delivery, wellbeing monitoring, debriefing

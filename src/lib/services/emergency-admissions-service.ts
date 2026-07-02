@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY ADMISSIONS SERVICE
+// CARA — EMERGENCY ADMISSIONS SERVICE
 // Tracks emergency placements, matching assessments, impact evaluations,
 // and admission compliance for unplanned admissions.
 // CHR 2015 Reg 35 (admissions — emergency placements),

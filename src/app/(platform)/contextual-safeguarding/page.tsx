@@ -2,8 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { ExportButton, type ExportColumn } from "@/components/ui/export-button";
 import { PrintButton } from "@/components/ui/print-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +18,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import {
   Plus, Search, Filter, ArrowUpDown, ChevronDown, ChevronUp,
   AlertTriangle, CheckCircle2, MapPin, Users, Shield,
@@ -152,7 +153,7 @@ export default function ContextualSafeguardingPage() {
   ];
 
   return (
-    <PageShell title="Contextual Safeguarding" subtitle="Working Together 2023 · Community Risk Mapping · Environmental Factors" ariaContext={{ pageTitle: "Contextual Safeguarding", sourceType: "child_record" }} actions={<div className="flex items-center gap-2"><PrintButton title="Contextual Safeguarding" /><ExportButton data={filtered} columns={exportCols} filename="contextual-safeguarding" /><Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Add Context</Button><AriaStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} /></div>}>
+    <PageShell title="Contextual Safeguarding" subtitle="Working Together 2023 · Community Risk Mapping · Environmental Factors" caraContext={{ pageTitle: "Contextual Safeguarding", sourceType: "child_record" }} actions={<div className="flex items-center gap-2"><PrintButton title="Contextual Safeguarding" /><ExportButton data={filtered} columns={exportCols} filename="contextual-safeguarding" /><Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Add Context</Button><CaraStudioQuickActionButton context={{ record_type: "safeguarding", record_id: "home_oak", home_id: "home_oak" }} /></div>}>
       <div id="print-area">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[
@@ -228,7 +229,7 @@ export default function ContextualSafeguardingPage() {
             <div><Label>Context Type</Label><Select value={form.context_type} onValueChange={(v) => setField("context_type", v)}><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(CONTEXTUAL_CONTEXT_TYPE_LABEL) as ContextualContextType[]).map((k) => (<SelectItem key={k} value={k}>{CONTEXTUAL_CONTEXT_TYPE_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
             <div><Label>Risk Level</Label><Select value={form.risk_level} onValueChange={(v) => setField("risk_level", v)}><SelectTrigger><SelectValue placeholder="Select…" /></SelectTrigger><SelectContent>{(Object.keys(CONTEXTUAL_RISK_LEVEL_LABEL) as ContextualRiskLevel[]).map((k) => (<SelectItem key={k} value={k}>{CONTEXTUAL_RISK_LEVEL_LABEL[k]}</SelectItem>))}</SelectContent></Select></div>
             <div className="col-span-2"><Label>Location / Context</Label><Input placeholder="Where or what is the context?" value={form.location_or_context} onChange={(e) => setField("location_or_context", e.target.value)} /></div>
-            <div className="col-span-2"><Label>Description</Label><Textarea rows={3} placeholder="Describe the risk…" value={form.description} onChange={(e) => setField("description", e.target.value)} /></div>
+            <div className="col-span-2"><Label>Description</Label><Textarea rows={3} placeholder="Describe the risk…" value={form.description} onChange={(e) => setField("description", e.target.value)} /><EntryAssist value={form.description} onChange={(v) => setField("description", v)} sourceRecordType="contextual_safeguarding" className="mt-1" /></div>
             <div className="col-span-2"><Label>Community Mapping</Label><Textarea rows={2} placeholder="Describe the physical/online environment…" value={form.community_mapping} onChange={(e) => setField("community_mapping", e.target.value)} /></div>
             <div><Label>Review Date</Label><Input type="date" value={form.review_date} onChange={(e) => setField("review_date", e.target.value)} /></div>
           </div>

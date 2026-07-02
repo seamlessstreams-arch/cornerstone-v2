@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS SERVICE
+// CARA — ADVOCACY & CHILDREN'S RIGHTS SERVICE
 // Manages independent advocacy referrals (Children Act 1989 s26), children's
 // rights awareness and exercise tracking. CHR 2015 Reg 7 (quality of care),
 // Reg 14 (care planning), Reg 45 (review of quality of care).

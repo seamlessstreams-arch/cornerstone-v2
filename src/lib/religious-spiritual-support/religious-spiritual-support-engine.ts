@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Religious & Spiritual Support Intelligence Engine
+// Cara Religious & Spiritual Support Intelligence Engine
 //
 // Evaluates how well children's religious, spiritual, and faith-based needs
 // are recognised, assessed, supported, and celebrated within the home.

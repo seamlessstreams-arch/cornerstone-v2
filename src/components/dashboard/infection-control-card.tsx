@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INFECTION CONTROL INTELLIGENCE CARD
+// CARA — INFECTION CONTROL INTELLIGENCE CARD
 // Dashboard card powered by the Premises Safety Intelligence Engine.
 // CHR 2015 Reg 25, Reg 12, Reg 36.
 // SCCIF: Helped & Protected — "Infection control measures protect children."
@@ -18,16 +18,16 @@ import { usePremisesSafetyIntelligence } from "@/hooks/use-premises-safety-intel
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -79,7 +79,7 @@ export function InfectionControlCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.check_completion_rate >= 85 ? "text-green-600" : "text-amber-600",
+              overview.check_completion_rate >= 85 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {overview.check_completion_rate}%
             </p>
@@ -91,7 +91,7 @@ export function InfectionControlCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.checks_failed === 0 ? "text-green-600" : "text-red-600",
+              overview.checks_failed === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {overview.checks_failed}
             </p>
@@ -103,7 +103,7 @@ export function InfectionControlCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              overview.checks_overdue === 0 ? "text-green-600" : "text-amber-600",
+              overview.checks_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {overview.checks_overdue}
             </p>
@@ -139,13 +139,13 @@ export function InfectionControlCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {(d.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Infection Intelligence
+              Cara Infection Intelligence
             </p>
             {(d.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PLACEMENT QUALITY INTELLIGENCE API ROUTE
+// CARA — CHILD PLACEMENT QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/child-placement-quality?childId=yp_alex
 // Per-child engine measuring placement experience quality: mood trajectory,
 // daily log engagement, key work, welfare checks, activities, stability.
@@ -8,7 +8,8 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { getStore } from "@/lib/db/store";
 import { getStaffName } from "@/lib/seed-data";
 import {
@@ -20,9 +21,14 @@ import {
   type PlacementMoveInput,
 } from "@/lib/engines/child-placement-quality-engine";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const childId = searchParams.get("childId");
+
+  const identity = await getRequestIdentity(request);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   if (!childId) {
     return NextResponse.json({ error: "childId is required" }, { status: 400 });
   }

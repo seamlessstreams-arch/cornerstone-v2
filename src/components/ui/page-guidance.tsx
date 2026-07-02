@@ -8,22 +8,22 @@ interface PageGuidanceProps {
   title: string;
   description: string;
   evidenceTip?: string;
-  ariaTip?: string;
+  caraTip?: string;
   regulationRef?: string;
-  variant?: "default" | "aria" | "compliance" | "safeguarding";
+  variant?: "default" | "cara" | "compliance" | "safeguarding";
   className?: string;
 }
 
 /**
  * Top-of-page guidance wrapper. Drop into any page to provide
- * contextual coaching, evidence tips, and ARIA suggestions.
+ * contextual coaching, evidence tips, and Cara suggestions.
  * Wraps GuidanceNote with standard page-level spacing.
  */
 export function PageGuidance({
   title,
   description,
   evidenceTip,
-  ariaTip,
+  caraTip,
   regulationRef,
   variant = "default",
   className,
@@ -34,7 +34,7 @@ export function PageGuidance({
         title={title}
         description={description}
         evidenceTip={evidenceTip}
-        ariaTip={ariaTip}
+        caraTip={caraTip}
         regulationRef={regulationRef}
         variant={variant}
         dismissible

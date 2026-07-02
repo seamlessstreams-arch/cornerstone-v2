@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo, useRef } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPracticePanel } from "@/components/aria-practice/aria-practice-panel";
+import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,8 @@ import { PrintButton } from "@/components/common/print-button";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { cn } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
+import { InlineRelationalPanel } from "@/components/relational-timeline/inline-relational-panel";
 import { toast } from "sonner";
 import {
   useKeyWorkingSessions,
@@ -29,9 +32,10 @@ import {
   AlertTriangle, CheckCircle2, Clock, Calendar, Star, BookOpen,
   Loader2,
 } from "lucide-react";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 
 // ── Local view-model type (camelCase for the page) ──────────────────────────
 interface SessionView {
@@ -148,6 +152,8 @@ export default function KeyWorkingPage() {
   const [formType, setFormType] = useState("");
   const [formMoodBefore, setFormMoodBefore] = useState("");
   const [formMoodAfter, setFormMoodAfter] = useState("");
+  const [childVoiceText, setChildVoiceText] = useState("");
+  const [workerObsText, setWorkerObsText] = useState("");
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -237,6 +243,8 @@ export default function KeyWorkingPage() {
           setFormType("");
           setFormMoodBefore("");
           setFormMoodAfter("");
+          setChildVoiceText("");
+          setWorkerObsText("");
           formRef.current?.reset();
         },
       },
@@ -270,18 +278,18 @@ export default function KeyWorkingPage() {
     <PageShell
       title="Key Working Sessions"
       subtitle="Recording meaningful interactions and tracking progress with each young person"
-      ariaContext={{ pageTitle: "Key Working Sessions", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Key Working Sessions", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Key Working Sessions" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="key-working-sessions" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Session</Button>
-          <AriaStudioQuickActionButton context={{ record_type: "keywork", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "keywork", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="print-area" className="space-y-6">
-        <AriaPanel
+        <CaraPanel
           mode="assist"
           pageContext="Key Working Sessions — meaningful interactions, goal tracking, child voice"
           recordType="key_work"
@@ -491,6 +499,8 @@ export default function KeyWorkingPage() {
                 <SelectContent>{children.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+            {formChildId && <InlinePracticeReasoning childId={formChildId} childName={getYPName(formChildId)} />}
+            {formChildId && <InlineRelationalPanel childId={formChildId} />}
             <div>
               <label className="text-sm font-medium">Session Type</label>
               <Select value={formType} onValueChange={setFormType}>
@@ -518,11 +528,17 @@ export default function KeyWorkingPage() {
             </div>
             <div>
               <label className="text-sm font-medium">Child&apos;s Voice</label>
-              <Textarea name="child_voice" placeholder="Record what the child said in their own words…" rows={3} />
+              <Textarea name="child_voice" placeholder="Record what the child said in their own words…" rows={3}
+                value={childVoiceText} onChange={(e) => setChildVoiceText(e.target.value)} />
+              <WritingAssistantInline value={childVoiceText} onApplyText={setChildVoiceText}
+                recordType="key_work" fieldName="child_voice" childId={formChildId || undefined} mode="writing-to-child" />
             </div>
             <div>
               <label className="text-sm font-medium">Worker Observations</label>
-              <Textarea name="worker_observations" placeholder="Your professional observations…" rows={3} />
+              <Textarea name="worker_observations" placeholder="Your professional observations…" rows={3}
+                value={workerObsText} onChange={(e) => setWorkerObsText(e.target.value)} />
+              <WritingAssistantInline value={workerObsText} onApplyText={setWorkerObsText}
+                recordType="key_work" fieldName="worker_observations" childId={formChildId || undefined} mode="standard" />
             </div>
             <div>
               <label className="text-sm font-medium">Actions Agreed</label>
@@ -560,7 +576,10 @@ export default function KeyWorkingPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPracticePanel sourceType="key_work" homeId="home_oak" title="Run ARIA on this session" />
+      <CaraPracticePanel sourceType="key_work" homeId="home_oak" title="Run Cara on this session" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="key_work" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this session record" />
+      </div>
     </PageShell>
   );
 }

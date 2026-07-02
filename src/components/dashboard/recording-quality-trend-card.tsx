@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND CARD
+// CARA — RECORDING QUALITY TREND CARD
 // Weekly trajectory of recording quality and the child's voice — is it improving?
 // Powered by the Recording Quality Trend engine (Reg 13 — driving improvement).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
 import { useRecordingQualityTrend } from "@/hooks/use-recording-quality-trend";
 
 const TREND_META: Record<string, { icon: React.ReactNode; cls: string; label: string }> = {
-  improving: { icon: <TrendingUp className="h-3.5 w-3.5" />, cls: "text-green-600", label: "improving" },
-  declining: { icon: <TrendingDown className="h-3.5 w-3.5" />, cls: "text-red-600", label: "declining" },
+  improving: { icon: <TrendingUp className="h-3.5 w-3.5" />, cls: "text-[--cs-success]", label: "improving" },
+  declining: { icon: <TrendingDown className="h-3.5 w-3.5" />, cls: "text-[--cs-risk]", label: "declining" },
   stable: { icon: <Minus className="h-3.5 w-3.5" />, cls: "text-gray-500", label: "stable" },
   insufficient_data: { icon: <Minus className="h-3.5 w-3.5" />, cls: "text-gray-400", label: "—" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 function barColor(v: number) { return v >= 85 ? "bg-green-400" : v >= 70 ? "bg-blue-400" : v >= 50 ? "bg-amber-400" : "bg-red-400"; }
 
@@ -86,10 +86,10 @@ export function RecordingQualityTrendCard() {
           <p className="text-[9px] text-[var(--cs-text-gentle)] mt-1 text-center">avg quality / week · last {series.length} weeks</p>
         </div>
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Trend Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Trend Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

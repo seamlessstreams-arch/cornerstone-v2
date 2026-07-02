@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SELF-HARM SAFETY PLAN INTELLIGENCE ENGINE
+// CARA — HOME SELF-HARM SAFETY PLAN INTELLIGENCE ENGINE
 // Pure deterministic engine: safety plan coverage, co-production quality,
 // warning sign identification, coping strategy breadth, contact network,
 // means restriction, review compliance, and child voice in safety planning.

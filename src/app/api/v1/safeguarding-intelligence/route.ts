@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE API ROUTE
+// CARA — SAFEGUARDING INTELLIGENCE API ROUTE
 // GET /api/v1/safeguarding-intelligence
 // Returns aggregated safeguarding intelligence from the engine.
 // Reg 12/35/40/41 — safeguarding, behaviour management, notifications.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PRACTICE RISK ASSESSMENT SERVICE
+// CARA — STAFF PRACTICE RISK ASSESSMENT SERVICE
 // Protective, not punitive. Creates staff-specific practice risk assessments
 // where concerns exist around lone working, medication, driving, allegations,
 // boundaries, conflict with children, repeated errors, emotional resilience,
@@ -8,7 +8,7 @@
 // CRITICAL PRINCIPLES:
 // — Not punitive — protective
 // — Strengths-based, fair, contextual, evidence-led
-// — ARIA suggests. Humans decide. Cornerstone evidences.
+// — Cara suggests. Humans decide. Cara evidences.
 // — Every insight includes evidence source, confidence, context,
 //   alternative explanations, manager approval, staff right to comment
 //

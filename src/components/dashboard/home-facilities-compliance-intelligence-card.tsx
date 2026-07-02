@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FACILITIES COMPLIANCE INTELLIGENCE CARD
+// CARA — HOME FACILITIES COMPLIANCE INTELLIGENCE CARD
 // Home-level: fire equipment checks, water hygiene, window restrictor
 // compliance, and pest control management.
 // CHR 2015 Reg 25. Fire Safety Order 2005. HSE L8.
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<FacilitiesRating, { bg: string; text: string; border
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.facilities_rating === "inadequate" && (d.facilities_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      facilities_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.facilities_rating] ?? RATING_STYLES.insufficient_data;
   const hasFireIssues = d.fire.overdue_inspections > 0 || (d.fire.total_checks > 0 && d.fire.pass_rate < 70);
@@ -68,7 +85,7 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Building2 className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-amber-600")} />
+            <Building2 className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-[--cs-warning]")} />
             <span className="text-slate-900">Facilities Compliance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -92,8 +109,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
                 <Flame className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
                   d.fire.total_checks === 0 ? "text-slate-400" :
-                  d.fire.pass_rate >= 90 ? "text-green-600" :
-                  d.fire.pass_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.fire.pass_rate >= 90 ? "text-[--cs-success]" :
+                  d.fire.pass_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.fire.total_checks === 0 ? "--" : `${d.fire.pass_rate}%`}
                 </p>
@@ -107,8 +124,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
                 <Droplets className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
                   d.water.total_checks === 0 ? "text-slate-400" :
-                  d.water.compliance_rate >= 90 ? "text-green-600" :
-                  d.water.compliance_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.water.compliance_rate >= 90 ? "text-[--cs-success]" :
+                  d.water.compliance_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.water.total_checks === 0 ? "--" : `${d.water.compliance_rate}%`}
                 </p>
@@ -122,8 +139,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
                 <SquareStack className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
                   d.windows.above_ground_count === 0 ? "text-slate-400" :
-                  d.windows.restrictor_compliance_rate >= 90 ? "text-green-600" :
-                  d.windows.restrictor_compliance_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.windows.restrictor_compliance_rate >= 90 ? "text-[--cs-success]" :
+                  d.windows.restrictor_compliance_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.windows.above_ground_count === 0 ? "--" : `${d.windows.restrictor_compliance_rate}%`}
                 </p>
@@ -137,8 +154,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
                 <Bug className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
                   d.pest.total_records === 0 ? "text-slate-400" :
-                  d.pest.flags_total === 0 ? "text-green-600" :
-                  d.pest.flags_total <= 2 ? "text-amber-600" : "text-red-600"
+                  d.pest.flags_total === 0 ? "text-[--cs-success]" :
+                  d.pest.flags_total <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.pest.total_records === 0 ? "--" : d.pest.flags_total}
                 </p>
@@ -156,8 +173,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Checks: <span className="font-medium text-slate-600">{d.fire.total_checks}</span></p>
                 <p>Pass rate: <span className={cn("font-medium",
-                  d.fire.pass_rate >= 90 ? "text-green-600" :
-                  d.fire.pass_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.fire.pass_rate >= 90 ? "text-[--cs-success]" :
+                  d.fire.pass_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.fire.pass_rate}%</span></p>
                 {d.fire.overdue_inspections > 0 && (
                   <p>Overdue: <span className="font-medium text-red-600">{d.fire.overdue_inspections}</span></p>
@@ -169,8 +186,8 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Checks: <span className="font-medium text-slate-600">{d.water.total_checks}</span></p>
                 <p>Compliance: <span className={cn("font-medium",
-                  d.water.compliance_rate >= 90 ? "text-green-600" :
-                  d.water.compliance_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.water.compliance_rate >= 90 ? "text-[--cs-success]" :
+                  d.water.compliance_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.water.compliance_rate}%</span></p>
                 {d.water.overdue_checks > 0 && (
                   <p>Overdue: <span className="font-medium text-red-600">{d.water.overdue_checks}</span></p>
@@ -188,7 +205,7 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -203,7 +220,7 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -230,12 +247,12 @@ export function HomeFacilitiesComplianceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Facilities Intelligence */}
+        {/* Cara Facilities Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Facilities Intelligence
+              Cara Facilities Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

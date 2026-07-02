@@ -45,12 +45,12 @@ export default function GlobalError({
         <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
           <div style={{ maxWidth: 420, width: "100%", borderRadius: 16, border: "1px solid #e6dccb", background: "#fff", padding: 32, textAlign: "center" }}>
             <h1 style={{ fontSize: 18, fontWeight: 700, color: "#0f1e36", margin: "0 0 8px" }}>
-              {isChunkLoadError(error) ? "Updating Cornerstone…" : "Something went wrong"}
+              {isChunkLoadError(error) ? "Updating Cara…" : "Something went wrong"}
             </h1>
             <p style={{ fontSize: 14, color: "#667085", margin: "0 0 20px" }}>
               {isChunkLoadError(error)
                 ? "A newer version is available. Reloading…"
-                : "Cornerstone hit an unexpected error. Your data is safe."}
+                : "Cara hit an unexpected error. Your data is safe."}
             </p>
             <button
               onClick={() => reset()}

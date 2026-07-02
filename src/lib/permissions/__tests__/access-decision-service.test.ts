@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Tests — Cornerstone Access Decision Service
+// Tests — Cara Access Decision Service
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
@@ -665,11 +665,11 @@ describe("Sensitivity enforcement", () => {
     expect(result.allowed).toBe(true);
   });
 
-  it("RSW Aria access limited to internal sensitivity", () => {
+  it("RSW Cara access limited to internal sensitivity", () => {
     const rsw = makeUser();
     const result = checkAccess({
       user: rsw,
-      resourceType: "aria_intelligence",
+      resourceType: "cara_intelligence",
       action: "view",
       resourceHomeId: "home_1",
       resourceSensitivity: "restricted",

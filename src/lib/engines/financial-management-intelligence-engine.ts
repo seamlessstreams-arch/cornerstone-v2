@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses expenses to surface spend patterns, approval compliance, missing
@@ -99,7 +99,7 @@ export interface FinancialAlert {
   message: string;
 }
 
-export interface AriaFinancialInsight {
+export interface CaraFinancialInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -109,7 +109,7 @@ export interface FinancialManagementIntelligenceResult {
   category_spend: CategorySpend[];
   staff_spend: StaffSpend[];
   alerts: FinancialAlert[];
-  insights: AriaFinancialInsight[];
+  insights: CaraFinancialInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -293,8 +293,8 @@ export function computeFinancialManagementIntelligence(
     }
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaFinancialInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraFinancialInsight[] = [];
 
   // Critical: stale approvals
   if (oldPending.length > 0) {

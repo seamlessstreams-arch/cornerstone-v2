@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAILY ROUTINE & STRUCTURE INTELLIGENCE ENGINE
+// CARA — HOME DAILY ROUTINE & STRUCTURE INTELLIGENCE ENGINE
 // Tracks daily routine quality — routine consistency, activity scheduling,
 // meal time regularity, bedtime routine adherence, and child participation
 // in daily planning. Critical for Ofsted under Children's Homes Regulations

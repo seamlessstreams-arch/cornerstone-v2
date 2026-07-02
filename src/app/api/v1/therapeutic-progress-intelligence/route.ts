@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { getStore } from "@/lib/db/store";
 import {
   computeTherapeuticProgress,
@@ -17,6 +18,11 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const childId = request.nextUrl.searchParams.get("childId");
+
+  const identity = await getRequestIdentity(request);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   if (!childId) {
     return NextResponse.json({ error: "childId required" }, { status: 400 });
   }
@@ -143,7 +149,7 @@ export async function GET(request: NextRequest) {
     }));
 
   // ── Restraint Records ─────────────────────────────────────────────────────
-  const restraintRecords: RestraintRecordInput[] = (store.restraintRecords ?? [])
+  const restraintRecords: RestraintRecordInput[] = (store.restraints ?? [])
     .filter((r: any) => r.child_id === childId)
     .map((r: any) => ({
       date: (r.date ?? r.incident_date ?? "").slice(0, 10),

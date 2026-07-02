@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD EMOTIONAL WELLBEING INTELLIGENCE ENGINE
+// CARA — CHILD EMOTIONAL WELLBEING INTELLIGENCE ENGINE
 // Per-child: synthesises mood data, behaviour patterns, keywork engagement,
 // therapeutic progress, and sanctions/rewards to assess emotional trajectory.
 // CHR 2015 Reg 7 (Protection of welfare), Reg 10 (Health & wellbeing).
@@ -428,7 +428,7 @@ export function computeChildEmotionalWellbeing(input: ChildEmotionalWellbeingInp
   const insights: ChildEmotionalWellbeingResult["insights"] = [];
 
   if (avgMood30d !== null && avgMood30d < 4) {
-    insights.push({ severity: "critical", text: `ARIA detects persistently low mood for ${child_name} (avg ${avgMood30d}/10). Under Reg 10, the home must promote children's emotional wellbeing. Inspectors will ask what action has been taken to support this child.` });
+    insights.push({ severity: "critical", text: `Cara detects persistently low mood for ${child_name} (avg ${avgMood30d}/10). Under Reg 10, the home must promote children's emotional wellbeing. Inspectors will ask what action has been taken to support this child.` });
   }
   if (moodTrend === "declining" && severe30d >= 2) {
     insights.push({ severity: "critical", text: `Declining mood combined with ${severe30d} severe behaviour incidents suggests ${child_name} may be in emotional crisis. Multi-agency response may be needed.` });

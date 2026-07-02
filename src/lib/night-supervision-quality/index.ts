@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Night Supervision Quality Intelligence — Public API
+// Cara Night Supervision Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

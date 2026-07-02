@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF REFLECTIVE PRACTICE SERVICE
+// CARA — STAFF REFLECTIVE PRACTICE SERVICE
 // Tracks reflective practice sessions where staff reflect on their
 // practice, learning, and professional development through structured
 // reflection models (Gibbs, Kolb, Driscoll).

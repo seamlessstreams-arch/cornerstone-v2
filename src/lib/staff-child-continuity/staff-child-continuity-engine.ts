@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF–CHILD CONTINUITY OF CARE INTELLIGENCE ENGINE
+// CARA — STAFF–CHILD CONTINUITY OF CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -94,7 +94,7 @@ export interface ContinuityAlert {
   child_id?: string;
 }
 
-export interface AriaContinuityInsight {
+export interface CaraContinuityInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -103,7 +103,7 @@ export interface StaffChildContinuityResult {
   overview: ContinuityOverview;
   children: ChildContinuity[];
   alerts: ContinuityAlert[];
-  insights: AriaContinuityInsight[];
+  insights: CaraContinuityInsight[];
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -335,10 +335,10 @@ function buildAlerts(children: ChildContinuity[]): ContinuityAlert[] {
   return alerts;
 }
 
-// ── ARIA insights builder ───────────────────────────────────────────────────
+// ── Cara insights builder ───────────────────────────────────────────────────
 
-function buildInsights(children: ChildContinuity[], overview: ContinuityOverview): AriaContinuityInsight[] {
-  const insights: AriaContinuityInsight[] = [];
+function buildInsights(children: ChildContinuity[], overview: ContinuityOverview): CaraContinuityInsight[] {
+  const insights: CaraContinuityInsight[] = [];
 
   const noKw = children.filter((c) => !c.key_worker_id);
   const inactiveKw = children.filter((c) => c.key_worker_id && !c.key_worker_active);

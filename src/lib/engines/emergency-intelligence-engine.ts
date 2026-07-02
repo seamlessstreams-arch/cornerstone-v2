@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
+// CARA — EMERGENCY PREPAREDNESS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses protocol drills, emergency plans, and overall preparedness to
@@ -89,7 +89,7 @@ export interface EmergencyAlert {
   message: string;
 }
 
-export interface AriaEmergencyInsight {
+export interface CaraEmergencyInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -100,7 +100,7 @@ export interface EmergencyIntelligenceResult {
   recent_drills: RecentDrill[];
   plan_coverage: PlanCoverage;
   alerts: EmergencyAlert[];
-  insights: AriaEmergencyInsight[];
+  insights: CaraEmergencyInsight[];
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -160,7 +160,7 @@ export function computeEmergencyIntelligence(input: {
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
   const ninetyDaysAgoStr = ninetyDaysAgo.toISOString().slice(0, 10);
 
-  const drillsLast90 = drills.filter((d) => d.date >= ninetyDaysAgoStr);
+  const drillsLast90 = drills.filter((d) => d.date >= ninetyDaysAgoStr && d.date.slice(0, 10) <= today);
 
   const avgResponseTime =
     drills.length > 0
@@ -349,9 +349,9 @@ export function computeEmergencyIntelligence(input: {
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
-  const insights: AriaEmergencyInsight[] = [];
+  const insights: CaraEmergencyInsight[] = [];
 
   // Critical: drill type never conducted
   const neverConducted = drill_types.filter((dt) => dt.drill_count === 0);

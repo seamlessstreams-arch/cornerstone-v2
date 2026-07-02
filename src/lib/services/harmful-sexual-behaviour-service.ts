@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HARMFUL SEXUAL BEHAVIOUR (HSB) MANAGEMENT SERVICE
+// CARA -- HARMFUL SEXUAL BEHAVIOUR (HSB) MANAGEMENT SERVICE
 // Tracks HSB incidents, Hackett continuum classification, AIM3 assessments,
 // Brook Traffic Light tool usage, specialist referrals, safety planning,
 // multi-agency coordination, and outcome recording for children in
@@ -533,7 +533,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: HarmfulSexualBehaviourRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

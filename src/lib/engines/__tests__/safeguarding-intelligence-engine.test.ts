@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE ENGINE TESTS
+// CARA — SAFEGUARDING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -637,9 +637,9 @@ describe("computeSafeguardingIntelligence — positive insights", () => {
   });
 });
 
-// ── Integration: Full Oak House Scenario ────────────────────────────────────
+// ── Integration: Full Chamberlain House Scenario ────────────────────────────────────
 
-describe("computeSafeguardingIntelligence — Oak House integration", () => {
+describe("computeSafeguardingIntelligence — Chamberlain House integration", () => {
   const children: ChildRef[] = [
     { id: "yp_alex", name: "Alex" },
     { id: "yp_jordan", name: "Jordan" },

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION CONSENT SERVICE
+// CARA — MEDICATION CONSENT SERVICE
 // Tracks consent for medication administration from those with
 // parental responsibility, local authorities, and young people
 // themselves (Gillick competence).

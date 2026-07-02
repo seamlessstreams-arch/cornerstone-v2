@@ -8,16 +8,16 @@ import { cn } from "@/lib/utils";
 import { useEducationIntelligence } from "@/hooks/use-education-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EducationAttendanceTrackingCard() {
@@ -40,6 +40,9 @@ export function EducationAttendanceTrackingCard() {
   const attendance = intel.attendance;
   const alerts = intel.alerts ?? [];
   const insights = intel.insights ?? [];
+  const below90Names = (intel.child_profiles ?? [])
+    .filter((p) => p.attendance_pct < 90)
+    .map((p) => p.child_name);
 
   return (
     <Card className="overflow-hidden">
@@ -70,7 +73,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.avg_attendance_pct >= 95 ? "text-green-600" : "text-amber-600"
+                overview.avg_attendance_pct >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]"
               )}
             >
               {overview.avg_attendance_pct}%
@@ -87,7 +90,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.excluded_count === 0 ? "text-green-600" : "text-red-600"
+                overview.excluded_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
               )}
             >
               {overview.excluded_count}
@@ -104,7 +107,7 @@ export function EducationAttendanceTrackingCard() {
             <p
               className={cn(
                 "text-lg font-bold tabular-nums",
-                overview.pep_overdue_count === 0 ? "text-green-600" : "text-amber-600"
+                overview.pep_overdue_count === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
               )}
             >
               {overview.pep_current_count}/{overview.pep_current_count + overview.pep_overdue_count}
@@ -133,14 +136,14 @@ export function EducationAttendanceTrackingCard() {
                   variant="outline"
                   className={cn(
                     "text-[10px]",
-                    attendance.avg_pct >= 95
+                    attendance.overall_pct >= 95
                       ? "text-green-700 bg-green-50 border-green-200"
-                      : attendance.avg_pct >= 90
+                      : attendance.overall_pct >= 90
                       ? "text-amber-700 bg-amber-50 border-amber-200"
                       : "text-red-700 bg-red-50 border-red-200"
                   )}
                 >
-                  {attendance.avg_pct}%
+                  {attendance.overall_pct}%
                 </Badge>
               </div>
 
@@ -159,25 +162,13 @@ export function EducationAttendanceTrackingCard() {
                 </Badge>
               </div>
 
-              {(attendance?.below_90_children?.length ?? 0) > 0 && (
+              {below90Names.length > 0 && (
                 <div className="rounded border p-2 text-xs space-y-1">
                   <p className="text-muted-foreground font-medium">Children below 90%:</p>
-                  {(attendance?.below_90_children ?? []).map((child: string, i: number) => (
+                  {below90Names.map((child, i) => (
                     <div key={i} className="flex items-center gap-2 text-red-700">
                       <AlertTriangle className="h-3 w-3 shrink-0" />
                       <span>{child}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {(attendance?.term_comparison?.length ?? 0) > 0 && (
-                <div className="rounded border p-2 text-xs space-y-1">
-                  <p className="text-muted-foreground font-medium">Term comparison:</p>
-                  {(attendance?.term_comparison ?? []).map((term: { term: string; pct: number }, i: number) => (
-                    <div key={i} className="flex items-center justify-between">
-                      <span>{term.term}</span>
-                      <span className="font-medium tabular-nums">{term.pct}%</span>
                     </div>
                   ))}
                 </div>
@@ -188,7 +179,7 @@ export function EducationAttendanceTrackingCard() {
 
         {/* Exclusion events */}
         {overview.exclusion_events_90d > 0 && (
-          <div className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800">
+          <div className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk]">
             <span className="font-medium">{overview.exclusion_events_90d}</span> exclusion event{overview.exclusion_events_90d !== 1 ? "s" : ""} in the last 90 days
           </div>
         )}
@@ -214,12 +205,12 @@ export function EducationAttendanceTrackingCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Attendance Intelligence
+              Cara Attendance Intelligence
             </p>
             {insights.map((insight: { severity: string; text: string }, i: number) => (
               <div

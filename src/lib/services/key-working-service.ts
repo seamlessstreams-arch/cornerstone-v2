@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY WORKING SESSION SERVICE
+// CARA — KEY WORKING SESSION SERVICE
 // Manages structured key work sessions between staff and young people,
-// therapeutic framework integration, and ARIA-powered session planning.
+// therapeutic framework integration, and Cara-powered session planning.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

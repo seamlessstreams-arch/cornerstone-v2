@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT STABILITY INTELLIGENCE ENGINE
+// CARA — HOME PLACEMENT STABILITY INTELLIGENCE ENGINE
 // Home-level: analyses placement tenure, incident patterns, missing episode
 // trends, return interview compliance, and overall stability across children.
 // CHR 2015 Reg 36 (Record Keeping), Reg 44. SCCIF: "Impact on children's

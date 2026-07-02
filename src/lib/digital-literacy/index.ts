@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Digital Literacy & Online Engagement — Public API
+// Cara Digital Literacy & Online Engagement — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

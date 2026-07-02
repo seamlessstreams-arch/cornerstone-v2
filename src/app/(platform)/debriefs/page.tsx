@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -24,8 +25,8 @@ import { REFLECTIVE_DEBRIEF_TYPE_LABEL } from "@/types/extended";
 import { useDebriefRecords, useCreateDebriefRecord } from "@/hooks/use-debrief-records";
 import { toast } from "sonner";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 const TYPE_META: Record<ReflectiveDebriefType, { label: string; color: string }> = {
   post_incident:   { label: "Post-Incident",    color: "bg-red-100 text-red-800" },
@@ -98,12 +99,12 @@ export default function DebriefsPage() {
     <PageShell
       title="Debriefs & Reflections"
       subtitle="Post-incident debriefs, team reflections, and lessons learned"
-      ariaContext={{ pageTitle: "Debriefs & Reflections", sourceType: "pi_debrief" }}
+      caraContext={{ pageTitle: "Debriefs & Reflections", sourceType: "pi_debrief" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Debriefs & Reflections" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="debriefs" />
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Debrief</Button>
         </div>
       }
@@ -243,7 +244,7 @@ export default function DebriefsPage() {
                 </Select>
               </div>
             </div>
-            <div><label className="text-sm font-medium">What Happened *</label><Textarea placeholder="Describe the incident or event…" rows={3} value={debForm.what_happened} onChange={(e) => setDeb("what_happened", e.target.value)} /></div>
+            <div><label className="text-sm font-medium">What Happened *</label><Textarea placeholder="Describe the incident or event…" rows={3} value={debForm.what_happened} onChange={(e) => setDeb("what_happened", e.target.value)} /><EntryAssist value={debForm.what_happened} onChange={(v) => setDeb("what_happened", v)} sourceRecordType="debrief" className="mt-1" /></div>
             <div><label className="text-sm font-medium">What Worked Well</label><Textarea placeholder="Positive aspects of the response…" rows={2} value={debForm.what_worked_well} onChange={(e) => setDeb("what_worked_well", e.target.value)} /></div>
             <div><label className="text-sm font-medium">What Could Improve</label><Textarea placeholder="Areas for improvement…" rows={2} value={debForm.what_could_improve} onChange={(e) => setDeb("what_could_improve", e.target.value)} /></div>
             <div><label className="text-sm font-medium">Lessons Learned</label><Textarea placeholder="Key lessons (one per line)" rows={2} value={debForm.lessons_learned} onChange={(e) => setDeb("lessons_learned", e.target.value)} /></div>
@@ -260,7 +261,7 @@ export default function DebriefsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Debriefs & Reflections — post-incident debriefs, physical intervention reviews, emotional check-ins, team learning, wellbeing, safe practice, culture of openness"
         recordType="incident"

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE API ROUTE
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE API ROUTE
 // GET /api/v1/financial-management-intelligence
 // Returns expense analysis, spend patterns, approval compliance, category
-// distribution, and ARIA financial governance insights.
+// distribution, and Cara financial governance insights.
 // Reg 40 (financial management), SCCIF governance.
 // ══════════════════════════════════════════════════════════════════════════════
 

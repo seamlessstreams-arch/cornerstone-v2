@@ -431,7 +431,7 @@ export default function DocumentAnalysisPage() {
     setActiveTab("findings");
 
     try {
-      const response = await fetch("/api/aria/document-analyse", {
+      const response = await fetch("/api/cara/document-analyse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -529,7 +529,7 @@ export default function DocumentAnalysisPage() {
         .map((a) => `- ${a.action} (Owner: ${a.owner}, Deadline: ${a.deadline})`)
         .join("\n");
 
-      const response = await fetch("/api/aria/orchestrate", {
+      const response = await fetch("/api/cara/orchestrate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -548,7 +548,7 @@ export default function DocumentAnalysisPage() {
       }
 
       setTaskCreationMessage(
-        `${result.extractedActions.length} task(s) sent to ARIA for creation. Check your task board for the new items.`,
+        `${result.extractedActions.length} task(s) sent to Cara for creation. Check your task board for the new items.`,
       );
     } catch (err) {
       console.error("[document-analysis] Task creation error:", err);
@@ -637,8 +637,8 @@ export default function DocumentAnalysisPage() {
     <main className="space-y-6 p-6 max-w-6xl mx-auto">
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div className="flex items-start gap-3">
-        <div className="p-2.5 bg-[var(--cs-aria-gold-bg)] rounded-xl border border-[var(--cs-aria-gold-soft)]">
-          <FileSearch className="h-6 w-6 text-[var(--cs-aria-gold)]" />
+        <div className="p-2.5 bg-[var(--cs-cara-gold-bg)] rounded-xl border border-[var(--cs-cara-gold-soft)]">
+          <FileSearch className="h-6 w-6 text-[var(--cs-cara-gold)]" />
         </div>
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-[var(--cs-navy)]">
@@ -654,11 +654,11 @@ export default function DocumentAnalysisPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
-            <FileText className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <FileText className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Document Input
           </CardTitle>
           <CardDescription>
-            Select the document type, paste the content, and describe what you want ARIA to analyse.
+            Select the document type, paste the content, and describe what you want Cara to analyse.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -719,8 +719,8 @@ export default function DocumentAnalysisPage() {
               relative rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all
               ${
                 isDragging
-                  ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)]"
-                  : "border-[var(--cs-border)] hover:border-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)]/30"
+                  ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)]"
+                  : "border-[var(--cs-border)] hover:border-[var(--cs-cara-gold)] hover:bg-[var(--cs-cara-gold-bg)]/30"
               }
             `}
           >
@@ -743,7 +743,7 @@ export default function DocumentAnalysisPage() {
           {/* Query field */}
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-[var(--cs-text-secondary)]">
-              What would you like ARIA to analyse?
+              What would you like Cara to analyse?
             </label>
             <Input
               value={query}
@@ -757,7 +757,7 @@ export default function DocumentAnalysisPage() {
                   key={suggestion}
                   onClick={() => setQuery(suggestion)}
                   disabled={isAnalysing}
-                  className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[var(--cs-aria-gold-bg)] text-[var(--cs-text-secondary)] border border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-soft)] transition-colors disabled:opacity-50"
+                  className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-[var(--cs-cara-gold-bg)] text-[var(--cs-text-secondary)] border border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-soft)] transition-colors disabled:opacity-50"
                 >
                   {suggestion}
                 </button>
@@ -775,7 +775,7 @@ export default function DocumentAnalysisPage() {
 
           {/* Analyse button */}
           <Button
-            variant="aria"
+            variant="cara"
             size="lg"
             onClick={handleAnalyse}
             disabled={isAnalysing || !documentText.trim() || !query.trim()}
@@ -802,7 +802,7 @@ export default function DocumentAnalysisPage() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center gap-2">
-                <Badge variant="aria">
+                <Badge variant="cara">
                   <Sparkles className="h-3 w-3" />
                   {result.agentUsed.replace(/_/g, " ")}
                 </Badge>

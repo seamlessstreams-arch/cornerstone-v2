@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME IT EQUIPMENT & CONNECTIVITY INTELLIGENCE ENGINE
+// CARA — HOME IT EQUIPMENT & CONNECTIVITY INTELLIGENCE ENGINE
 // Monitors the home's IT equipment and connectivity including WiFi reliability,
 // computer/tablet availability, printer access, software currency, and child
 // digital access equity.

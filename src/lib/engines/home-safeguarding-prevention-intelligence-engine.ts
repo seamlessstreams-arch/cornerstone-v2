@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME SAFEGUARDING PREVENTION INTELLIGENCE ENGINE
+// CARA -- HOME SAFEGUARDING PREVENTION INTELLIGENCE ENGINE
 // Home-level: bullying incidents, hate incidents, Prevent duty compliance,
 // court attendance support, and safeguarding prevention culture.
 // CHR 2015 Reg 12: "Protection of children from harm and abuse."
@@ -419,7 +419,7 @@ export function computeHomeSafeguardingPrevention(
     });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (
     bullyingResolutionRate === 100 && bullying90d.length > 0 &&
     hateReportingRate === 100 && hate90d.length > 0 &&
@@ -432,7 +432,7 @@ export function computeHomeSafeguardingPrevention(
   }
   if (bullyingResolutionRate < 50 && bullying90d.length >= 3) {
     insights.push({
-      text: `ARIA detects pattern of unresolved bullying incidents -- risk of institutional harm. ${bullyingOpen} cases remain open with resolution rate of only ${bullyingResolutionRate}%.`,
+      text: `Cara detects pattern of unresolved bullying incidents -- risk of institutional harm. ${bullyingOpen} cases remain open with resolution rate of only ${bullyingResolutionRate}%.`,
       severity: "critical",
     });
   }

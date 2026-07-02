@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE ENGINE
+// CARA — HOME STAFF PERFORMANCE APPRAISAL INTELLIGENCE ENGINE
 // Home-level: assesses appraisal completion rates, performance target tracking,
 // competency assessment coverage, development goal progress, feedback quality,
 // and staff satisfaction to produce an overall performance appraisal score.

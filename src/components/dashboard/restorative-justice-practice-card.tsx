@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTORATIVE JUSTICE PRACTICE CARD
+// CARA — RESTORATIVE JUSTICE PRACTICE CARD
 // Live data from behaviour intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,16 +15,16 @@ import { cn } from "@/lib/utils";
 import { useBehaviourIntelligence } from "@/hooks/use-behaviour-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function RestorativeJusticePracticeCard() {
@@ -60,11 +60,11 @@ export function RestorativeJusticePracticeCard() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_incidents_30d ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Incidents</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{d?.profile?.total_entries ?? 0}</p>
+            <p className="text-[10px] text-muted-foreground">Entries</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.unique_children ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.profile?.children_with_entries ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
@@ -72,7 +72,7 @@ export function RestorativeJusticePracticeCard() {
             <p className="text-[10px] text-muted-foreground">Rewards</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.rewards_sanctions?.total_sanctions ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.rewards_sanctions?.total_sanctions ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.rewards_sanctions?.total_sanctions ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.rewards_sanctions?.total_sanctions ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.rewards_sanctions?.total_sanctions ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Sanctions</p>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function RestorativeJusticePracticeCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Restorative Justice Intelligence
+              Cara Restorative Justice Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

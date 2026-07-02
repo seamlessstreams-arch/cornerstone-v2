@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DELEGATED AUTHORITY INTELLIGENCE CARD
+// CARA — HOME DELEGATED AUTHORITY INTELLIGENCE CARD
 // Delegated authority completeness, review compliance, category coverage.
 // CHR 2015 Reg 22: "Arrangements for the delegation of authority."
 // SCCIF: "Staff understand what decisions they can make day to day."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<DelegatedAuthorityRating, { bg: string; text: string
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.authority_rating === "inadequate" && (d.authority_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      authority_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.authority_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.authority_rating === "inadequate" || d.review_profile.reviews_overdue > 1;
@@ -66,7 +83,7 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <KeyRound className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-amber-500")} />
+            <KeyRound className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-amber-500")} />
             <span className="text-slate-900">Delegated Authority</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -89,8 +106,8 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.status_profile.granted_rate >= 70 ? "text-green-600" :
-                  d.status_profile.granted_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.status_profile.granted_rate >= 70 ? "text-[--cs-success]" :
+                  d.status_profile.granted_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.status_profile.granted_rate}%
                 </p>
@@ -103,8 +120,8 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.child_coverage.coverage_rate >= 100 ? "text-green-600" :
-                  d.child_coverage.coverage_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.child_coverage.coverage_rate >= 100 ? "text-[--cs-success]" :
+                  d.child_coverage.coverage_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.child_coverage.children_with_authority}/{d.child_coverage.total_children}
                 </p>
@@ -117,8 +134,8 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.category_coverage.categories_addressed >= 10 ? "text-green-600" :
-                  d.category_coverage.categories_addressed >= 7 ? "text-blue-600" : "text-amber-600"
+                  d.category_coverage.categories_addressed >= 10 ? "text-[--cs-success]" :
+                  d.category_coverage.categories_addressed >= 7 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.category_coverage.categories_addressed}/{d.category_coverage.total_possible_categories}
                 </p>
@@ -131,7 +148,7 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <KeyRound className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.review_profile.reviews_overdue === 0 ? "text-green-600" : "text-red-600"
+                  d.review_profile.reviews_overdue === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>
                   {d.review_profile.reviews_overdue}
                 </p>
@@ -150,7 +167,7 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
                 <p>Granted: <span className="font-medium text-green-600">{d.status_profile.granted}</span></p>
                 <p>Partial: <span className="font-medium text-amber-600">{d.status_profile.partial}</span></p>
                 <p>Pending: <span className={cn("font-medium",
-                  d.status_profile.pending === 0 ? "text-green-600" : "text-red-600"
+                  d.status_profile.pending === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.status_profile.pending}</span></p>
                 <p>Not granted: <span className="font-medium text-slate-600">{d.status_profile.not_granted}</span></p>
               </div>
@@ -159,11 +176,11 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Reviews</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Due soon: <span className={cn("font-medium",
-                  d.review_profile.reviews_due_soon === 0 ? "text-green-600" : "text-amber-600"
+                  d.review_profile.reviews_due_soon === 0 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.review_profile.reviews_due_soon}</span></p>
                 <p>Avg age: <span className="font-medium text-slate-600">{d.review_profile.avg_days_since_review}d</span></p>
                 <p>Stale (90d+): <span className={cn("font-medium",
-                  d.review_profile.last_reviewed_stale === 0 ? "text-green-600" : "text-red-600"
+                  d.review_profile.last_reviewed_stale === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.review_profile.last_reviewed_stale}</span></p>
                 <p>Total items: <span className="font-medium text-slate-600">{d.status_profile.total_items}</span></p>
               </div>
@@ -179,7 +196,7 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -194,7 +211,7 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -221,12 +238,12 @@ export function HomeDelegatedAuthorityIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Authority Intelligence */}
+        {/* Cara Authority Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Authority Intelligence
+              Cara Authority Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

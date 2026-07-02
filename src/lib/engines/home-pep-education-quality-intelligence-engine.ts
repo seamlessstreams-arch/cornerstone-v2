@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEP EDUCATION QUALITY INTELLIGENCE ENGINE
+// CARA — HOME PEP EDUCATION QUALITY INTELLIGENCE ENGINE
 // Pure deterministic engine: Personal Education Plan (PEP) timeliness, attendance,
 // exclusion rates, target progress, pupil premium usage, child/carer voice,
 // and action completion tracking.

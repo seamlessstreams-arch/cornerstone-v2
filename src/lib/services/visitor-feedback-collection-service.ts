@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITOR FEEDBACK COLLECTION SERVICE
+// CARA — VISITOR FEEDBACK COLLECTION SERVICE
 // Captures feedback from visitors (parents, social workers,
 // professionals, advocates) about the home environment and care.
 // CHR 2015 Reg 44 (independent person — visits and reports),

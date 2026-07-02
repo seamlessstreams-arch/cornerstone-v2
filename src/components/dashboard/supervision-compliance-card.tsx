@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION COMPLIANCE CARD
+// CARA — SUPERVISION COMPLIANCE CARD
 // Dashboard widget showing supervision completion rate, overdue sessions,
 // upcoming schedule, and wellbeing trends.
 // Reg 33 — Staff must receive regular supervision appropriate to their role.
@@ -68,7 +68,7 @@ export function SupervisionComplianceCard() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-[13px]">
-            <MessageSquare className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <MessageSquare className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Supervision
           </CardTitle>
         </CardHeader>
@@ -86,11 +86,11 @@ export function SupervisionComplianceCard() {
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-[13px]">
-            <MessageSquare className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <MessageSquare className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Supervision
           </CardTitle>
           <Link href="/supervision">
-            <Badge className="text-[9px] bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-0 rounded-full hover:bg-[var(--cs-aria-gold-soft)] cursor-pointer">
+            <Badge className="text-[9px] bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-0 rounded-full hover:bg-[var(--cs-cara-gold-soft)] cursor-pointer">
               View all
             </Badge>
           </Link>
@@ -122,7 +122,7 @@ export function SupervisionComplianceCard() {
             <span className="text-[var(--cs-text-muted)]">Compliance</span>
             <span className={cn(
               "font-bold tabular-nums",
-              compliancePct >= 90 ? "text-emerald-600" : compliancePct >= 75 ? "text-amber-600" : "text-red-600",
+              compliancePct >= 90 ? "text-emerald-600" : compliancePct >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {compliancePct}%
             </span>
@@ -146,7 +146,7 @@ export function SupervisionComplianceCard() {
             </span>
             <span className={cn(
               "font-bold tabular-nums",
-              avgWellbeing >= 4 ? "text-emerald-600" : avgWellbeing >= 3 ? "text-amber-600" : "text-red-600",
+              avgWellbeing >= 4 ? "text-emerald-600" : avgWellbeing >= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {avgWellbeing}/5
             </span>

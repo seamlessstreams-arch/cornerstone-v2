@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME AROMATHERAPY & WELLBEING THERAPIES INTELLIGENCE ENGINE
+// CARA — HOME AROMATHERAPY & WELLBEING THERAPIES INTELLIGENCE ENGINE
 // Monitors complementary therapy provision across the home — aromatherapy
 // session quality, wellbeing therapy access, relaxation programme effectiveness,
 // sensory-based calming techniques, and child benefit tracking.

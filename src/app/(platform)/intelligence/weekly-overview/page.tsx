@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WEEKLY INTELLIGENCE OVERVIEW
+// CARA — WEEKLY INTELLIGENCE OVERVIEW
 // Comprehensive management report: aggregated intelligence snapshot for the week.
-// For Registered Managers — Oak House.
+// For Registered Managers — Chamberlain House.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useMemo, useState } from "react";
@@ -220,7 +220,7 @@ function HeaderStatCards() {
       <div className="rounded-2xl border border-[var(--cs-border)] bg-white p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
           <span className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wider">Voice Coverage</span>
-          <MessageSquareQuote className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+          <MessageSquareQuote className="h-4 w-4 text-[var(--cs-cara-gold)]" />
         </div>
         {voiceLoading ? (
           <Skeleton className="h-8 w-12" />
@@ -264,7 +264,7 @@ function ChildOverviewCard({ child }: { child: { id: string; name: string } }) {
   return (
     <Link
       href={`/young-people/${child.id}`}
-      className="block rounded-2xl border border-[var(--cs-border)] bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]"
+      className="block rounded-2xl border border-[var(--cs-border)] bg-white p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)]"
     >
       {/* Child header */}
       <div className="flex items-center gap-3 mb-4">
@@ -392,7 +392,7 @@ function PatternAlertsSection() {
           <div className="flex flex-col items-center gap-2 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-slate-200" />
             <p className="text-sm text-[var(--cs-text-muted)]">No active pattern alerts</p>
-            <p className="text-xs text-[var(--cs-text-muted)]">ARIA is monitoring for emerging patterns</p>
+            <p className="text-xs text-[var(--cs-text-muted)]">Cara is monitoring for emerging patterns</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -565,9 +565,9 @@ function ActionsTrackerSection() {
   );
 }
 
-// ── Section E: ARIA Weekly Report Generator ───────────────────────────────────
+// ── Section E: Cara Weekly Report Generator ───────────────────────────────────
 
-function AriaWeeklyReportSection() {
+function CaraWeeklyReportSection() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [rawOutput, setRawOutput]       = useState("");
   const [isDone, setIsDone]             = useState(false);
@@ -581,7 +581,7 @@ function AriaWeeklyReportSection() {
     setError(null);
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -591,13 +591,13 @@ function AriaWeeklyReportSection() {
           page_context: "weekly-overview",
           user_role: "registered_manager",
           question:
-            "Generate a weekly management overview narrative for Oak House. Cover: home climate this week, patterns identified, children's wellbeing scores, outstanding actions, children's voice coverage, and key priorities for next week. Write in management oversight style.",
+            "Generate a weekly management overview narrative for Chamberlain House. Cover: home climate this week, patterns identified, children's wellbeing scores, outstanding actions, children's voice coverage, and key priorities for next week. Write in management oversight style.",
           period_days: 7,
         }),
       });
 
       if (!res.ok || !res.body) {
-        throw new Error(`ARIA returned ${res.status}`);
+        throw new Error(`Cara returned ${res.status}`);
       }
 
       const reader  = res.body.getReader();
@@ -658,8 +658,8 @@ function AriaWeeklyReportSection() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-          ARIA Weekly Report
+          <Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" />
+          Cara Weekly Report
           {isDone && rawOutput && (
             <Badge className="ml-auto bg-emerald-100 text-emerald-700 border-0 text-[10px] rounded-full">
               <CheckCircle2 className="h-3 w-3 mr-1" />Generated
@@ -669,8 +669,8 @@ function AriaWeeklyReportSection() {
       </CardHeader>
       <CardContent className="space-y-4">
         {!rawOutput && !isGenerating && (
-          <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] p-4 text-xs text-[var(--cs-aria-gold)] leading-relaxed">
-            ARIA will generate a comprehensive management narrative covering home climate, pattern alerts,
+          <div className="rounded-xl bg-[var(--cs-cara-gold-bg)] border border-[var(--cs-cara-gold-soft)] p-4 text-xs text-[var(--cs-cara-gold)] leading-relaxed">
+            Cara will generate a comprehensive management narrative covering home climate, pattern alerts,
             wellbeing scores, outstanding actions, and children&apos;s voice coverage for the week.
           </div>
         )}
@@ -688,7 +688,7 @@ function AriaWeeklyReportSection() {
               <pre className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap leading-relaxed font-sans">
                 {rawOutput}
                 {isGenerating && (
-                  <span className="inline-block h-3.5 w-0.5 bg-[var(--cs-aria-gold-bg)]0 ml-0.5 animate-pulse align-middle" />
+                  <span className="inline-block h-3.5 w-0.5 bg-[var(--cs-cara-gold-bg)]0 ml-0.5 animate-pulse align-middle" />
                 )}
               </pre>
             </div>
@@ -712,7 +712,7 @@ function AriaWeeklyReportSection() {
           {isGenerating ? (
             <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Generating...</>
           ) : (
-            <><Sparkles className="h-4 w-4 mr-2" />{rawOutput ? "Re-generate Report" : "Generate ARIA Weekly Report"}</>
+            <><Sparkles className="h-4 w-4 mr-2" />{rawOutput ? "Re-generate Report" : "Generate Cara Weekly Report"}</>
           )}
         </Button>
       </CardContent>
@@ -824,7 +824,7 @@ function BulkComputeSection() {
           lines.push("");
         }
 
-        const res = await fetch("/api/v1/aria", {
+        const res = await fetch("/api/v1/cara", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -843,7 +843,7 @@ function BulkComputeSection() {
         const json = await res.json();
         const parsed = json?.data?.parsed;
         if (!parsed || typeof parsed !== "object") {
-          throw new Error(`${child.name}: ARIA did not return valid JSON`);
+          throw new Error(`${child.name}: Cara did not return valid JSON`);
         }
 
         await createSnapshot.mutateAsync({
@@ -862,11 +862,11 @@ function BulkComputeSection() {
           stability_score:     Number(parsed.stability_score     ?? 50),
           achievement_score:   Number(parsed.achievement_score   ?? 50),
           overall_score:       Number(parsed.overall_score       ?? 50),
-          narrative:           parsed.narrative ?? "ARIA analysis complete.",
+          narrative:           parsed.narrative ?? "Cara analysis complete.",
           trend:               parsed.trend ?? "stable",
           strengths:           Array.isArray(parsed.strengths) ? parsed.strengths : [],
           concerns:            Array.isArray(parsed.concerns)  ? parsed.concerns  : [],
-          computed_by:         "aria",
+          computed_by:         "cara",
         });
 
         setProgress((prev) => [...prev.slice(0, -1), `✓ ${child.name} — score: ${parsed.overall_score ?? "?"}`]);
@@ -881,11 +881,11 @@ function BulkComputeSection() {
   }
 
   return (
-    <Card className="border-[var(--cs-aria-gold-soft)]">
+    <Card className="border-[var(--cs-cara-gold-soft)]">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <Cpu className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Compute All Wellbeing Snapshots
           </CardTitle>
           <Button
@@ -913,14 +913,14 @@ function BulkComputeSection() {
       <CardContent className="space-y-3">
         {state === "idle" && progress.length === 0 && (
           <p className="text-xs text-[var(--cs-text-muted)] leading-relaxed">
-            Ask ARIA to compute fresh wellbeing snapshots for all three children simultaneously,
+            Ask Cara to compute fresh wellbeing snapshots for all three children simultaneously,
             using their latest voice records, interventions, and practice bank data as context.
           </p>
         )}
         {progress.length > 0 && (
-          <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] px-4 py-3 space-y-1.5">
+          <div className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] px-4 py-3 space-y-1.5">
             {progress.map((line, i) => (
-              <div key={i} className="flex items-center gap-2 text-xs text-[var(--cs-aria-gold)]">
+              <div key={i} className="flex items-center gap-2 text-xs text-[var(--cs-cara-gold)]">
                 {state === "running" && i === progress.length - 1
                   ? <Loader2 className="h-3 w-3 animate-spin shrink-0" />
                   : <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
@@ -947,11 +947,11 @@ export default function WeeklyOverviewPage() {
   return (
     <PageShell
       title="Weekly Intelligence Overview"
-      subtitle="Oak House — management snapshot for the week"
+      subtitle="Chamberlain House — management snapshot for the week"
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Weekly Intelligence Overview" subtitle="Oak House — Weekly Management Snapshot" targetId="weekly-overview-content" />
+          <PrintButton title="Weekly Intelligence Overview" subtitle="Chamberlain House — Weekly Management Snapshot" targetId="weekly-overview-content" />
           <SmartUploadButton variant="inline" label="Upload Weekly Summary" uploadContext="Intelligence — weekly overview supporting document upload" />
         </div>
       }
@@ -970,8 +970,8 @@ export default function WeeklyOverviewPage() {
         {/* D: Actions tracker */}
         <ActionsTrackerSection />
 
-        {/* E: ARIA weekly report */}
-        <AriaWeeklyReportSection />
+        {/* E: Cara weekly report */}
+        <CaraWeeklyReportSection />
 
         {/* F: Bulk compute snapshots */}
         <BulkComputeSection />

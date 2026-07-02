@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE RISK ASSESSMENT SERVICE
+// CARA — HOME FIRE RISK ASSESSMENT SERVICE
 // Manages fire risk assessments, escape routes, fire detection systems,
 // compartmentation, evacuation plans, and fire safety compliance.
 // Regulatory Reform (Fire Safety) Order 2005,
@@ -352,7 +352,7 @@ export function computeFireRiskAlerts(
   return alerts;
 }
 
-export function generateFireRiskAriaInsights(
+export function generateFireRiskCaraInsights(
   rows: HomeFireRiskAssessmentRow[],
 ): string[] {
   const metrics = computeFireRiskMetrics(rows);
@@ -412,5 +412,5 @@ export function generateFireRiskAriaInsights(
 export const _testing = {
   computeFireRiskMetrics,
   computeFireRiskAlerts,
-  generateFireRiskAriaInsights,
+  generateFireRiskCaraInsights,
 };

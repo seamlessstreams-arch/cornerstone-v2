@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RECORDING QUALITY INTELLIGENCE ENGINE — TESTS
+// CARA — HOME RECORDING QUALITY INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import {

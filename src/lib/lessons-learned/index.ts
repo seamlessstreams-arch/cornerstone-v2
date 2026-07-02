@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Lessons Learned Intelligence — Public API
+// Cara Lessons Learned Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

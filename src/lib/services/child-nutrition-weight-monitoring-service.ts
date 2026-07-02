@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD NUTRITION & WEIGHT MONITORING SERVICE
+// CARA — CHILD NUTRITION & WEIGHT MONITORING SERVICE
 // BMI tracking, dietary needs, weight management plans,
 // nutritional assessments, growth monitoring.
 // CHR 2015 Reg 10 (health and wellbeing),
@@ -245,7 +245,7 @@ export function computeNutritionAlerts(
   return alerts;
 }
 
-export function generateNutritionAriaInsights(
+export function generateNutritionCaraInsights(
   rows: ChildNutritionWeightMonitoringRow[],
 ): string[] {
   const metrics = computeNutritionMetrics(rows);
@@ -368,5 +368,5 @@ export async function createChildNutritionWeightMonitoring(input: {
 export const _testing = {
   computeNutritionMetrics,
   computeNutritionAlerts,
-  generateNutritionAriaInsights,
+  generateNutritionCaraInsights,
 };

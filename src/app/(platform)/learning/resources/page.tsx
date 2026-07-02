@@ -1,13 +1,13 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEARNING STUDIO: RESOURCE GENERATOR
+// CARA — LEARNING STUDIO: RESOURCE GENERATOR
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -52,11 +52,11 @@ const STATUS_COLOURS: Record<string, string> = {
   draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   reviewed: "bg-blue-100 text-blue-700",
   approved: "bg-emerald-100 text-emerald-700",
-  published: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+  published: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
   archived: "bg-slate-100 text-[var(--cs-text-muted)]",
 };
 
-function ariaMode(type: GeneratedResourceType): string {
+function caraMode(type: GeneratedResourceType): string {
   switch (type) {
     case "workshop": return "learning_workshop_plan";
     case "flashcard_set": return "learning_flashcards";
@@ -71,7 +71,7 @@ function ariaMode(type: GeneratedResourceType): string {
   }
 }
 
-function ariaStyle(pathway: LearningPathway, tone: string): string {
+function caraStyle(pathway: LearningPathway, tone: string): string {
   if (tone === "child_friendly") return "child_friendly";
   if (tone === "warm") return "warm_professional";
   return "professional_formal";
@@ -142,8 +142,8 @@ function ResourceCard({ resource }: { resource: GeneratedResource }) {
     <Card className="border border-[var(--cs-border-subtle)]">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--cs-aria-gold-bg)]">
-            <FileText className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--cs-cara-gold-bg)]">
+            <FileText className="h-4 w-4 text-[var(--cs-cara-gold)]" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
@@ -213,10 +213,10 @@ export default function ResourceGeneratorPage() {
     setSaved(false);
     try {
       const res = await api.post<{ data: { parsed?: Record<string, unknown> } }>(
-        "/aria",
+        "/cara",
         {
-          mode: ariaMode(resourceType),
-          style: ariaStyle(pathway, tone),
+          mode: caraMode(resourceType),
+          style: caraStyle(pathway, tone),
           source_content: `Topic: ${topic}\n\nContext: ${context}`,
           page_context: "Learning Studio — Resource Generator",
           record_type: resourceType,
@@ -249,7 +249,7 @@ export default function ResourceGeneratorPage() {
         pathway,
         content: result,
         status: "draft",
-        aria_generated: true,
+        cara_generated: true,
         created_by: currentUser?.id ?? "staff_darren",
         tags: [pathway, readingLevel],
       });
@@ -311,14 +311,14 @@ export default function ResourceGeneratorPage() {
   return (
     <PageShell
       title="Resource Generator"
-      subtitle="Generate learning resources with ARIA for staff and young people"
-      ariaContext={{ pageTitle: "Learning Resources", sourceType: "document" }}
+      subtitle="Generate learning resources with Cara for staff and young people"
+      caraContext={{ pageTitle: "Learning Resources", sourceType: "document" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Resource Generator" subtitle="Oak House — Learning Resources" targetId="resources-content" />
+          <PrintButton title="Resource Generator" subtitle="Chamberlain House — Learning Resources" targetId="resources-content" />
           <SmartUploadButton variant="inline" label="Upload Resource" uploadContext="Learning — Resource Generator upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -328,10 +328,10 @@ export default function ResourceGeneratorPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--cs-aria-gold-bg)]">
-                <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--cs-cara-gold-bg)]">
+                <Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" />
               </div>
-              Generate with ARIA
+              Generate with Cara
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -395,7 +395,7 @@ export default function ResourceGeneratorPage() {
               <Textarea
                 className="mt-1 text-sm"
                 rows={3}
-                placeholder="Any specific context, audience details, or focus areas for ARIA…"
+                placeholder="Any specific context, audience details, or focus areas for Cara…"
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
               />
@@ -406,14 +406,14 @@ export default function ResourceGeneratorPage() {
               className="gap-1.5"
             >
               <Sparkles className="h-3.5 w-3.5" />
-              {generating ? "Generating…" : "Generate with ARIA"}
+              {generating ? "Generating…" : "Generate with Cara"}
             </Button>
           </CardContent>
         </Card>
 
         {/* Result */}
         {result && (
-          <Card className="border-[var(--cs-aria-gold-soft)]">
+          <Card className="border-[var(--cs-cara-gold-soft)]">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base">Generated Resource</CardTitle>
@@ -464,7 +464,7 @@ export default function ResourceGeneratorPage() {
           )}
         </div>
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Learning Resources — training resource generation, care practice documents, policy templates, safeguarding resources, regulatory guidance, CPD materials, workforce evidence"
         recordType="staff_training"

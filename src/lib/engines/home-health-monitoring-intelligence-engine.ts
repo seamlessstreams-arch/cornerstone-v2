@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH MONITORING INTELLIGENCE ENGINE
+// CARA — HOME HEALTH MONITORING INTELLIGENCE ENGINE
 // Home-level: synthesises annual health assessments, immunisation records,
 // dental records, and health passports across all children to produce an
 // overall health monitoring reachability and compliance intelligence.

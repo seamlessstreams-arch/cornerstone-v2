@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MISSING EPISODES INTELLIGENCE ENGINE TESTS
+// CARA — HOME MISSING EPISODES INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering missing from care episode analysis,
 // reporting compliance, pattern detection, scoring, and insights.
 // CHR 2015 Reg 12, Reg 34; SCCIF "Safe."

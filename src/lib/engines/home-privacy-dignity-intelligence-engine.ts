@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PRIVACY & DIGNITY INTELLIGENCE ENGINE
+// CARA -- HOME PRIVACY & DIGNITY INTELLIGENCE ENGINE
 // Tracks how well the home respects children's privacy and dignity -- private
 // space provision, knock-before-entry compliance, personal boundary respect,
 // confidentiality of records, and dignity in care practices.

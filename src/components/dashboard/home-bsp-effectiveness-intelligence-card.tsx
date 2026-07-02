@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BSP EFFECTIVENESS INTELLIGENCE CARD
+// CARA — HOME BSP EFFECTIVENESS INTELLIGENCE CARD
 // Cross-cutting analysis: behaviour support plans × behaviour log × restraints.
 // CHR 2015 Reg 19, Reg 20. SCCIF: "How well children are helped and protected."
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<BSPEffectivenessRating, { bg: string; text: string; 
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomeBSPEffectivenessIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.bsp_rating === "inadequate" && (d.bsp_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      bsp_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.bsp_rating] ?? RATING_STYLES.insufficient_data;
   const hasCoverageGap = d.coverage.children_with_concerning_no_bsp > 0;
@@ -66,7 +83,7 @@ export function HomeBSPEffectivenessIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <BookOpen className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-violet-500")} />
+            <BookOpen className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-violet-500")} />
             <span className="text-slate-900">BSP Effectiveness</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -102,8 +119,8 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ThumbsUp className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.behaviour.strategy_usage_rate >= 80 ? "text-green-600" :
-                  d.behaviour.strategy_usage_rate >= 60 ? "text-amber-600" : "text-red-600"
+                  d.behaviour.strategy_usage_rate >= 80 ? "text-[--cs-success]" :
+                  d.behaviour.strategy_usage_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.behaviour.concerning_count > 0 ? `${d.behaviour.strategy_usage_rate}%` : "—"}
                 </p>
@@ -116,8 +133,8 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldOff className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.restraint.total_restraints === 0 ? "text-green-600" :
-                  d.restraint.total_restraints <= 2 ? "text-amber-600" : "text-red-600"
+                  d.restraint.total_restraints === 0 ? "text-[--cs-success]" :
+                  d.restraint.total_restraints <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.restraint.total_restraints}
                 </p>
@@ -130,8 +147,8 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.coverage.children_with_concerning_no_bsp === 0 ? "text-green-600" :
-                  d.coverage.children_with_concerning_no_bsp <= 1 ? "text-amber-600" : "text-red-600"
+                  d.coverage.children_with_concerning_no_bsp === 0 ? "text-[--cs-success]" :
+                  d.coverage.children_with_concerning_no_bsp <= 1 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.coverage.children_with_concerning_no_bsp}
                 </p>
@@ -148,19 +165,19 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               <p className="font-medium text-slate-700 mb-1">Plan Quality</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Effectiveness: <span className={cn("font-medium",
-                  d.plan_quality.strategy_effectiveness_rate >= 80 ? "text-green-600" :
-                  d.plan_quality.strategy_effectiveness_rate >= 60 ? "text-amber-600" : "text-red-600"
+                  d.plan_quality.strategy_effectiveness_rate >= 80 ? "text-[--cs-success]" :
+                  d.plan_quality.strategy_effectiveness_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.plan_quality.total_active > 0 ? `${d.plan_quality.strategy_effectiveness_rate}%` : "N/A"}</span></p>
                 <p>Child voice: <span className={cn("font-medium",
-                  d.plan_quality.child_voice_rate >= 90 ? "text-green-600" :
-                  d.plan_quality.child_voice_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.plan_quality.child_voice_rate >= 90 ? "text-[--cs-success]" :
+                  d.plan_quality.child_voice_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.plan_quality.total_active > 0 ? `${d.plan_quality.child_voice_rate}%` : "N/A"}</span></p>
                 <p>Professional input: <span className={cn("font-medium",
-                  d.plan_quality.professional_input_rate >= 80 ? "text-green-600" :
-                  d.plan_quality.professional_input_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.plan_quality.professional_input_rate >= 80 ? "text-[--cs-success]" :
+                  d.plan_quality.professional_input_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.plan_quality.total_active > 0 ? `${d.plan_quality.professional_input_rate}%` : "N/A"}</span></p>
                 <p>Safety plan: <span className={cn("font-medium",
-                  d.plan_quality.safety_plan_rate >= 90 ? "text-green-600" : "text-amber-600"
+                  d.plan_quality.safety_plan_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.plan_quality.total_active > 0 ? `${d.plan_quality.safety_plan_rate}%` : "N/A"}</span></p>
               </div>
             </div>
@@ -169,15 +186,15 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Entries: <span className="font-medium text-slate-600">{d.behaviour.total_entries}</span></p>
                 <p>Positive: <span className={cn("font-medium",
-                  d.behaviour.positive_rate >= 70 ? "text-green-600" :
-                  d.behaviour.positive_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.behaviour.positive_rate >= 70 ? "text-[--cs-success]" :
+                  d.behaviour.positive_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.behaviour.total_entries > 0 ? `${d.behaviour.positive_rate}%` : "N/A"}</span></p>
                 <p>High intensity: <span className={cn("font-medium",
-                  d.behaviour.high_intensity_count === 0 ? "text-green-600" :
-                  d.behaviour.high_intensity_rate <= 30 ? "text-amber-600" : "text-red-600"
+                  d.behaviour.high_intensity_count === 0 ? "text-[--cs-success]" :
+                  d.behaviour.high_intensity_rate <= 30 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.behaviour.high_intensity_count}</span></p>
                 <p>Overdue reviews: <span className={cn("font-medium",
-                  d.currency.overdue_reviews === 0 ? "text-green-600" : "text-red-600"
+                  d.currency.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.currency.overdue_reviews}</span></p>
               </div>
             </div>
@@ -192,7 +209,7 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -207,7 +224,7 @@ export function HomeBSPEffectivenessIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -234,12 +251,12 @@ export function HomeBSPEffectivenessIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA BSP Intelligence */}
+        {/* Cara BSP Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA BSP Intelligence
+              Cara BSP Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

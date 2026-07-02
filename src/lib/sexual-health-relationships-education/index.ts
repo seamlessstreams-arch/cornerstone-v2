@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Sexual Health & Relationships Education Intelligence — Public API
+// Cara Sexual Health & Relationships Education Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

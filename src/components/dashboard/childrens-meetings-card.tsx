@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS INTELLIGENCE CARD
+// CARA — CHILDREN'S MEETINGS INTELLIGENCE CARD
 // Dashboard card for house meetings, children's council, and participation.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 7, Reg 10, Reg 16.
@@ -21,16 +21,16 @@ import { useContactEngagement } from "@/hooks/use-contact-engagement";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ export function ChildrensMeetingsCard() {
             <p className="text-[10px] text-muted-foreground">Sessions (90d)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", c.overall_completion_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 80 ? "text-green-600" : "text-amber-600")}>{c.overall_completion_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_completion_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{c.overall_completion_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Completion</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -91,7 +91,7 @@ export function ChildrensMeetingsCard() {
             <p className="text-[10px] text-muted-foreground">Per Child</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", c.plans_overdue_review === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.plans_overdue_review === 0 ? "text-green-600" : "text-amber-600")}>{c.plans_overdue_review}</p>
+            <p className={cn("text-lg font-bold tabular-nums", c.plans_overdue_review === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{c.plans_overdue_review}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
         </div>
@@ -150,13 +150,13 @@ export function ChildrensMeetingsCard() {
             </div>
           </div>
           {c.plans_overdue_review > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {c.plans_overdue_review} review overdue
             </Badge>
           ) : c.active_plans > 0 ? (
-            <Badge className="text-[10px] bg-green-100 text-green-700">All current</Badge>
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">All current</Badge>
           ) : (
-            <Badge className="text-[10px] bg-gray-100 text-gray-600">None active</Badge>
+            <Badge className="text-[10px] bg-[--cs-bg] text-[--cs-text-secondary]">None active</Badge>
           )}
         </div>
 
@@ -182,13 +182,13 @@ export function ChildrensMeetingsCard() {
           </div>
         )}
 
-        {/* ── ARIA Meeting Intelligence ───────────────────────────────── */}
+        {/* ── Cara Meeting Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Meeting Intelligence
+              Cara Meeting Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

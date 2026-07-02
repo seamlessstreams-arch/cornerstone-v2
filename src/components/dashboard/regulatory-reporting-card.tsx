@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE CARD
+// CARA — REGULATORY REPORTING INTELLIGENCE CARD
 // Dashboard card powered by the Regulatory Reporting Intelligence Engine.
 // Reg 44 (independent person visits), Reg 45 (quality of care review),
 // Reg 40 (notifications to Ofsted), SCCIF Leadership & Management.
@@ -20,23 +20,23 @@ import { useRegulatoryReportingIntelligence } from "@/hooks/use-regulatory-repor
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 function dueColour(days: number | null): string {
   if (days === null) return "text-slate-600";
-  if (days < 0) return "text-red-600";
-  if (days <= 14) return "text-amber-600";
-  return "text-green-600";
+  if (days < 0) return "text-[--cs-risk]";
+  if (days <= 14) return "text-[--cs-warning]";
+  return "text-[--cs-success]";
 }
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ export function RegulatoryReportingCard() {
           {/* Reg 44 */}
           <div className={cn(
             "rounded-lg border p-3",
-            o.reg44_compliant ? "border-green-200 bg-green-50" : "border-amber-200 bg-amber-50",
+            o.reg44_compliant ? "border-[--cs-success-soft] bg-[--cs-success-bg]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg]",
           )}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold">Reg 44</span>
@@ -111,7 +111,7 @@ export function RegulatoryReportingCard() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">12-month count</span>
-                <span className={cn("font-medium", reg44.visits_last_12_months >= 12 ? "text-green-600" : "text-amber-600")}>
+                <span className={cn("font-medium", reg44.visits_last_12_months >= 12 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                   {reg44.visits_last_12_months}/12
                 </span>
               </div>
@@ -121,7 +121,7 @@ export function RegulatoryReportingCard() {
           {/* Reg 45 */}
           <div className={cn(
             "rounded-lg border p-3",
-            o.reg45_compliant ? "border-green-200 bg-green-50" : "border-amber-200 bg-amber-50",
+            o.reg45_compliant ? "border-[--cs-success-soft] bg-[--cs-success-bg]" : "border-[--cs-warning-soft] bg-[--cs-warning-bg]",
           )}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold">Reg 45</span>
@@ -144,7 +144,7 @@ export function RegulatoryReportingCard() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">12-month count</span>
-                <span className={cn("font-medium", reg45.reports_last_12_months >= 2 ? "text-green-600" : "text-amber-600")}>
+                <span className={cn("font-medium", reg45.reports_last_12_months >= 2 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                   {reg45.reports_last_12_months}/2
                 </span>
               </div>
@@ -162,7 +162,7 @@ export function RegulatoryReportingCard() {
             </p>
             <Badge className={cn(
               "text-[10px]",
-              intel.recommendation_tracker.outstanding === 0 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700",
+              intel.recommendation_tracker.outstanding === 0 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]",
             )}>
               {intel.recommendation_tracker.outstanding} outstanding
             </Badge>
@@ -188,7 +188,7 @@ export function RegulatoryReportingCard() {
               <p className="text-[10px] text-muted-foreground">Completed</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", o.notifications_on_time_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("font-bold tabular-nums", o.notifications_on_time_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {o.notifications_on_time_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Notifications</p>
@@ -214,9 +214,9 @@ export function RegulatoryReportingCard() {
             </div>
             <span className={cn(
               "text-sm font-bold tabular-nums",
-              o.overall_compliance_score >= 80 ? "text-green-600"
-                : o.overall_compliance_score >= 60 ? "text-amber-600"
-                : "text-red-600",
+              o.overall_compliance_score >= 80 ? "text-[--cs-success]"
+                : o.overall_compliance_score >= 60 ? "text-[--cs-warning]"
+                : "text-[--cs-risk]",
             )}>
               {o.overall_compliance_score}%
             </span>
@@ -245,13 +245,13 @@ export function RegulatoryReportingCard() {
           </div>
         )}
 
-        {/* ── ARIA Regulatory Intelligence ────────────────────────────── */}
+        {/* ── Cara Regulatory Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Regulatory Intelligence
+              Cara Regulatory Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

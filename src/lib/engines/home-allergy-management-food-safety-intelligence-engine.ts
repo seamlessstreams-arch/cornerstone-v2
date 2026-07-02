@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE ENGINE
+// CARA — HOME ALLERGY MANAGEMENT & FOOD SAFETY INTELLIGENCE ENGINE
 // Monitors how well the home manages children's allergy plans, ensures staff
 // allergen awareness training is current, tracks epipen availability and
 // expiry checks, evaluates food labelling compliance, measures emergency

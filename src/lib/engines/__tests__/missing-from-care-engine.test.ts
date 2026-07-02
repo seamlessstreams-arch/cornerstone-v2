@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE ENGINE TESTS
+// CARA — MISSING FROM CARE ENGINE TESTS
 // Comprehensive test suite covering profile stats, factor analysis,
-// episode classification, and ARIA insight generation.
+// episode classification, and Cara insight generation.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -343,7 +343,7 @@ describe("computeMissingIntelligence — push/pull analysis", () => {
 // INTEGRATION: computeMissingIntelligence — Insights
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("computeMissingIntelligence — ARIA insights", () => {
+describe("computeMissingIntelligence — Cara insights", () => {
   it("generates critical insight for active episodes", () => {
     const result = computeMissingIntelligence(baseInput({
       episodes: [makeEpisode({ status: "active", child_id: "yp_alex" })],
@@ -421,11 +421,11 @@ describe("computeMissingIntelligence — ARIA insights", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// INTEGRATION: Full Oak House dataset
+// INTEGRATION: Full Chamberlain House dataset
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("computeMissingIntelligence — Oak House integration", () => {
-  it("processes real Oak House episodes correctly", () => {
+describe("computeMissingIntelligence — Chamberlain House integration", () => {
+  it("processes real Chamberlain House episodes correctly", () => {
     const result = computeMissingIntelligence(baseInput({
       episodes: [
         makeEpisode({

@@ -1,7 +1,7 @@
 "use client";
 
 // ==============================================================================
-// CORNERSTONE -- BEHAVIOUR SUPPORT PLANS
+// CARA -- BEHAVIOUR SUPPORT PLANS
 // Formal, structured plans for supporting children with challenging behaviour.
 // Covers triggers, de-escalation (traffic-light model), positive strategies,
 // safety plans, restrictive interventions, and multi-agency professional input.
@@ -37,8 +37,8 @@ import Link from "next/link";
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import type { BehaviourSupportPlan, BSPPrimaryBehaviour, BSPKnownTrigger, BSPDeEscalationStage, BSPPositiveStrategy, BSPReward, BSPBoundary, BSPSafetyPlanItem, BSPProfessionalInput, BSPRestrictiveIntervention, BSPReviewHistoryEntry } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // -- Helpers ------------------------------------------------------------------
 
@@ -49,30 +49,30 @@ const d = (n: number) => {
 };
 
 const STATUS_COLOURS: Record<BehaviourSupportPlan["status"], string> = {
-  active: "bg-green-100 text-green-800",
-  under_review: "bg-amber-100 text-amber-800",
+  active: "bg-[--cs-success-bg] text-[--cs-success]",
+  under_review: "bg-[--cs-warning-bg] text-[--cs-warning]",
   draft: "bg-gray-100 text-gray-700",
   archived: "bg-slate-100 text-[var(--cs-text-secondary)]",
-  suspended: "bg-red-100 text-red-800",
+  suspended: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const SEVERITY_COLOURS: Record<string, string> = {
-  low: "bg-green-100 text-green-700",
-  medium: "bg-amber-100 text-amber-700",
-  high: "bg-red-100 text-red-700",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  high: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const LIKELIHOOD_COLOURS: Record<string, string> = {
-  high: "bg-red-100 text-red-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+  high: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const EFFECTIVENESS_COLOURS: Record<string, string> = {
-  highly_effective: "bg-green-100 text-green-800",
-  effective: "bg-blue-100 text-blue-800",
-  partially_effective: "bg-amber-100 text-amber-800",
-  not_effective: "bg-red-100 text-red-800",
+  highly_effective: "bg-[--cs-success-bg] text-[--cs-success]",
+  effective: "bg-[--cs-info-bg] text-[--cs-info]",
+  partially_effective: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  not_effective: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const CATEGORY_COLOURS: Record<string, string> = {
@@ -86,12 +86,12 @@ const CATEGORY_COLOURS: Record<string, string> = {
 };
 
 const trendArrow = (t: string) =>
-  t === "improving" ? <span className="text-green-600 font-bold">&uarr;</span> :
+  t === "improving" ? <span className="text-[--cs-success] font-bold">&uarr;</span> :
   t === "stable"    ? <span className="text-gray-500 font-bold">&rarr;</span> :
-                      <span className="text-red-600 font-bold">&darr;</span>;
+                      <span className="text-[--cs-risk] font-bold">&darr;</span>;
 
 const trendColour = (t: string) =>
-  t === "improving" ? "text-green-600" : t === "stable" ? "text-gray-500" : "text-red-600";
+  t === "improving" ? "text-[--cs-success]" : t === "stable" ? "text-gray-500" : "text-[--cs-risk]";
 
 // -- Export Columns -----------------------------------------------------------
 
@@ -169,12 +169,12 @@ export default function BehaviourSupportPlansPage() {
     <PageShell
       title="Behaviour Support Plans"
       subtitle="Formal behaviour support strategies -- triggers, de-escalation, positive reinforcement, and safety plans"
-      ariaContext={{ pageTitle: "Behaviour Support Plans", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Behaviour Support Plans", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Behaviour Support Plans" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="behaviour-support-plans" />
-          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> New BSP
           </Button>
@@ -189,9 +189,9 @@ export default function BehaviourSupportPlansPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: "Active Plans", value: stats.active, icon: Shield, colour: "text-blue-600" },
-            { label: "Due for Review", value: stats.dueReview, icon: Clock, colour: stats.dueReview > 0 ? "text-orange-600" : "text-green-600" },
-            { label: "Improving Behaviours", value: `${stats.improvingPct}%`, icon: CheckCircle2, colour: "text-green-600" },
-            { label: "Incidents This Week", value: stats.incidentsThisWeek, icon: AlertTriangle, colour: stats.incidentsThisWeek > 3 ? "text-red-600" : "text-amber-600" },
+            { label: "Due for Review", value: stats.dueReview, icon: Clock, colour: stats.dueReview > 0 ? "text-orange-600" : "text-[--cs-success]" },
+            { label: "Improving Behaviours", value: `${stats.improvingPct}%`, icon: CheckCircle2, colour: "text-[--cs-success]" },
+            { label: "Incidents This Week", value: stats.incidentsThisWeek, icon: AlertTriangle, colour: stats.incidentsThisWeek > 3 ? "text-[--cs-risk]" : "text-[--cs-warning]" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border bg-white p-4 flex items-center gap-3">
               <s.icon className={cn("h-5 w-5", s.colour)} />
@@ -205,9 +205,9 @@ export default function BehaviourSupportPlansPage() {
 
         {/* -- Alert Banners ------------------------------------------------- */}
         {overdueReviews.length > 0 && (
-          <div className="rounded-lg bg-red-50 border border-red-200 p-3 flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 shrink-0" />
-            <div className="text-sm text-red-800">
+          <div className="rounded-lg bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-3 flex items-start gap-2">
+            <AlertTriangle className="h-4 w-4 text-[--cs-risk] mt-0.5 shrink-0" />
+            <div className="text-sm text-[--cs-risk]">
               <strong>Overdue Review:</strong>{" "}
               {overdueReviews.map((p) => getYPName(p.child_id)).join(", ")} &mdash;
               BSP review is overdue. Please schedule an urgent review with the care team.
@@ -215,9 +215,9 @@ export default function BehaviourSupportPlansPage() {
           </div>
         )}
         {underReviewPlans.length > 0 && (
-          <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex items-start gap-2">
-            <Clock className="h-4 w-4 text-amber-600 mt-0.5 shrink-0" />
-            <div className="text-sm text-amber-800">
+          <div className="rounded-lg bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-3 flex items-start gap-2">
+            <Clock className="h-4 w-4 text-[--cs-warning] mt-0.5 shrink-0" />
+            <div className="text-sm text-[--cs-warning]">
               <strong>Under Review:</strong>{" "}
               {underReviewPlans.map((p) => getYPName(p.child_id)).join(", ")} &mdash;
               BSP is currently under review following professional recommendations.
@@ -285,8 +285,8 @@ export default function BehaviourSupportPlansPage() {
                   </div>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
                     <span>{behaviourCount} behaviours</span>
-                    {improvingCount > 0 && <span className="text-green-600">{improvingCount} improving</span>}
-                    {worseningCount > 0 && <span className="text-red-600">{worseningCount} worsening</span>}
+                    {improvingCount > 0 && <span className="text-[--cs-success]">{improvingCount} improving</span>}
+                    {worseningCount > 0 && <span className="text-[--cs-risk]">{worseningCount} worsening</span>}
                   </div>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {cp.diagnosis.map((dx) => (
@@ -296,7 +296,7 @@ export default function BehaviourSupportPlansPage() {
                     ))}
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Review due: <span className={cn(cp.review_date <= today ? "text-red-600 font-medium" : "")}>{cp.review_date}</span>
+                    Review due: <span className={cn(cp.review_date <= today ? "text-[--cs-risk] font-medium" : "")}>{cp.review_date}</span>
                   </p>
                 </CardContent>
               </Card>
@@ -314,7 +314,7 @@ export default function BehaviourSupportPlansPage() {
             const reviewOverdue = plan.review_date <= today;
 
             return (
-              <div key={plan.id} className={cn("rounded-xl border bg-white overflow-hidden", reviewOverdue && "border-l-4 border-l-red-400")}>
+              <div key={plan.id} className={cn("rounded-xl border bg-white overflow-hidden", reviewOverdue && "border-l-4 border-l-[--cs-risk]")}>
                 {/* -- Header ------------------------------------------------ */}
                 <button
                   className="w-full flex items-center justify-between p-4 text-left hover:bg-[var(--cs-surface)] transition-colors"
@@ -414,9 +414,9 @@ export default function BehaviourSupportPlansPage() {
                       <div className="space-y-2">
                         {plan.de_escalation.map((stage) => {
                           const stageConfig = {
-                            green: { bg: "bg-green-50 border-green-200", title: "Green Zone -- Calm / Regulated", titleColour: "text-green-800", icon: <CheckCircle2 className="h-4 w-4 text-green-600" /> },
-                            amber: { bg: "bg-amber-50 border-amber-200", title: "Amber Zone -- Early Signs / Escalating", titleColour: "text-amber-800", icon: <AlertTriangle className="h-4 w-4 text-amber-600" /> },
-                            red:   { bg: "bg-red-50 border-red-200", title: "Red Zone -- Crisis", titleColour: "text-red-800", icon: <AlertTriangle className="h-4 w-4 text-red-600" /> },
+                            green: { bg: "bg-[--cs-success-bg] border-[--cs-success-soft]", title: "Green Zone -- Calm / Regulated", titleColour: "text-[--cs-success]", icon: <CheckCircle2 className="h-4 w-4 text-[--cs-success]" /> },
+                            amber: { bg: "bg-[--cs-warning-bg] border-[--cs-warning-soft]", title: "Amber Zone -- Early Signs / Escalating", titleColour: "text-[--cs-warning]", icon: <AlertTriangle className="h-4 w-4 text-[--cs-warning]" /> },
+                            red:   { bg: "bg-[--cs-risk-bg] border-[--cs-risk-soft]", title: "Red Zone -- Crisis", titleColour: "text-[--cs-risk]", icon: <AlertTriangle className="h-4 w-4 text-[--cs-risk]" /> },
                           }[stage.stage];
                           return (
                             <div key={stage.stage} className={cn("rounded-lg border p-3", stageConfig.bg)}>
@@ -447,7 +447,7 @@ export default function BehaviourSupportPlansPage() {
                       <div className="space-y-1">
                         {plan.known_triggers.map((t, i) => (
                           <div key={i} className="flex items-center gap-2 text-sm bg-white rounded-lg border p-2">
-                            <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                            <AlertTriangle className="h-3.5 w-3.5 text-[--cs-risk] shrink-0" />
                             <span className="flex-1">{t.trigger}</span>
                             <Badge className={cn("text-xs", CATEGORY_COLOURS[t.category])}>{t.category.replace(/_/g, " ")}</Badge>
                             <Badge className={cn("text-xs", LIKELIHOOD_COLOURS[t.likelihood])}>{t.likelihood}</Badge>
@@ -457,11 +457,11 @@ export default function BehaviourSupportPlansPage() {
                     </div>
 
                     {/* Early Warning Signs */}
-                    <div className="rounded-lg bg-amber-50 border border-amber-200 p-3">
-                      <p className="text-xs font-semibold text-amber-800 mb-2">Early Warning Signs</p>
+                    <div className="rounded-lg bg-[--cs-warning-bg] border border-[--cs-warning-soft] p-3">
+                      <p className="text-xs font-semibold text-[--cs-warning] mb-2">Early Warning Signs</p>
                       <ol className="space-y-1 list-decimal list-inside">
                         {plan.early_warnings.map((w, i) => (
-                          <li key={i} className="text-sm text-amber-900">{w}</li>
+                          <li key={i} className="text-sm text-[--cs-warning]">{w}</li>
                         ))}
                       </ol>
                     </div>
@@ -498,13 +498,13 @@ export default function BehaviourSupportPlansPage() {
                     {/* Rewards & Boundaries side-by-side */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {/* Rewards */}
-                      <div className="rounded-lg bg-green-50 border border-green-200 p-3">
-                        <p className="text-xs font-semibold text-green-800 mb-2">Rewards</p>
+                      <div className="rounded-lg bg-[--cs-success-bg] border border-[--cs-success-soft] p-3">
+                        <p className="text-xs font-semibold text-[--cs-success] mb-2">Rewards</p>
                         <div className="space-y-2">
                           {plan.rewards.map((r, i) => (
                             <div key={i} className="text-sm">
                               <p className="font-medium">{r.reward}</p>
-                              <p className="text-xs text-green-700">Earned by: {r.earned_by} &middot; {r.frequency}</p>
+                              <p className="text-xs text-[--cs-success]">Earned by: {r.earned_by} &middot; {r.frequency}</p>
                             </div>
                           ))}
                         </div>
@@ -525,17 +525,17 @@ export default function BehaviourSupportPlansPage() {
                     </div>
 
                     {/* Safety Plan */}
-                    <div className="rounded-lg bg-red-50 border border-red-200 p-3">
+                    <div className="rounded-lg bg-[--cs-risk-bg] border border-[--cs-risk-soft] p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="h-4 w-4 text-red-600" />
-                        <p className="text-xs font-semibold text-red-800">Safety Plan</p>
+                        <Shield className="h-4 w-4 text-[--cs-risk]" />
+                        <p className="text-xs font-semibold text-[--cs-risk]">Safety Plan</p>
                       </div>
                       <div className="space-y-3">
                         {plan.safety_plan.map((sp, i) => (
                           <div key={i} className="text-sm">
-                            <p className="font-medium text-red-900">{sp.scenario}</p>
-                            <p className="text-red-800 mt-1">{sp.response}</p>
-                            <p className="text-xs text-red-600 mt-0.5">Staff required: {sp.staff_required}</p>
+                            <p className="font-medium text-[--cs-risk]">{sp.scenario}</p>
+                            <p className="text-[--cs-risk] mt-1">{sp.response}</p>
+                            <p className="text-xs text-[--cs-risk] mt-0.5">Staff required: {sp.staff_required}</p>
                           </div>
                         ))}
                       </div>

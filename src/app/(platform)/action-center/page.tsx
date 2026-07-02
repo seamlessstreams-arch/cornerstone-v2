@@ -7,7 +7,7 @@ import { EnablePushButton } from "@/components/pwa/enable-push-button";
 export default function ActionCenterPage() {
   return (
     <PageShell
-      title="Action Centre"
+      title="Operations Action Centre"
       subtitle="Everything that needs you right now — emergencies, acknowledgements, staffing alerts and sign-offs, in one place."
       actions={<EnablePushButton />}
     >

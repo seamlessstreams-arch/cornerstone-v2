@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX ENGINE
+// CARA — MANAGER ACTION INBOX ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -7,7 +7,7 @@
 // the canonical event stream into a single prioritised list of things that need a
 // human: approvals, safeguarding alerts, high-risk events, missing information and
 // compliance gaps — each with a reason, a deadline, the linked child/staff, the
-// required action, an ARIA-suggested response, evidence links and the actions a
+// required action, an Cara-suggested response, evidence links and the actions a
 // manager can take (approve / request changes / escalate).
 //
 // It never decides or auto-acts — it surfaces and routes. Approvals and escalations
@@ -36,7 +36,7 @@ export interface InboxItem {
   staff_id?: string;
   required_action: string;
   approval_level?: CornerstoneApprovalLevel;
-  aria_suggested_response: string | null;
+  cara_suggested_response: string | null;
   evidence_categories: string[];
   occurred_at: string;
   deadline: string;          // ISO date
@@ -53,7 +53,7 @@ export interface ManagerInboxOverview {
   overdue: number;
 }
 
-export interface AriaInboxInsight {
+export interface CaraInboxInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -61,7 +61,7 @@ export interface AriaInboxInsight {
 export interface ManagerInboxResult {
   overview: ManagerInboxOverview;
   items: InboxItem[];
-  insights: AriaInboxInsight[];
+  insights: CaraInboxInsight[];
 }
 
 export interface ManagerInboxInput {
@@ -91,7 +91,7 @@ function isSafeguarding(e: CornerstoneEvent): boolean {
 // ── Build one inbox item from an event (or null if no action needed) ────────────
 
 function toItem(e: CornerstoneEvent, today: string): InboxItem | null {
-  const flags = e.ariaAnalysis?.complianceFlags ?? [];
+  const flags = e.caraAnalysis?.complianceFlags ?? [];
   const safeguarding = isSafeguarding(e);
   const highRisk = e.riskLevel === "high" || e.riskLevel === "critical";
 
@@ -144,7 +144,7 @@ function toItem(e: CornerstoneEvent, today: string): InboxItem | null {
     staff_id: e.staffId,
     required_action,
     approval_level: e.approvalLevel,
-    aria_suggested_response: e.ariaAnalysis?.suggestedActions?.[0] ?? null,
+    cara_suggested_response: e.caraAnalysis?.suggestedActions?.[0] ?? null,
     evidence_categories: e.evidenceCategories ?? [],
     occurred_at: e.occurredAt,
     deadline,
@@ -187,8 +187,8 @@ export function computeManagerInbox(input: ManagerInboxInput): ManagerInboxResul
 
 // ── Insights ──────────────────────────────────────────────────────────────────
 
-function buildInsights(items: InboxItem[], overview: ManagerInboxOverview): AriaInboxInsight[] {
-  const insights: AriaInboxInsight[] = [];
+function buildInsights(items: InboxItem[], overview: ManagerInboxOverview): CaraInboxInsight[] {
+  const insights: CaraInboxInsight[] = [];
 
   if (overview.safeguarding_alerts > 0 || overview.by_priority.critical > 0) {
     const top = items.find((i) => i.priority === "critical");
@@ -208,7 +208,7 @@ function buildInsights(items: InboxItem[], overview: ManagerInboxOverview): Aria
   if (overview.approvals_pending > 0) {
     insights.push({
       severity: overview.approvals_pending >= 5 ? "warning" : "positive",
-      text: `${overview.approvals_pending} item${overview.approvals_pending === 1 ? "" : "s"} await sign-off. Timely approval keeps the audit trail tight and surfaces serious events without delay — each item shows who needs to approve and an ARIA-suggested response to speed the decision.`,
+      text: `${overview.approvals_pending} item${overview.approvals_pending === 1 ? "" : "s"} await sign-off. Timely approval keeps the audit trail tight and surfaces serious events without delay — each item shows who needs to approve and an Cara-suggested response to speed the decision.`,
     });
   }
 

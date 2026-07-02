@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PARENTAL CONTACT & FAMILY ENGAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME PARENTAL CONTACT & FAMILY ENGAGEMENT INTELLIGENCE ENGINE
 // Evaluates parental contact and family engagement quality: contact schedule
 // compliance, family visit management, parental engagement assessments,
 // supervised contact quality, and family relationship support.

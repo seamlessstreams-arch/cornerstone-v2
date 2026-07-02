@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPETENCY & TRAINING SERVICE TESTS
+// CARA — COMPETENCY & TRAINING SERVICE TESTS
 // Pure-function unit tests for training status computation, training matrix
 // aggregation, competency profile scoring, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUTY OF CANDOUR SERVICE
+// CARA — DUTY OF CANDOUR SERVICE
 // Manages transparency obligations when things go wrong, including
 // notifiable safety incidents, apologies, and investigation tracking.
 // CHR 2015 Reg 20 (duty of candour),

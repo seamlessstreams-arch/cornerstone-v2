@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK LANDSCAPE INTELLIGENCE ENGINE
+// CARA — HOME RISK LANDSCAPE INTELLIGENCE ENGINE
 // Home-level: synthesises risk assessments across all children — risk
 // distribution, trend analysis, mitigation effectiveness, review currency,
 // child voice coverage, and domain gaps.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA LEARNING STUDIO HUB
+// CARA — Cara LEARNING STUDIO HUB
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React from "react";
@@ -23,15 +23,15 @@ import {
   FileText, Zap,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 
 const FEATURES = [
   {
     href: "/learning/training-needs",
     title: "Training Needs",
-    description: "Core intelligence loop — ARIA-identified and manual training needs",
+    description: "Core intelligence loop — Cara-identified and manual training needs",
     icon: AlertTriangle,
     colour: "text-red-600",
     bg: "bg-red-50",
@@ -43,9 +43,9 @@ const FEATURES = [
     title: "Resource Generator",
     description: "Generate workshops, guidance notes, flashcards, and session plans",
     icon: Sparkles,
-    colour: "text-[var(--cs-aria-gold)]",
-    bg: "bg-[var(--cs-aria-gold-bg)]",
-    border: "border-[var(--cs-aria-gold-soft)]",
+    colour: "text-[var(--cs-cara-gold)]",
+    bg: "bg-[var(--cs-cara-gold-bg)]",
+    border: "border-[var(--cs-cara-gold-soft)]",
   },
   {
     href: "/learning/workshops",
@@ -95,7 +95,7 @@ const FEATURES = [
   {
     href: "/learning/guidance",
     title: "Guidance Notes",
-    description: "ARIA-generated professional practice guidance for staff or children",
+    description: "Cara-generated professional practice guidance for staff or children",
     icon: FileText,
     colour: "text-blue-600",
     bg: "bg-blue-50",
@@ -140,13 +140,13 @@ export default function LearningHubPage() {
     <PageShell
       title="Learning Studio"
       subtitle="AI-powered learning and development for staff and children"
-      ariaContext={{ pageTitle: "Learning Hub", sourceType: "general" }}
+      caraContext={{ pageTitle: "Learning Hub", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Learning Hub" subtitle="Oak House — Staff Learning & Development" targetId="learning-content" />
+          <PrintButton title="Learning Hub" subtitle="Chamberlain House — Staff Learning & Development" targetId="learning-content" />
           <SmartUploadButton variant="inline" label="Upload Resource" uploadContext="Learning Studio — training resource or certificate upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -171,13 +171,13 @@ export default function LearningHubPage() {
               <BookOpen className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold">ARIA Learning Studio</h2>
+              <h2 className="text-lg font-bold">Cara Learning Studio</h2>
               <p className="text-sm text-[var(--cs-text-gentle)]">Intelligent learning design for residential care</p>
             </div>
           </div>
           <p className="text-sm text-[var(--cs-text-gentle)] leading-relaxed max-w-2xl">
             Generate professional learning resources for staff and children — from workshops and flashcards to full curricula.
-            ARIA identifies training needs from your operational data and closes the loop from governance to learning.
+            Cara identifies training needs from your operational data and closes the loop from governance to learning.
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             <span className="rounded-full bg-teal-600/40 px-3 py-1 text-xs font-medium text-teal-200">Staff Pathway</span>
@@ -190,7 +190,7 @@ export default function LearningHubPage() {
         <div className="grid gap-3 sm:grid-cols-5">
           <StatChip label="Active Projects" value={activeProjects} colour="text-teal-700" />
           <StatChip label="Urgent Needs" value={urgentNeeds} colour={urgentNeeds > 0 ? "text-red-700" : "text-emerald-700"} />
-          <StatChip label="Resources" value={totalResources} colour="text-[var(--cs-aria-gold)]" />
+          <StatChip label="Resources" value={totalResources} colour="text-[var(--cs-cara-gold)]" />
           <StatChip label="Knowledge Gaps" value={openGaps} colour={openGaps > 0 ? "text-orange-700" : "text-emerald-700"} />
           <StatChip label="Library" value={libraryCount} colour="text-[var(--cs-text-secondary)]" />
         </div>
@@ -205,7 +205,7 @@ export default function LearningHubPage() {
             {[
               "RI identifies risk",
               "→ Training Need created",
-              "→ ARIA generates resource",
+              "→ Cara generates resource",
               "→ Manager assigns to staff",
               "→ Completion recorded",
               "→ Evidence feeds Reg 45",
@@ -217,7 +217,7 @@ export default function LearningHubPage() {
             ))}
           </div>
           <p className="text-xs text-teal-700">
-            Training needs can be identified automatically by ARIA from incidents, supervision records, and RI alerts — or added manually.
+            Training needs can be identified automatically by Cara from incidents, supervision records, and RI alerts — or added manually.
           </p>
         </div>
 
@@ -262,7 +262,7 @@ export default function LearningHubPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Learning Hub — staff training, mandatory training, e-learning, training certificates, knowledge assessments, CPD, supervision learning, workforce development, Reg 45 evidence"
         recordType="staff_training"

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE ENGINE
+// CARA -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE ENGINE
 // Monitors continence and hygiene support quality -- continence management plans,
 // personal hygiene routine support, dignity in care, age-appropriate guidance,
 // and product provision.

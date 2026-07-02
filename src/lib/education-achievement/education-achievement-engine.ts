@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Education Achievement Intelligence Engine
+// Cara Education Achievement Intelligence Engine
 //
 // Evaluates educational outcomes, attendance, PEP quality, academic progress,
 // school stability, and exclusion impact for looked-after children.

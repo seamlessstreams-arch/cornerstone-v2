@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INTELLIGENCE API ROUTE
+// CARA — MEDICATION INTELLIGENCE API ROUTE
 // GET /api/v1/medication-intelligence
 // Returns medication adherence, refusals, witnessing compliance, PRN analysis,
-// stock management, and ARIA medication management intelligence.
+// stock management, and Cara medication management intelligence.
 // Reg 23/12 — health provision, safe medication administration.
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology Engine — Public API
+// Cara Quality Ecology Engine — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

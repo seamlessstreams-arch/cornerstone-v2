@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION SIDE EFFECTS CARD
+// CARA — MEDICATION SIDE EFFECTS CARD
 // Dashboard widget for PRN analysis, refusals (side-effect proxy),
 // effectiveness tracking, and medication safety alerts.
 // Powered by the Medication Intelligence Engine — live data (Reg 23/12).
@@ -20,16 +20,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -78,23 +78,23 @@ export function MedicationSideEffectsCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{o.prn_uses_30d}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{o.prn_administrations_30d}</p>
             <p className="text-[10px] text-muted-foreground">PRN (30d)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", prn.effectiveness_rate >= 80 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", prn.effectiveness_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", prn.effectiveness_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {prn.effectiveness_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Effect.</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.refusal_rate === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.refusal_rate === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.refusal_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Refused</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.adherence_rate >= 95 ? "bg-green-50" : o.adherence_rate >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-green-600" : o.adherence_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.adherence_rate >= 95 ? "text-[--cs-success]" : o.adherence_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {o.adherence_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Adherence</p>
@@ -113,7 +113,7 @@ export function MedicationSideEffectsCard() {
               <div key={i} className="flex items-center justify-between rounded-lg border p-3 text-xs">
                 <span className="font-medium">{med.name}</span>
                 <div className="flex items-center gap-2">
-                  <Badge className="text-[10px] bg-blue-100 text-blue-700">
+                  <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">
                     {med.count} uses
                   </Badge>
                 </div>
@@ -144,13 +144,13 @@ export function MedicationSideEffectsCard() {
           </div>
         )}
 
-        {/* ── ARIA Insights ───────────────────────────────────────────── */}
+        {/* ── Cara Insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

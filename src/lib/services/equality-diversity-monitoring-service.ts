@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- EQUALITY, DIVERSITY & INCLUSION MONITORING SERVICE
+// CARA -- EQUALITY, DIVERSITY & INCLUSION MONITORING SERVICE
 // Tracks equality and diversity records including staff training, policy reviews,
 // practice audits, discrimination complaints, hate crime incidents, inclusive
 // practice examples, reasonable adjustments, accessibility reviews, cultural
@@ -502,7 +502,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: EqualityDiversityMonitoringRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

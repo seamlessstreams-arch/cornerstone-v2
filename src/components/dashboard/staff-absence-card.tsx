@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ABSENCE INTELLIGENCE CARD
+// CARA — STAFF ABSENCE INTELLIGENCE CARD
 // Dashboard card for sickness monitoring, Bradford factor alerts, and trends.
 // Powered by the Workforce Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,9 +19,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Insight styling ──────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Trend icon helper ────────────────────────────────────────────────────────
@@ -82,13 +82,13 @@ export function StaffAbsenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", s.total_sick_days_this_month === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", s.total_sick_days_this_month === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", s.total_sick_days_this_month === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {s.total_sick_days_this_month}
             </p>
             <p className="text-[10px] text-muted-foreground">Sick Days</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", s.staff_with_sickness === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", s.staff_with_sickness === 0 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", s.staff_with_sickness === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {s.staff_with_sickness}
             </p>
             <p className="text-[10px] text-muted-foreground">Staff Sick</p>
@@ -101,7 +101,7 @@ export function StaffAbsenceCard() {
             <p className="text-[10px] text-muted-foreground mt-1">Trend</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", (s.bradford_factor_alerts?.length ?? 0) === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {(s.bradford_factor_alerts?.length ?? 0)}
             </p>
             <p className="text-[10px] text-muted-foreground">Bradford</p>
@@ -130,7 +130,7 @@ export function StaffAbsenceCard() {
                 const diff = s.total_sick_days_this_month - s.total_sick_days_last_month;
                 const pct = Math.round((diff / s.total_sick_days_last_month) * 100);
                 return (
-                  <span className={cn("font-semibold tabular-nums", diff > 0 ? "text-red-600" : diff < 0 ? "text-green-600" : "text-blue-600")}>
+                  <span className={cn("font-semibold tabular-nums", diff > 0 ? "text-[--cs-risk]" : diff < 0 ? "text-[--cs-success]" : "text-blue-600")}>
                     {diff > 0 ? "+" : ""}{diff} ({pct > 0 ? "+" : ""}{pct}%)
                   </span>
                 );
@@ -149,14 +149,14 @@ export function StaffAbsenceCard() {
             </p>
             <div className="space-y-1">
               {(s.bradford_factor_alerts ?? []).map((alert) => (
-                <div key={alert.staff_id} className="flex items-center justify-between rounded border border-red-200 bg-red-50 p-2 text-xs">
+                <div key={alert.staff_id} className="flex items-center justify-between rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2 text-xs">
                   <div className="flex-1 min-w-0">
-                    <span className="font-medium text-red-800">{alert.staff_name}</span>
+                    <span className="font-medium text-[--cs-risk]">{alert.staff_name}</span>
                     <span className="text-red-600 ml-1">
                       {alert.instances} instances, {alert.days} days
                     </span>
                   </div>
-                  <Badge variant="outline" className="text-[10px] text-red-700 bg-red-100 border-red-300 shrink-0 ml-2">
+                  <Badge variant="outline" className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk] border-red-300 shrink-0 ml-2">
                     BF: {alert.factor}
                   </Badge>
                 </div>
@@ -165,13 +165,13 @@ export function StaffAbsenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Absence Intelligence
+              Cara Absence Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

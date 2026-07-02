@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPPORT ACTION CARD
+// CARA — STAFF SUPPORT ACTION CARD
 // Live data from workforce intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffSupportActionCard() {
@@ -56,15 +56,15 @@ export function StaffSupportActionCard() {
             <p className="text-[10px] text-muted-foreground">Requiring</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.supervision?.overdue ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.supervision?.overdue ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.supervision?.overdue ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.supervision?.overdue ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.supervision?.overdue ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.sickness?.staff_with_sickness ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.sickness?.staff_with_sickness ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.sickness?.staff_with_sickness ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.sickness?.staff_with_sickness ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.sickness?.staff_with_sickness ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Sick</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.sickness?.bradford_factor_alerts?.length ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.sickness?.bradford_factor_alerts?.length ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.sickness?.bradford_factor_alerts?.length ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.sickness?.bradford_factor_alerts?.length ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.sickness?.bradford_factor_alerts?.length ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Bradford</p>
           </div>
         </div>
@@ -73,7 +73,7 @@ export function StaffSupportActionCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Staff Support Actions Intelligence
+              Cara Staff Support Actions Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

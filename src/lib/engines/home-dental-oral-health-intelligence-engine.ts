@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DENTAL & ORAL HEALTH INTELLIGENCE ENGINE
+// CARA — HOME DENTAL & ORAL HEALTH INTELLIGENCE ENGINE
 // Monitors how well the home manages children's dental health — check-up
 // compliance, oral hygiene routine adherence, dental treatment follow-through,
 // orthodontic care management, and dental anxiety support.

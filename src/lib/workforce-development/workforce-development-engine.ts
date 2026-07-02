@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Workforce Development Intelligence Engine
+// Cara — Workforce Development Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

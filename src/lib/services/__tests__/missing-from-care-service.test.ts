@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE SERVICE TESTS
+// CARA — MISSING FROM CARE SERVICE TESTS
 // Pure-function tests for missing-profile computation, child missing history,
 // compliance alert generation, and push/pull factor identification.
 // CHR 2015 Reg 34, DfE statutory guidance.

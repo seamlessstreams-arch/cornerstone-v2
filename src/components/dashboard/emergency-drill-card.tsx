@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY DRILL INTELLIGENCE CARD
+// CARA — EMERGENCY DRILL INTELLIGENCE CARD
 // Dashboard card powered by the Emergency Intelligence Engine.
 // CHR 2015 Reg 25, Reg 36, Regulatory Reform (Fire Safety) Order 2005.
 // SCCIF: Helped & Protected — "Children know what to do in an emergency."
@@ -20,16 +20,16 @@ import { useEmergencyIntelligence } from "@/hooks/use-emergency-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const OUTCOME_STYLES: Record<string, string> = {
@@ -96,27 +96,27 @@ export function EmergencyDrillCard() {
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.children_participated_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.protocol_followed_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.children_participated_rate >= 90 ? "text-green-600" : "text-amber-600",
+              o.protocol_followed_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.children_participated_rate}%
+              {o.protocol_followed_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Children</p>
+            <p className="text-[10px] text-muted-foreground">Protocol</p>
           </div>
           <div className={cn(
             "text-center rounded-lg p-2.5",
-            o.staff_participated_rate >= 90 ? "bg-green-50" : "bg-amber-50",
+            o.satisfactory_rate >= 90 ? "bg-green-50" : "bg-amber-50",
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.staff_participated_rate >= 90 ? "text-green-600" : "text-amber-600",
+              o.satisfactory_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
-              {o.staff_participated_rate}%
+              {o.satisfactory_rate}%
             </p>
-            <p className="text-[10px] text-muted-foreground">Staff</p>
+            <p className="text-[10px] text-muted-foreground">Satisfactory</p>
           </div>
         </div>
 
@@ -156,8 +156,8 @@ export function EmergencyDrillCard() {
                 <span className="truncate flex-1">{dt.type_label}</span>
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{dt.drill_count}</Badge>
-                  {dt.is_overdue && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">Overdue</Badge>
+                  {dt.status === "overdue" && (
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">Overdue</Badge>
                   )}
                 </div>
               </div>
@@ -187,13 +187,13 @@ export function EmergencyDrillCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ──────────────────────────────────────── */}
+        {/* ── Cara Intelligence ──────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Drill Intelligence
+              Cara Drill Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

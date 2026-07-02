@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Cultural Identity Support Intelligence — Public API
+// Cara Cultural Identity Support Intelligence — Public API
 // ==============================================================================
 
 export {

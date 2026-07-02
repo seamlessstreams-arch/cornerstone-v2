@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMMUNITY ACCESS INTELLIGENCE CARD
+// CARA — HOME COMMUNITY ACCESS INTELLIGENCE CARD
 // Home-level: transport safety, RA quality, independent travel, trip planning,
 // community engagement aggregated across all children.
 // CHR 2015 Reg 9 (enjoyment & achievement), Reg 12 (independence).
@@ -29,21 +29,21 @@ const RATING_STYLES: Record<CommunityAccessRating, { bg: string; text: string; b
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 function scoreColor(score: number): string {
-  if (score >= 65) return "text-green-600";
-  if (score >= 45) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 65) return "text-[--cs-success]";
+  if (score >= 45) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -61,8 +61,25 @@ export function HomeCommunityAccessIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.community_access_rating === "inadequate" && (d.community_access_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      community_access_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.community_access_rating] ?? RATING_STYLES.insufficient_data;
 
@@ -159,7 +176,7 @@ export function HomeCommunityAccessIntelligenceCard() {
 
         {/* Independent Travel Detail */}
         {d.independent_travel.total_records > 0 && (
-          <div className="rounded border border-purple-200 bg-purple-50 p-2 text-xs">
+          <div className="rounded border border-[--cs-oversight-soft] bg-[--cs-oversight-bg] p-2 text-xs">
             <p className="font-medium text-purple-700 flex items-center gap-1 mb-1.5">
               <Route className="h-3 w-3" />
               Independent Travel
@@ -189,7 +206,7 @@ export function HomeCommunityAccessIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -204,7 +221,7 @@ export function HomeCommunityAccessIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -231,12 +248,12 @@ export function HomeCommunityAccessIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-emerald-700">
               <Brain className="h-3 w-3" />
-              ARIA Community Access Intelligence
+              Cara Community Access Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

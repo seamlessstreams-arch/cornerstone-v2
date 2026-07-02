@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MANDATORY REFRESHER TRAINING SERVICE
+// CARA — STAFF MANDATORY REFRESHER TRAINING SERVICE
 // Tracks mandatory training renewals and compliance for staff in children's
 // residential homes — completion dates, expiry dates, refresher booking status,
 // certificate management, and competency assessment.
@@ -183,9 +183,9 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function computeAriaInsights(rows: StaffMandatoryRefresherTrainingRow[]): string[] {
+export function computeCaraInsights(rows: StaffMandatoryRefresherTrainingRow[]): string[] {
   const metrics = computeMetrics(rows);
   const alerts = computeAlerts(rows);
   const insights: string[] = [];
@@ -311,4 +311,4 @@ export async function updateStaffMandatoryRefresherTraining(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeMetrics, computeAlerts, computeAriaInsights };
+export const _testing = { computeMetrics, computeAlerts, computeCaraInsights };

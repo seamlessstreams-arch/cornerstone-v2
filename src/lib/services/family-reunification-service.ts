@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- FAMILY REUNIFICATION & RETURN HOME PLANNING SERVICE
+// CARA -- FAMILY REUNIFICATION & RETURN HOME PLANNING SERVICE
 // Tracks family reunification planning: initial and viability assessments, family
 // and home environment checks, phased contact and overnight/extended stay trials,
 // reunification decisions, transition plans, post-reunification support, breakdown
@@ -742,7 +742,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: FamilyReunificationRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DATA PROTECTION SERVICE
+// CARA — DATA PROTECTION SERVICE
 // Tracks GDPR compliance, subject access requests, data retention reviews,
 // privacy impact assessments, and data breach reporting.
 // CHR 2015 Reg 37 (privacy and confidentiality),

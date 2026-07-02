@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Shift-Based Access (Phase 4)
+// Cara Permission System — Shift-Based Access (Phase 4)
 //
 // Makes the permission engine's `shiftActive` reflect REAL on-shift state (the
 // signal Phase 3's Smart Sign-In now keeps current), so general care staff lose

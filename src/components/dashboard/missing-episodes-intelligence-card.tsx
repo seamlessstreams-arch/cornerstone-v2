@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING EPISODES INTELLIGENCE CARD
+// CARA — MISSING EPISODES INTELLIGENCE CARD
 // Dashboard card powered by the Missing From Care Intelligence Engine.
 // CHR 2015 Reg 12/34. SCCIF: Helped & Protected — Missing from care.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,15 +19,15 @@ import { useMissingIntelligence } from "@/hooks/use-missing-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RISK_STYLES: Record<string, string> = {
-  high:    "bg-red-100 text-red-700",
-  medium:  "bg-amber-100 text-amber-700",
-  low:     "bg-green-100 text-green-700",
+  high:    "bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:  "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:     "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -75,7 +75,7 @@ export function MissingEpisodesIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", p.active_episodes === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.active_episodes === 0 ? "text-green-600" : "text-red-600")}>{p.active_episodes}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.active_episodes === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{p.active_episodes}</p>
             <p className="text-[10px] text-muted-foreground">Active</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -83,11 +83,11 @@ export function MissingEpisodesIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Total</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.return_interview_completion_rate >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.return_interview_completion_rate >= 100 ? "text-green-600" : "text-amber-600")}>{p.return_interview_completion_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.return_interview_completion_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{p.return_interview_completion_rate}%</p>
             <p className="text-[10px] text-muted-foreground">RHI Done</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", p.contextual_safeguarding_flagged === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.contextual_safeguarding_flagged === 0 ? "text-green-600" : "text-amber-600")}>{p.contextual_safeguarding_flagged}</p>
+            <p className={cn("text-lg font-bold tabular-nums", p.contextual_safeguarding_flagged === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{p.contextual_safeguarding_flagged}</p>
             <p className="text-[10px] text-muted-foreground">CSG Flag</p>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function MissingEpisodesIntelligenceCard() {
                 </div>
                 <div className="flex items-center justify-between text-muted-foreground">
                   <span>{new Date(ep.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} — {ep.duration}</span>
-                  <span className={cn(ep.return_interview === "completed" ? "text-green-600" : "text-amber-600")}>
+                  <span className={cn(ep.return_interview === "completed" ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                     RHI: {ep.return_interview}
                   </span>
                 </div>
@@ -154,13 +154,13 @@ export function MissingEpisodesIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Missing Intelligence ───────────────────────────────── */}
+        {/* ── Cara Missing Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Missing Intelligence
+              Cara Missing Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

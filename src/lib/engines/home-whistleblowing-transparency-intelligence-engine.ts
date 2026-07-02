@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WHISTLEBLOWING TRANSPARENCY INTELLIGENCE ENGINE
+// CARA — HOME WHISTLEBLOWING TRANSPARENCY INTELLIGENCE ENGINE
 // Home-level: analyses whistleblowing records, staff confidence, policy
 // awareness, and protection measures to assess transparency culture.
 // CHR 2015 Reg 40. PIDA 1998. SCCIF: "Well-led and managed."

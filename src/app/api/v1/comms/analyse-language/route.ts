@@ -5,11 +5,11 @@ import { analyseMessageLanguage, detectRecordableContent } from "@/lib/comms/com
 export const dynamic = "force-dynamic";
 
 // POST /api/v1/comms/analyse-language
-// Advisory analysis of a DRAFT message: professional-language nudge (ARIA scorer)
+// Advisory analysis of a DRAFT message: professional-language nudge (Cara scorer)
 // + recordable-content detection. Read-only — never stores or sends anything, so it
 // is safe to call as the user types. Identity is resolved only for consistency.
 export async function POST(req: NextRequest) {
-  resolveCommsUser(req); // identity resolved (no side effects) — keeps parity with other routes
+  await resolveCommsUser(req); // identity resolved (no side effects) — keeps parity with other routes
   let body: { text?: string; has_linked_child?: boolean; has_linked_incident?: boolean };
   try {
     body = await req.json();

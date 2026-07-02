@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import {
   Microscope, Sparkles, CheckCircle2, Star, Clock, Plus,
   ThumbsUp, AlertTriangle, ChevronRight, Search, Users, Eye, ArrowUpDown,
@@ -42,7 +42,7 @@ const OBS_EXPORT_COLS: ExportColumn<PracticeObservation>[] = [
 type OutcomeFilter = "all" | ObservationOutcome;
 
 export default function PracticeObservationsPage() {
-  const [showAria, setShowAria] = useState(false);
+  const [showCara, setShowCara] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState("all");
   const [outcomeFilter, setOutcomeFilter] = useState<OutcomeFilter>("all");
   const [search, setSearch] = useState("");
@@ -127,35 +127,35 @@ export default function PracticeObservationsPage() {
     <PageShell
       title="Practice Observations"
       subtitle="Direct observation of staff practice — quality assurance and development evidence"
-      ariaContext={{ pageTitle: "Practice Observations", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Practice Observations", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={OBS_EXPORT_COLS} filename="practice-observations" />
-          <PrintButton title="Practice Observations" subtitle="Oak House — Staff Practice Evidence" targetId="observations-content" />
+          <PrintButton title="Practice Observations" subtitle="Chamberlain House — Staff Practice Evidence" targetId="observations-content" />
           <SmartUploadButton variant="inline" label="Upload" uploadContext="Practice Observations — observation notes or evidence upload" />
           <Button
             size="sm"
             variant="outline"
             className="gap-1.5"
-            onClick={() => setShowAria((p) => !p)}
+            onClick={() => setShowCara((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
-            ARIA Summary
+            Cara Summary
           </Button>
           <Button size="sm" className="gap-1.5">
             <Plus className="h-3.5 w-3.5" />
             New Observation
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="observations-content" className="space-y-0">
-      {showAria && (
+      {showCara && (
         <div className="relative">
-          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
-          <AriaPanel
+          <button onClick={() => setShowCara(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
+          <CaraPanel
             mode="staff_development_summary"
             pageContext={`Practice observations: ${allObs.length} total. Outstanding: ${outstanding}. Requires support: ${needsSupport}. Staff observed: ${staffObserved.map(getStaffName).join(", ")}.`}
           />
@@ -375,11 +375,11 @@ export default function PracticeObservationsPage() {
                     )}
                   </div>
 
-                  {/* ARIA summary */}
-                  {obs.aria_summary && (
+                  {/* Cara summary */}
+                  {obs.cara_summary && (
                     <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold text-indigo-600 mb-1">ARIA Observation Intelligence</p>
-                      <p className="text-xs text-indigo-800 leading-relaxed">{obs.aria_summary}</p>
+                      <p className="text-[10px] font-semibold text-indigo-600 mb-1">Cara Observation Intelligence</p>
+                      <p className="text-xs text-indigo-800 leading-relaxed">{obs.cara_summary}</p>
                     </div>
                   )}
 

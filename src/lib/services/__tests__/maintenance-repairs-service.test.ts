@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MAINTENANCE & REPAIRS SERVICE TESTS
+// CARA — MAINTENANCE & REPAIRS SERVICE TESTS
 // Pure-function tests for maintenance metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

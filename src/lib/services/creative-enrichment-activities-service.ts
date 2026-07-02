@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CREATIVE ENRICHMENT ACTIVITIES SERVICE
+// CARA — CREATIVE ENRICHMENT ACTIVITIES SERVICE
 // Monitors participation in creative arts, hobbies,
 // enrichment programmes, and cultural activities.
 // CHR 2015 Reg 9 (leisure activities — creative expression),

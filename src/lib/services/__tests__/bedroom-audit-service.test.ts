@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEDROOM AUDIT SERVICE TESTS
+// CARA — BEDROOM AUDIT SERVICE TESTS
 // Pure-function tests for bedroom audit metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

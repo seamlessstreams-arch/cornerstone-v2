@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Cultural Identity Support Intelligence Engine
+// Cara Cultural Identity Support Intelligence Engine
 //
 // Evaluates how well the home supports children's cultural identity, heritage,
 // religious needs, and identity development.

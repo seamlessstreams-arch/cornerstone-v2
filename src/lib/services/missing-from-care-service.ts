@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE SERVICE
+// CARA — MISSING FROM CARE SERVICE
 // Manages missing-from-care episodes, return home interviews, push/pull
 // factor analysis, and compliance tracking. CHR 2015 Reg 34, DfE statutory
 // guidance on children who run away or go missing from home or care.

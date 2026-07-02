@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTHY EATING COOKING SKILLS CARD
+// CARA — HEALTHY EATING COOKING SKILLS CARD
 // Live data from health intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,16 +15,16 @@ import { cn } from "@/lib/utils";
 import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function HealthyEatingCookingSkillsCard() {
@@ -64,7 +64,7 @@ export function HealthyEatingCookingSkillsCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.appointments?.total_30d ?? 0}</p>
+            <p className="text-lg font-bold tabular-nums text-blue-600">{d?.appointments?.total_appointments_90d ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Appts</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
@@ -72,7 +72,7 @@ export function HealthyEatingCookingSkillsCard() {
             <p className="text-[10px] text-muted-foreground">Attended</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-green-600">{Math.round(d?.appointments?.attendance_rate ?? 0)}%</p>
+            <p className="text-lg font-bold tabular-nums text-green-600">{Math.max(0, 100 - (d?.appointments?.dna_rate ?? 0)).toFixed(0)}%</p>
             <p className="text-[10px] text-muted-foreground">Rate %</p>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function HealthyEatingCookingSkillsCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Healthy Eating & Cooking Intelligence
+              Cara Healthy Eating & Cooking Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

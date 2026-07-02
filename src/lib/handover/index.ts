@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Handover Intelligence — Public API
+// Cara Handover Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

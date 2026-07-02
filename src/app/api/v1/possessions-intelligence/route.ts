@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSSESSIONS INTELLIGENCE API ROUTE
+// CARA — POSSESSIONS INTELLIGENCE API ROUTE
 // GET /api/v1/possessions-intelligence
 // Returns children's property and possessions analysis: inventory completeness,
-// photo compliance, insurance coverage, missing/damaged items, and ARIA insights.
+// photo compliance, insurance coverage, missing/damaged items, and Cara insights.
 // Reg 20: children's belongings must be safeguarded
 // ══════════════════════════════════════════════════════════════════════════════
 

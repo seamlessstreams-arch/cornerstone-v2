@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME OUTCOMES PROGRESS INTELLIGENCE ENGINE
+// CARA — HOME OUTCOMES PROGRESS INTELLIGENCE ENGINE
 // Home-level: analyses therapeutic outcome targets — domain coverage, rating
 // progress, direction trends, review timeliness, young person voice, and
 // child-level equity across the home.

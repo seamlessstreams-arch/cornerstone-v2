@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT CAPTURE (write-path) API ROUTE
+// CARA — EVENT CAPTURE (write-path) API ROUTE
 //
 // GET  /api/v1/event-capture — pre-submission PREVIEW on a representative draft
 //      (validation, duplicate check, routing, evidence) so a form can show the

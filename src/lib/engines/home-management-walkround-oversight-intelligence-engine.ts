@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MANAGEMENT WALKROUND & OVERSIGHT INTELLIGENCE ENGINE
+// CARA — HOME MANAGEMENT WALKROUND & OVERSIGHT INTELLIGENCE ENGINE
 // Pure deterministic engine: walkround frequency, observations, child/staff
 // interactions, environmental checks, follow-up actions, and emerging themes.
 // CHR 2015 Reg 13: "The leadership and management standard."

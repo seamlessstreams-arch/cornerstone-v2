@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOAST PROVIDER (Sonner)
+// CARA — TOAST PROVIDER (Sonner)
 // Styled toasts for success, error, warning, and info notifications.
 // ══════════════════════════════════════════════════════════════════════════════
 

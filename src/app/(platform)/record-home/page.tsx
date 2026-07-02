@@ -11,7 +11,7 @@ export default function UniversalHomeRecordPage() {
       <div className="mb-6">
         <h1 className="text-lg font-bold text-[var(--cs-navy)]">Record for the Home</h1>
         <p className="text-sm text-[var(--cs-text-muted)]">
-          Just write what happened. Cornerstone will classify it and route it everywhere.
+          Just write what happened. Cara will classify it and route it everywhere.
         </p>
       </div>
       <UniversalHomeEntry onCancel={() => router.back()} />

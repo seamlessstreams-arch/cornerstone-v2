@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE CARD
+// CARA — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE CARD
 // Dashboard card powered by the Advocacy Intelligence Engine.
 // Reg 7 (wishes/feelings), Reg 14 (needs assessment), Reg 45 (QoC review),
 // Children Act 1989 s26 (advocacy for LAC).
@@ -20,16 +20,16 @@ import { useAdvocacyIntelligence } from "@/hooks/use-advocacy-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ export function AdvocacyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.active_referrals > 0 ? "text-amber-600" : "text-green-600",
+              o.active_referrals > 0 ? "text-[--cs-warning]" : "text-[--cs-success]",
             )}>
               {o.active_referrals}
             </p>
@@ -106,7 +106,7 @@ export function AdvocacyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.children_without_any_referral === 0 ? "text-green-600" : "text-amber-600",
+              o.children_without_any_referral === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.children_without_any_referral}
             </p>
@@ -128,7 +128,7 @@ export function AdvocacyCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{r.count}</Badge>
                   {r.active_count > 0 && (
-                    <Badge className="text-[10px] bg-blue-100 text-blue-700">{r.active_count} active</Badge>
+                    <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">{r.active_count} active</Badge>
                   )}
                 </div>
               </div>
@@ -151,14 +151,14 @@ export function AdvocacyCard() {
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
                   {cp.has_advocate ? (
-                    <Badge className="text-[10px] bg-green-100 text-green-700">Active</Badge>
+                    <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">Active</Badge>
                   ) : cp.total_referrals > 0 ? (
-                    <Badge className="text-[10px] bg-blue-100 text-blue-700">{cp.total_referrals} past</Badge>
+                    <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">{cp.total_referrals} past</Badge>
                   ) : (
-                    <Badge className="text-[10px] bg-gray-100 text-gray-600">None</Badge>
+                    <Badge className="text-[10px] bg-[--cs-bg] text-[--cs-text-secondary]">None</Badge>
                   )}
                   {cp.days_since_last_visit !== null && cp.days_since_last_visit > 28 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">{cp.days_since_last_visit}d gap</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{cp.days_since_last_visit}d gap</Badge>
                   )}
                 </div>
               </div>
@@ -211,13 +211,13 @@ export function AdvocacyCard() {
           </div>
         )}
 
-        {/* ── ARIA Advocacy Intelligence ──────────────────────────────── */}
+        {/* ── Cara Advocacy Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Advocacy Intelligence
+              Cara Advocacy Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

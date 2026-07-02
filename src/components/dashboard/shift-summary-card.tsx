@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT SUMMARY CARD
+// CARA — SHIFT SUMMARY CARD
 // Auto-generated summary of everything that happened during a shift.
 // Used on the handover page to pre-populate handover notes.
 // Saves staff 15-20 minutes per handover by collating all events.
@@ -30,8 +30,8 @@ const EVENT_CONFIG: Record<ShiftSummaryEvent["type"], {
   medication:     { icon: Pill,          color: "text-teal-600",   bgColor: "bg-teal-100" },
   daily_log:      { icon: BookOpen,      color: "text-emerald-600", bgColor: "bg-emerald-100" },
   task:           { icon: CheckSquare,   color: "text-blue-600",   bgColor: "bg-blue-100" },
-  missing:        { icon: MapPin,        color: "text-red-600",    bgColor: "bg-red-100" },
-  handover_flag:  { icon: AlertTriangle, color: "text-amber-600",  bgColor: "bg-amber-100" },
+  missing:        { icon: MapPin,        color: "text-[--cs-risk]",    bgColor: "bg-red-100" },
+  handover_flag:  { icon: AlertTriangle, color: "text-[--cs-warning]",  bgColor: "bg-amber-100" },
 };
 
 const SEVERITY_DOT: Record<string, string> = {
@@ -66,7 +66,7 @@ function EventRow({ event }: { event: ShiftSummaryEvent }) {
         <div className="flex items-center gap-2 mt-0.5">
           <span className="text-[10px] text-[var(--cs-text-muted)] tabular-nums">{event.time}</span>
           {event.child_name && (
-            <span className="text-[10px] text-[var(--cs-aria-gold)] flex items-center gap-0.5">
+            <span className="text-[10px] text-[var(--cs-cara-gold)] flex items-center gap-0.5">
               <Heart className="h-2.5 w-2.5" /> {event.child_name}
             </span>
           )}
@@ -192,8 +192,8 @@ export function ShiftSummaryCard({
                   <span className={cn(
                     "text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center",
                     yp.mood_score >= 7 ? "bg-emerald-100 text-emerald-700" :
-                    yp.mood_score >= 4 ? "bg-amber-100 text-amber-700" :
-                    "bg-red-100 text-red-700",
+                    yp.mood_score >= 4 ? "bg-[--cs-warning-bg] text-[--cs-warning]" :
+                    "bg-[--cs-risk-bg] text-[--cs-risk]",
                   )}>
                     {yp.mood_score}
                   </span>
@@ -260,7 +260,7 @@ function StatPill({
       alert ? "bg-red-50" : "bg-[var(--cs-surface)]",
     )}>
       <Icon className={cn("h-3 w-3 mx-auto mb-0.5", alert ? "text-red-500" : "text-[var(--cs-text-muted)]")} />
-      <div className={cn("text-sm font-bold tabular-nums", alert ? "text-red-600" : "text-[var(--cs-text-secondary)]")}>
+      <div className={cn("text-sm font-bold tabular-nums", alert ? "text-[--cs-risk]" : "text-[var(--cs-text-secondary)]")}>
         {value}
       </div>
       <div className="text-[9px] text-[var(--cs-text-muted)]">{label}</div>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CAPTURE EVENT HOOK (the write path, client side)
+// CARA — CAPTURE EVENT HOOK (the write path, client side)
 // POST /api/v1/event-capture — capture a single canonical event once. On success
 // it invalidates every spine-derived view so the new event surfaces everywhere.
 // ══════════════════════════════════════════════════════════════════════════════

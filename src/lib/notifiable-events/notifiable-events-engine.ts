@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Notifiable Events Engine
+// Cara Notifiable Events Engine
 //
 // Deterministic engine for tracking, validating, and managing statutory
 // notifications to Ofsted and other bodies under Schedule 5 CHR 2015.

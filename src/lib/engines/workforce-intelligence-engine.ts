@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE ENGINE
+// CARA — WORKFORCE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates staff records, training, shifts,
 // supervisions, leave, and DBS data to produce:
@@ -9,7 +9,7 @@
 // - Staffing coverage analysis (rota gaps, overtime patterns)
 // - DBS / safer recruitment compliance
 // - Sickness and absence patterns
-// - Auto-generated ARIA workforce intelligence insights (deterministic)
+// - Auto-generated Cara workforce intelligence insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 32 — Fitness of workers (DBS, training, references)
@@ -144,7 +144,7 @@ export interface SicknessPattern {
   trend: "increasing" | "stable" | "decreasing";
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -156,7 +156,7 @@ export interface WorkforceIntelligenceResult {
   staffing: StaffingCoverage;
   dbs: DBSCompliance;
   sickness: SicknessPattern;
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface WorkforceEngineInput {
@@ -474,7 +474,7 @@ export function computeWorkforceIntelligence(input: WorkforceEngineInput): Workf
     return d.toISOString().slice(0, 10);
   })();
 
-  const recentSick = sickLeave.filter((l) => l.start_date >= ninetyDaysAgo);
+  const recentSick = sickLeave.filter((l) => l.start_date >= ninetyDaysAgo && l.start_date.slice(0, 10) <= today);
   const staffSickInstances = new Map<string, { instances: number; days: number }>();
   for (const l of recentSick) {
     const current = staffSickInstances.get(l.staff_id) ?? { instances: 0, days: 0 };
@@ -527,8 +527,8 @@ export function computeWorkforceIntelligence(input: WorkforceEngineInput): Workf
     average_tenure_months: avgTenureMonths,
   };
 
-  // ── ARIA Intelligence Insights (deterministic) ─────────────────────────
-  const insights: AriaInsight[] = [];
+  // ── Cara Intelligence Insights (deterministic) ─────────────────────────
+  const insights: CaraInsight[] = [];
 
   // Training compliance
   const expiredTraining = training.filter((t) => t.is_mandatory && t.status === "expired");

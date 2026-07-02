@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW SERVICE
+// CARA — LAC REVIEW SERVICE
 // Manages Looked After Children (LAC) review tracking, IRO engagement,
 // statutory timescales, and review outcomes.
 // CHR 2015 Reg 45 (review of quality of care),

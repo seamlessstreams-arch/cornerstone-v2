@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME MINOR REPAIRS & MAINTENANCE INTELLIGENCE ENGINE — TESTS
 //
 // Comprehensive test suite covering: insufficient_data, inadequate floor,
 // outstanding/good/adequate/inadequate scenarios, each bonus in isolation,

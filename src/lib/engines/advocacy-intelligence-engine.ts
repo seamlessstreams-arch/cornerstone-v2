@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE
+// CARA — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE
 // Pure deterministic engine for advocacy referral analysis.
 // Analyses advocacy access, referral timeliness, visit frequency,
-// children's participation, and generates ARIA intelligence insights.
+// children's participation, and generates Cara intelligence insights.
 // Reg 7: children's wishes and feelings — Reg 14: assessment of needs
 // Reg 45: quality of care review — Children Act 1989 s26: advocacy for LAC
 // ══════════════════════════════════════════════════════════════════════════════
@@ -67,7 +67,7 @@ export interface AdvocacyAlert {
   message: string;
 }
 
-export interface AriaAdvocacyInsight {
+export interface CaraAdvocacyInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -77,7 +77,7 @@ export interface AdvocacyIntelligenceResult {
   referral_breakdown: ReferralTypeBreakdown[];
   child_advocacy_profiles: ChildAdvocacyProfile[];
   alerts: AdvocacyAlert[];
-  insights: AriaAdvocacyInsight[];
+  insights: CaraAdvocacyInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -318,7 +318,7 @@ export function computeAdvocacyIntelligence(input: {
 
   // ── Insights ───────────────────────────────────────────────────────────
 
-  const insights: AriaAdvocacyInsight[] = [];
+  const insights: CaraAdvocacyInsight[] = [];
 
   // critical: child with no advocacy access ever
   for (const c of childrenWithoutReferral) {

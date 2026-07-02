@@ -2,7 +2,7 @@
 // Pure deterministic — no AI, no external calls, no randomness, no Date.now()
 
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Staff Wellbeing & Resilience Intelligence Engine
+// Cara — Staff Wellbeing & Resilience Intelligence Engine
 //
 // Evaluates how well a children's home supports its staff workforce through
 // wellbeing assessments, burnout prevention, policy frameworks, and

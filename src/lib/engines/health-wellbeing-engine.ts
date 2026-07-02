@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH & WELLBEING INTELLIGENCE ENGINE
+// CARA — HEALTH & WELLBEING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses health and wellbeing data to produce:
 // - Overall compliance summary (immunisations, dental, optician, health assess.)
@@ -7,7 +7,7 @@
 // - Appointment analysis (DNA rate, attendance patterns)
 // - Wellbeing trend analysis (from daily log mood scores)
 // - CAMHS engagement summary
-// - Auto-generated ARIA health insights (deterministic)
+// - Auto-generated Cara health insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 23 — Health of children (promoting, monitoring, arranging)
@@ -146,7 +146,7 @@ export interface HealthAlert {
   message: string;
 }
 
-export interface AriaHealthInsight {
+export interface CaraHealthInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -158,7 +158,7 @@ export interface HealthWellbeingResult {
   child_profiles: ChildHealthProfile[];
   camhs: CamhsSummary;
   alerts: HealthAlert[];
-  insights: AriaHealthInsight[];
+  insights: CaraHealthInsight[];
 }
 
 export interface HealthWellbeingInput {
@@ -583,9 +583,9 @@ export function computeHealthWellbeing(
   const sevOrder: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3 };
   alerts.sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3));
 
-  // ── ARIA Health Insights ─────────────────────────────────────────────────
+  // ── Cara Health Insights ─────────────────────────────────────────────────
 
-  const insights: AriaHealthInsight[] = [];
+  const insights: CaraHealthInsight[] = [];
 
   // 1. Health assessment compliance
   if (children.length > 0 && haCount < children.length) {

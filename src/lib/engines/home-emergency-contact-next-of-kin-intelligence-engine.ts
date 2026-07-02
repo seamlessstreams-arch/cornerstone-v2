@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EMERGENCY CONTACT & NEXT OF KIN INTELLIGENCE ENGINE
+// CARA — HOME EMERGENCY CONTACT & NEXT OF KIN INTELLIGENCE ENGINE
 // Monitors emergency contact management — contact information currency,
 // accessibility of emergency numbers, update frequency, multi-contact coverage,
 // out-of-hours availability, and verification practices.

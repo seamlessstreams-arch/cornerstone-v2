@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE AT A GLANCE CARD
+// CARA — WORKFORCE AT A GLANCE CARD
 // Surfaces the live workforce-engine signals (sign-in / safe staffing / emergencies
 // / message governance — Phases 1-8) on the dashboard, with deep-links. Reads the
 // Phase 8 oversight API. Defensive: tolerates missing fields, never throws.
@@ -16,13 +16,13 @@ import { cn } from "@/lib/utils";
 import { useWorkforceOversight } from "@/hooks/use-workforce-oversight";
 
 const SEV_STYLE: Record<string, string> = {
-  critical: "text-red-600",
-  high: "text-amber-600",
-  ok: "text-green-600",
+  critical: "text-[--cs-risk]",
+  high: "text-[--cs-warning]",
+  ok: "text-[--cs-success]",
 };
 const FLAG_STYLE: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  attention: "border-amber-200 bg-amber-50 text-amber-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  attention: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
   info: "border-slate-200 bg-slate-50 text-slate-700",
 };
 
@@ -68,11 +68,11 @@ export function WorkforceSummaryCard() {
             <p className="text-[10px] text-muted-foreground">Staffing</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", activeEmergencies > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", activeEmergencies > 0 ? "text-red-600" : "text-green-600")}>{activeEmergencies}</p>
+            <p className={cn("text-lg font-bold tabular-nums", activeEmergencies > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{activeEmergencies}</p>
             <p className="text-[10px] text-muted-foreground">Emergencies</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", unverified > 0 ? "bg-amber-50" : "bg-slate-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", unverified > 0 ? "text-amber-600" : "text-slate-700")}>{unverified}</p>
+            <p className={cn("text-lg font-bold tabular-nums", unverified > 0 ? "text-[--cs-warning]" : "text-slate-700")}>{unverified}</p>
             <p className="text-[10px] text-muted-foreground">Unverified</p>
           </div>
         </div>

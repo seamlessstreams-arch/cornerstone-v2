@@ -17,7 +17,7 @@ export function HandoverPrintContext({ incomingStaffIds }: Props) {
   return (
     <div className="hidden print:block mt-8 border-t-2 border-[var(--cs-border)] pt-4">
       <h3 className="text-sm font-bold text-[var(--cs-navy)] mb-3">
-        ARIA Personalised Handover Context
+        Cara Personalised Handover Context
       </h3>
       <p className="text-[10px] text-[var(--cs-text-muted)] mb-4">
         Context depth is determined by how long each incoming staff member has been away from shift.
@@ -35,7 +35,7 @@ export function HandoverPrintContext({ incomingStaffIds }: Props) {
             </span>
           </div>
           <pre className="text-[10px] text-[var(--cs-text-secondary)] whitespace-pre-wrap font-sans leading-relaxed border-l-2 border-[var(--cs-border)] pl-3">
-            {ctx.aria_summary}
+            {ctx.cara_summary}
           </pre>
         </div>
       ))}

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Restraint Intelligence Engine
+// Cara Restraint Intelligence Engine
 //
 // Deterministic engine for evaluating how effectively a children's residential
 // home manages physical restraint — tracking incidents, compliance with

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DENTAL OPTICAL HEALTH SERVICE
+// CARA — DENTAL OPTICAL HEALTH SERVICE
 // Tracks dental check-ups, optical examinations, treatment compliance,
 // appointment attendance, and health outcomes.
 // CHR 2015 Reg 33(4)(a) (access to dental and optical services),

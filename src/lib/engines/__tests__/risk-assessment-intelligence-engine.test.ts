@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK ASSESSMENT INTELLIGENCE ENGINE — TEST SUITE
+// CARA — RISK ASSESSMENT INTELLIGENCE ENGINE — TEST SUITE
 // Reg 12/34/11 — dynamic risk management, mitigation effectiveness,
-// child voice presence, domain analysis, and ARIA risk insights.
+// child voice presence, domain analysis, and Cara risk insights.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -530,10 +530,10 @@ describe("Risk Assessment Engine — Alerts", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INSIGHTS
+// Cara INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Risk Assessment Engine — ARIA Insights", () => {
+describe("Risk Assessment Engine — Cara Insights", () => {
   it("generates critical insight for very_high risk", () => {
     const result = computeRiskAssessmentIntelligence({
       children: [makeChild({ id: "child_1" })],
@@ -656,8 +656,8 @@ describe("Risk Assessment Engine — ARIA Insights", () => {
 // FULL OAK HOUSE INTEGRATION
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Risk Assessment Engine — Oak House Integration", () => {
-  it("produces comprehensive output for realistic Oak House data", () => {
+describe("Risk Assessment Engine — Chamberlain House Integration", () => {
+  it("produces comprehensive output for realistic Chamberlain House data", () => {
     const children: ChildInput[] = [
       { id: "yp_alex", name: "Alex W" },
       { id: "yp_jordan", name: "Jordan K" },

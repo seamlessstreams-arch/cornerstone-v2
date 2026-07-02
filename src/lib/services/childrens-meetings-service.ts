@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S MEETINGS SERVICE
+// CARA — CHILDREN'S MEETINGS SERVICE
 // Tracks house meetings, children's council, young people's forums,
 // and all group participation activities where children shape their care.
 // CHR 2015 Reg 7 (children's plan — participation),

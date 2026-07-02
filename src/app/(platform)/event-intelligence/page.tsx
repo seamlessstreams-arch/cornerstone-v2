@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT INTELLIGENCE (detail page)
+// CARA — EVENT INTELLIGENCE (detail page)
 // Stream-native analytics: cross-domain risk radar, approval backlog, compliance
 // register and theme trends — all from the canonical CornerstoneEvent stream.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -49,7 +49,7 @@ export default function EventIntelligencePage() {
       subtitle="Analytics derived from the canonical event stream — one cross-domain view of risk, approvals and compliance across every event type"
       icon={<Radar className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Event Intelligence", sourceType: "general" }}
+      caraContext={{ pageTitle: "Event Intelligence", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">
@@ -82,7 +82,7 @@ export default function EventIntelligencePage() {
           {/* Insights */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
-              <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700"><Brain className="h-4 w-4" /> ARIA Event Intelligence</h2>
+              <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700"><Brain className="h-4 w-4" /> Cara Event Intelligence</h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>{insight.text}</div>
               ))}

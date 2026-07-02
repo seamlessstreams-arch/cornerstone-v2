@@ -6,7 +6,7 @@ import {
   getChecklistItems, completeChecklistItem, addChecklistItem,
   getMatchingFactors, addMatchingFactor,
   createYoungPersonFromWorkflow,
-  generateAriaMatchingFactors,
+  generateCaraMatchingFactors,
 } from "@/lib/services/yp-admission-service";
 
 type RouteContext = { params: Promise<{ id: string }> };
@@ -106,13 +106,13 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ ok: true, data: result.data }, { status: 201 });
     }
 
-    // ARIA matching analysis
-    if (action === "aria_matching") {
+    // Cara matching analysis
+    if (action === "cara_matching") {
       const { incomingChild, currentYoungPeople, homeCapacity } = body;
       if (!incomingChild || !homeCapacity) {
         return NextResponse.json({ error: "incomingChild and homeCapacity required" }, { status: 400 });
       }
-      const analysis = generateAriaMatchingFactors({
+      const analysis = generateCaraMatchingFactors({
         incomingChild,
         currentYoungPeople: currentYoungPeople ?? [],
         homeCapacity,

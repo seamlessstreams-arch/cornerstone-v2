@@ -1,7 +1,7 @@
 "use client";
 
 // ═══════════════════���══════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD SUBSTANCE MISUSE SCREENING CARD
+// CARA — CHILD SUBSTANCE MISUSE SCREENING CARD
 // Live data from useHealthWellbeing() — compliance, child profiles, wellbeing.
 // CHR 2015 Reg 23/33. SCCIF: Health & Wellbeing.
 // ════════════════════════════════════════════════════════���═════════════════════
@@ -16,16 +16,16 @@ import { cn } from "@/lib/utils";
 import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function ChildSubstanceMisuseScreeningCard() {
@@ -74,11 +74,11 @@ export function ChildSubstanceMisuseScreeningCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", compliance.overall_compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", compliance.overall_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>{compliance.overall_compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", compliance.overall_compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{compliance.overall_compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", declining === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", declining === 0 ? "text-green-600" : "text-red-600")}>{declining}</p>
+            <p className={cn("text-lg font-bold tabular-nums", declining === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{declining}</p>
             <p className="text-[10px] text-muted-foreground">Declining</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -95,7 +95,7 @@ export function ChildSubstanceMisuseScreeningCard() {
             {child_profiles.filter((c) => c.wellbeing_trend === "declining").slice(0, 3).map((c) => (
               <div key={c.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{c.child_name}</span>
-                <Badge className="text-[9px] bg-red-100 text-red-700">
+                <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                   {c.wellbeing_score !== null ? `WB: ${c.wellbeing_score.toFixed(1)}` : "declining"}
                 </Badge>
               </div>
@@ -119,13 +119,13 @@ export function ChildSubstanceMisuseScreeningCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Screening Intelligence
+              Cara Screening Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

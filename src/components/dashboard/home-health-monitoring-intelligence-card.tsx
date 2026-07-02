@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH MONITORING INTELLIGENCE CARD
+// CARA — HOME HEALTH MONITORING INTELLIGENCE CARD
 // Home-level: annual health assessments, immunisation coverage, dental
 // registration, health passport currency, LA sign-off compliance.
 // CHR 2015 Reg 10/15. SCCIF: "Health & Wellbeing."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<HomeHealthMonitoringRating, { bg: string; text: stri
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeHealthMonitoringIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.health_monitoring_rating === "inadequate" && (d.health_monitoring_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      health_monitoring_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.health_monitoring_rating] ?? RATING_STYLES.insufficient_data;
   const hasGaps = d.assessment.children_assessed < (d.assessment.recent_365d > 0 ? d.assessment.children_assessed + 1 : 1);
@@ -69,7 +86,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Stethoscope className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-emerald-500")} />
+            <Stethoscope className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-emerald-500")} />
             <span className="text-slate-900">Health Monitoring</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -91,7 +108,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <FileHeart className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.assessment.recent_365d >= 3 ? "text-green-600" : d.assessment.recent_365d >= 1 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.assessment.recent_365d >= 3 ? "text-[--cs-success]" : d.assessment.recent_365d >= 1 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.assessment.recent_365d}
                 </p>
               </div>
@@ -102,7 +119,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Syringe className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.immunisation.catch_up_ratio === 100 ? "text-green-600" : d.immunisation.catch_up_ratio >= 80 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.immunisation.catch_up_ratio === 100 ? "text-[--cs-success]" : d.immunisation.catch_up_ratio >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.immunisation.catch_up_ratio}%
                 </p>
               </div>
@@ -113,7 +130,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <SmilePlus className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.dental.registered_rate === 100 ? "text-green-600" : d.dental.registered_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.dental.registered_rate === 100 ? "text-[--cs-success]" : d.dental.registered_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.dental.registered_rate}%
                 </p>
               </div>
@@ -124,7 +141,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.passport.currency_rate === 100 ? "text-green-600" : d.passport.currency_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.passport.currency_rate === 100 ? "text-[--cs-success]" : d.passport.currency_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.passport.currency_rate}%
                 </p>
               </div>
@@ -140,9 +157,9 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Assessments</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Completion: <span className={cn("font-medium", d.assessment.completion_rate === 100 ? "text-green-600" : d.assessment.completion_rate >= 80 ? "text-amber-600" : "text-red-600")}>{d.assessment.completion_rate}%</span></p>
-                <p>LA sign-off: <span className={cn("font-medium", d.assessment.la_sign_off_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.assessment.la_sign_off_rate}%</span></p>
-                <p>Optical: <span className={cn("font-medium", d.assessment.optical_up_to_date_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.assessment.optical_up_to_date_rate}%</span></p>
+                <p>Completion: <span className={cn("font-medium", d.assessment.completion_rate === 100 ? "text-[--cs-success]" : d.assessment.completion_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{d.assessment.completion_rate}%</span></p>
+                <p>LA sign-off: <span className={cn("font-medium", d.assessment.la_sign_off_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.assessment.la_sign_off_rate}%</span></p>
+                <p>Optical: <span className={cn("font-medium", d.assessment.optical_up_to_date_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.assessment.optical_up_to_date_rate}%</span></p>
                 {d.assessment.avg_recommendations > 0 && <p>Avg recs: <span className="font-medium text-slate-600">{d.assessment.avg_recommendations}</span></p>}
               </div>
             </div>
@@ -151,7 +168,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Dental & Immun</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>GP registered: <span className={cn("font-medium", d.immunisation.gp_registered_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.immunisation.gp_registered_rate}%</span></p>
+                <p>GP registered: <span className={cn("font-medium", d.immunisation.gp_registered_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.immunisation.gp_registered_rate}%</span></p>
                 {d.immunisation.missed_total > 0 && <p>Missed immun: <span className="font-medium text-red-600">{d.immunisation.missed_total}</span></p>}
                 {d.dental.overdue_checkups > 0 && <p>Overdue dental: <span className="font-medium text-red-600">{d.dental.overdue_checkups}</span></p>}
                 {d.dental.anxiety_count > 0 && <p>Dental anxiety: <span className="font-medium text-amber-600">{d.dental.anxiety_count}</span></p>}
@@ -168,7 +185,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -183,7 +200,7 @@ export function HomeHealthMonitoringIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -210,12 +227,12 @@ export function HomeHealthMonitoringIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Health Intelligence */}
+        {/* Cara Health Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Health Monitoring Intelligence
+              Cara Health Monitoring Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

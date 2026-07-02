@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE ENGINE -- TESTS
+// CARA -- HOME CONTINENCE & PERSONAL HYGIENE SUPPORT INTELLIGENCE ENGINE -- TESTS
 // CHR 2015 Reg 5/14: Continence management and personal hygiene support.
 // ══════════════════════════════════════════════════════════════════════════════
 

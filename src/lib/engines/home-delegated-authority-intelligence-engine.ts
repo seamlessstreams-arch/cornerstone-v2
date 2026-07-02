@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DELEGATED AUTHORITY INTELLIGENCE ENGINE
+// CARA — HOME DELEGATED AUTHORITY INTELLIGENCE ENGINE
 // Pure deterministic engine: delegated authority completeness, review
 // compliance, category coverage, status distribution for all children.
 // CHR 2015 Reg 22: "Arrangements for the delegation of authority."

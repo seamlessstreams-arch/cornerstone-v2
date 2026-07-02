@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CLOTHING & PERSONAL POSSESSIONS INTELLIGENCE ENGINE
+// CARA — HOME CLOTHING & PERSONAL POSSESSIONS INTELLIGENCE ENGINE
 // Tracks whether children have adequate, appropriate clothing and personal
 // possessions — clothing allowance usage, seasonal wardrobe reviews, personal
 // item inventories, dignity and choice in clothing, and replacement timeliness.

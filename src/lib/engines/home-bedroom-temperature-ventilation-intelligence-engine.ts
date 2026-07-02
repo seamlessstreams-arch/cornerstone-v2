@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE ENGINE
+// CARA — HOME BEDROOM TEMPERATURE & VENTILATION INTELLIGENCE ENGINE
 // Monitors bedroom environment quality including temperature monitoring,
 // ventilation adequacy, heating system checks, window opening compliance,
 // and child comfort with bedroom temperature.

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — AUDIT QUALITY ASSURANCE INTELLIGENCE HOOK
+// CARA — AUDIT QUALITY ASSURANCE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/audit-quality-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

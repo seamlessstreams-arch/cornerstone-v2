@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DEVELOPMENT INTELLIGENCE CARD
+// CARA — HOME STAFF DEVELOPMENT INTELLIGENCE CARD
 // Home-level: supervision compliance, mandatory training, qualifications,
 // induction progress, staff wellbeing — holistic workforce development view.
 // CHR 2015 Reg 32, 33. SCCIF: "Leadership and management."
@@ -30,15 +30,15 @@ const RATING_STYLES: Record<StaffDevelopmentRating, { bg: string; text: string; 
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const TREND_ICON = {
@@ -49,9 +49,9 @@ const TREND_ICON = {
 };
 
 const TREND_COLOR: Record<string, string> = {
-  improving: "text-green-600",
+  improving: "text-[--cs-success]",
   stable: "text-slate-500",
-  declining: "text-red-600",
+  declining: "text-[--cs-risk]",
   insufficient_data: "text-slate-400",
 };
 
@@ -70,8 +70,25 @@ export function HomeStaffDevelopmentIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.staff_development_rating === "inadequate" && (d.staff_development_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      staff_development_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.staff_development_rating] ?? RATING_STYLES.insufficient_data;
   const hasExpired = d.training.expired_count > 0;
@@ -85,7 +102,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-amber-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-amber-600" : "text-teal-500")} />
+            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-[--cs-warning]" : "text-teal-500")} />
             <span className="text-slate-900">Staff Development</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -107,7 +124,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.supervision.completion_rate_6m >= 90 ? "text-green-600" : d.supervision.completion_rate_6m >= 70 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.supervision.completion_rate_6m >= 90 ? "text-[--cs-success]" : d.supervision.completion_rate_6m >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.supervision.completion_rate_6m}%
                 </p>
                 {d.supervision.trend !== "insufficient_data" && (
@@ -119,7 +136,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
 
             {/* Training Compliance */}
             <div className="text-center rounded-lg bg-slate-50 p-2">
-              <p className={cn("text-lg font-bold tabular-nums", d.training.mandatory_compliance_rate === 100 ? "text-green-600" : d.training.mandatory_compliance_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.training.mandatory_compliance_rate === 100 ? "text-[--cs-success]" : d.training.mandatory_compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                 {d.training.mandatory_compliance_rate}%
               </p>
               <p className="text-[10px] text-muted-foreground">Training Compliant</p>
@@ -127,7 +144,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
 
             {/* Expired Training */}
             <div className="text-center rounded-lg bg-slate-50 p-2">
-              <p className={cn("text-lg font-bold tabular-nums", d.training.expired_count === 0 ? "text-green-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.training.expired_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                 {d.training.expired_count}
               </p>
               <p className="text-[10px] text-muted-foreground">Expired</p>
@@ -137,7 +154,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <Heart className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.supervision.avg_wellbeing_score !== null && d.supervision.avg_wellbeing_score >= 7 ? "text-green-600" : d.supervision.avg_wellbeing_score !== null && d.supervision.avg_wellbeing_score >= 5 ? "text-amber-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.supervision.avg_wellbeing_score !== null && d.supervision.avg_wellbeing_score >= 7 ? "text-[--cs-success]" : d.supervision.avg_wellbeing_score !== null && d.supervision.avg_wellbeing_score >= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {d.supervision.avg_wellbeing_score ?? "—"}
                 </p>
               </div>
@@ -156,8 +173,8 @@ export function HomeStaffDevelopmentIntelligenceCard() {
                 Supervision
               </p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Completed: <span className="font-medium text-slate-600">{d.supervision.total_completed_6m}</span> · Overdue: <span className={cn("font-medium", d.supervision.overdue_count > 0 ? "text-red-600" : "text-green-600")}>{d.supervision.overdue_count}</span></p>
-                <p>Dual-signed: <span className={cn("font-medium", d.supervision.dual_signature_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.supervision.dual_signature_rate}%</span></p>
+                <p>Completed: <span className="font-medium text-slate-600">{d.supervision.total_completed_6m}</span> · Overdue: <span className={cn("font-medium", d.supervision.overdue_count > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d.supervision.overdue_count}</span></p>
+                <p>Dual-signed: <span className={cn("font-medium", d.supervision.dual_signature_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.supervision.dual_signature_rate}%</span></p>
                 {d.supervision.avg_duration_minutes !== null && (
                   <p>Avg duration: <span className="font-medium text-slate-600">{d.supervision.avg_duration_minutes}min</span></p>
                 )}
@@ -172,8 +189,8 @@ export function HomeStaffDevelopmentIntelligenceCard() {
               </p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Completed: <span className="font-medium text-green-600">{d.qualifications.completed_count}</span> · In progress: <span className="font-medium text-blue-600">{d.qualifications.in_progress_count}</span></p>
-                <p>Not started: <span className={cn("font-medium", d.qualifications.not_started_count > 0 ? "text-amber-600" : "text-slate-600")}>{d.qualifications.not_started_count}</span></p>
-                <p>Mandatory: <span className={cn("font-medium", d.qualifications.mandatory_completion_rate >= 80 ? "text-green-600" : "text-amber-600")}>{d.qualifications.mandatory_completion_rate}%</span></p>
+                <p>Not started: <span className={cn("font-medium", d.qualifications.not_started_count > 0 ? "text-[--cs-warning]" : "text-slate-600")}>{d.qualifications.not_started_count}</span></p>
+                <p>Mandatory: <span className={cn("font-medium", d.qualifications.mandatory_completion_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.qualifications.mandatory_completion_rate}%</span></p>
               </div>
             </div>
 
@@ -206,7 +223,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
                   <p className="text-red-600 font-medium">{d.inductions.overdue_count} overdue</p>
                 )}
                 {d.inductions.completed_count > 0 && (
-                  <p>Probation pass: <span className={cn("font-medium", d.inductions.probation_pass_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.inductions.probation_pass_rate}%</span></p>
+                  <p>Probation pass: <span className={cn("font-medium", d.inductions.probation_pass_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.inductions.probation_pass_rate}%</span></p>
                 )}
               </div>
             </div>
@@ -263,7 +280,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -278,7 +295,7 @@ export function HomeStaffDevelopmentIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -305,12 +322,12 @@ export function HomeStaffDevelopmentIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Staff Development Intelligence */}
+        {/* Cara Staff Development Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Staff Intelligence
+              Cara Staff Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

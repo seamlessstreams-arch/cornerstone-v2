@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Transition Readiness Intelligence Engine
+// Cara Transition Readiness Intelligence Engine
 //
 // Evaluates transition/move preparation quality, key worker handovers,
 // child readiness assessment, placement continuity, and support planning.

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT SAFETY INTELLIGENCE CARD
+// CARA — HOME NIGHT SAFETY INTELLIGENCE CARD
 // Home-level: overnight welfare check compliance, night disturbances,
-// incidents, per-child night profiles, ARIA insights.
+// incidents, per-child night profiles, Cara insights.
 // CHR 2015 Reg 12, 34. SCCIF: "Safety of children."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -29,21 +29,21 @@ const RATING_STYLES: Record<NightSafetyRating, { bg: string; text: string; borde
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 function scoreColor(score: number): string {
-  if (score >= 65) return "text-green-600";
-  if (score >= 45) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 65) return "text-[--cs-success]";
+  if (score >= 45) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 function scoreBg(score: number): string {
@@ -67,8 +67,25 @@ export function HomeNightSafetyIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.night_safety_rating === "inadequate" && (d.night_safety_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      night_safety_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.night_safety_rating] ?? RATING_STYLES.insufficient_data;
 
@@ -95,7 +112,7 @@ export function HomeNightSafetyIntelligenceCard() {
           <div className={cn("text-center rounded-lg p-2", d.check_compliance.compliance_rate >= 80 ? "bg-green-50" : d.check_compliance.compliance_rate >= 50 ? "bg-amber-50" : "bg-red-50")}>
             <div className="flex items-center justify-center gap-1">
               <Eye className={cn("h-4 w-4", d.check_compliance.compliance_rate >= 80 ? "text-green-500" : d.check_compliance.compliance_rate >= 50 ? "text-amber-500" : "text-red-500")} />
-              <p className={cn("text-lg font-bold tabular-nums", d.check_compliance.compliance_rate >= 80 ? "text-green-600" : d.check_compliance.compliance_rate >= 50 ? "text-amber-600" : "text-red-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.check_compliance.compliance_rate >= 80 ? "text-[--cs-success]" : d.check_compliance.compliance_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                 {d.check_compliance.compliance_rate}%
               </p>
             </div>
@@ -105,14 +122,14 @@ export function HomeNightSafetyIntelligenceCard() {
           <div className="text-center rounded-lg bg-slate-50 p-2">
             <div className="flex items-center justify-center gap-1">
               <Shield className={cn("h-4 w-4", d.check_compliance.all_children_checked_rate >= 80 ? "text-green-500" : "text-amber-500")} />
-              <p className={cn("text-lg font-bold tabular-nums", d.check_compliance.all_children_checked_rate >= 80 ? "text-green-600" : "text-amber-600")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.check_compliance.all_children_checked_rate >= 80 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {d.check_compliance.all_children_checked_rate}%
               </p>
             </div>
             <p className="text-[10px] text-muted-foreground">All Checked</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className={cn("text-lg font-bold tabular-nums", d.night_incidents.total_incidents_30d === 0 ? "text-green-600" : d.night_incidents.total_incidents_30d <= 2 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", d.night_incidents.total_incidents_30d === 0 ? "text-[--cs-success]" : d.night_incidents.total_incidents_30d <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {d.night_incidents.total_incidents_30d}
             </p>
             <p className="text-[10px] text-muted-foreground">Incidents (30d)</p>
@@ -121,7 +138,7 @@ export function HomeNightSafetyIntelligenceCard() {
             )}
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className={cn("text-lg font-bold tabular-nums", d.disturbances.total_disturbances_30d === 0 ? "text-green-600" : d.disturbances.total_disturbances_30d <= 3 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", d.disturbances.total_disturbances_30d === 0 ? "text-[--cs-success]" : d.disturbances.total_disturbances_30d <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {d.disturbances.total_disturbances_30d}
             </p>
             <p className="text-[10px] text-muted-foreground">Disturbances (30d)</p>
@@ -133,14 +150,14 @@ export function HomeNightSafetyIntelligenceCard() {
 
         {/* Incident Type Breakdown */}
         {d.night_incidents.incident_types.length > 0 && (
-          <div className="rounded border border-red-200 bg-red-50 p-2 text-xs">
+          <div className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2 text-xs">
             <p className="font-medium text-red-700 flex items-center gap-1 mb-1">
               <AlertOctagon className="h-3 w-3" />
               Night Incident Types
             </p>
             <div className="flex flex-wrap gap-1">
               {d.night_incidents.incident_types.map((t, i) => (
-                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-red-800 border border-red-200 capitalize">
+                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-[--cs-risk] border border-red-200 capitalize">
                   {t.type.replace(/_/g, " ")} <span className="font-bold">{t.count}</span>
                 </span>
               ))}
@@ -166,10 +183,10 @@ export function HomeNightSafetyIntelligenceCard() {
                     <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
                       <span>{cp.checks_received_30d} checks</span>
                       {cp.nights_unsettled_30d > 0 && (
-                        <span className="text-amber-600">{cp.nights_unsettled_30d} unsettled</span>
+                        <span className="text-[--cs-warning]">{cp.nights_unsettled_30d} unsettled</span>
                       )}
                       {cp.incidents_30d > 0 && (
-                        <span className="text-red-600">{cp.incidents_30d} incident{cp.incidents_30d !== 1 ? "s" : ""}</span>
+                        <span className="text-[--cs-risk]">{cp.incidents_30d} incident{cp.incidents_30d !== 1 ? "s" : ""}</span>
                       )}
                     </div>
                   </div>
@@ -179,7 +196,7 @@ export function HomeNightSafetyIntelligenceCard() {
                   {(cp.flags?.length ?? 0) > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(cp.flags ?? []).map((f, i) => (
-                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-red-100 text-red-700 border border-red-200">
+                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-[--cs-risk-bg] text-[--cs-risk] border border-red-200">
                           {f}
                         </span>
                       ))}
@@ -199,7 +216,7 @@ export function HomeNightSafetyIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -214,7 +231,7 @@ export function HomeNightSafetyIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -241,12 +258,12 @@ export function HomeNightSafetyIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Night Safety Insights */}
+        {/* Cara Night Safety Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Night Safety Intelligence
+              Cara Night Safety Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

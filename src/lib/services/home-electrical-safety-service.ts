@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ELECTRICAL SAFETY SERVICE
+// CARA — HOME ELECTRICAL SAFETY SERVICE
 // Tracks EICR inspections, PAT testing, emergency lighting checks,
 // fire alarm testing, lightning protection, and visual inspections.
 // BS 7671 Wiring Regulations compliance,
@@ -271,7 +271,7 @@ export function identifyElectricalSafetyAlerts(
   return alerts;
 }
 
-export function generateElectricalSafetyAriaInsights(
+export function generateElectricalSafetyCaraInsights(
   rows: HomeElectricalSafetyRow[],
 ): string[] {
   const metrics = computeElectricalSafetyMetrics(rows);
@@ -438,5 +438,5 @@ export async function deleteRecord(
 export const _testing = {
   computeElectricalSafetyMetrics,
   identifyElectricalSafetyAlerts,
-  generateElectricalSafetyAriaInsights,
+  generateElectricalSafetyCaraInsights,
 };

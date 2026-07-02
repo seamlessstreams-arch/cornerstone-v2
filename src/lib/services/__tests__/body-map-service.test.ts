@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BODY MAP SERVICE TESTS
+// CARA — BODY MAP SERVICE TESTS
 // Pure-function unit tests for body map metrics computation, alert
 // identification, constant validation, and CRUD fallback behaviour.
 // CHR 2015 Reg 12 (safeguarding — recording injuries),

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER'S INTELLIGENCE BRIEFING CARD
+// CARA — MANAGER'S INTELLIGENCE BRIEFING CARD
 // Cross-cutting meta-intelligence aggregated from all domain engines.
 // CHR 2015 Reg 5 (RM duties), Reg 45 (quality of care review).
 // SCCIF: Overall Experiences, Helped & Protected, Leadership & Management.
@@ -31,16 +31,16 @@ const STATUS_DOT: Record<string, string> = {
 };
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-amber-200 bg-amber-50 text-amber-800",
-  medium: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  medium: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
   low: "border-slate-200 bg-slate-50 text-slate-700",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 function TrendIcon({ direction }: { direction: string }) {
@@ -91,13 +91,13 @@ export function ManagerIntelligenceBriefingCard() {
         {/* Executive KPIs */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", exec.total_critical_alerts > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", exec.total_critical_alerts > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", exec.total_critical_alerts > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {exec.total_critical_alerts}
             </p>
             <p className="text-[10px] text-muted-foreground">Critical</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", exec.domains_at_risk > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", exec.domains_at_risk > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", exec.domains_at_risk > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {exec.domains_at_risk}
             </p>
             <p className="text-[10px] text-muted-foreground">Domains at Risk</p>
@@ -107,7 +107,7 @@ export function ManagerIntelligenceBriefingCard() {
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", exec.children_requiring_attention > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", exec.children_requiring_attention > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", exec.children_requiring_attention > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {exec.children_requiring_attention}
             </p>
             <p className="text-[10px] text-muted-foreground">YP Attention</p>
@@ -166,8 +166,8 @@ export function ManagerIntelligenceBriefingCard() {
                 key={child.child_id}
                 className={cn(
                   "rounded border p-2 text-xs",
-                  child.severity === "critical" ? "border-red-200 bg-red-50" :
-                  child.severity === "high" ? "border-amber-200 bg-amber-50" :
+                  child.severity === "critical" ? "border-[--cs-risk-soft] bg-[--cs-risk-bg]" :
+                  child.severity === "high" ? "border-[--cs-warning-soft] bg-[--cs-warning-bg]" :
                   "border-slate-200 bg-slate-50",
                 )}
               >
@@ -175,8 +175,8 @@ export function ManagerIntelligenceBriefingCard() {
                   <span className="font-semibold">{child.child_name}</span>
                   <span className={cn(
                     "text-[10px] font-bold px-1.5 py-0.5 rounded-full",
-                    child.severity === "critical" ? "bg-red-200 text-red-800" :
-                    child.severity === "high" ? "bg-amber-200 text-amber-800" :
+                    child.severity === "critical" ? "bg-red-200 text-[--cs-risk]" :
+                    child.severity === "high" ? "bg-amber-200 text-[--cs-warning]" :
                     "bg-slate-200 text-slate-700",
                   )}>
                     {child.severity.toUpperCase()}
@@ -237,12 +237,12 @@ export function ManagerIntelligenceBriefingCard() {
           </div>
         </div>
 
-        {/* ARIA Intelligence Insights */}
+        {/* Cara Intelligence Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Intelligence Briefing
+              Cara Intelligence Briefing
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -87,7 +87,7 @@ const DEMO_WORKFLOWS = [
     risk_factors: ["Self-harm history", "Absconding"],
     previous_placements_count: 3,
     created_at: "2026-04-28",
-    aria_risk_summary: "Medium risk — previous placement disruptions and self-harm history require enhanced support plan. Age-appropriate matching with current cohort.",
+    cara_risk_summary: "Medium risk — previous placement disruptions and self-harm history require enhanced support plan. Age-appropriate matching with current cohort.",
   },
   {
     id: "wf-2",
@@ -103,7 +103,7 @@ const DEMO_WORKFLOWS = [
     risk_factors: ["CSE vulnerability indicator"],
     previous_placements_count: 1,
     created_at: "2026-04-15",
-    aria_risk_summary: "Elevated safeguarding attention needed — CSE vulnerability identified. Strong protective factors including family engagement and educational motivation.",
+    cara_risk_summary: "Elevated safeguarding attention needed — CSE vulnerability identified. Strong protective factors including family engagement and educational motivation.",
   },
   {
     id: "wf-3",
@@ -119,7 +119,7 @@ const DEMO_WORKFLOWS = [
     risk_factors: ["Physical aggression to peers", "Substance use", "CCE indicators"],
     previous_placements_count: 5,
     created_at: "2026-05-10",
-    aria_risk_summary: "High risk referral — multiple placement breakdowns and significant risk factors. Full impact assessment critical before progression. Not recommended for current cohort without enhanced staffing.",
+    cara_risk_summary: "High risk referral — multiple placement breakdowns and significant risk factors. Full impact assessment critical before progression. Not recommended for current cohort without enhanced staffing.",
   },
   {
     id: "wf-4",
@@ -135,7 +135,7 @@ const DEMO_WORKFLOWS = [
     risk_factors: [],
     previous_placements_count: 0,
     created_at: "2026-02-01",
-    aria_risk_summary: "Low risk — first placement, strong family support, good educational engagement. Standard monitoring recommended.",
+    cara_risk_summary: "Low risk — first placement, strong family support, good educational engagement. Standard monitoring recommended.",
   },
 ];
 
@@ -186,7 +186,7 @@ export default function AdmissionWorkflowPage() {
   const activeCount = DEMO_WORKFLOWS.filter((w) => !["completed", "withdrawn"].includes(w.current_phase)).length;
 
   return (
-    <PageShell title="Admission Workflow" subtitle="Full referral-to-placement journey with ARIA intelligence">
+    <PageShell title="Admission Workflow" subtitle="Full referral-to-placement journey with Cara intelligence">
       {viewMode === "list" ? (
         <div className="space-y-6">
           {/* Summary strip */}
@@ -297,11 +297,11 @@ export default function AdmissionWorkflowPage() {
                       <ChevronRight className="h-5 w-5 text-gray-400 shrink-0 mt-1" />
                     </div>
 
-                    {/* ARIA insight */}
-                    {wf.aria_risk_summary && (
+                    {/* Cara insight */}
+                    {wf.cara_risk_summary && (
                       <div className="mt-3 flex items-start gap-2 px-3 py-2 rounded-lg bg-violet-50 border border-violet-100">
                         <Sparkles className="h-4 w-4 text-violet-500 shrink-0 mt-0.5" />
-                        <p className="text-xs text-violet-700 leading-relaxed">{wf.aria_risk_summary}</p>
+                        <p className="text-xs text-violet-700 leading-relaxed">{wf.cara_risk_summary}</p>
                       </div>
                     )}
                   </CardContent>
@@ -356,7 +356,7 @@ function WorkflowDetail({
   setExpandedChecklist: React.Dispatch<React.SetStateAction<Set<string>>>;
   onBack: () => void;
 }) {
-  const [activeTab, setActiveTab] = useState<"overview" | "matching" | "checklist" | "aria">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "matching" | "checklist" | "cara">("overview");
   const age = getAge(workflow.child_date_of_birth);
   const phaseIdx = getPhaseIndex(workflow.current_phase);
   const nextPhase = phaseIdx < ADMISSION_PHASES.length - 1 ? ADMISSION_PHASES[phaseIdx + 1] : null;
@@ -440,7 +440,7 @@ function WorkflowDetail({
 
       {/* Tabs */}
       <div className="flex gap-2 border-b border-gray-200 pb-0">
-        {(["overview", "matching", "checklist", "aria"] as const).map((tab) => (
+        {(["overview", "matching", "checklist", "cara"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -449,7 +449,7 @@ function WorkflowDetail({
               activeTab === tab ? "border-[var(--cs-primary)] text-[var(--cs-primary)]" : "border-transparent text-gray-500 hover:text-gray-700",
             )}
           >
-            {tab === "overview" ? "Overview" : tab === "matching" ? "Matching Analysis" : tab === "checklist" ? "Pre-Admission Checklist" : "ARIA Insights"}
+            {tab === "overview" ? "Overview" : tab === "matching" ? "Matching Analysis" : tab === "checklist" ? "Pre-Admission Checklist" : "Cara Insights"}
           </button>
         ))}
       </div>
@@ -460,7 +460,7 @@ function WorkflowDetail({
       {activeTab === "checklist" && (
         <ChecklistTab expanded={expandedChecklist} setExpanded={setExpandedChecklist} />
       )}
-      {activeTab === "aria" && <AriaTab workflow={workflow} />}
+      {activeTab === "cara" && <CaraTab workflow={workflow} />}
     </div>
   );
 }
@@ -589,7 +589,7 @@ function MatchingTab({ factors }: { factors: typeof DEMO_MATCHING }) {
         <CardContent className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-violet-500" /> ARIA Matching Analysis
+              <Sparkles className="h-4 w-4 text-violet-500" /> Cara Matching Analysis
             </h4>
             <Badge className={cn(
               "text-sm",
@@ -796,21 +796,21 @@ function ChecklistTab({
   );
 }
 
-// ── ARIA insights tab ──────────────────────────────────────────────────────
+// ── Cara insights tab ──────────────────────────────────────────────────────
 
-function AriaTab({ workflow }: { workflow: (typeof DEMO_WORKFLOWS)[0] }) {
+function CaraTab({ workflow }: { workflow: (typeof DEMO_WORKFLOWS)[0] }) {
   const insights = [
     {
       type: "risk_assessment",
-      title: "ARIA Risk Summary",
-      content: workflow.aria_risk_summary ?? "No risk summary available",
+      title: "Cara Risk Summary",
+      content: workflow.cara_risk_summary ?? "No risk summary available",
       severity: workflow.risk_factors.length > 2 ? "high" : workflow.risk_factors.length > 0 ? "medium" : "low",
     },
     {
       type: "placement_stability",
       title: "Placement Stability Prediction",
       content: workflow.previous_placements_count > 3
-        ? "This young person has experienced multiple placement breakdowns. ARIA recommends an enhanced transition plan with daily key work sessions for the first two weeks, therapeutic life story work, and a stepped approach to boundaries."
+        ? "This young person has experienced multiple placement breakdowns. Cara recommends an enhanced transition plan with daily key work sessions for the first two weeks, therapeutic life story work, and a stepped approach to boundaries."
         : workflow.previous_placements_count > 1
           ? "Some placement history suggests moderate disruption risk. Standard transition plan with enhanced monitoring for the first month recommended."
           : "First or second placement — standard transition plan appropriate. Monitor settling-in closely for the first two weeks.",
@@ -829,7 +829,7 @@ function AriaTab({ workflow }: { workflow: (typeof DEMO_WORKFLOWS)[0] }) {
     {
       type: "transition_planning",
       title: "Transition Recommendations",
-      content: "ARIA suggests: 1) Pre-admission visit to include the child's favourite meal, 2) Photo book of their bedroom and communal areas shared before admission, 3) Introductions to each young person individually rather than as a group, 4) First 48 hours focus on comfort and routine — avoid formal meetings.",
+      content: "Cara suggests: 1) Pre-admission visit to include the child's favourite meal, 2) Photo book of their bedroom and communal areas shared before admission, 3) Introductions to each young person individually rather than as a group, 4) First 48 hours focus on comfort and routine — avoid formal meetings.",
       severity: "info",
     },
   ];
@@ -838,7 +838,7 @@ function AriaTab({ workflow }: { workflow: (typeof DEMO_WORKFLOWS)[0] }) {
     <div className="space-y-4">
       <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-50 border border-violet-100 mb-2">
         <Sparkles className="h-4 w-4 text-violet-500" />
-        <p className="text-xs text-violet-700">ARIA analyses referral data, risk factors, and the current young people in the home to generate placement intelligence. All suggestions require professional judgement.</p>
+        <p className="text-xs text-violet-700">Cara analyses referral data, risk factors, and the current young people in the home to generate placement intelligence. All suggestions require professional judgement.</p>
       </div>
 
       {insights.map((insight, idx) => (

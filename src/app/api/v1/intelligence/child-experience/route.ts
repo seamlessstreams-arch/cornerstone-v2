@@ -1,10 +1,17 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import type { ChildExperienceSnapshot } from "@/types/extended";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const childId = searchParams.get("child_id");
+
+  const identity = await getRequestIdentity(req);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   const latest = searchParams.get("latest") === "true";
 
   if (!childId) {
@@ -31,7 +38,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json() as Partial<ChildExperienceSnapshot>;
+
+  const identity = await getRequestIdentity(req);
+  if (identity instanceof NextResponse) return identity;
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data as Partial<ChildExperienceSnapshot>;
+  const denied = assertChildHomeAccess(identity, (body as { child_id?: string }).child_id);
+  if (denied) return denied;
 
   const required = [
     "child_id", "home_id", "period_start", "period_end",
@@ -82,7 +96,7 @@ export async function POST(req: NextRequest) {
     strengths: body.strengths ?? [],
     concerns: body.concerns ?? [],
     evidence_refs: body.evidence_refs ?? [],
-    computed_by: body.computed_by ?? "aria",
+    computed_by: body.computed_by ?? "cara",
     reviewed_by: body.reviewed_by ?? null,
   });
 

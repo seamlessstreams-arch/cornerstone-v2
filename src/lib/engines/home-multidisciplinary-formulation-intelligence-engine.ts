@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MULTI-DISCIPLINARY FORMULATION INTELLIGENCE ENGINE
+// CARA — HOME MULTI-DISCIPLINARY FORMULATION INTELLIGENCE ENGINE
 // Pure deterministic engine: therapeutic formulation quality, 4P model
 // completeness, multi-agency participation, child contribution, intervention
 // planning, risk identification, review currency and model diversity.

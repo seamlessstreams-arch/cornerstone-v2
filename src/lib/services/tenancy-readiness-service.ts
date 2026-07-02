@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- TENANCY READINESS & HOUSING SKILLS SERVICE
+// CARA -- TENANCY READINESS & HOUSING SKILLS SERVICE
 // Tracks tenancy readiness sessions for care leavers, covering housing skill
 // areas, delivery methods, competency assessments, engagement levels, practical
 // components, housing applications, housing register status, deposit schemes,
@@ -543,7 +543,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: TenancyReadinessRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

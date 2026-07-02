@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DAILY LIFE INTELLIGENCE CARD
+// CARA — CHILD DAILY LIFE INTELLIGENCE CARD
 // Per-child: daily log analysis — mood patterns, recording frequency,
 // entry type coverage, significant events, time-of-day coverage.
 // CHR 2015 Reg 10, 6, 36. SCCIF: "Quality of care."
@@ -214,12 +214,12 @@ export function ChildDailyLifeIntelligenceCard({ childId }: { childId: string })
           </div>
         )}
 
-        {/* ARIA Daily Life Intelligence */}
+        {/* Cara Daily Life Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Daily Life Intelligence
+              Cara Daily Life Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

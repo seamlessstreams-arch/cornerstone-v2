@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS INTELLIGENCE API ROUTE
+// CARA — OUTCOMES PROGRESS INTELLIGENCE API ROUTE
 // GET /api/v1/outcomes-progress
 // Returns outcome target analysis, domain progress, review compliance,
-// velocity metrics, alerts, and ARIA outcomes intelligence.
+// velocity metrics, alerts, and Cara outcomes intelligence.
 // Reg 7–14, SCCIF Overall Experiences & Progress.
 // ══════════════════════════════════════════════════════════════════════════════
 

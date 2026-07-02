@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — HOME HOBBIES & INTERESTS DEVELOPMENT INTELLIGENCE ENGINE
 // Monitors hobby and interest development quality — hobby participation rates,
 // interest exploration breadth, talent development programmes, creative
 // expression opportunities, and child-led activity engagement.

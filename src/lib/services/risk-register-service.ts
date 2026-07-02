@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK MANAGEMENT REGISTER SERVICE
+// CARA — RISK MANAGEMENT REGISTER SERVICE
 // Maintains a live risk register for the children's home, tracking
 // identified risks, risk ratings, mitigation strategies, owners,
 // and review cycles.

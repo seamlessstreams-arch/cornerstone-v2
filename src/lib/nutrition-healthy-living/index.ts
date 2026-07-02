@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Nutrition & Healthy Living Intelligence — Public API
+// Cara Nutrition & Healthy Living Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

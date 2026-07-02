@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES WIDGET
+// CARA — KEY DATES WIDGET
 // Dashboard card showing upcoming important dates: birthdays, training expiry,
 // supervision due dates, probation reviews, care plan reviews.
 // Ensures nothing falls through the cracks — key Ofsted requirement.
@@ -28,10 +28,10 @@ const TYPE_CONFIG: Record<KeyDate["type"], {
   label: string;
 }> = {
   birthday:         { icon: Cake,           color: "text-pink-600",    bgColor: "bg-pink-100",    label: "Birthday" },
-  training_expiry:  { icon: GraduationCap,  color: "text-amber-600",   bgColor: "bg-amber-100",   label: "Training" },
+  training_expiry:  { icon: GraduationCap,  color: "text-[--cs-warning]",   bgColor: "bg-amber-100",   label: "Training" },
   supervision:      { icon: Users,          color: "text-indigo-600",  bgColor: "bg-indigo-100",  label: "Supervision" },
   probation_end:    { icon: Award,          color: "text-emerald-600", bgColor: "bg-emerald-100", label: "Probation" },
-  placement_review: { icon: Heart,          color: "text-[var(--cs-aria-gold)]",  bgColor: "bg-[var(--cs-aria-gold-bg)]",  label: "Placement" },
+  placement_review: { icon: Heart,          color: "text-[var(--cs-cara-gold)]",  bgColor: "bg-[var(--cs-cara-gold-bg)]",  label: "Placement" },
   document_expiry:  { icon: FileText,       color: "text-[var(--cs-text-secondary)]",   bgColor: "bg-[var(--cs-surface)]",   label: "Document" },
   care_review:      { icon: Heart,          color: "text-blue-600",    bgColor: "bg-blue-100",    label: "Care Plan" },
 };
@@ -92,7 +92,7 @@ function KeyDateRow({ item }: { item: KeyDate }) {
         </Badge>
       )}
       {isOverdue && (
-        <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+        <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
           <AlertTriangle className="h-3 w-3 mr-0.5" />
           {item.notes}
         </Badge>
@@ -161,19 +161,19 @@ export function KeyDatesCard({ limit = 8 }: { limit?: number }) {
             <Calendar className="h-4 w-4 text-blue-500" />
             Key Dates
             {items.length > 0 && (
-              <Badge className="bg-blue-100 text-blue-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-info-bg] text-[--cs-info] border-0 text-[10px] rounded-full">
                 {items.length}
               </Badge>
             )}
           </CardTitle>
           <div className="flex items-center gap-2">
             {overdueCount > 0 && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
                 {overdueCount} overdue
               </Badge>
             )}
             {thisWeekCount > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[10px] rounded-full">
                 {thisWeekCount} this week
               </Badge>
             )}

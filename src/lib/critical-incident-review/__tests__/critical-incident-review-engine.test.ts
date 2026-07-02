@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Critical Incident Review Intelligence Engine Tests
+// Cara — Critical Incident Review Intelligence Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -537,7 +537,7 @@ describe("evaluateTrendAnalysis", () => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("generateCriticalIncidentReviewIntelligence", () => {
-  // ── Oak House Demo Scenario ──────────────────────────────────────────────
+  // ── Chamberlain House Demo Scenario ──────────────────────────────────────────────
 
   const demoIncidents: CriticalIncident[] = [
     // Alex — restraint, well-managed

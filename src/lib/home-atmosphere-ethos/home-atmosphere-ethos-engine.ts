@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Home Atmosphere & Ethos Intelligence Engine
+// Cara Home Atmosphere & Ethos Intelligence Engine
 //
 // Deterministic engine for evaluating warmth & culture, child experience,
 // environment quality, and staff practice across the home.

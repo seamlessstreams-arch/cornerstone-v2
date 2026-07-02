@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RISK ASSESSMENT INTELLIGENCE CARD
+// CARA — HOME RISK ASSESSMENT INTELLIGENCE CARD
 // Home-level: risk assessments, behaviour support plans, trend analysis,
 // mitigation effectiveness, review compliance.
 // CHR 2015 Reg 12, 13. SCCIF: "Safe", "Well-led and managed."
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<RiskAssessmentRating, { bg: string; text: string; bo
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -55,8 +55,25 @@ export function HomeRiskAssessmentIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.risk_rating === "inadequate" && (d.risk_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      risk_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.risk_rating] ?? RATING_STYLES.insufficient_data;
   const hasVeryHigh = d.risk_profile.very_high_risk_count > 0;
@@ -70,7 +87,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-orange-500")} />
+            <ShieldAlert className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-orange-500")} />
             <span className="text-slate-900">Risk Assessments & BSPs</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -92,7 +109,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <ShieldAlert className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.risk_profile.total_assessments > 0 ? "text-green-600" : "text-red-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.risk_profile.total_assessments > 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>
                   {d.risk_profile.total_assessments}
                 </p>
               </div>
@@ -107,7 +124,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
                   : <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
                 }
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.risk_profile.increasing_trend_count === 0 ? "text-green-600" : "text-red-600"
+                  d.risk_profile.increasing_trend_count === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>
                   {d.risk_profile.decreasing_trend_count}↓ {d.risk_profile.increasing_trend_count}↑
                 </p>
@@ -120,8 +137,8 @@ export function HomeRiskAssessmentIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <CheckCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.risk_profile.mitigation_effectiveness_rate >= 80 ? "text-green-600" :
-                  d.risk_profile.mitigation_effectiveness_rate >= 50 ? "text-amber-600" : "text-red-600"
+                  d.risk_profile.mitigation_effectiveness_rate >= 80 ? "text-[--cs-success]" :
+                  d.risk_profile.mitigation_effectiveness_rate >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.risk_profile.mitigation_effectiveness_rate}%
                 </p>
@@ -133,7 +150,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
             <div className="text-center rounded-lg bg-slate-50 p-2">
               <div className="flex items-center justify-center gap-1">
                 <ShieldAlert className="h-3.5 w-3.5 text-slate-400" />
-                <p className={cn("text-lg font-bold tabular-nums", d.bsp_profile.active_plans > 0 ? "text-green-600" : "text-slate-600")}>
+                <p className={cn("text-lg font-bold tabular-nums", d.bsp_profile.active_plans > 0 ? "text-[--cs-success]" : "text-slate-600")}>
                   {d.bsp_profile.active_plans}
                 </p>
               </div>
@@ -149,10 +166,10 @@ export function HomeRiskAssessmentIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">Risk Profile</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Children covered: <span className={cn("font-medium", d.risk_profile.children_without_assessments.length === 0 ? "text-green-600" : "text-red-600")}>{d.risk_profile.children_with_assessments.length}</span></p>
+                <p>Children covered: <span className={cn("font-medium", d.risk_profile.children_without_assessments.length === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{d.risk_profile.children_with_assessments.length}</span></p>
                 {d.risk_profile.very_high_risk_count > 0 && <p>Very high risk: <span className="font-medium text-red-600">{d.risk_profile.very_high_risk_count}</span></p>}
                 {d.risk_profile.high_risk_count > 0 && <p>High risk: <span className="font-medium text-amber-600">{d.risk_profile.high_risk_count}</span></p>}
-                <p>Child views: <span className={cn("font-medium", d.risk_profile.child_views_rate === 100 ? "text-green-600" : "text-amber-600")}>{d.risk_profile.child_views_rate}%</span></p>
+                <p>Child views: <span className={cn("font-medium", d.risk_profile.child_views_rate === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.risk_profile.child_views_rate}%</span></p>
                 {d.risk_profile.overdue_reviews > 0 && <p>Overdue reviews: <span className="font-medium text-red-600">{d.risk_profile.overdue_reviews}</span></p>}
               </div>
             </div>
@@ -161,9 +178,9 @@ export function HomeRiskAssessmentIntelligenceCard() {
             <div className="rounded border p-2 text-xs">
               <p className="font-medium text-slate-700 mb-1">BSP Quality</p>
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                <p>Improving behaviours: <span className={cn("font-medium", d.bsp_profile.improving_behaviour_rate >= 60 ? "text-green-600" : "text-amber-600")}>{d.bsp_profile.improving_behaviour_rate}%</span></p>
+                <p>Improving behaviours: <span className={cn("font-medium", d.bsp_profile.improving_behaviour_rate >= 60 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.bsp_profile.improving_behaviour_rate}%</span></p>
                 <p>Avg strategies: <span className="font-medium text-slate-600">{d.bsp_profile.avg_strategies_per_plan}</span></p>
-                <p>Safety plans: <span className={cn("font-medium", d.bsp_profile.safety_plan_coverage === 100 ? "text-green-600" : "text-amber-600")}>{d.bsp_profile.safety_plan_coverage}%</span></p>
+                <p>Safety plans: <span className={cn("font-medium", d.bsp_profile.safety_plan_coverage === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{d.bsp_profile.safety_plan_coverage}%</span></p>
                 {d.bsp_profile.overdue_reviews > 0 && <p>Overdue reviews: <span className="font-medium text-red-600">{d.bsp_profile.overdue_reviews}</span></p>}
               </div>
             </div>
@@ -178,7 +195,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -193,7 +210,7 @@ export function HomeRiskAssessmentIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -220,12 +237,12 @@ export function HomeRiskAssessmentIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Risk Intelligence */}
+        {/* Cara Risk Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

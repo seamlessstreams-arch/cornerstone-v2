@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PRACTICE LEARNING SERVICE
+// CARA — PRACTICE LEARNING SERVICE
 // Manages learning from incidents, serious case reviews, near misses,
 // practice reviews, and continuous improvement tracking.
 // CHR 2015 Reg 45 (review of quality of care — learning from events),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CCTV & SURVEILLANCE SERVICE TESTS
+// CARA — CCTV & SURVEILLANCE SERVICE TESTS
 // Pure-function unit tests for CCTV metrics computation, alert
 // identification, and constant validation.
 // CHR 2015 Reg 36 (fitness of premises — surveillance),

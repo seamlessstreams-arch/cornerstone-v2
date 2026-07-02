@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED EVENT STREAM (detail page)
+// CARA — UNIFIED EVENT STREAM (detail page)
 // One normalised, filterable timeline of everything that happens in the home.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -44,7 +44,7 @@ export default function EventStreamPage() {
       subtitle="Every domain event — incidents, logs, missing, medication, restraint, complaints, family contact, risk assessments, LAC reviews, notifiable events, behaviour plans and more — in one normalised timeline"
       icon={<Layers className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Unified Event Stream", sourceType: "general" }}
+      caraContext={{ pageTitle: "Unified Event Stream", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">
@@ -56,9 +56,9 @@ export default function EventStreamPage() {
           <div className="rounded-2xl border border-[var(--cs-border)] bg-[var(--cs-bg)] p-4 flex gap-3">
             <Info className="h-4 w-4 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
             <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
-              Every record in Cornerstone is projected into one canonical event shape — so this single timeline shows
+              Every record in Cara is projected into one canonical event shape — so this single timeline shows
               everything that happens in the home, each with a consistent risk level, the sign-off it needs, its links,
-              and a rule-based ARIA reading (themes, actions, compliance flags). <strong>Capture once, surface
+              and a rule-based Cara reading (themes, actions, compliance flags). <strong>Capture once, surface
               everywhere.</strong>
             </p>
           </div>
@@ -131,18 +131,18 @@ export default function EventStreamPage() {
                         ))}
                       </div>
                     )}
-                    {e.ariaAnalysis && (
+                    {e.caraAnalysis && (
                       <div className="rounded-lg bg-[var(--cs-bg)] p-2.5 text-[11px] space-y-1">
-                        <p className="font-semibold text-purple-700 flex items-center gap-1"><Brain className="h-3 w-3" /> ARIA · confidence {Math.round(e.ariaAnalysis.confidenceScore * 100)}%</p>
-                        {e.ariaAnalysis.themes.length > 0 && <p className="text-[var(--cs-text-muted)]">Themes: {e.ariaAnalysis.themes.join(", ")}</p>}
-                        {e.ariaAnalysis.complianceFlags.map((f, i) => (
+                        <p className="font-semibold text-purple-700 flex items-center gap-1"><Brain className="h-3 w-3" /> Cara · confidence {Math.round(e.caraAnalysis.confidenceScore * 100)}%</p>
+                        {e.caraAnalysis.themes.length > 0 && <p className="text-[var(--cs-text-muted)]">Themes: {e.caraAnalysis.themes.join(", ")}</p>}
+                        {e.caraAnalysis.complianceFlags.map((f, i) => (
                           <p key={i} className="text-amber-700 flex items-center gap-1"><AlertTriangle className="h-3 w-3 shrink-0" />{f}</p>
                         ))}
-                        {e.ariaAnalysis.suggestedActions.length > 0 && (
-                          <p className="text-[var(--cs-text-secondary)]">→ {e.ariaAnalysis.suggestedActions[0]}</p>
+                        {e.caraAnalysis.suggestedActions.length > 0 && (
+                          <p className="text-[var(--cs-text-secondary)]">→ {e.caraAnalysis.suggestedActions[0]}</p>
                         )}
-                        {e.ariaAnalysis.missingInformation.length > 0 && (
-                          <p className="text-[var(--cs-text-gentle)]">Missing: {e.ariaAnalysis.missingInformation.join(", ")}</p>
+                        {e.caraAnalysis.missingInformation.length > 0 && (
+                          <p className="text-[var(--cs-text-gentle)]">Missing: {e.caraAnalysis.missingInformation.join(", ")}</p>
                         )}
                       </div>
                     )}

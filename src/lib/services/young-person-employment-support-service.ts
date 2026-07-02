@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE
+// CARA — YOUNG PERSON EMPLOYMENT SUPPORT SERVICE
 // Work readiness assessment, employment applications, interview preparation,
 // apprenticeship support, supported employment. Helps care leavers prepare
 // for work and achieve economic wellbeing.
@@ -329,7 +329,7 @@ export function computeEmploymentSupportAlerts(
   return alerts;
 }
 
-export function generateEmploymentSupportAriaInsights(
+export function generateEmploymentSupportCaraInsights(
   rows: YoungPersonEmploymentSupportRow[],
 ): string[] {
   const metrics = computeEmploymentSupportMetrics(rows);
@@ -389,5 +389,5 @@ export function generateEmploymentSupportAriaInsights(
 export const _testing = {
   computeEmploymentSupportMetrics,
   computeEmploymentSupportAlerts,
-  generateEmploymentSupportAriaInsights,
+  generateEmploymentSupportCaraInsights,
 };

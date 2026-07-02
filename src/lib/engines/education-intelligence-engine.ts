@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION INTELLIGENCE ENGINE
+// CARA — EDUCATION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that analyses education and enrichment data:
 // - Attendance tracking (overall %, per-child, trend detection)
@@ -7,7 +7,7 @@
 // - PEP compliance (review currency)
 // - Activity/enrichment analysis (breadth, frequency, engagement)
 // - Per-child education profiles
-// - Auto-generated ARIA education insights (deterministic)
+// - Auto-generated Cara education insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 8  — Promotion of educational achievement
@@ -105,7 +105,7 @@ export interface EducationAlert {
   message: string;
 }
 
-export interface AriaEducationInsight {
+export interface CaraEducationInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -116,7 +116,7 @@ export interface EducationIntelligenceResult {
   attendance: AttendanceAnalysis;
   activities: ActivityAnalysis;
   alerts: EducationAlert[];
-  insights: AriaEducationInsight[];
+  insights: CaraEducationInsight[];
 }
 
 export interface EducationIntelligenceInput {
@@ -558,9 +558,9 @@ export function computeEducationIntelligence(
   const sevOrder: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3 };
   alerts.sort((a, b) => (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3));
 
-  // ── ARIA Education Insights ──────────────────────────────────────────────
+  // ── Cara Education Insights ──────────────────────────────────────────────
 
-  const insights: AriaEducationInsight[] = [];
+  const insights: CaraEducationInsight[] = [];
 
   // 1. NEET concern
   if (neetCount > 0) {

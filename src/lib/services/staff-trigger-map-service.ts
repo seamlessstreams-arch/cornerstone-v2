@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF TRIGGER MAP SERVICE
+// CARA — STAFF TRIGGER MAP SERVICE
 // Maps situations, contexts, or stressors that trigger concerning patterns
 // in staff practice — enabling proactive support before incidents occur.
 //

@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -157,16 +157,16 @@ export default function AuditLogPage() {
     <PageShell
       title="Audit Log"
       subtitle="Complete record of all safer recruitment actions — inspection-ready"
-      ariaContext={{ pageTitle: "Safer Recruitment Audit Trail", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Safer Recruitment Audit Trail", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Audit Log" subtitle="Oak House — Safer Recruitment Audit Trail" targetId="sr-audit-content" />
+          <PrintButton title="Audit Log" subtitle="Chamberlain House — Safer Recruitment Audit Trail" targetId="sr-audit-content" />
           <SmartUploadButton variant="inline" label="Upload Audit Document" uploadContext="Safer Recruitment — audit evidence or inspection bundle document upload" />
           <Button size="sm" variant="outline" className="gap-1.5" disabled title="Inspection bundles are generated from the Documents section. Contact your system administrator.">
             <Download className="h-3.5 w-3.5" />
             Generate Inspection Bundle
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -275,7 +275,7 @@ export default function AuditLogPage() {
         </Card>
       )}
       </div>{/* close #sr-audit-content */}
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Safer Recruitment Audit Trail — immutable audit log, SCR evidence, safer recruitment compliance, Ofsted inspection readiness, DBS checks audit, references audit, right to work audit"
         recordType="staff_training"

@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON ADMISSION WORKFLOW SERVICE
+// CARA — YOUNG PERSON ADMISSION WORKFLOW SERVICE
 // Full referral-to-placement workflow: intake, screening, impact assessment,
 // matching panel, pre-admission, admission planning, and profile creation.
-// Follows: "ARIA suggests. Humans decide. Cornerstone evidences."
+// Follows: "Cara suggests. Humans decide. Cara evidences."
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -130,8 +130,8 @@ export interface AdmissionWorkflow {
   school_arrangements_made: boolean;
   emergency_contacts: Record<string, unknown>[];
   created_yp_id: string | null;
-  aria_risk_summary: string | null;
-  aria_recommendations: Record<string, unknown>[];
+  cara_risk_summary: string | null;
+  cara_recommendations: Record<string, unknown>[];
   notes: string | null;
   created_by: string;
   completed_at: string | null;
@@ -668,9 +668,9 @@ export function computeMatchingScore(factors: MatchingFactor[]): {
   };
 }
 
-// ── ARIA matching intelligence (pure) ──────────────────────────────────────
+// ── Cara matching intelligence (pure) ──────────────────────────────────────
 
-export interface AriaMatchingInput {
+export interface CaraMatchingInput {
   incomingChild: {
     age: number;
     gender: string;
@@ -688,7 +688,7 @@ export interface AriaMatchingInput {
   homeCapacity: number;
 }
 
-export function generateAriaMatchingFactors(input: AriaMatchingInput): {
+export function generateCaraMatchingFactors(input: CaraMatchingInput): {
   factors: { factorType: MatchingFactorType; score: number; rationale: string; riskLevel: "low" | "medium" | "high" }[];
   overallRisk: "low" | "medium" | "high";
   summary: string;
@@ -771,7 +771,7 @@ export function generateAriaMatchingFactors(input: AriaMatchingInput): {
   const overallRisk = highRiskFactors >= 2 ? "high" : highRiskFactors === 1 || factors.some((f) => f.riskLevel === "medium") ? "medium" : "low";
 
   const avgScore = factors.reduce((sum, f) => sum + f.score, 0) / factors.length;
-  const summary = `ARIA matching analysis: ${factors.length} factors assessed, overall score ${avgScore.toFixed(1)}/10. ${highRiskFactors > 0 ? `${highRiskFactors} high-risk factor${highRiskFactors > 1 ? "s" : ""} identified requiring mitigation.` : "No high-risk factors identified."} ${overallRisk === "high" ? "Enhanced risk management and close monitoring recommended." : overallRisk === "medium" ? "Standard risk management with targeted monitoring." : "Standard care arrangements should be appropriate."}`;
+  const summary = `Cara matching analysis: ${factors.length} factors assessed, overall score ${avgScore.toFixed(1)}/10. ${highRiskFactors > 0 ? `${highRiskFactors} high-risk factor${highRiskFactors > 1 ? "s" : ""} identified requiring mitigation.` : "No high-risk factors identified."} ${overallRisk === "high" ? "Enhanced risk management and close monitoring recommended." : overallRisk === "medium" ? "Standard risk management with targeted monitoring." : "Standard care arrangements should be appropriate."}`;
 
   return { factors, overallRisk, summary };
 }
@@ -895,7 +895,7 @@ export const _testing = {
   computePhaseProgress,
   computeChecklistProgress,
   computeMatchingScore,
-  generateAriaMatchingFactors,
+  generateCaraMatchingFactors,
   ADMISSION_PHASES,
   VALID_TRANSITIONS,
   DEFAULT_CHECKLIST_ITEMS,

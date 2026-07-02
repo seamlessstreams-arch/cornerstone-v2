@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Property Damage Assessment Intelligence Engine Tests
+// Cara — Property Damage Assessment Intelligence Engine Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -998,10 +998,10 @@ describe("generatePropertyDamageAssessmentIntelligence", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// Oak House Demo Data Validation
+// Chamberlain House Demo Data Validation
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Oak House Demo Data Validation", () => {
+describe("Chamberlain House Demo Data Validation", () => {
   const demoIncidents: DamageIncident[] = [
     {
       id: "dmg-j1", date: "2025-03-12", damageType: "furniture", severity: "moderate",

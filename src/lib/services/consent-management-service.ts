@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONSENT MANAGEMENT SERVICE
+// CARA — CONSENT MANAGEMENT SERVICE
 // Manages consent recording for medical treatment, photographs, outings,
 // information sharing, and other activities requiring parental/child consent.
 // CHR 2015 Reg 7 (children's wishes and feelings),

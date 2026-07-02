@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRE SAFETY INTELLIGENCE ENGINE
+// CARA — HOME FIRE SAFETY INTELLIGENCE ENGINE
 // Pure deterministic engine: fire drills, evacuations, equipment checks,
 // response times, child participation, and regulatory compliance.
 // CHR 2015 Reg 25: "The premises standard — fire safety."

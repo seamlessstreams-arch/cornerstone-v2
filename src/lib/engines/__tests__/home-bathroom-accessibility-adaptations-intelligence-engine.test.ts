@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE ENGINE — TESTS
+// CARA — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 25 (Premises), Reg 5 (Engagement with parents/carers).
 // SCCIF: "Safety", "Living in the home", "Quality of care".
 // ══════════════════════════════════════════════════════════════════════════════

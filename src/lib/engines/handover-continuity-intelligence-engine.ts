@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE ENGINE
+// CARA — HANDOVER CONTINUITY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses shift handover quality: completion rates, sign-off compliance,
@@ -117,7 +117,7 @@ export interface HandoverAlert {
   message: string;
 }
 
-export interface AriaHandoverInsight {
+export interface CaraHandoverInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -127,7 +127,7 @@ export interface HandoverContinuityIntelligenceResult {
   handover_profiles: HandoverProfile[];
   child_mood_summary: ChildMoodSummary[];
   alerts: HandoverAlert[];
-  insights: AriaHandoverInsight[];
+  insights: CaraHandoverInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -342,8 +342,8 @@ export function computeHandoverContinuityIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaHandoverInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraHandoverInsight[] = [];
 
   // Critical: incomplete handovers
   if (incomplete.length > 0) {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING SERVICE
+// CARA — REGULATORY REPORTING SERVICE
 // Generates and manages Reg 44 independent visitor reports, Reg 45 quality
 // of care reviews, and other statutory reporting requirements.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- OUTDOOR ADVENTURE & PHYSICAL ACTIVITY SERVICE
+// CARA -- OUTDOOR ADVENTURE & PHYSICAL ACTIVITY SERVICE
 // Tracks outdoor adventure and physical activities for looked-after children
 // including walking/hiking, cycling, swimming, climbing/bouldering, kayaking/
 // canoeing, sailing, surfing, horse riding, camping, Duke of Edinburgh, Scouts/
@@ -654,7 +654,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: OutdoorAdventureActivityRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

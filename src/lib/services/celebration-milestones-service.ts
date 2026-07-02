@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CELEBRATION MILESTONES SERVICE
+// CARA — CELEBRATION MILESTONES SERVICE
 // Tracks birthdays, achievements, festivals, cultural celebrations,
 // personal milestones, and positive recognition events.
 // CHR 2015 Reg 6(2)(b) (quality of care — celebrating achievements),

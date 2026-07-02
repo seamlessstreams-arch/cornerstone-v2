@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORD ONCE CONTEXT
+// CARA — RECORD ONCE CONTEXT
 // "Capture once, link intelligently, surface everywhere, never duplicate."
 // Fetches child/staff profile data and provides it to any form via context,
 // so staff never re-enter information the system already knows.
@@ -105,7 +105,7 @@ const RecordOnceContext = createContext<RecordOnceData>({
 
 /** Home name is hard-coded to match seed data until a homes API exists. */
 function resolveHomeName(homeId: string): string {
-  const MAP: Record<string, string> = { home_oak: "Oak House" };
+  const MAP: Record<string, string> = { home_oak: "Chamberlain House" };
   return MAP[homeId] ?? homeId;
 }
 

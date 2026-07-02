@@ -1,10 +1,17 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import type { Intervention } from "@/types/extended";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const childId = searchParams.get("child_id");
+
+  const identity = await getRequestIdentity(req);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   const homeId = searchParams.get("home_id") ?? "home_oak";
   const status = searchParams.get("status");
 
@@ -31,7 +38,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json() as Partial<Intervention>;
+
+  const identity = await getRequestIdentity(req);
+  if (identity instanceof NextResponse) return identity;
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data as Partial<Intervention>;
+  const denied = assertChildHomeAccess(identity, (body as { child_id?: string }).child_id);
+  if (denied) return denied;
 
   const required = ["child_id", "title", "description", "rationale", "started_at", "intended_outcome"] as const;
   for (const field of required) {

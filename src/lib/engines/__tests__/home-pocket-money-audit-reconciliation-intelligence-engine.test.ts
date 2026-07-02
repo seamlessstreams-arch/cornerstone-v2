@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME POCKET MONEY AUDIT & RECONCILIATION INTELLIGENCE ENGINE
+// CARA — HOME POCKET MONEY AUDIT & RECONCILIATION INTELLIGENCE ENGINE
 // TESTS
 //
 // 180 tests covering: empty states, scoring bonuses/penalties, rating

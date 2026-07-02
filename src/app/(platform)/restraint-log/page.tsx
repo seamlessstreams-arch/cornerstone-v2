@@ -3,8 +3,14 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { PacePanel } from "@/components/pace/pace-panel";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
+import { InlinePracticeModules } from "@/components/intelligence/practice-module-panels";
+import { InlineCaraHeartPanel } from "@/components/cara-heart/inline-cara-heart-panel";
+import type { CaraPracticeRecord } from "@/lib/cara-heart/types";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,6 +82,23 @@ export default function RestraintLogPage() {
   const [rlForm, setRlForm] = useState({ date: new Date().toISOString().slice(0, 10), child_id: "", start_time: "", end_time: "", reason: "harm_to_self" as RestraintReason, antecedent: "", de_escalation_attempts: "", description: "" });
   const setRL = (k: string, v: unknown) => setRlForm((p) => ({ ...p, [k]: v }));
 
+  const rlHeartRecord = useMemo<CaraPracticeRecord | null>(() => {
+    if (!rlForm.child_id || rlForm.description.length < 30) return null;
+    const context = [rlForm.antecedent, rlForm.description].filter(Boolean).join(" | ");
+    return {
+      id: "draft",
+      childId: rlForm.child_id,
+      type: "physical_intervention",
+      dateTime: `${rlForm.date}T${rlForm.start_time || "00:00"}:00`,
+      severity: 4,
+      description: context,
+      staffResponse: rlForm.de_escalation_attempts || undefined,
+      immediateRisk: "high",
+      restraintUsed: true,
+      staffDebriefRecorded: false,
+    };
+  }, [rlForm.child_id, rlForm.description, rlForm.antecedent, rlForm.de_escalation_attempts, rlForm.date, rlForm.start_time]);
+
   const handleSaveRestraint = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!rlForm.child_id) { toast.error("Please select a young person."); return; }
@@ -111,13 +134,13 @@ export default function RestraintLogPage() {
     <PageShell
       title="Restraint Log"
       subtitle="Physical intervention records — Regulation 35 compliance"
-      ariaContext={{ pageTitle: "Care Events — Restraint &amp; Physical Intervention", sourceType: "incident" }}
+      caraContext={{ pageTitle: "Care Events — Restraint &amp; Physical Intervention", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Restraint Log" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="restraint-log" />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> Record Restraint</Button>
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -127,7 +150,7 @@ export default function RestraintLogPage() {
         </div>
       ) : (
       <div id="print-area" className="space-y-6">
-        <AriaPanel
+        <CaraPanel
           mode="assist"
           pageContext="Restraint Log — physical intervention records, Regulation 35 compliance, debrief"
           recordType="restraint"
@@ -286,6 +309,12 @@ export default function RestraintLogPage() {
                 </Select>
               </div>
             </div>
+            {rlForm.child_id && (
+              <>
+                <InlinePracticeReasoning childId={rlForm.child_id} childName={YOUNG_PEOPLE.find((y) => y.id === rlForm.child_id)?.preferred_name ?? rlForm.child_id} />
+                <InlinePracticeModules childId={rlForm.child_id} modules={["rights"]} />
+              </>
+            )}
             <div className="grid grid-cols-2 gap-2">
               <div><label className="text-sm font-medium">Start Time</label><Input type="time" value={rlForm.start_time} onChange={(e) => setRL("start_time", e.target.value)} /></div>
               <div><label className="text-sm font-medium">End Time</label><Input type="time" value={rlForm.end_time} onChange={(e) => setRL("end_time", e.target.value)} /></div>
@@ -295,9 +324,18 @@ export default function RestraintLogPage() {
                 <SelectContent>{Object.entries(REASON_META).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent>
               </Select>
             </div>
-            <div><label className="text-sm font-medium">Antecedent</label><Textarea placeholder="What led up to the incident?" rows={2} value={rlForm.antecedent} onChange={(e) => setRL("antecedent", e.target.value)} /></div>
+            <div>
+              <label className="text-sm font-medium">Antecedent</label>
+              <Textarea placeholder="What led up to the incident?" rows={2} value={rlForm.antecedent} onChange={(e) => setRL("antecedent", e.target.value)} />
+              <WritingAssistantInline value={rlForm.antecedent} onApplyText={(t) => setRL("antecedent", t)} recordType="incident" fieldName="antecedent" childId={rlForm.child_id || undefined} mode="standard" />
+            </div>
             <div><label className="text-sm font-medium">De-escalation Attempts</label><Textarea placeholder="List all de-escalation attempts (one per line)" rows={2} value={rlForm.de_escalation_attempts} onChange={(e) => setRL("de_escalation_attempts", e.target.value)} /></div>
-            <div><label className="text-sm font-medium">Description *</label><Textarea placeholder="Detailed description of the intervention…" rows={3} value={rlForm.description} onChange={(e) => setRL("description", e.target.value)} /></div>
+            <div>
+              <label className="text-sm font-medium">Description *</label>
+              <Textarea placeholder="Detailed description of the intervention…" rows={3} value={rlForm.description} onChange={(e) => setRL("description", e.target.value)} />
+              <WritingAssistantInline value={rlForm.description} onApplyText={(t) => setRL("description", t)} recordType="incident" fieldName="description" childId={rlForm.child_id || undefined} mode="standard" />
+            </div>
+            <InlineCaraHeartPanel record={rlHeartRecord} />
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
               <Button type="submit" disabled={createRestraint.isPending}>{createRestraint.isPending ? "Saving…" : "Save Record"}</Button>
@@ -313,6 +351,9 @@ export default function RestraintLogPage() {
         days={60}
         defaultCollapsed
       />
+      <div className="mt-4">
+        <PacePanel context="PHYSICAL_INTERVENTION" title="PACE check — the relational stance during & after" />
+      </div>
     </PageShell>
   );
 }

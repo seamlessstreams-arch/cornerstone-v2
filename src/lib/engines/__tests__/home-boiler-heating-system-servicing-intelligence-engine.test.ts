@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE ENGINE TESTS
+// CARA — HOME BOILER & HEATING SYSTEM SERVICING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for boiler servicing, heating checks, radiator
 // maintenance, thermostat calibration, and energy efficiency analysis.
 // Covers CHR 2015 Reg 25 (Premises and safety), SCCIF premises standards.

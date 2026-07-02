@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SICKNESS MANAGEMENT SERVICE
+// CARA — STAFF SICKNESS MANAGEMENT SERVICE
 // Sickness absence tracking, return-to-work interviews, occupational health
 // referrals, Bradford Factor, trigger point management, pattern analysis.
 // CHR 2015 Reg 33 (employment — managing staffing levels and absence),
@@ -253,10 +253,10 @@ export function computeSicknessAlerts(rows: StaffSicknessManagementRow[]): {
 }
 
 /**
- * Generate ARIA intelligence insights for sickness management.
+ * Generate Cara intelligence insights for sickness management.
  * Returns 3 strings: summary (cyan), priority concerns (amber), reflective question (reflect).
  */
-export function generateSicknessAriaInsights(
+export function generateSicknessCaraInsights(
   rows: StaffSicknessManagementRow[],
 ): string[] {
   const metrics = computeSicknessMetrics(rows);
@@ -425,5 +425,5 @@ export async function updateStaffSicknessManagement(
 export const _testing = {
   computeSicknessMetrics,
   computeSicknessAlerts,
-  generateSicknessAriaInsights,
+  generateSicknessCaraInsights,
 };

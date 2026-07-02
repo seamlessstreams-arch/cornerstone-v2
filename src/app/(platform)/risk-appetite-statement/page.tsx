@@ -30,8 +30,8 @@ import { useRiskAppetiteDomains } from "@/hooks/use-risk-appetite-domains";
 import type { RiskAppetiteDomain, RiskAppetiteLevel } from "@/types/extended";
 import { RISK_APPETITE_LEVEL_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── local config (icons cannot be serialized to store) ───────────── */
 
@@ -99,7 +99,7 @@ export default function RiskAppetiteStatementPage() {
 
   if (isLoading) {
     return (
-      <PageShell title="Risk Appetite Statement" subtitle="Framework for balancing proportionate risk-taking with safeguarding at Oak House">
+      <PageShell title="Risk Appetite Statement" subtitle="Framework for balancing proportionate risk-taking with safeguarding at Chamberlain House">
         <div className="flex items-center justify-center py-24">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
@@ -110,13 +110,13 @@ export default function RiskAppetiteStatementPage() {
   return (
     <PageShell
       title="Risk Appetite Statement"
-      subtitle="Framework for balancing proportionate risk-taking with safeguarding at Oak House"
-      ariaContext={{ pageTitle: "Risk Appetite Statement", sourceType: "document" }}
+      subtitle="Framework for balancing proportionate risk-taking with safeguarding at Chamberlain House"
+      caraContext={{ pageTitle: "Risk Appetite Statement", sourceType: "document" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={records} columns={exportCols} filename="risk-appetite-statement" />
           <PrintButton title="Risk Appetite Statement" />
-          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -229,7 +229,7 @@ export default function RiskAppetiteStatementPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Risk Appetite Statement — organisational risk tolerance, domain risk levels, decision thresholds, positive risk-taking, governance, board oversight, QA framework"
         recordType="policy"

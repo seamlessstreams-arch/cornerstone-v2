@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF PROFESSIONAL REGISTRATION SERVICE
+// CARA — STAFF PROFESSIONAL REGISTRATION SERVICE
 // Tracks professional body registrations, PIN verification, renewal compliance,
 // CPD hours, and fitness to practise for children's residential home staff.
 //
@@ -218,9 +218,9 @@ export function computeRegistrationAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function generateRegistrationAriaInsights(rows: StaffProfessionalRegistrationRow[]): string[] {
+export function generateRegistrationCaraInsights(rows: StaffProfessionalRegistrationRow[]): string[] {
   const metrics = computeRegistrationMetrics(rows);
   const alerts = computeRegistrationAlerts(rows);
   const insights: string[] = [];
@@ -350,4 +350,4 @@ export async function updateStaffProfessionalRegistration(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeRegistrationMetrics, computeRegistrationAlerts, generateRegistrationAriaInsights };
+export const _testing = { computeRegistrationMetrics, computeRegistrationAlerts, generateRegistrationCaraInsights };

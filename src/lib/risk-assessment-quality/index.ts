@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Risk Assessment Quality Intelligence — Public API
+// Cara Risk Assessment Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

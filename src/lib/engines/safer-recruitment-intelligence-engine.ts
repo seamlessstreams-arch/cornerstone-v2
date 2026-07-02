@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT INTELLIGENCE ENGINE
+// CARA — SAFER RECRUITMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses recruitment pipeline health, candidate compliance, check completion,
@@ -178,7 +178,7 @@ export interface RecruitmentAlert {
   message: string;
 }
 
-export interface AriaRecruitmentInsight {
+export interface CaraRecruitmentInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -188,7 +188,7 @@ export interface SaferRecruitmentIntelligenceResult {
   candidate_profiles: CandidateRecruitmentProfile[];
   check_analysis: CheckTypeAnalysis[];
   alerts: RecruitmentAlert[];
-  insights: AriaRecruitmentInsight[];
+  insights: CaraRecruitmentInsight[];
 }
 
 // ── Constants ──────────────────────────────────────────────────────────────
@@ -615,8 +615,8 @@ export function computeSaferRecruitmentIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaRecruitmentInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraRecruitmentInsight[] = [];
 
   // Critical: any candidate at pre-start or beyond without full Schedule 2
   const advancedNoSchedule2 = candidate_profiles.filter(

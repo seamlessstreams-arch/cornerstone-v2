@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED INSPECTION READINESS SERVICE
+// CARA — OFSTED INSPECTION READINESS SERVICE
 // Pre-inspection readiness checks, evidence gathering, action tracking,
 // mock inspection outcomes, inspector focus areas. Helps managers prepare
 // for inspections proactively.
@@ -328,7 +328,7 @@ export function computeOfstedReadinessAlerts(
   return alerts;
 }
 
-export function generateOfstedReadinessAriaInsights(
+export function generateOfstedReadinessCaraInsights(
   rows: OfstedInspectionReadinessRow[],
 ): string[] {
   const insights: string[] = [];
@@ -390,5 +390,5 @@ export function generateOfstedReadinessAriaInsights(
 export const _testing = {
   computeOfstedReadinessMetrics,
   computeOfstedReadinessAlerts,
-  generateOfstedReadinessAriaInsights,
+  generateOfstedReadinessCaraInsights,
 };

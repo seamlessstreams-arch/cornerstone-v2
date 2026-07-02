@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEGAL STATUS CARD
+// CARA — LEGAL STATUS CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function LegalStatusCard() {
@@ -56,11 +56,11 @@ export function LegalStatusCard() {
             <p className="text-[10px] text-muted-foreground">Assessments</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.risk_assessments?.high_or_very_high ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.risk_assessments?.high_or_very_high ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.risk_assessments?.high_or_very_high ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.risk_assessments?.high_or_very_high ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.risk_assessments?.high_or_very_high ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">High+</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.risk_assessments?.overdue_reviews ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.risk_assessments?.overdue_reviews ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.risk_assessments?.overdue_reviews ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.risk_assessments?.overdue_reviews ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.risk_assessments?.overdue_reviews ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
           <div className="text-center rounded-lg bg-green-50 p-2">
@@ -73,7 +73,7 @@ export function LegalStatusCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Legal Status Intelligence
+              Cara Legal Status Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

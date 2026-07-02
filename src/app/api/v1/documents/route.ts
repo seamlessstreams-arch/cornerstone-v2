@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENTS BULK ENDPOINT (enriched with receipts & meta)
+// CARA — DOCUMENTS BULK ENDPOINT (enriched with receipts & meta)
 //
 // Returns all documents with read receipts and computed meta:
 // total, requires_sign, expiring_soon, expired.

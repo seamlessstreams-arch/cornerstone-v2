@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Ofsted Readiness Intelligence Engine
+// Cara Ofsted Readiness Intelligence Engine
 //
 // Meta-intelligence module that evaluates inspection readiness across the
 // 3 SCCIF judgment areas. Takes high-level summary scores from operational

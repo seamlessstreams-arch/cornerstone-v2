@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA DOCUMENT INTELLIGENCE HUB
+// CARA — Cara DOCUMENT INTELLIGENCE HUB
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
@@ -172,7 +172,7 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
                 <div>
                   <div className="text-sm font-bold text-red-800">⚠️ Prompt injection attempt detected</div>
                   <div className="text-xs text-red-700 mt-1 leading-relaxed">
-                    This document contained instructions attempting to manipulate ARIA. All instructions were ignored — analysis treats document content as data only.
+                    This document contained instructions attempting to manipulate Cara. All instructions were ignored — analysis treats document content as data only.
                     {aiResult.suspicious_content && (
                       <div className="mt-1.5 font-mono bg-red-100 rounded px-2 py-1 text-[10px]">
                         Detected: &ldquo;{aiResult.suspicious_content}&rdquo;
@@ -314,10 +314,10 @@ function DocumentCard({ doc }: { doc: UploadedDocument }) {
             </div>
           )}
 
-          {/* ARIA oversight draft */}
+          {/* Cara oversight draft */}
           {aiResult.oversight_draft && (
             <div className="px-5 py-4 bg-indigo-50/30">
-              <div className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider mb-2">ARIA Management Oversight Draft</div>
+              <div className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider mb-2">Cara Management Oversight Draft</div>
               <div className="rounded-xl bg-white border border-indigo-100 p-3">
                 <p className="text-xs text-indigo-800 leading-relaxed">{aiResult.oversight_draft}</p>
               </div>
@@ -466,11 +466,11 @@ export default function DocumentIntelligencePage() {
     <>
       <PageShell
         title="Document Intelligence"
-        subtitle="Upload any document — ARIA classifies, extracts, and converts it into tasks, evidence, and oversight"
+        subtitle="Upload any document — Cara classifies, extracts, and converts it into tasks, evidence, and oversight"
         showQuickCreate={false}
         actions={
           <div className="flex items-center gap-2">
-            <PrintButton title="Document Intelligence" subtitle="Oak House — AI Document Processing" targetId="doc-intelligence-content" />
+            <PrintButton title="Document Intelligence" subtitle="Chamberlain House — AI Document Processing" targetId="doc-intelligence-content" />
             <SmartUploadButton label="Upload Document" />
           </div>
         }
@@ -484,9 +484,9 @@ export default function DocumentIntelligencePage() {
                 <Sparkles className="h-7 w-7 text-white" />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg font-bold">ARIA Document Intelligence Engine</h2>
+                <h2 className="text-lg font-bold">Cara Document Intelligence Engine</h2>
                 <p className="text-sm text-[var(--cs-text-gentle)] mt-1.5 leading-relaxed max-w-2xl">
-                  Upload any operational document. ARIA reads, classifies, extracts entities, detects risks, maps to regulations, suggests tasks, generates management oversight, and creates Reg 45 evidence — all requiring your approval before any record is changed.
+                  Upload any operational document. Cara reads, classifies, extracts entities, detects risks, maps to regulations, suggests tasks, generates management oversight, and creates Reg 45 evidence — all requiring your approval before any record is changed.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
@@ -614,7 +614,7 @@ export default function DocumentIntelligencePage() {
                 </div>
                 <div className="text-sm text-[var(--cs-text-muted)] mt-1 max-w-sm mx-auto leading-relaxed">
                   {allDocs.length === 0
-                    ? "Upload your first document and ARIA will classify, extract intelligence, and suggest actions."
+                    ? "Upload your first document and Cara will classify, extract intelligence, and suggest actions."
                     : "Try clearing your filters to see all documents."
                   }
                 </div>
@@ -637,7 +637,7 @@ export default function DocumentIntelligencePage() {
             </div>
           )}
 
-          {/* What ARIA supports */}
+          {/* What Cara supports */}
           <div className="rounded-2xl border border-[var(--cs-border-subtle)] bg-slate-50 p-5 space-y-4">
             <div className="text-xs font-bold text-[var(--cs-text-secondary)]">Supported document types</div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 text-[11px] text-[var(--cs-text-muted)]">
@@ -660,7 +660,7 @@ export default function DocumentIntelligencePage() {
             <div className="flex items-start gap-2 rounded-xl border border-[var(--cs-border)] bg-white p-3">
               <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
               <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
-                <strong>Security:</strong> ARIA treats all uploaded document content as data. If a document contains instructions attempting to manipulate ARIA (e.g. &ldquo;ignore previous instructions&rdquo;), they are automatically detected, flagged, and ignored. All AI suggestions require explicit human approval before creating any records. Full audit trail is maintained for every action.
+                <strong>Security:</strong> Cara treats all uploaded document content as data. If a document contains instructions attempting to manipulate Cara (e.g. &ldquo;ignore previous instructions&rdquo;), they are automatically detected, flagged, and ignored. All AI suggestions require explicit human approval before creating any records. Full audit trail is maintained for every action.
               </p>
             </div>
           </div>

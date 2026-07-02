@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX (detail page)
+// CARA — MANAGER ACTION INBOX (detail page)
 // One prioritised command centre for managers, deputies, team leaders and the RI.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -44,7 +44,7 @@ export default function ManagerInboxPage() {
       subtitle="Everything that needs a human decision — approvals, safeguarding, high-risk and compliance — in one prioritised list, built from the event stream"
       icon={<Inbox className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Manager Action Inbox", sourceType: "general" }}
+      caraContext={{ pageTitle: "Manager Action Inbox", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24"><Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" /></div>
@@ -56,7 +56,7 @@ export default function ManagerInboxPage() {
             <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">
               This is assembled automatically from events across the home — it never decides or acts on its own. Each item
               shows <strong>why</strong> it's here, the <strong>deadline</strong>, the linked child/staff, the required
-              action, an <strong>ARIA-suggested response</strong> and the evidence it will contribute to. Approving,
+              action, an <strong>Cara-suggested response</strong> and the evidence it will contribute to. Approving,
               requesting changes or escalating remain your decision, with a full audit trail. Reg 13 (leadership oversight).
             </p>
           </div>
@@ -111,8 +111,8 @@ export default function ManagerInboxPage() {
                   <CardContent className="space-y-2">
                     <p className="text-xs text-[var(--cs-text-secondary)]"><span className="text-[var(--cs-text-muted)]">Why:</span> {it.reason}</p>
                     <p className="text-xs text-[var(--cs-text-secondary)] flex items-start gap-1"><ListChecks className="h-3.5 w-3.5 shrink-0 mt-0.5 text-brand" /> {it.required_action}{it.approval_level ? ` (${it.approval_level.replace("_", " ")})` : ""}</p>
-                    {it.aria_suggested_response && (
-                      <p className="text-[11px] text-purple-700 flex items-start gap-1"><Brain className="h-3.5 w-3.5 shrink-0 mt-0.5" /> Suggested: {it.aria_suggested_response}</p>
+                    {it.cara_suggested_response && (
+                      <p className="text-[11px] text-purple-700 flex items-start gap-1"><Brain className="h-3.5 w-3.5 shrink-0 mt-0.5" /> Suggested: {it.cara_suggested_response}</p>
                     )}
                     {it.evidence_categories.length > 0 && (
                       <div className="flex flex-wrap gap-1">

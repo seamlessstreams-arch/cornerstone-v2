@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD EXPERIENCE TAB
+// CARA — CHILD EXPERIENCE TAB
 // Full intelligence view for one child: scores, patterns, interventions,
 // practice bank, voice records, and trusted adult map.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -132,7 +132,7 @@ const INT_STATUS_CLASSES: Record<string, string> = {
   paused:       "bg-amber-100 text-amber-800",
   completed:    "bg-blue-100 text-blue-800",
   stopped:      "bg-[var(--cs-surface)] text-[var(--cs-text-secondary)]",
-  under_review: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)]",
+  under_review: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)]",
 };
 
 const INT_OUTCOME_CLASSES: Record<string, string> = {
@@ -169,7 +169,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
   const { data, isLoading, isError } = useChildExperienceLatest(childId);
   const snapshot = data?.data ?? null;
 
-  // Supporting data used to build ARIA context
+  // Supporting data used to build Cara context
   const { data: alertsData }        = usePatternAlerts({ childId });
   const { data: interventionsData } = useInterventions(childId);
   const { data: voiceData }         = useVoiceRecords(childId);
@@ -245,8 +245,8 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
 
       const childContext = lines.join("\n");
 
-      // Call ARIA in compute_experience_snapshot mode (non-streaming JSON mode)
-      const res = await fetch("/api/v1/aria", {
+      // Call Cara in compute_experience_snapshot mode (non-streaming JSON mode)
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -259,14 +259,14 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err?.error ?? `ARIA returned ${res.status}`);
+        throw new Error(err?.error ?? `Cara returned ${res.status}`);
       }
 
       const json = await res.json();
       const parsed = json?.data?.parsed;
 
       if (!parsed || typeof parsed !== "object") {
-        throw new Error("ARIA did not return a valid JSON snapshot");
+        throw new Error("Cara did not return a valid JSON snapshot");
       }
 
       // Build period dates: last 30 days
@@ -290,11 +290,11 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
         stability_score:       Number(parsed.stability_score     ?? 50),
         achievement_score:     Number(parsed.achievement_score   ?? 50),
         overall_score:         Number(parsed.overall_score       ?? 50),
-        narrative:             parsed.narrative ?? "ARIA analysis complete.",
+        narrative:             parsed.narrative ?? "Cara analysis complete.",
         trend:                 parsed.trend ?? "stable",
         strengths:             Array.isArray(parsed.strengths) ? parsed.strengths : [],
         concerns:              Array.isArray(parsed.concerns)  ? parsed.concerns  : [],
-        computed_by:           "aria",
+        computed_by:           "cara",
       });
 
       setComputeState("success");
@@ -314,7 +314,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <Sparkles className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Experience Scores
           </CardTitle>
 
@@ -374,7 +374,7 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
             <Cpu className="h-10 w-10 text-[var(--cs-text-gentle)]" />
             <p className="text-xs text-[var(--cs-text-muted)] italic">No experience snapshot yet</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">
-              Click <strong>Compute Snapshot</strong> to have ARIA analyse all available data for this child.
+              Click <strong>Compute Snapshot</strong> to have Cara analyse all available data for this child.
             </p>
           </div>
         ) : isError ? (
@@ -408,9 +408,9 @@ function ExperienceScoresPanel({ childId }: { childId: string }) {
             </div>
 
             {snapshot.narrative && (
-              <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-3">
-                <div className="text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider mb-1">
-                  ARIA Narrative
+              <div className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] p-3">
+                <div className="text-[10px] font-semibold text-[var(--cs-cara-gold)] uppercase tracking-wider mb-1">
+                  Cara Narrative
                 </div>
                 <p className="text-xs text-[var(--cs-text-secondary)] leading-relaxed">{snapshot.narrative}</p>
               </div>
@@ -728,7 +728,7 @@ function VoiceRecordsPanel({ childId, childName }: { childId: string; childName:
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <MessageSquareQuote className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <MessageSquareQuote className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             Children&apos;s Voice
           </CardTitle>
           <VoiceCaptureModal childId={childId} childName={childName} />
@@ -743,9 +743,9 @@ function VoiceRecordsPanel({ childId, childName }: { childId: string; childName:
         ) : (
           <div className="space-y-3">
             {records.map((record) => (
-              <div key={record.id} className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]/50 p-3 space-y-2">
+              <div key={record.id} className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)]/50 p-3 space-y-2">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="rounded-full bg-[var(--cs-aria-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-aria-gold)] capitalize">
+                  <span className="rounded-full bg-[var(--cs-cara-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-cara-gold)] capitalize">
                     {voiceThemeLabel(record.theme)}
                   </span>
                   {record.voice_heeded !== null && (
@@ -764,7 +764,7 @@ function VoiceRecordsPanel({ childId, childName }: { childId: string; childName:
                   <span className="ml-auto text-[10px] text-[var(--cs-text-muted)]">{formatDate(record.recorded_at)}</span>
                 </div>
                 {record.direct_quote ? (
-                  <blockquote className="text-xs text-[var(--cs-text-secondary)] italic border-l-2 border-[var(--cs-aria-gold-soft)] pl-2 leading-relaxed">
+                  <blockquote className="text-xs text-[var(--cs-text-secondary)] italic border-l-2 border-[var(--cs-cara-gold-soft)] pl-2 leading-relaxed">
                     "{record.direct_quote}"
                   </blockquote>
                 ) : record.paraphrase ? (
@@ -914,14 +914,14 @@ function TrustedAdultMapPanel({ childId, childName }: { childId: string; childNa
   );
 }
 
-// ── ARIA Child Panel ──────────────────────────────────────────────────────────
+// ── Cara Child Panel ──────────────────────────────────────────────────────────
 
-interface AriaChildPanelProps {
+interface CaraChildPanelProps {
   childId: string;
   childName: string;
 }
 
-type AriaMode =
+type CaraMode =
   | "experience_summary"
   | "practice_bank"
   | "pattern_analysis"
@@ -930,7 +930,7 @@ type AriaMode =
 
 interface PresetPrompt {
   label: string;
-  mode: AriaMode;
+  mode: CaraMode;
   question?: string;
 }
 
@@ -946,11 +946,11 @@ const PRESET_PROMPTS: PresetPrompt[] = [
   { label: "Children's voice summary", mode: "voice_summary" },
 ];
 
-function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
+function CaraChildPanel({ childId, childName }: CaraChildPanelProps) {
   const [customQuestion, setCustomQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<string | null>(null);
-  const [activeMode, setActiveMode] = useState<AriaMode | null>(null);
+  const [activeMode, setActiveMode] = useState<CaraMode | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -1008,7 +1008,7 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
     ].join("\n");
   }
 
-  async function callAria(mode: AriaMode, question?: string) {
+  async function callCara(mode: CaraMode, question?: string) {
     setIsLoading(true);
     setResponse(null);
     setError(null);
@@ -1026,7 +1026,7 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
         source_content: childContext,
       };
 
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -1053,12 +1053,12 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
   }
 
   function handlePreset(preset: PresetPrompt) {
-    callAria(preset.mode, preset.question);
+    callCara(preset.mode, preset.question);
   }
 
   function handleCustomSubmit() {
     if (!customQuestion.trim()) return;
-    callAria("assist", customQuestion.trim());
+    callCara("assist", customQuestion.trim());
   }
 
   function handleCopy() {
@@ -1079,11 +1079,11 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
-          <Brain className="h-4 w-4 text-[var(--cs-aria-gold)]" />
-          Ask ARIA about {childName}
+          <Brain className="h-4 w-4 text-[var(--cs-cara-gold)]" />
+          Ask Cara about {childName}
         </CardTitle>
         <p className="text-[11px] text-[var(--cs-text-muted)] leading-relaxed mt-0.5">
-          ARIA can analyse {childName}&apos;s records, suggest approaches,
+          Cara can analyse {childName}&apos;s records, suggest approaches,
           review what&apos;s working, and support your reflective practice.
         </p>
       </CardHeader>
@@ -1098,8 +1098,8 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
               disabled={isLoading}
               className={cn(
                 "rounded-lg border px-3 py-1.5 text-[11px] font-medium transition-colors",
-                "border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
-                "hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold-soft)]",
+                "border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
+                "hover:bg-[var(--cs-cara-gold-bg)] hover:border-[var(--cs-cara-gold-soft)]",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
@@ -1115,12 +1115,12 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
               rows={3}
               value={customQuestion}
               onChange={(e) => setCustomQuestion(e.target.value)}
-              placeholder="Ask ARIA a custom question about this young person…"
+              placeholder="Ask Cara a custom question about this young person…"
               disabled={isLoading}
               className={cn(
                 "w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5",
                 "text-xs text-[var(--cs-navy)] placeholder:text-[var(--cs-text-muted)]",
-                "resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold-soft)] focus:border-transparent",
+                "resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold-soft)] focus:border-transparent",
                 "disabled:opacity-50"
               )}
             />
@@ -1141,17 +1141,17 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
               disabled={isLoading || !customQuestion.trim()}
               className="bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white text-xs px-4"
             >
-              Ask ARIA
+              Ask Cara
             </Button>
           </div>
         </div>
 
         {/* Loading state */}
         {isLoading && (
-          <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)] p-4">
+          <div className="flex items-center gap-3 rounded-xl border border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)] p-4">
             <Brain className="h-5 w-5 text-[var(--cs-text-muted)] animate-pulse shrink-0" />
-            <span className="text-xs text-[var(--cs-aria-gold)] font-medium">
-              ARIA is thinking…
+            <span className="text-xs text-[var(--cs-cara-gold)] font-medium">
+              Cara is thinking…
             </span>
           </div>
         )}
@@ -1166,10 +1166,10 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
         {/* Response output */}
         {response && !isLoading && (
           <div className="space-y-2">
-            <div className="rounded-xl border border-[var(--cs-aria-gold-soft)] bg-white p-4 space-y-3">
+            <div className="rounded-xl border border-[var(--cs-cara-gold-soft)] bg-white p-4 space-y-3">
               {/* Header row */}
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="rounded-full bg-[var(--cs-aria-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-aria-gold)] uppercase tracking-wider">
+                <span className="rounded-full bg-[var(--cs-cara-gold-bg)] px-2 py-0.5 text-[10px] font-semibold text-[var(--cs-cara-gold)] uppercase tracking-wider">
                   MODE: {activeMode}
                 </span>
                 <div className="flex items-center gap-2">
@@ -1199,7 +1199,7 @@ function AriaChildPanel({ childId, childName }: AriaChildPanelProps) {
             {/* Disclaimer */}
             <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
               AI-generated content. Always subject to professional judgement —
-              ARIA does not replace practitioner decision-making.
+              Cara does not replace practitioner decision-making.
             </p>
           </div>
         )}
@@ -1224,7 +1224,7 @@ export function ChildExperienceTab({ childId, childName }: ChildExperienceTabPro
       <PracticeBankPanel childId={childId} childName={childName} />
       <VoiceRecordsPanel childId={childId} childName={childName} />
       <TrustedAdultMapPanel childId={childId} childName={childName} />
-      <AriaChildPanel childId={childId} childName={childName} />
+      <CaraChildPanel childId={childId} childName={childName} />
     </div>
   );
 }

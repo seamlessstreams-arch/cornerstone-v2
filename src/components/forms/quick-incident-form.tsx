@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — QUICK INCIDENT FORM
+// CARA — QUICK INCIDENT FORM
 // Calm, progressive incident recording for stressful situations.
 // Auto-fills child name, date/time, location, recording staff.
 // 5-step progressive flow. Large text, simple choices.
@@ -11,6 +11,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EnterOnceIndicator } from "@/components/forms/enter-once-indicator";
+import { InlineEmotionalSafetyPanel } from "@/components/emotional-safety/inline-emotional-safety-panel";
 import {
   AlertTriangle,
   ArrowLeft,
@@ -360,7 +361,7 @@ export function QuickIncidentForm({
             </div>
             <div className="h-1.5 rounded-full bg-[var(--cs-surface)] overflow-hidden">
               <div
-                className="h-full rounded-full bg-[var(--cs-aria-gold)] transition-all duration-300"
+                className="h-full rounded-full bg-[var(--cs-cara-gold)] transition-all duration-300"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -417,6 +418,9 @@ export function QuickIncidentForm({
               className="col-span-2"
             />
           </div>
+
+          {/* ── Point-of-work: emotional safety profile for this child ──── */}
+          <InlineEmotionalSafetyPanel childId={childId} className="mb-4" />
 
           {/* ── Step content ──────────────────────────────────────────── */}
           <div className="min-h-[200px]">
@@ -514,7 +518,7 @@ export function QuickIncidentForm({
                       className={cn(
                         "rounded-xl border-2 px-4 py-2 min-h-[48px] text-sm transition-all",
                         form.involvedPersons.includes(person)
-                          ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] text-[var(--cs-navy)] font-medium"
+                          ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)] text-[var(--cs-navy)] font-medium"
                           : "border-[var(--cs-border)] bg-[var(--cs-surface-elevated)] text-[var(--cs-text-secondary)] hover:border-[var(--cs-border-subtle)]",
                       )}
                     >

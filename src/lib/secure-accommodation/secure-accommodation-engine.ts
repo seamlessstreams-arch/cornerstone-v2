@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Secure Accommodation Intelligence Engine
+// Cara Secure Accommodation Intelligence Engine
 //
 // Evaluates compliance with secure accommodation requirements under
 // Children Act 1989 s25, welfare review quality, restriction justification,

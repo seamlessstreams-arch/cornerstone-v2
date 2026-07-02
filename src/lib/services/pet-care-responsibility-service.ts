@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PET CARE RESPONSIBILITY SERVICE
+// CARA — PET CARE RESPONSIBILITY SERVICE
 // Tracks pet care activities, animal welfare responsibilities, and the
 // therapeutic benefits of pet ownership for children in residential care.
 // CHR 2015 Reg 6 (quality of care), Reg 9 (enjoyment and achievement),

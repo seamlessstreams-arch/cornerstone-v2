@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT PLANS SERVICE
+// CARA — BEHAVIOUR SUPPORT PLANS SERVICE
 // Manages formal behaviour support plans (BSPs) for children, tracking
 // strategies, triggers, de-escalation approaches, positive reinforcement,
 // and plan reviews. Distinct from behaviour-service (incident recording).

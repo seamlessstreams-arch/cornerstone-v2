@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Missing & Absent Episodes Intelligence — Public API
+// Cara Missing & Absent Episodes Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

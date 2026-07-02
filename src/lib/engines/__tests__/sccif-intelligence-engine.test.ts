@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE — TEST SUITE
+// CARA — SCCIF SELF-EVALUATION INTELLIGENCE ENGINE — TEST SUITE
 // Social Care Common Inspection Framework — self-evaluation coverage,
 // strength ratios, action completion, evidence gaps, inspection readiness.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -868,9 +868,9 @@ describe("computeSCCIFIntelligence — injectable today", () => {
   });
 });
 
-// ── Full Oak House Integration Scenario ──────────────────────────────────────
+// ── Full Chamberlain House Integration Scenario ──────────────────────────────────────
 
-describe("computeSCCIFIntelligence — Oak House integration scenario", () => {
+describe("computeSCCIFIntelligence — Chamberlain House integration scenario", () => {
   const oakHouseAreas: SelfEvaluationAreaInput[] = [
     {
       id: "seva_oh_1",

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME REGULATORY COMPLIANCE COMPOSITE ENGINE
+// CARA — HOME REGULATORY COMPLIANCE COMPOSITE ENGINE
 // Aggregates regulatory evidence across Reg 44/45/46 visits, policy reviews,
 // data governance, quality assurance audits, notifiable events, and document control.
 // Pure deterministic engine. CHR 2015 Reg 44–46 / Schedule 7.

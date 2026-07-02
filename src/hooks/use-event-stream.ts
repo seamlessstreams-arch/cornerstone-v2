@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIFIED EVENT STREAM HOOK
+// CARA — UNIFIED EVENT STREAM HOOK
 // React Query wrapper for /api/v1/event-stream
 // ══════════════════════════════════════════════════════════════════════════════
 

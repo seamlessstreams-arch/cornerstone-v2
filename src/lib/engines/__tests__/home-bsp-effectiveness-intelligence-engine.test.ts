@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BSP EFFECTIVENESS INTELLIGENCE ENGINE — TESTS
+// CARA — HOME BSP EFFECTIVENESS INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

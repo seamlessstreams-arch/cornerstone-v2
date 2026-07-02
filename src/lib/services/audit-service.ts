@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — IMMUTABLE AUDIT TRAIL SERVICE
+// CARA — IMMUTABLE AUDIT TRAIL SERVICE
 // INSERT-only audit log. No UPDATE, no DELETE — ever.
 // Every significant action in the system is recorded with full context.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -44,7 +44,7 @@ export const AUDIT_ENTITY_TYPES = {
   ROLE_ASSIGNMENT:     "role_assignment",
   PERMISSION:          "permission_change",
   SYSTEM_SETTING:      "system_setting",
-  ARIA_RECOMMENDATION: "aria_recommendation",
+  CARA_RECOMMENDATION: "cara_recommendation",
   INSPECTION_SCAN:     "inspection_scan",
   EXPORT:              "data_export",
   SESSION:             "user_session",

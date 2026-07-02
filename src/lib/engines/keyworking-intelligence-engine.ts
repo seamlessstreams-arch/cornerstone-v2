@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKING INTELLIGENCE ENGINE
+// CARA — KEYWORKING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses key working session frequency, quality, mood impact, therapeutic
@@ -103,7 +103,7 @@ export interface KeyworkingAlert {
   message: string;
 }
 
-export interface AriaKeyworkingInsight {
+export interface CaraKeyworkingInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -115,7 +115,7 @@ export interface KeyworkingIntelligenceResult {
   session_type_breakdown: SessionTypeBreakdown[];
   follow_up_compliance: FollowUpCompliance;
   alerts: KeyworkingAlert[];
-  insights: AriaKeyworkingInsight[];
+  insights: CaraKeyworkingInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -338,8 +338,8 @@ export function computeKeyworkingIntelligence(input: KeyworkingIntelligenceInput
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaKeyworkingInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraKeyworkingInsight[] = [];
 
   // Critical: overdue children
   if (overdueChildren.length > 0) {

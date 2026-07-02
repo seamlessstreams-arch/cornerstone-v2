@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology — QA Sampling Tests
+// Cara Quality Ecology — QA Sampling Tests
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -39,7 +39,7 @@ function makeOccurrence(overrides: Partial<ScheduledOccurrence> = {}): Scheduled
     qaRequired: true,
     evidenceTags: [],
     escalationLevel: 0,
-    ariaReviewed: false,
+    caraReviewed: false,
     ...overrides,
   };
 }
@@ -63,7 +63,7 @@ function makeTemplate(overrides: Partial<TaskTemplate> = {}): TaskTemplate {
     requiresManagerReview: false,
     qaRequired: true,
     qaSamplePercentage: 20,
-    ariaReviewRequired: false,
+    caraReviewRequired: false,
     filingLocation: "H&S > Fire",
     evidenceTags: [],
     regulationLinks: [],

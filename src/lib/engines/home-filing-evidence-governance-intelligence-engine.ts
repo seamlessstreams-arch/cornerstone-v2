@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FILING EVIDENCE GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME FILING EVIDENCE GOVERNANCE INTELLIGENCE ENGINE
 // Home-level: aggregates filing cabinet items and care events to assess the
 // quality and governance of evidence filing — critical for Ofsted inspection
 // readiness. Ensures every significant event has properly filed, verified,

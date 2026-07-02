@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATORY REPORTING INTELLIGENCE ENGINE — TEST SUITE
+// CARA — REGULATORY REPORTING INTELLIGENCE ENGINE — TEST SUITE
 // Reg 44 visit schedule, Reg 45 quality of care reviews, Reg 40 notifications,
 // recommendation tracking, overall compliance score, alerts, and insights.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1040,9 +1040,9 @@ describe("computeRegulatoryReportingIntelligence", () => {
     });
   });
 
-  // ── Oak House Scenario ──────────────────────────────────────────────────────
+  // ── Chamberlain House Scenario ──────────────────────────────────────────────────────
 
-  describe("Oak House test data scenario", () => {
+  describe("Chamberlain House test data scenario", () => {
     function buildOakHouseInput(): RegulatoryReportingIntelligenceInput {
       // 11 completed reports (1 per month for the last 11 months) + 1 in_progress
       const completedReports: Reg44ReportInput[] = [];

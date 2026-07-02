@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Filing Cabinet — Retention & Retrieval Engine
+// Cara Filing Cabinet — Retention & Retrieval Engine
 //
 // Deterministic engine for document retention, destruction scheduling,
 // compliance tracking, and filing against CHR 2015 and DPA 2018.

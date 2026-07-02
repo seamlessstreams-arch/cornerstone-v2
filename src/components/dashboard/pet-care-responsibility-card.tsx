@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PET CARE RESPONSIBILITY CARD
+// CARA — PET CARE RESPONSIBILITY CARD
 // Live data from placement intelligence engine.
 // CHR 2015 Reg 12, Reg 34. SCCIF: Helped & Protected.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { usePlacementStability } from "@/hooks/use-placement-stability";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function PetCareResponsibilityCard() {
@@ -60,7 +60,7 @@ export function PetCareResponsibilityCard() {
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.home_metrics?.children_at_risk ?? 0) > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.home_metrics?.children_at_risk ?? 0) > 0 ? "text-amber-600" : "text-green-600")}>{d?.home_metrics?.children_at_risk ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.home_metrics?.children_at_risk ?? 0) > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.home_metrics?.children_at_risk ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">At Risk</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
@@ -73,7 +73,7 @@ export function PetCareResponsibilityCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Pet Care Intelligence
+              Cara Pet Care Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

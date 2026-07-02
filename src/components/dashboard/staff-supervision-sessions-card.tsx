@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPERVISION SESSIONS INTELLIGENCE CARD
+// CARA — STAFF SUPERVISION SESSIONS INTELLIGENCE CARD
 // Dashboard widget for supervision session counts, staff wellbeing,
-// pending actions, and ARIA intelligence insights.
+// pending actions, and Cara intelligence insights.
 // Powered by the Supervision Intelligence Engine — live data (Reg 33/16).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,16 +20,16 @@ import { useSupervisionIntelligence } from "@/hooks/use-supervision-intelligence
 // ── Styling ──────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_BADGE: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
@@ -94,13 +94,13 @@ export function StaffSupervisionSessionsCard() {
             <p className="text-[10px] text-muted-foreground">Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.avg_wellbeing_score >= 7 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.avg_wellbeing_score >= 7 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.avg_wellbeing_score >= 7 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.avg_wellbeing_score}/10
             </p>
             <p className="text-[10px] text-muted-foreground">Wellbeing</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", totalActionsPending > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalActionsPending > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", totalActionsPending > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {totalActionsPending}
             </p>
             <p className="text-[10px] text-muted-foreground">Actions</p>
@@ -176,13 +176,13 @@ export function StaffSupervisionSessionsCard() {
           </div>
         )}
 
-        {/* ── ARIA Supervision Intelligence ────────────────────────────── */}
+        {/* ── Cara Supervision Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Supervision Intelligence
+              Cara Supervision Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

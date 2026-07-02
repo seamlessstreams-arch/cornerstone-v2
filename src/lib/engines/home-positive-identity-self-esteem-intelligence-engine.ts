@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME POSITIVE IDENTITY & SELF-ESTEEM INTELLIGENCE ENGINE
+// CARA -- HOME POSITIVE IDENTITY & SELF-ESTEEM INTELLIGENCE ENGINE
 // Tracks identity and self-esteem development -- identity exploration work,
 // life story engagement, self-esteem programme participation, achievement
 // celebration, and positive self-image development.

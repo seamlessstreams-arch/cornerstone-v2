@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TASK EXPLORER SERVICE
+// CARA — TASK EXPLORER SERVICE
 // Full task lifecycle: create → assign → track → escalate → sign off.
-// Supports ARIA risk scoring, dependencies, recurrence, and delegation.
+// Supports Cara risk scoring, dependencies, recurrence, and delegation.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";
@@ -44,7 +44,7 @@ const CATEGORY_PREFIX: Record<CsTaskCategory, string> = {
   inspection: "INS",
   health_and_safety: "HSE",
   admin: "ADM",
-  aria_generated: "ARA",
+  cara_generated: "ARA",
 };
 
 // ── Task CRUD ───────────────────────────────────────────────────────────────
@@ -124,8 +124,8 @@ export async function createTask(input: {
   parent_task_id?: string;
   tags?: string[];
   regulation_refs?: string[];
-  aria_generated?: boolean;
-  aria_source?: string;
+  cara_generated?: boolean;
+  cara_source?: string;
   created_by: string;
 }): Promise<ServiceResult<CsTask>> {
   const s = sb();
@@ -157,8 +157,8 @@ export async function createTask(input: {
       parent_task_id: input.parent_task_id ?? null,
       tags: input.tags ?? [],
       regulation_refs: input.regulation_refs ?? [],
-      aria_generated: input.aria_generated ?? false,
-      aria_source: input.aria_source ?? null,
+      cara_generated: input.cara_generated ?? false,
+      cara_source: input.cara_source ?? null,
       created_by: input.created_by,
     })
     .select()
@@ -404,7 +404,7 @@ export async function getEscalationRules(
   return { ok: true, data: data ?? [] };
 }
 
-// ── ARIA risk scoring ───────────────────────────────────────────────────────
+// ── Cara risk scoring ───────────────────────────────────────────────────────
 
 export interface TaskRiskAssessment {
   score: number;
@@ -413,7 +413,7 @@ export interface TaskRiskAssessment {
 }
 
 /**
- * Compute an ARIA risk score for a task based on multiple factors.
+ * Compute an Cara risk score for a task based on multiple factors.
  * Score is 0-100 where higher = higher risk of overdue/failure.
  */
 export function computeTaskRiskScore(task: CsTask): TaskRiskAssessment {

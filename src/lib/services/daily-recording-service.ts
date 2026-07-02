@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DAILY RECORDING & SHIFT NOTES SERVICE
+// CARA — DAILY RECORDING & SHIFT NOTES SERVICE
 // Manages daily logs, shift notes, handover records, and recording quality
-// analytics. Powers ARIA's recording intelligence and Reg 36 compliance.
+// analytics. Powers Cara's recording intelligence and Reg 36 compliance.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

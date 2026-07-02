@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARRIVAL & SETTLING EXPERIENCE INTELLIGENCE CARD
+// CARA — ARRIVAL & SETTLING EXPERIENCE INTELLIGENCE CARD
 // Live data from usePlacementStability() — home metrics, children.
 // CHR 2015 Reg 36. SCCIF: Overall Experiences.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { usePlacementStability } from "@/hooks/use-placement-stability";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function ArrivalSettlingExperienceCard() {
@@ -66,7 +66,7 @@ export function ArrivalSettlingExperienceCard() {
             <p className="text-[10px] text-muted-foreground">Children</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", (metrics?.average_stability_score ?? 0) >= 70 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (metrics?.average_stability_score ?? 0) >= 70 ? "text-green-600" : "text-amber-600")}>{metrics?.average_stability_score ?? 0}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", (metrics?.average_stability_score ?? 0) >= 70 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{metrics?.average_stability_score ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Stability</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -79,13 +79,13 @@ export function ArrivalSettlingExperienceCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {(d?.insights ?? []).length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Settling Intelligence
+              Cara Settling Intelligence
             </p>
             {(d?.insights ?? []).slice(0, 2).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ADMINISTRATION INTELLIGENCE ENGINE
+// CARA — MEDICATION ADMINISTRATION INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses medication adherence, refusals, timeliness, witnessing compliance,
@@ -106,7 +106,7 @@ export interface MedicationAlert {
   message: string;
 }
 
-export interface AriaMedicationInsight {
+export interface CaraMedicationInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -117,7 +117,7 @@ export interface MedicationIntelligenceResult {
   medication_details: MedicationDetail[];
   prn_analysis: PRNAnalysis;
   alerts: MedicationAlert[];
-  insights: AriaMedicationInsight[];
+  insights: CaraMedicationInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -330,8 +330,8 @@ export function computeMedicationIntelligence(input: MedicationIntelligenceInput
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaMedicationInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraMedicationInsight[] = [];
 
   // Critical: missed doses
   if (missed > 0) {

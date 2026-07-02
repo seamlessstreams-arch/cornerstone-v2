@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME RESTRICTIVE PRACTICE INTELLIGENCE ENGINE
+// CARA — HOME RESTRICTIVE PRACTICE INTELLIGENCE ENGINE
 // Home-level: synthesises restraint data to assess frequency, proportionality,
 // de-escalation quality, debrief completion, review compliance, and training.
 // CHR 2015 Reg 19, 20. SCCIF: "Safe", "Well-led and managed."

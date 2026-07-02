@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY TREND HOOK
+// CARA — RECORDING QUALITY TREND HOOK
 // React Query wrapper for /api/v1/recording-quality-trend
 // ══════════════════════════════════════════════════════════════════════════════
 

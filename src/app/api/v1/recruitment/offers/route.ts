@@ -1,12 +1,21 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { requirePermissionAsync } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
+import { createRecruitmentAuditRecord, persistRecruitmentOffer } from "@/lib/supabase/recruitment-persist";
 import { evaluateCandidateRules } from "@/lib/recruitment-rules";
 
 // ── PATCH /api/v1/recruitment/offers ─────────────────────────────────────────
 // Supports: grant_final_clearance, update offer details
 
 export async function PATCH(req: NextRequest) {
-  const body = await req.json();
+  const auth = await requirePermissionAsync(req, PERMISSIONS.MANAGE_RECRUITMENT);
+  if (auth instanceof NextResponse) return auth;
+
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const { candidate_id, action, by } = body;
 
   if (!candidate_id) {
@@ -46,8 +55,9 @@ export async function PATCH(req: NextRequest) {
       final_clearance_by: by ?? "staff_darren",
       status: "final_accepted",
     });
+    if (updated) void persistRecruitmentOffer(updated); // best-effort write-through (no-op when off)
 
-    db.recruitmentAudit.create({
+    createRecruitmentAuditRecord({
       candidate_id,
       actor_id: by ?? "staff_darren",
       event_type: "final_clearance_granted",

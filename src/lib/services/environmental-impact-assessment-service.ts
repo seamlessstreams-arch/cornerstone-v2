@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ENVIRONMENTAL IMPACT ASSESSMENT SERVICE
+// CARA — ENVIRONMENTAL IMPACT ASSESSMENT SERVICE
 // Manages Environmental Impact Assessments — energy efficiency,
 // waste management, sustainability measures, carbon footprint reduction,
 // and environmental responsibility for children's homes.
@@ -273,7 +273,7 @@ export function computeEnvironmentalImpactAlerts(
   return alerts;
 }
 
-export function generateEnvironmentalImpactAriaInsights(
+export function generateEnvironmentalImpactCaraInsights(
   metrics: ReturnType<typeof computeEnvironmentalImpactMetrics>,
   alerts: ReturnType<typeof computeEnvironmentalImpactAlerts>,
 ): string[] {
@@ -332,5 +332,5 @@ export function generateEnvironmentalImpactAriaInsights(
 export const _testing = {
   computeEnvironmentalImpactMetrics,
   computeEnvironmentalImpactAlerts,
-  generateEnvironmentalImpactAriaInsights,
+  generateEnvironmentalImpactCaraInsights,
 };

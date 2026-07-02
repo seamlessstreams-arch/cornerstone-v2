@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Quality Ecology Engine — Core Types
+// Cara Quality Ecology Engine — Core Types
 //
 // The Quality Ecology manages the lifecycle of every form, task, check and
 // review in the home. Items move through a deterministic lifecycle:
@@ -107,7 +107,7 @@ export interface TaskTemplate {
   requiresManagerReview: boolean;
   qaRequired: boolean;
   qaSamplePercentage?: number;      // 0-100
-  ariaReviewRequired: boolean;
+  caraReviewRequired: boolean;
 
   // Filing
   filingLocation: string;           // e.g. "Home Compliance > Fire Safety > Daily Checks"
@@ -196,10 +196,10 @@ export interface ScheduledOccurrence {
   escalatedTo?: string;
   escalationReason?: string;
 
-  // Aria
-  ariaReviewed: boolean;
-  ariaQualityScore?: number;
-  ariaSuggestions?: string[];
+  // Cara
+  caraReviewed: boolean;
+  caraQualityScore?: number;
+  caraSuggestions?: string[];
 }
 
 // ── Status Transition ───────────────────────────────────────────────────────

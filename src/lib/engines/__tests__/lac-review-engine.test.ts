@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LAC REVIEW & PERMANENCE ENGINE TESTS
+// CARA — LAC REVIEW & PERMANENCE ENGINE TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -389,7 +389,7 @@ describe("computeLACReviewIntelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for overdue reviews", () => {
       const result = computeLACReviewIntelligence({
         children: [makeChild("yp_1", "Alex")],
@@ -474,7 +474,7 @@ describe("computeLACReviewIntelligence", () => {
     });
   });
 
-  describe("full Oak House integration", () => {
+  describe("full Chamberlain House integration", () => {
     it("produces comprehensive output for 3 children with 3 reviews", () => {
       const children: ChildInput[] = [
         makeChild("yp_alex", "Alex", "2025-03-01"),

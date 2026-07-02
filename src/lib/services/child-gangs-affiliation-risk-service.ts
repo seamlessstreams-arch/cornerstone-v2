@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD GANGS AFFILIATION RISK SERVICE
+// CARA — CHILD GANGS AFFILIATION RISK SERVICE
 // Tracks gang affiliation risk indicators, disruption strategies, and
 // multi-agency working for children in residential care.
 // CHR 2015 Reg 12 (protection of children — safeguarding from exploitation),
@@ -209,7 +209,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function computeAriaInsights(
+export function computeCaraInsights(
   metrics: ReturnType<typeof computeMetrics>,
   alerts?: ReturnType<typeof computeAlerts>,
 ): string[] {
@@ -345,5 +345,5 @@ export async function updateRecord(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  computeAriaInsights,
+  computeCaraInsights,
 };

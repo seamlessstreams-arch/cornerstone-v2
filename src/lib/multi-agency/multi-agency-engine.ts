@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Multi-Agency Working Engine
+// Cara Multi-Agency Working Engine
 //
 // Deterministic engine for tracking professional network coordination,
 // communication quality, meeting attendance, and information sharing

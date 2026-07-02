@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS & REPRESENTATIONS REGISTER
+// CARA — COMPLAINTS & REPRESENTATIONS REGISTER
 // Statutory Guidance on Complaints in Children's Social Care (2016)
 // Children's Homes Quality Standards — Standard 3 (Rights & Responsibilities)
 // ══════════════════════════════════════════════════════════════════════════════
@@ -24,10 +24,10 @@ import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
 import { useComplaints, useCreateComplaint, useUpdateComplaint } from "@/hooks/use-complaints";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { getYPName } from "@/lib/seed-data";
-import { AriaWriteToChild } from "@/components/aria/aria-write-to-child";
+import { CaraWriteToChild } from "@/components/cara/cara-write-to-child";
 import type {
   Complaint, ComplaintStatus, ComplaintOutcome, ComplaintCategory, ComplainantType,
 } from "@/types/extended";
@@ -54,7 +54,7 @@ const STATUS_COLOUR: Record<ComplaintStatus, string> = {
   received:            "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   acknowledged:        "bg-blue-50 text-blue-700 border-blue-200",
   under_investigation: "bg-amber-50 text-amber-700 border-amber-200",
-  response_sent:       "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)]",
+  response_sent:       "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)]",
   escalated:           "bg-rose-50 text-rose-700 border-rose-200",
   closed:              "bg-emerald-50 text-emerald-700 border-emerald-200",
 };
@@ -138,13 +138,13 @@ function isOverdue(complaint: Complaint): boolean {
 function ComplaintCard({
   complaint,
   onUpdate,
-  onAriaAnalysis,
-  ariaBusy,
+  onCaraAnalysis,
+  caraBusy,
 }: {
   complaint: Complaint;
   onUpdate: (id: string, data: Partial<Complaint>) => void;
-  onAriaAnalysis: (c: Complaint) => void;
-  ariaBusy: string | null;
+  onCaraAnalysis: (c: Complaint) => void;
+  caraBusy: string | null;
 }) {
   const [expanded, setExpanded] = useState(complaint.status !== "closed");
   const overdue  = isOverdue(complaint);
@@ -319,30 +319,30 @@ function ComplaintCard({
             </div>
           )}
 
-          {/* ARIA analysis */}
-          {complaint.aria_summary ? (
+          {/* Cara analysis */}
+          {complaint.cara_summary ? (
             <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">ARIA Analysis</p>
+                <p className="text-[10px] font-semibold text-teal-700 uppercase tracking-widest">Cara Analysis</p>
               </div>
-              <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.aria_summary}</p>
+              <p className="text-xs text-[var(--cs-text-secondary)]">{complaint.cara_summary}</p>
             </div>
           ) : (
             <button
-              onClick={() => onAriaAnalysis(complaint)}
-              disabled={ariaBusy === complaint.id}
+              onClick={() => onCaraAnalysis(complaint)}
+              disabled={caraBusy === complaint.id}
               className="inline-flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-800 disabled:opacity-50"
             >
-              {ariaBusy === complaint.id
-                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />ARIA analysing…</>
-                : <><Sparkles className="h-3.5 w-3.5" />Generate ARIA analysis</>}
+              {caraBusy === complaint.id
+                ? <><Sparkles className="h-3.5 w-3.5 animate-spin" />Cara analysing…</>
+                : <><Sparkles className="h-3.5 w-3.5" />Generate Cara analysis</>}
             </button>
           )}
 
           {/* Write to Child — complaint */}
           {complaint.child_id && (
-            <AriaWriteToChild
+            <CaraWriteToChild
               source="complaint"
               sourceText={complaint.outcome_detail || complaint.summary}
               sourceRecordId={complaint.id}
@@ -522,8 +522,8 @@ export default function ComplaintsPage() {
   const meta       = complaintsQuery.data?.meta;
 
   const [showNew, setShowNew]     = useState(false);
-  const [ariaBusy, setAriaBusy]   = useState<string | null>(null);
-  const [ariaError, setAriaError] = useState<string | null>(null);
+  const [caraBusy, setCaraBusy]   = useState<string | null>(null);
+  const [caraError, setCaraError] = useState<string | null>(null);
   const [search, setSearch]       = useState("");
   const [sortBy, setSortBy]       = useState<"date" | "reference" | "severity">("date");
   const [categoryFilter, setCategoryFilter] = useState<"all" | ComplaintCategory>("all");
@@ -593,12 +593,12 @@ export default function ComplaintsPage() {
     await createComplaint.mutateAsync(data);
   };
 
-  const handleAriaAnalysis = async (complaint: Complaint) => {
-    setAriaBusy(complaint.id);
-    setAriaError(null);
+  const handleCaraAnalysis = async (complaint: Complaint) => {
+    setCaraBusy(complaint.id);
+    setCaraError(null);
     try {
       const ypName = complaint.child_id ? getYPName(complaint.child_id) : "not specified";
-      const prompt = `You are ARIA, a regulatory compliance AI for a children's residential home. Analyse this complaint and provide a concise 2–3 sentence summary covering: nature and validity of the complaint, timeliness of response, outcome and learning. Note any quality standard implications. Be precise and child-rights focused.
+      const prompt = `You are Cara, a regulatory compliance AI for a children's residential home. Analyse this complaint and provide a concise 2–3 sentence summary covering: nature and validity of the complaint, timeliness of response, outcome and learning. Note any quality standard implications. Be precise and child-rights focused.
 
 Reference: ${complaint.reference}
 Complainant: ${COMPLAINANT_LABELS[complaint.complainant_type]} — ${complaint.complainant_name}
@@ -612,7 +612,7 @@ ${complaint.outcome_detail ? `Outcome detail: ${complaint.outcome_detail}` : ""}
 ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
 
       const response = await api.post<{ choices: { message: { content: string } }[] }>(
-        "/aria/chat",
+        "/cara/chat",
         { messages: [{ role: "user", content: prompt }], context: "complaint_analysis" },
       );
 
@@ -620,11 +620,11 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         response?.choices?.[0]?.message?.content ??
         `${complaint.reference} (${CATEGORY_LABELS[complaint.category]}) — ${complaint.outcome ? OUTCOME_LABELS[complaint.outcome] : "pending outcome"}. ${complaint.status === "closed" ? "Closed within statutory timeframe." : `Response due ${formatDate(complaint.response_due)}.`} ${complaint.lessons_learned ? "Learning documented." : "Learning pending."}`;
 
-      await updateComplaint.mutateAsync({ id: complaint.id, data: { aria_summary: summary } });
+      await updateComplaint.mutateAsync({ id: complaint.id, data: { cara_summary: summary } });
     } catch {
-      setAriaError("ARIA analysis failed — please try again");
+      setCaraError("Cara analysis failed — please try again");
     } finally {
-      setAriaBusy(null);
+      setCaraBusy(null);
     }
   };
 
@@ -640,12 +640,12 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
     <PageShell
       title="Complaints & Representations"
       subtitle="Formal complaints register — statutory timelines, outcomes and learning"
-      ariaContext={{ pageTitle: "Complaints & Representations", sourceType: "general" }}
+      caraContext={{ pageTitle: "Complaints & Representations", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton<Complaint> filename="complaints-export" data={filtered} columns={COMPLAINT_EXPORT_COLS} label="Export" />
-          <PrintButton title="Complaints & Representations" subtitle="Oak House — Complaints Register" targetId="complaints-content" />
+          <PrintButton title="Complaints & Representations" subtitle="Chamberlain House — Complaints Register" targetId="complaints-content" />
           <SmartUploadButton
             variant="inline"
             label="Upload Complaint Document"
@@ -659,12 +659,12 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
             <Plus className="h-3.5 w-3.5" />
             Log Complaint
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "complaint", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "complaint", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="complaints-content" className="space-y-5">
-        <AriaPanel
+        <CaraPanel
           mode="assist"
           pageContext="Complaints & Representations — statutory complaints register, timelines and learning"
           recordType="complaint"
@@ -776,7 +776,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value as "all" | ComplaintCategory)}
-          className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
+          className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-cara-gold)] focus:ring-1 focus:ring-[var(--cs-cara-gold)]/30 outline-none"
         >
           <option value="all">All categories</option>
           {(Object.keys(CATEGORY_LABELS) as ComplaintCategory[]).map((c) => (
@@ -789,7 +789,7 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as "date" | "reference" | "severity")}
-            className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-aria-gold)] focus:ring-1 focus:ring-[var(--cs-aria-gold)]/30 outline-none"
+            className="rounded-lg border border-[var(--cs-border)] bg-white px-2.5 py-1 text-[11px] text-[var(--cs-text-secondary)] focus:border-[var(--cs-cara-gold)] focus:ring-1 focus:ring-[var(--cs-cara-gold)]/30 outline-none"
           >
             <option value="date">Date received</option>
             <option value="reference">Reference</option>
@@ -831,11 +831,11 @@ ${complaint.lessons_learned ? `Learning: ${complaint.lessons_learned}` : ""}`;
               key={c.id}
               complaint={c}
               onUpdate={handleUpdate}
-              onAriaAnalysis={handleAriaAnalysis}
-              ariaBusy={ariaBusy}
+              onCaraAnalysis={handleCaraAnalysis}
+              caraBusy={caraBusy}
             />
           ))}
-          {ariaError && <p className="text-xs text-red-600 text-right">{ariaError}</p>}
+          {caraError && <p className="text-xs text-red-600 text-right">{caraError}</p>}
         </div>
       )}
 

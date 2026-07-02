@@ -52,7 +52,7 @@ function fullModuleSet(): ModuleIntelligenceScore[] {
     mod({ moduleId: "filing-cabinet", moduleName: "Filing Cabinet", domain: "workforce_operations", overallScore: 83, rating: "outstanding" }),
     mod({ moduleId: "hr-files", moduleName: "HR Files", domain: "workforce_operations", overallScore: 71, rating: "good" }),
     mod({ moduleId: "multi-agency", moduleName: "Multi-Agency", domain: "workforce_operations", overallScore: 79, rating: "good" }),
-    mod({ moduleId: "aria-learning", moduleName: "ARIA Learning", domain: "workforce_operations", overallScore: 68, rating: "good" }),
+    mod({ moduleId: "cara-learning", moduleName: "Cara Learning", domain: "workforce_operations", overallScore: 68, rating: "good" }),
   ];
 }
 
@@ -624,7 +624,7 @@ describe("buildDomainSummaries", () => {
 describe("generateHomeIntelligenceSummary", () => {
   const baseInput = {
     homeId: "home-oak-house",
-    homeName: "Oak House",
+    homeName: "Chamberlain House",
     periodStart: "2025-01-01",
     periodEnd: "2025-12-31",
   };
@@ -636,7 +636,7 @@ describe("generateHomeIntelligenceSummary", () => {
     });
 
     expect(result.homeId).toBe("home-oak-house");
-    expect(result.homeName).toBe("Oak House");
+    expect(result.homeName).toBe("Chamberlain House");
     expect(result.periodStart).toBe("2025-01-01");
     expect(result.periodEnd).toBe("2025-12-31");
     expect(result.overallScore).toBeGreaterThan(0);

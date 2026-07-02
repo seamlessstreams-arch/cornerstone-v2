@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER ACTION INBOX CARD
+// CARA — MANAGER ACTION INBOX CARD
 // One prioritised command centre — approvals, safeguarding, high-risk, missing
 // info — composed from the canonical event stream. Powered by the Manager Inbox
 // engine (Reg 13 — leadership oversight).
@@ -24,7 +24,7 @@ const CAT_LABEL: Record<string, string> = {
   safeguarding: "Safeguarding", approval: "Approval", high_risk: "High risk", missing_info: "Missing info", compliance: "Compliance",
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function ManagerInboxCard() {
@@ -56,9 +56,9 @@ export function ManagerInboxCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-gray-50 p-2.5"><p className="text-lg font-bold tabular-nums">{o.total}</p><p className="text-[10px] text-muted-foreground">Actions</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.by_priority.critical > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.by_priority.critical > 0 ? "text-red-600" : "text-green-600")}>{o.by_priority.critical}</p><p className="text-[10px] text-muted-foreground">Critical</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.approvals_pending > 0 ? "bg-amber-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.approvals_pending > 0 ? "text-amber-600" : "text-gray-500")}>{o.approvals_pending}</p><p className="text-[10px] text-muted-foreground">Approvals</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.overdue > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.overdue > 0 ? "text-red-600" : "text-green-600")}>{o.overdue}</p><p className="text-[10px] text-muted-foreground">Overdue</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.by_priority.critical > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.by_priority.critical > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.by_priority.critical}</p><p className="text-[10px] text-muted-foreground">Critical</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.approvals_pending > 0 ? "bg-amber-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.approvals_pending > 0 ? "text-[--cs-warning]" : "text-gray-500")}>{o.approvals_pending}</p><p className="text-[10px] text-muted-foreground">Approvals</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.overdue > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.overdue > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.overdue}</p><p className="text-[10px] text-muted-foreground">Overdue</p></div>
         </div>
 
         {items.length > 0 && (
@@ -91,7 +91,7 @@ export function ManagerInboxCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Inbox Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Inbox Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

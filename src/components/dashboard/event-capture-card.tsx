@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT CAPTURE (write-path) CARD
+// CARA — EVENT CAPTURE (write-path) CARD
 // "Capture once, validate once, route everywhere" — the pre-submission preview:
 // validation, duplicate check, routing and evidence for a draft event. Powered by
 // the Event Capture orchestrator.
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { useEventCapture } from "@/hooks/use-event-capture";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function EventCaptureCard() {
@@ -58,7 +58,7 @@ export function EventCaptureCard() {
         <div className="rounded-lg border p-2.5 text-[11px] space-y-1">
           <p className="text-[var(--cs-text-muted)]">Will route to <span className="font-medium text-[var(--cs-text-secondary)]">{intel.routing.destinations.length}</span> surface(s){intel.routing.external_apis.length > 0 ? `, ${intel.routing.external_apis.length} external (gated)` : ""}; builds <span className="font-medium text-[var(--cs-text-secondary)]">{intel.evidence_categories.length}</span> evidence categor{intel.evidence_categories.length === 1 ? "y" : "ies"}.</p>
           <div className="flex items-center gap-1.5 pt-0.5">
-            <Badge className={cn("text-[10px]", intel.ready_to_submit ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700")}>
+            <Badge className={cn("text-[10px]", intel.ready_to_submit ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
               {intel.ready_to_submit ? "Ready to submit" : "Held — review needed"}
             </Badge>
           </div>
@@ -66,7 +66,7 @@ export function EventCaptureCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Capture Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Capture Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

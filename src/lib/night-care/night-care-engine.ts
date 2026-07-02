@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Night Care Intelligence Engine
+// Cara — Night Care Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls, no randomness.
 // Evaluates overnight care quality across night checks, sleep monitoring,

@@ -34,8 +34,8 @@ import {
 import { usePlacementStabilityMeetings } from "@/hooks/use-placement-stability-meetings";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ─── export columns ─── */
 const exportCols: ExportColumn<PlacementStabilityMeeting>[] = [
@@ -122,12 +122,12 @@ export default function PlacementStabilityMeetingsPage() {
     <PageShell
       title="Placement Stability Meetings"
       subtitle="Multi-agency meetings to prevent placement breakdown and keep children in the right home"
-      ariaContext={{ pageTitle: "Placement Stability Meetings", sourceType: "care_plan" }}
+      caraContext={{ pageTitle: "Placement Stability Meetings", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={entries} columns={exportCols} filename="stability-meetings" />
           <PrintButton title="Placement Stability Meetings" />
-          <AriaStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -166,7 +166,7 @@ export default function PlacementStabilityMeetingsPage() {
           <div>
             <p className="text-sm font-medium text-green-800">100% Placement Stability</p>
             <p className="text-xs text-green-700 mt-1">
-              All placements at Oak House have been maintained. Where stability was at risk,
+              All placements at Chamberlain House have been maintained. Where stability was at risk,
               proactive multi-agency intervention and genuine listening to children&apos;s voices
               resolved concerns. Zero unplanned endings in 12 months.
             </p>
@@ -370,7 +370,7 @@ export default function PlacementStabilityMeetingsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Placement Stability Meetings — stability planning, crisis intervention, team around child, risk of disruption, action plans, protective factors, multi-agency support, Reg 45 evidence"
         recordType="placement_plan"

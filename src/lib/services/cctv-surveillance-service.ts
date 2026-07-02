@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CCTV & SURVEILLANCE SERVICE
+// CARA — CCTV & SURVEILLANCE SERVICE
 // Tracks CCTV systems, data protection compliance, access logs,
 // retention schedules, and privacy impact assessments.
 // CHR 2015 Reg 36 (fitness of premises — surveillance),

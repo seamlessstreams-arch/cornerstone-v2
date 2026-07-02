@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Core care-record write-through helpers
+// CARA — Core care-record write-through helpers
 //
 // Best-effort persistence for core care records that are created by SYNC services
 // (linked-updates, the care-events processor, orchestrators) which write the

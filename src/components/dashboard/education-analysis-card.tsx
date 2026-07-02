@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// DASHBOARD WIDGET — Education Analysis (ARIA Intelligence-Driven)
+// DASHBOARD WIDGET — Education Analysis (Cara Intelligence-Driven)
 //
 // Shows at a glance:
 //   - Overall score + rating
@@ -55,10 +55,10 @@ const RATING_STYLES: Record<string, { bg: string; text: string; border: string }
 
 const BAND_STYLES: Record<string, { text: string }> = {
   excellent: { text: "text-emerald-600" },
-  good: { text: "text-green-600" },
-  concern: { text: "text-amber-600" },
+  good: { text: "text-[--cs-success]" },
+  concern: { text: "text-[--cs-warning]" },
   persistent_absence: { text: "text-orange-600" },
-  severe_absence: { text: "text-red-600" },
+  severe_absence: { text: "text-[--cs-risk]" },
 };
 
 export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
@@ -68,7 +68,7 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`/api/aria/education?childId=${childId}`);
+        const res = await fetch(`/api/cara/education?childId=${childId}`);
         const json = await res.json();
         if (json.success) setData(json.data);
       } catch (err) {
@@ -130,7 +130,7 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
               "text-xs font-bold",
               data.latestPEPQuality === "outstanding" || data.latestPEPQuality === "good"
                 ? "text-emerald-600" : data.latestPEPQuality === "none"
-                ? "text-gray-400" : "text-amber-600",
+                ? "text-gray-400" : "text-[--cs-warning]",
             )}>
               {data.latestPEPQuality === "none" ? "N/A" : data.latestPEPQuality}
             </span>
@@ -154,7 +154,7 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
             <span className={cn(
               "text-xs font-bold",
               data.exclusionDays === 0 ? "text-emerald-600" :
-              data.exclusionDays >= 5 ? "text-red-600" : "text-amber-600",
+              data.exclusionDays >= 5 ? "text-[--cs-risk]" : "text-[--cs-warning]",
             )}>
               {data.exclusionDays}d
             </span>
@@ -182,7 +182,7 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
                 )}>
                   <AlertTriangle className={cn(
                     "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHigh ? "text-red-600" : "text-amber-600",
+                    isHigh ? "text-[--cs-risk]" : "text-[--cs-warning]",
                   )} />
                   <span className={isHigh ? "text-red-700" : "text-amber-700"}>
                     {concern.description}
@@ -201,8 +201,8 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
                 key={i}
                 className={cn(
                   "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  flag.status === "not_met" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200" :
+                  "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
                 )}
                 title={flag.detail}
               >
@@ -229,7 +229,7 @@ export function EducationAnalysisCard({ childId }: EducationAnalysisCardProps) {
 // ── Sub-component ───────────────────────────────────────────────────────────
 
 function MiniScore({ label, score }: { label: string; score: number }) {
-  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-red-600";
+  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   return (
     <div className="text-center">
       <span className={cn("text-sm font-bold", color)}>{score}</span>

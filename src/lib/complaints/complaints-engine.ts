@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Complaints Intelligence Engine
+// Cara Complaints Intelligence Engine
 //
 // Deterministic engine for evaluating complaints management quality in
 // children's homes — complaint handling quality, investigation compliance,

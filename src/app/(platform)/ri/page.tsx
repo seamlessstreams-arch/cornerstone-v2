@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI COMMAND CENTRE HUB
+// CARA — RI COMMAND CENTRE HUB
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useMemo } from "react";
@@ -32,8 +32,8 @@ import {
   Building2, Sparkles, Eye, Award, Zap,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 
 // ── Score pill ─────────────────────────────────────────────────────────────────
@@ -152,12 +152,12 @@ export default function RiHubPage() {
   return (
     <PageShell
       title="RI Command Centre"
-      subtitle="Responsible Individual governance dashboard — Oak House"
-      ariaContext={{ pageTitle: "RI Oversight Dashboard", sourceType: "general" }}
+      subtitle="Responsible Individual governance dashboard — Chamberlain House"
+      caraContext={{ pageTitle: "RI Oversight Dashboard", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Responsible Individual" subtitle="Oak House — RI Oversight Dashboard" targetId="ri-content" />
+          <PrintButton title="Responsible Individual" subtitle="Chamberlain House — RI Oversight Dashboard" targetId="ri-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="RI — governance document upload" />
           <Link href="/ri/scorecard">
             <Button variant="outline" size="sm" className="gap-1.5">
@@ -165,7 +165,7 @@ export default function RiHubPage() {
               Full Scorecard
             </Button>
           </Link>
-          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -195,7 +195,7 @@ export default function RiHubPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold">RI Command Centre</h2>
-                <p className="text-sm text-[var(--cs-text-gentle)]">Strategic governance for Oak House</p>
+                <p className="text-sm text-[var(--cs-text-gentle)]">Strategic governance for Chamberlain House</p>
               </div>
             </div>
             <div className="text-right shrink-0">
@@ -221,7 +221,7 @@ export default function RiHubPage() {
             <MetricBar label="Child Voice" score={scores.child_voice_score} />
           </div>
           <div className="flex flex-wrap gap-2 pt-1 border-t border-white/10">
-            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-[var(--cs-text-gentle)]">Oak House</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-[var(--cs-text-gentle)]">Chamberlain House</span>
             <span className="rounded-full bg-[var(--cs-navy)]/40 px-3 py-1 text-xs text-indigo-200">Reg 17 / Reg 44 / Reg 45</span>
             <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-[var(--cs-text-gentle)]">ILACS Framework</span>
           </div>
@@ -256,7 +256,7 @@ export default function RiHubPage() {
             <FeatureCard
               href="/ri/scorecard"
               title="Governance Scorecard"
-              description="15 live governance metrics with trend analysis and ARIA commentary"
+              description="15 live governance metrics with trend analysis and Cara commentary"
               icon={BarChart3}
               colour="text-indigo-600"
               bg="bg-indigo-50"
@@ -275,8 +275,8 @@ export default function RiHubPage() {
               title="Ofsted Readiness"
               description="Mock inspection review, ILACS checklist, question preparation"
               icon={Award}
-              colour="text-[var(--cs-aria-gold)]"
-              bg="bg-[var(--cs-aria-gold-bg)]"
+              colour="text-[var(--cs-cara-gold)]"
+              bg="bg-[var(--cs-cara-gold-bg)]"
             />
             <FeatureCard
               href="/ri/challenge-log"
@@ -299,7 +299,7 @@ export default function RiHubPage() {
             <FeatureCard
               href="/learning/training-needs"
               title="Training Intelligence"
-              description="ARIA-identified training needs linked to governance evidence"
+              description="Cara-identified training needs linked to governance evidence"
               icon={TrendingUp}
               colour="text-teal-600"
               bg="bg-teal-50"
@@ -308,15 +308,15 @@ export default function RiHubPage() {
           </div>
         </div>
 
-        {/* ARIA RI intelligence prompt */}
+        {/* Cara RI intelligence prompt */}
         <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 flex items-start gap-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--cs-navy)]">
             <Sparkles className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 space-y-2">
-            <p className="text-sm font-semibold text-indigo-900">Ask ARIA for a Strategic Summary</p>
+            <p className="text-sm font-semibold text-indigo-900">Ask Cara for a Strategic Summary</p>
             <p className="text-xs text-indigo-700 leading-relaxed">
-              ARIA can analyse all current data and generate a strategic governance summary, challenge questions for the manager, or a full Ofsted readiness review.
+              Cara can analyse all current data and generate a strategic governance summary, challenge questions for the manager, or a full Ofsted readiness review.
             </p>
             <div className="flex flex-wrap gap-2 pt-1">
               <Link href="/ri/scorecard?mode=strategic">
@@ -354,7 +354,7 @@ export default function RiHubPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="RI Oversight Dashboard — responsible individual oversight, governance alerts, compliance status, quality standards, safeguarding indicators, regulation compliance, Reg 44/45 evidence, Ofsted readiness"
         recordType="management_oversight"

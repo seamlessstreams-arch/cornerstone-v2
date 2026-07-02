@@ -16,8 +16,8 @@ import {
   ClipboardCheck, ArrowUpDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
@@ -260,7 +260,7 @@ export default function StaffDevelopmentPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "at_risk" | "attention" | "on_track">("all");
   const [sortBy, setSortBy] = useState<"name" | "compliance" | "status" | "needs">("status");
-  const [showAria, setShowAria] = useState(false);
+  const [showCara, setShowCara] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["staff-development"],
@@ -304,12 +304,12 @@ export default function StaffDevelopmentPage() {
     return result;
   }, [profiles, filter, search, sortBy]);
 
-  // Build ARIA context from at-risk profiles
-  const ariaContext = useMemo(() => {
+  // Build Cara context from at-risk profiles
+  const caraContext = useMemo(() => {
     const atRisk = profiles.filter((p) => p.status === "at_risk");
     const attention = profiles.filter((p) => p.status === "attention");
     const lines = [
-      `Staff development overview for Oak House — ${profiles.length} active staff.`,
+      `Staff development overview for Chamberlain House — ${profiles.length} active staff.`,
       `On track: ${summary?.on_track ?? 0} | Needs attention: ${summary?.needs_attention ?? 0} | At risk: ${summary?.at_risk ?? 0}`,
       `Average training compliance: ${summary?.avg_training_compliance ?? 0}%`,
       summary?.supervision_overdue
@@ -337,27 +337,27 @@ export default function StaffDevelopmentPage() {
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={STAFF_DEV_EXPORT_COLS} filename="staff-development" />
-          <PrintButton title="Staff Development" subtitle="Oak House — Development & CPD" targetId="staff-dev-content" />
+          <PrintButton title="Staff Development" subtitle="Chamberlain House — Development & CPD" targetId="staff-dev-content" />
           <SmartUploadButton variant="inline" label="Upload Document" uploadContext="Staff Development — training certificate or appraisal upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="staff-dev-content">
-      {/* ARIA Panel */}
-      {showAria && (
+      {/* Cara Panel */}
+      {showCara && (
         <div className="mb-6 relative">
           <button
-            onClick={() => setShowAria(false)}
+            onClick={() => setShowCara(false)}
             className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs"
           >
             ✕ Close
           </button>
-          <AriaPanel
+          <CaraPanel
             mode="staff_development_summary"
             pageContext="Staff Development Hub — team overview"
             recordType="staff_development"
-            sourceContent={ariaContext}
+            sourceContent={caraContext}
           />
         </div>
       )}
@@ -452,10 +452,10 @@ export default function StaffDevelopmentPage() {
           size="sm"
           variant="outline"
           className="gap-1.5 h-9 rounded-xl ml-auto"
-          onClick={() => setShowAria((v) => !v)}
+          onClick={() => setShowCara((v) => !v)}
         >
           <Sparkles className="h-3.5 w-3.5 text-violet-600" />
-          ARIA Team Analysis
+          Cara Team Analysis
         </Button>
       </div>
 

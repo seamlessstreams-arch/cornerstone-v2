@@ -422,7 +422,7 @@ describe("computeChildPlacementQuality", () => {
     }
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   it("generates positive insight for outstanding placement", () => {
     const r = computeChildPlacementQuality(baseInput());
     if (r.placement_quality === "outstanding") {

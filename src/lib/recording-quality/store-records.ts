@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STORE → RECORD INPUT MAPPER
+// CARA — STORE → RECORD INPUT MAPPER
 // Single source of truth for turning the store's narrative records (daily logs,
 // incidents, key-working) into RecordInput for the recording-quality engine.
 // Used by both the recording-quality and staff-recording-practice routes.

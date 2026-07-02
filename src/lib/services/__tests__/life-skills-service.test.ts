@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE SERVICE TESTS
+// CARA — LIFE SKILLS & INDEPENDENCE SERVICE TESTS
 // Pure-function unit tests for child readiness computation, home readiness
 // overview aggregation, life-skills alert identification, and constant
 // validation.

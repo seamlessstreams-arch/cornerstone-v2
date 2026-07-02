@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY INTELLIGENCE CARD
+// CARA — DEPRIVATION OF LIBERTY INTELLIGENCE CARD
 // Dashboard card powered by the DoL Intelligence Engine.
 // Reg 20 (restraint & DoL), Reg 21 (privacy & access),
 // SCCIF Helped & Protected, Children Act 1989.
@@ -20,16 +20,16 @@ import { useDoLIntelligence } from "@/hooks/use-dol-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function DeprivationOfLibertyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.active_orders === 0 ? "text-green-600" : "text-amber-600",
+              o.active_orders === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.active_orders}
             </p>
@@ -98,7 +98,7 @@ export function DeprivationOfLibertyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.proportionality_rate >= 90 ? "text-green-600" : "text-amber-600",
+              o.proportionality_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {o.proportionality_rate}%
             </p>
@@ -110,7 +110,7 @@ export function DeprivationOfLibertyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.overdue_reviews === 0 ? "text-green-600" : "text-red-600",
+              o.overdue_reviews === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.overdue_reviews}
             </p>
@@ -127,10 +127,10 @@ export function DeprivationOfLibertyCard() {
               Active DoL Orders
             </p>
             {intel.active_orders.map((order) => (
-              <div key={order.order_id} className="rounded border border-amber-200 bg-amber-50 p-2.5 text-xs space-y-1">
+              <div key={order.order_id} className="rounded border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-2.5 text-xs space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-amber-800">{order.child_name}</span>
-                  <Badge className="text-[10px] bg-amber-100 text-amber-700">{order.type_label}</Badge>
+                  <span className="font-semibold text-[--cs-warning]">{order.child_name}</span>
+                  <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{order.type_label}</Badge>
                 </div>
                 <div className="flex items-center gap-2 text-amber-700">
                   <Clock className="h-3 w-3" />
@@ -157,7 +157,7 @@ export function DeprivationOfLibertyCard() {
                   <Badge variant="outline" className="text-[10px] tabular-nums">{r.count}</Badge>
                   <Badge className={cn(
                     "text-[10px]",
-                    r.overdue_count === 0 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700",
+                    r.overdue_count === 0 ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]",
                   )}>
                     {r.reviewed_on_time}/{r.count} reviewed
                   </Badge>
@@ -180,7 +180,7 @@ export function DeprivationOfLibertyCard() {
                 <MessageSquare className="h-3 w-3" />
                 Child consulted
               </span>
-              <span className={cn("font-bold tabular-nums", o.child_consultation_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+              <span className={cn("font-bold tabular-nums", o.child_consultation_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {o.child_consultation_rate}%
               </span>
             </div>
@@ -196,7 +196,7 @@ export function DeprivationOfLibertyCard() {
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Social worker informed</span>
-              <span className={cn("font-bold tabular-nums", o.social_worker_informed_rate >= 90 ? "text-green-600" : "text-amber-600")}>
+              <span className={cn("font-bold tabular-nums", o.social_worker_informed_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
                 {o.social_worker_informed_rate}%
               </span>
             </div>
@@ -233,13 +233,13 @@ export function DeprivationOfLibertyCard() {
           </div>
         )}
 
-        {/* ── ARIA DoL Intelligence ──────────────────────────────────── */}
+        {/* ── Cara DoL Intelligence ──────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA DoL Intelligence
+              Cara DoL Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

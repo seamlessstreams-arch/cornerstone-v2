@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MULTI-AGENCY WORKING INTELLIGENCE ENGINE TESTS
+// CARA — MULTI-AGENCY WORKING INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // Reg 5, Reg 13, Working Together to Safeguard Children 2018
 // ══════════════════════════════════════════════════════════════════════════════
@@ -94,7 +94,7 @@ function makeInput(overrides: Partial<MultiAgencyEngineInput> = {}): MultiAgency
   };
 }
 
-// ── Oak House integration data ──────────────────────────────────────────────
+// ── Chamberlain House integration data ──────────────────────────────────────────────
 
 const OAK_CHILDREN: ChildRef[] = [
   { id: "yp_alex", name: "Alex" },
@@ -953,10 +953,10 @@ describe("computeMultiAgencyIntelligence — edge cases", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// Oak House — Full Integration Test
+// Chamberlain House — Full Integration Test
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("computeMultiAgencyIntelligence — Oak House integration", () => {
+describe("computeMultiAgencyIntelligence — Chamberlain House integration", () => {
   const result = computeMultiAgencyIntelligence(makeOakInput());
 
   it("overview: counts 9 active professionals", () => {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Internet Safety Monitoring Intelligence — Public API
+// Cara Internet Safety Monitoring Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

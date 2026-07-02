@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PLACEMENT QUALITY INTELLIGENCE ENGINE
+// CARA — CHILD PLACEMENT QUALITY INTELLIGENCE ENGINE
 // Per-child engine measuring the quality of the child's placement experience:
 // placement duration/stability, mood trajectory, daily log engagement,
 // key worker relationship, welfare checks, activities, and whether the
@@ -515,7 +515,7 @@ export function computeChildPlacementQuality(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: PlacementInsight[] = [];
 
   if (placement_quality === "poor" || placement_quality === "concerning") {

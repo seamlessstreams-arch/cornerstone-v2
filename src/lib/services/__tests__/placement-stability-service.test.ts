@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY SERVICE TESTS
+// CARA — PLACEMENT STABILITY SERVICE TESTS
 // Pure-function unit tests for placement stability metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 36 (records — placement history),

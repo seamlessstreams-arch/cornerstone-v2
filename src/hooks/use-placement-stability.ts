@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT STABILITY INTELLIGENCE HOOK
+// CARA — PLACEMENT STABILITY INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/placement-stability
 // ══════════════════════════════════════════════════════════════════════════════
 

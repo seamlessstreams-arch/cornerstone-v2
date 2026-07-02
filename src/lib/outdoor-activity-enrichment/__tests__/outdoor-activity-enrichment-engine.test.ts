@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Outdoor Activity & Enrichment Intelligence — Engine Tests
+// Cara Outdoor Activity & Enrichment Intelligence — Engine Tests
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

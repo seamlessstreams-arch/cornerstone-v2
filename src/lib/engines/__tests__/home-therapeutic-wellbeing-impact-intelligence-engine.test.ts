@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME THERAPEUTIC WELLBEING IMPACT INTELLIGENCE ENGINE -- TESTS
+// CARA -- HOME THERAPEUTIC WELLBEING IMPACT INTELLIGENCE ENGINE -- TESTS
 // ==============================================================================
 
 import { describe, it, expect } from "vitest";

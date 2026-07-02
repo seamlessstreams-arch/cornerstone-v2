@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT HANDOVER SERVICE TESTS
+// CARA — SHIFT HANDOVER SERVICE TESTS
 // Pure-function unit tests for handover compliance computation, quality metrics,
 // alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FORM GOVERNANCE SERVICE
+// CARA — FORM GOVERNANCE SERVICE
 // Full lifecycle: template design → version management → submissions →
 // review/approve workflows → audit logging.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,13 +1,13 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REGULATION 45 ENGINE
+// CARA — REGULATION 45 ENGINE
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +36,7 @@ const STATUS_COLOURS: Record<string, string> = {
   draft: "bg-slate-100 text-[var(--cs-text-secondary)]",
   in_progress: "bg-blue-100 text-blue-700",
   reviewed: "bg-amber-100 text-amber-700",
-  approved: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+  approved: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
   submitted: "bg-emerald-100 text-emerald-700",
 };
 
@@ -78,15 +78,15 @@ function Reg45Card({ record }: { record: RiReg45Evidence }) {
           </button>
         </div>
 
-        {expanded && record.aria_strengths && (
+        {expanded && record.cara_strengths && (
           <div className="mt-4 space-y-4 border-t border-[var(--cs-border-subtle)] pt-4">
             {[
-              { label: "Strengths", content: record.aria_strengths, colour: "bg-emerald-50 border-emerald-100 text-emerald-900" },
-              { label: "Weaknesses / Areas for Development", content: record.aria_weaknesses, colour: "bg-amber-50 border-amber-100 text-amber-900" },
-              { label: "Improvement Areas", content: record.aria_improvement_areas, colour: "bg-blue-50 border-blue-100 text-blue-900" },
-              { label: "Impact on Children", content: record.aria_child_impact, colour: "bg-[var(--cs-aria-gold-bg)] border-[var(--cs-aria-gold-soft)] text-[var(--cs-navy)]" },
-              { label: "Action Plan", content: record.aria_action_plan, colour: "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-navy)]" },
-              { label: "RI Statement", content: record.aria_ri_statement, colour: "bg-indigo-50 border-indigo-100 text-indigo-900" },
+              { label: "Strengths", content: record.cara_strengths, colour: "bg-emerald-50 border-emerald-100 text-emerald-900" },
+              { label: "Weaknesses / Areas for Development", content: record.cara_weaknesses, colour: "bg-amber-50 border-amber-100 text-amber-900" },
+              { label: "Improvement Areas", content: record.cara_improvement_areas, colour: "bg-blue-50 border-blue-100 text-blue-900" },
+              { label: "Impact on Children", content: record.cara_child_impact, colour: "bg-[var(--cs-cara-gold-bg)] border-[var(--cs-cara-gold-soft)] text-[var(--cs-navy)]" },
+              { label: "Action Plan", content: record.cara_action_plan, colour: "bg-slate-50 border-[var(--cs-border)] text-[var(--cs-navy)]" },
+              { label: "RI Statement", content: record.cara_ri_statement, colour: "bg-indigo-50 border-indigo-100 text-indigo-900" },
             ].filter((s) => !!s.content).map(({ label, content, colour }) => (
               <div key={label}>
                 <p className="text-[11px] font-semibold text-[var(--cs-text-muted)] uppercase tracking-wide mb-1">{label}</p>
@@ -164,9 +164,9 @@ const REG45_STANDARDS: Reg45Standard[] = [
     label: "Leadership & Management",
     description: "RI oversight, governance, challenge and quality assurance",
     icon: ClipboardCheck,
-    colour: "text-[var(--cs-aria-gold)]",
-    bg: "bg-[var(--cs-aria-gold-bg)]",
-    border: "border-[var(--cs-aria-gold-soft)]",
+    colour: "text-[var(--cs-cara-gold)]",
+    bg: "bg-[var(--cs-cara-gold-bg)]",
+    border: "border-[var(--cs-cara-gold-soft)]",
     sourceCategories: ["Challenges", "Audits"],
   },
 ];
@@ -245,7 +245,7 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
       .forEach((a) =>
         out.push({
           icon: ClipboardCheck,
-          iconColour: "text-[var(--cs-aria-gold)]",
+          iconColour: "text-[var(--cs-cara-gold)]",
           category: ["staffing", "general"].includes(a.category) ? "Challenges" : "Audits",
           title: a.title,
           detail: `Score: ${a.score}/${a.max_score} (${Math.round((a.score / Math.max(a.max_score, 1)) * 100)}%) — ${a.findings} finding${a.findings !== 1 ? "s" : ""}`,
@@ -351,7 +351,7 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
               onClick={buildContext}
             >
               <Copy className="h-3 w-3" />
-              Use {selected.size > 0 ? selected.size : ""} items as ARIA context
+              Use {selected.size > 0 ? selected.size : ""} items as Cara context
               <ChevronRight className="h-3 w-3" />
             </Button>
           </div>
@@ -359,7 +359,7 @@ function LiveEvidencePanel({ onUseContext }: { onUseContext: (text: string) => v
       </CardHeader>
         <CardContent className="pt-0 space-y-4">
           <p className="text-xs text-[var(--cs-text-muted)]">
-            Evidence auto-surfaced from completed training needs, resolved alerts, audits, and supervision — grouped by Reg 45 reporting standard. Select items to build ARIA context.
+            Evidence auto-surfaced from completed training needs, resolved alerts, audits, and supervision — grouped by Reg 45 reporting standard. Select items to build Cara context.
           </p>
           {items.length === 0 ? (
             <p className="text-sm text-[var(--cs-text-muted)] text-center py-4">No completed evidence items found yet.</p>
@@ -463,11 +463,11 @@ function GenerateForm({
     setGenerating(true);
     try {
       const res = await api.post<{ data: { parsed?: Record<string, unknown> } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_reg45_generate",
           style: "reg_45_narrative",
-          source_content: evidenceNotes || `Regulation 45 report for ${period}. Period: ${periodStart} to ${periodEnd}. Home: Oak House.`,
+          source_content: evidenceNotes || `Regulation 45 report for ${period}. Period: ${periodStart} to ${periodEnd}. Home: Chamberlain House.`,
           page_context: "Regulation 45 Engine",
           record_type: "reg_45",
           user_role: "responsible_individual",
@@ -491,13 +491,13 @@ function GenerateForm({
         period_start: periodStart,
         period_end: periodEnd,
         evidence_items: [],
-        aria_strengths: result.strengths,
-        aria_weaknesses: result.weaknesses,
-        aria_improvement_areas: result.improvement_areas,
-        aria_child_impact: result.child_impact,
-        aria_action_plan: Array.isArray(result.action_plan) ? (result.action_plan as string[]).join("\n") : result.action_plan,
-        aria_ri_statement: result.ri_statement,
-        aria_generated_at: new Date().toISOString(),
+        cara_strengths: result.strengths,
+        cara_weaknesses: result.weaknesses,
+        cara_improvement_areas: result.improvement_areas,
+        cara_child_impact: result.child_impact,
+        cara_action_plan: Array.isArray(result.action_plan) ? (result.action_plan as string[]).join("\n") : result.action_plan,
+        cara_ri_statement: result.ri_statement,
+        cara_generated_at: new Date().toISOString(),
         status: "in_progress",
         submitted_to_ofsted: false,
         created_by: currentUser?.id ?? "staff_darren",
@@ -511,7 +511,7 @@ function GenerateForm({
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-semibold flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-blue-600" />
-          Generate New Reg 45 Report with ARIA
+          Generate New Reg 45 Report with Cara
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -549,7 +549,7 @@ function GenerateForm({
           <Textarea
             className="mt-1 text-sm"
             rows={3}
-            placeholder="Paste key evidence, themes, or context for ARIA to use when drafting…"
+            placeholder="Paste key evidence, themes, or context for Cara to use when drafting…"
             value={evidenceNotes}
             onChange={(e) => setEvidenceNotes(e.target.value)}
           />
@@ -561,12 +561,12 @@ function GenerateForm({
           size="sm"
         >
           <Sparkles className="h-3.5 w-3.5" />
-          {generating ? "Generating Reg 45 with ARIA…" : "Generate Reg 45 Draft"}
+          {generating ? "Generating Reg 45 with Cara…" : "Generate Reg 45 Draft"}
         </Button>
 
         {result && (
           <div className="space-y-3 border-t border-blue-100 pt-4">
-            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide">ARIA Draft — Review before saving</p>
+            <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide">Cara Draft — Review before saving</p>
             {[
               { label: "Strengths", key: "strengths" },
               { label: "Weaknesses", key: "weaknesses" },
@@ -606,17 +606,17 @@ export default function Reg45Page() {
     <PageShell
       title="Regulation 45 Engine"
       subtitle="Evidence collection and Reg 45 report generation"
-      ariaContext={{ pageTitle: "Regulation 45 Engine", sourceType: "reg45" }}
+      caraContext={{ pageTitle: "Regulation 45 Engine", sourceType: "reg45" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton
             title="Reg 45 Reports"
-            subtitle="Oak House — Independent Person Reports"
+            subtitle="Chamberlain House — Independent Person Reports"
             targetId="reg45-content"
           />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="RI — Regulation 45 evidence upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "reg45", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -625,7 +625,7 @@ export default function Reg45Page() {
         <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 flex items-start gap-3">
           <AlertTriangle className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
           <p className="text-xs text-blue-800 leading-relaxed">
-            <strong>Regulation 45 reports</strong> must be completed at least once every 6 months by the RI under Reg 45 of the Children's Homes (England) Regulations 2015. ARIA drafts are a starting point — all content must be reviewed, edited and approved by the RI before submission.
+            <strong>Regulation 45 reports</strong> must be completed at least once every 6 months by the RI under Reg 45 of the Children's Homes (England) Regulations 2015. Cara drafts are a starting point — all content must be reviewed, edited and approved by the RI before submission.
           </p>
         </div>
 
@@ -654,7 +654,7 @@ export default function Reg45Page() {
           )}
         </div>
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Regulation 45 Engine — RI view of Reg 45 report building, evidence review, quarterly reporting, thematic analysis, quality of care evidence, outcomes evidence, Ofsted readiness"
         recordType="reg45"

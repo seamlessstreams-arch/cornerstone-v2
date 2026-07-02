@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CLEANING SCHEDULE SERVICE
+// CARA — CLEANING SCHEDULE SERVICE
 // Tracks cleaning schedules, hygiene audits, deep cleans, infection
 // prevention measures, and environmental cleanliness standards.
 // CHR 2015 Reg 25 (premises — maintained to appropriate standard),

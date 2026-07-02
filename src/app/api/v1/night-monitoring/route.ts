@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING INTELLIGENCE API ROUTE
+// CARA — NIGHT MONITORING INTELLIGENCE API ROUTE
 // GET /api/v1/night-monitoring
 // Returns welfare check compliance, sleep patterns, security analysis,
-// night staffing, and ARIA night care intelligence.
+// night staffing, and Cara night care intelligence.
 // Reg 12/25/34 — health & safety, night staffing, welfare of children.
 // ══════════════════════════════════════════════════════════════════════════════
 

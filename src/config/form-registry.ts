@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FORM REGISTRY
+// CARA — FORM REGISTRY
 // Single source of truth for every form/record type in the system.
 // Replaces the scattered GLOBAL_CREATE_ITEMS approach with a structured,
 // domain-aware, searchable registry.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MISSING EPISODE INTELLIGENCE ENGINE
+// CARA — HOME MISSING EPISODE INTELLIGENCE ENGINE
 // Home-level: analyses missing from care episodes across all children to produce
 // frequency, compliance, timeliness, notification, pattern analysis, and
 // duration/resolution intelligence.

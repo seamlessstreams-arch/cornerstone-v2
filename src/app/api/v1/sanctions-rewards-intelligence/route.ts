@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SANCTIONS & REWARDS INTELLIGENCE API ROUTE
+// CARA — SANCTIONS & REWARDS INTELLIGENCE API ROUTE
 // GET /api/v1/sanctions-rewards-intelligence
 // Returns behaviour management analysis: reward/sanction ratios,
-// proportionality, per-child breakdown, and ARIA behaviour intelligence.
+// proportionality, per-child breakdown, and Cara behaviour intelligence.
 // Reg 19 (behaviour management), Reg 35 (behaviour standards), SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
 

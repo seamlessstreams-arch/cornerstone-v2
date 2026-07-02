@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Statement of Purpose Alignment Intelligence Engine Tests
+// Cara -- Statement of Purpose Alignment Intelligence Engine Tests
 // 80+ tests covering all functions, scoring, labels, edge cases
 // ==============================================================================
 
@@ -1044,7 +1044,7 @@ describe("generateStatementOfPurposeAlignmentIntelligence", () => {
 
   // -- Full realistic scenario --
 
-  it("handles Oak House-style realistic data", () => {
+  it("handles Chamberlain House-style realistic data", () => {
     const sections: SoPSection[] = [
       "ethos_values", "care_approach", "admission_criteria", "staffing_model",
       "education_support", "health_wellbeing", "behaviour_management",

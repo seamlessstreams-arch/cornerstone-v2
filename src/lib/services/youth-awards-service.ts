@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- YOUTH AWARDS & ACCREDITED PROGRAMMES SERVICE
+// CARA -- YOUTH AWARDS & ACCREDITED PROGRAMMES SERVICE
 // Tracks young people's participation in accredited award schemes including
 // Duke of Edinburgh (Bronze, Silver, Gold), ASDAN, AQA Unit Awards, John Muir
 // Trust Award, Arts Award (Discover through Gold), Saltire Award, Sports
@@ -506,7 +506,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: YouthAwardsRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

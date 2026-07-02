@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — THERAPEUTIC PROGRESS INTELLIGENCE ENGINE
+// CARA — THERAPEUTIC PROGRESS INTELLIGENCE ENGINE
 // Per-child therapeutic trajectory analysis aggregating therapy sessions,
 // keywork interactions, behaviour patterns, mood trends, CAMHS engagement,
 // and outcome progress into a coherent therapeutic narrative.

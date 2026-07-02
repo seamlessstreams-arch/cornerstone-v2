@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Service Worker (offline support)
+// Cara — Service Worker (offline support)
 //
 // SAFETY-FIRST caching for a children's-home care platform:
 //   • App SHELL (navigations) → network-first, falling back to a clear offline page.
@@ -13,7 +13,7 @@
 // Bump VERSION to invalidate caches on a breaking change.
 // ══════════════════════════════════════════════════════════════════════════════
 
-const VERSION = "v2"; // bumped: added push + notificationclick handlers
+const VERSION = "v6"; // bumped: refresh installed apps to the latest build (deterministic-first AI degradation + fallbacks, Anthropic-only/OpenAI removed, dead-card & type-error repairs)
 const SHELL_CACHE = `cs-shell-${VERSION}`;
 const STATIC_CACHE = `cs-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
@@ -41,9 +41,11 @@ self.addEventListener("activate", (event) => {
 });
 
 function isStaticAsset(url) {
+  // NOTE: the web-app manifest is deliberately NOT cache-first — app identity
+  // (name, shortcuts, screenshots) must propagate without a cache-version bump.
   return (
     url.pathname.startsWith("/_next/static/") ||
-    /\.(?:js|css|woff2?|ttf|png|jpg|jpeg|svg|ico|webp|webmanifest)$/.test(url.pathname)
+    /\.(?:js|css|woff2?|ttf|png|jpg|jpeg|svg|ico|webp)$/.test(url.pathname)
   );
 }
 
@@ -99,7 +101,7 @@ self.addEventListener("push", (event) => {
   let payload = {};
   try { payload = event.data ? event.data.json() : {}; }
   catch { payload = { body: event.data ? event.data.text() : "" }; }
-  const title = payload.title || "Cornerstone";
+  const title = payload.title || "Cara";
   event.waitUntil(
     self.registration.showNotification(title, {
       body: payload.body || "",

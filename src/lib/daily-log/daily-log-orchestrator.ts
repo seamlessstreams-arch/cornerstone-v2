@@ -2,14 +2,14 @@
 // DAILY LOG ORCHESTRATOR
 //
 // Same pattern as incident-orchestrator: one entry creates all linked records.
-// Form → Store → Audit → Timeline → Dashboard → Reports → ARIA
+// Form → Store → Audit → Timeline → Dashboard → Reports → Cara
 //
 // "Enter once. Use everywhere."
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { getStore } from "@/lib/db/store";
 import { recordEvent } from "@/lib/timeline/timeline-service";
-import { logInteraction } from "@/lib/aria/aria-config";
+import { logInteraction } from "@/lib/cara/cara-config";
 import { captureDomainEvent } from "@/lib/event-capture/capture-event-service";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -137,7 +137,7 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
   // ── 5. Reports availability ────────────────────────────────────────────
   linkedUpdates.push("Available in Reg 45 report and inspection evidence pack");
 
-  // ── 6. ARIA context ────────────────────────────────────────────────────
+  // ── 6. Cara context ────────────────────────────────────────────────────
   logInteraction({
     user_id: input.staff_id,
     child_id: input.child_id,
@@ -149,7 +149,7 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
     risk_level: riskLevel === "medium" ? "medium" : "low",
     requires_review: false,
   });
-  linkedUpdates.push("ARIA intelligence context updated");
+  linkedUpdates.push("Cara intelligence context updated");
 
   // ── 7. Alerts based on content ─────────────────────────────────────────
   if (input.mood === "distressed") {
@@ -164,7 +164,7 @@ export function createDailyLog(input: CreateDailyLogInput): DailyLogOrchestratio
     alerts.push("Follow-up flagged by recording staff — ensure this is actioned on the next shift");
     linkedUpdates.push("Follow-up flagged for next shift");
   }
-  if (input.concerns.length > 0 && /safeguard|harm|abuse|disclosure|exploit/i.test(input.concerns)) {
+  if (input.concerns.length > 0 && /safeguard|\bharm(s|ed|ful)?\b|abuse|disclosure|exploit/i.test(input.concerns)) {
     alerts.push("SAFEGUARDING LANGUAGE DETECTED in concerns — review immediately and consider raising a safeguarding concern if not already done");
     linkedUpdates.push("Alert: safeguarding language detected in concerns");
   }

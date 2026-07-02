@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOLIDAY TRIPS SERVICE TESTS
+// CARA — HOLIDAY TRIPS SERVICE TESTS
 // Pure-function tests for trip metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

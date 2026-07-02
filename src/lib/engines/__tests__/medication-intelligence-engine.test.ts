@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INTELLIGENCE ENGINE — TEST SUITE
+// CARA — MEDICATION INTELLIGENCE ENGINE — TEST SUITE
 // Reg 23/12 — health provision, safe medication administration
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -474,7 +474,7 @@ describe("computeMedicationIntelligence", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates critical insight for missed doses", () => {
       const admins: AdministrationInput[] = [
         makeAdmin({ id: "a1", status: "missed" }),
@@ -542,7 +542,7 @@ describe("computeMedicationIntelligence", () => {
     });
   });
 
-  describe("full Oak House integration", () => {
+  describe("full Chamberlain House integration", () => {
     it("processes realistic multi-child medication data", () => {
       const children: ChildInput[] = [
         { id: "yp_casey", name: "Casey" },

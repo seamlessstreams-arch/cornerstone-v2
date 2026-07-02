@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE CARD
+// CARA — SAFEGUARDING INTELLIGENCE CARD
 // Dashboard card for incident tracking, restraint analysis, missing episodes,
-// risk assessment overview, Reg 40 notification compliance, and ARIA insights.
+// risk assessment overview, Reg 40 notification compliance, and Cara insights.
 // Powered by the Safeguarding Intelligence Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,16 +20,16 @@ import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligen
 // ── Styling maps ────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const RISK_LEVEL_STYLES: Record<string, string> = {
-  very_high: "bg-red-100 text-red-700",
-  high: "bg-orange-100 text-orange-700",
-  medium: "bg-amber-100 text-amber-700",
-  low: "bg-green-100 text-green-700",
+  very_high: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "bg-[--cs-warning-soft] text-[--cs-warning]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TREND_ICONS: Record<string, React.ReactNode> = {
@@ -94,19 +94,19 @@ export function SafeguardingIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Incidents</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", p.open_incidents > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", p.open_incidents > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {p.open_incidents}
             </p>
             <p className="text-[10px] text-muted-foreground">Open</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", r.total_restraints_30d > 0 ? "bg-orange-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", r.total_restraints_30d > 0 ? "text-orange-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", r.total_restraints_30d > 0 ? "text-orange-600" : "text-[--cs-success]")}>
               {r.total_restraints_90d}
             </p>
             <p className="text-[10px] text-muted-foreground">Restraints</p>
           </div>
           <div className="text-center rounded-lg p-2" style={{ background: ne.compliance_rate >= 100 ? "hsl(var(--chart-2) / 0.1)" : "hsl(var(--destructive) / 0.08)" }}>
-            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", ne.compliance_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {ne.compliance_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Reg 40</p>
@@ -126,16 +126,16 @@ export function SafeguardingIntelligenceCard() {
             </div>
           </div>
           {ne.pending_notification > 0 ? (
-            <Badge className="text-[10px] bg-red-100 text-red-700">
+            <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {ne.pending_notification} pending
             </Badge>
           ) : ne.notified_late > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {ne.notified_late} late
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               Compliant
             </Badge>
@@ -156,11 +156,11 @@ export function SafeguardingIntelligenceCard() {
               </div>
             </div>
             {r.injuries_during_restraint > 0 ? (
-              <Badge className="text-[10px] bg-red-100 text-red-700">
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                 {r.injuries_during_restraint} injury
               </Badge>
             ) : (
-              <Badge className="text-[10px] bg-green-100 text-green-700">
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                 No injuries
               </Badge>
             )}
@@ -181,15 +181,15 @@ export function SafeguardingIntelligenceCard() {
               </div>
             </div>
             {m.repeat_missing_children > 0 ? (
-              <Badge className="text-[10px] bg-red-100 text-red-700">
+              <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                 {m.repeat_missing_children} repeat
               </Badge>
             ) : m.contextual_safeguarding_flagged > 0 ? (
-              <Badge className="text-[10px] bg-amber-100 text-amber-700">
+              <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
                 {m.contextual_safeguarding_flagged} CS risk
               </Badge>
             ) : (
-              <Badge className="text-[10px] bg-green-100 text-green-700">
+              <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 Managed
               </Badge>
@@ -210,25 +210,25 @@ export function SafeguardingIntelligenceCard() {
             </div>
           </div>
           {ra.overdue_reviews > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               {ra.overdue_reviews} overdue
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               Current
             </Badge>
           )}
         </div>
 
-        {/* ── Risk domains (top 3) ───────────────────────────────────── */}
+        {/* ── Risk domains (top 4) — compact chips ──────────────────── */}
 
         {ra.by_domain.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {(ra.by_domain ?? []).slice(0, 4).map((d) => (
               <Badge
                 key={d.domain}
-                className={cn("text-[10px]", RISK_LEVEL_STYLES[d.highest_level] ?? "bg-gray-100 text-gray-600")}
+                className={cn("text-[10px]", RISK_LEVEL_STYLES[d.highest_level] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}
               >
                 {d.domain.replace(/_/g, " ")} ({d.highest_level.replace(/_/g, " ")})
               </Badge>
@@ -236,13 +236,13 @@ export function SafeguardingIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Safeguarding Intelligence
+              Cara Safeguarding Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIVE EVENT STREAM (projected ∪ persisted)
+// CARA — LIVE EVENT STREAM (projected ∪ persisted)
 //
 // The read side of the capture-once write spine. The canonical stream is the
 // read-only projection of domain collections UNION any events captured directly

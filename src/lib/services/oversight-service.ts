@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGEMENT OVERSIGHT SERVICE
-// ARIA-prompted reflective oversight for all record types. Generates quality
+// CARA — MANAGEMENT OVERSIGHT SERVICE
+// Cara-prompted reflective oversight for all record types. Generates quality
 // prompts, stores oversight notes, and links to tasks/evidence.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -18,7 +18,7 @@ function sb(): SB | null {
   return createServerClient() as unknown as SB;
 }
 
-// ── ARIA prompt generation ──────────────────────────────────────────────────
+// ── Cara prompt generation ──────────────────────────────────────────────────
 
 export interface OversightPromptContext {
   recordType: OversightRecordType;
@@ -30,7 +30,7 @@ export interface OversightPromptContext {
 }
 
 /**
- * Generate ARIA reflective prompts for management oversight.
+ * Generate Cara reflective prompts for management oversight.
  * These prompts guide managers through 5 quality dimensions.
  */
 export function generateOversightPrompts(ctx: OversightPromptContext): {
@@ -149,9 +149,9 @@ export async function createOversightNote(input: {
     decisionClarity: number;
     actionSpecificity: number;
   };
-  ariaPrompted?: boolean;
-  ariaPromptUsed?: string;
-  ariaSuggestions?: Record<string, unknown>;
+  caraPrompted?: boolean;
+  caraPromptUsed?: string;
+  caraSuggestions?: Record<string, unknown>;
   actionsIdentified?: string[];
   regulationRefs?: string[];
   oversightBy: string;
@@ -168,9 +168,9 @@ export async function createOversightNote(input: {
       oversight_text: input.oversightText,
       quality_score: input.qualityScore ?? null,
       quality_dimensions: input.qualityDimensions ?? null,
-      aria_prompted: input.ariaPrompted ?? false,
-      aria_prompt_used: input.ariaPromptUsed ?? null,
-      aria_suggestions: input.ariaSuggestions ?? null,
+      cara_prompted: input.caraPrompted ?? false,
+      cara_prompt_used: input.caraPromptUsed ?? null,
+      cara_suggestions: input.caraSuggestions ?? null,
       actions_identified: input.actionsIdentified ?? [],
       regulation_refs: input.regulationRefs ?? [],
       oversight_by: input.oversightBy,
@@ -240,14 +240,14 @@ export async function getOversightStats(
   total_notes: number;
   by_record_type: Record<string, number>;
   avg_quality_score: number | null;
-  aria_prompted_percentage: number;
+  cara_prompted_percentage: number;
   records_needing_oversight: number;
 }>> {
   const s = sb();
   if (!s) return { ok: false, error: "Supabase not configured" };
 
   const { data: notes, error } = await (s.from("cs_management_oversight_notes") as SB)
-    .select("record_type, quality_score, aria_prompted")
+    .select("record_type, quality_score, cara_prompted")
     .eq("home_id", homeId);
 
   if (error) return { ok: false, error: error.message };
@@ -256,7 +256,7 @@ export async function getOversightStats(
   const byType: Record<string, number> = {};
   let qualitySum = 0;
   let qualityCount = 0;
-  let ariaCount = 0;
+  let caraCount = 0;
 
   for (const n of allNotes) {
     byType[n.record_type] = (byType[n.record_type] ?? 0) + 1;
@@ -264,7 +264,7 @@ export async function getOversightStats(
       qualitySum += n.quality_score;
       qualityCount++;
     }
-    if (n.aria_prompted) ariaCount++;
+    if (n.cara_prompted) caraCount++;
   }
 
   return {
@@ -273,7 +273,7 @@ export async function getOversightStats(
       total_notes: allNotes.length,
       by_record_type: byType,
       avg_quality_score: qualityCount > 0 ? Math.round((qualitySum / qualityCount) * 10) / 10 : null,
-      aria_prompted_percentage: allNotes.length > 0 ? Math.round((ariaCount / allNotes.length) * 100) : 0,
+      cara_prompted_percentage: allNotes.length > 0 ? Math.round((caraCount / allNotes.length) * 100) : 0,
       records_needing_oversight: 0, // would need to query each record type
     },
   };

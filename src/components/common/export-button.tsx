@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EXPORT BUTTON
+// CARA — EXPORT BUTTON
 // Reusable CSV export button. Takes column definitions and row data,
 // generates a CSV file, and triggers a browser download. Used across
 // listing pages for Ofsted-ready data export.

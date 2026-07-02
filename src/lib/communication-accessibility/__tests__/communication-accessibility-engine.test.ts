@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Communication & Accessibility Intelligence Engine Tests
+// Cara — Communication & Accessibility Intelligence Engine Tests
 // 100+ tests covering all functions, scoring, labels, edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -33,7 +33,7 @@ import type {
   TrainingType,
 } from "../communication-accessibility-engine";
 
-// ── Demo Data: Oak House ────────────────────────────────────────────────────
+// ── Demo Data: Chamberlain House ────────────────────────────────────────────────────
 
 const CHILD_IDS = ["alex", "jordan", "morgan"];
 const CHILD_NAMES: Record<string, string> = {

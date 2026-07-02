@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Physical Health Monitoring Intelligence Engine
+// Cara — Physical Health Monitoring Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Maps to: CHR 2015 Reg 10 (health and wellbeing), SCCIF experiences &

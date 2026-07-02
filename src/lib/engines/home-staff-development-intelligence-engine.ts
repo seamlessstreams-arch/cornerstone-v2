@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME STAFF DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — HOME STAFF DEVELOPMENT INTELLIGENCE ENGINE
 // Home-level: synthesises supervision compliance, mandatory training,
 // qualifications, induction progress, and wellbeing scores to produce
 // an overall staff development health score.

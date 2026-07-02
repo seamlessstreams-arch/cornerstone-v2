@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TREND & REPEAT-PATTERN INTELLIGENCE ENGINE
+// CARA — MEDICATION ERROR TREND & REPEAT-PATTERN INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 //
@@ -122,7 +122,7 @@ export interface MedTrendAlert {
   message: string;
 }
 
-export interface AriaMedTrendInsight {
+export interface CaraMedTrendInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -134,7 +134,7 @@ export interface MedicationErrorTrendResult {
   learning_gaps: LearningGap[];
   severity_breakdown: SeverityBreakdown;
   alerts: MedTrendAlert[];
-  insights: AriaMedTrendInsight[];
+  insights: CaraMedTrendInsight[];
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -430,8 +430,8 @@ export function computeMedicationErrorTrends(input: MedErrorTrendInput): Medicat
     });
   }
 
-  // ── ARIA insights ──────────────────────────────────────────────────────
-  const insights: AriaMedTrendInsight[] = [];
+  // ── Cara insights ──────────────────────────────────────────────────────
+  const insights: CaraMedTrendInsight[] = [];
 
   if (harm_events > 0 || recurAfterLearningGroups.length > 0) {
     insights.push({

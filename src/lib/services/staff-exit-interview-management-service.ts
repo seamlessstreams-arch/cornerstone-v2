@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF EXIT INTERVIEW MANAGEMENT SERVICE
+// CARA — STAFF EXIT INTERVIEW MANAGEMENT SERVICE
 // Tracks exit interviews, departure processes, knowledge transfer, and
 // offboarding compliance for staff in children's residential homes.
 //
@@ -198,9 +198,9 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function computeAriaInsights(rows: StaffExitInterviewRow[]): string[] {
+export function computeCaraInsights(rows: StaffExitInterviewRow[]): string[] {
   const metrics = computeMetrics(rows);
   const alerts = computeAlerts(rows);
   const insights: string[] = [];
@@ -338,4 +338,4 @@ export async function updateStaffExitInterview(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeMetrics, computeAlerts, computeAriaInsights };
+export const _testing = { computeMetrics, computeAlerts, computeCaraInsights };

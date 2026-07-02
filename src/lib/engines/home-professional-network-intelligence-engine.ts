@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PROFESSIONAL NETWORK INTELLIGENCE ENGINE
+// CARA — HOME PROFESSIONAL NETWORK INTELLIGENCE ENGINE
 // Home-level: measures the strength and health of the professional support
 // network around the children's home — contact currency, role diversity,
 // meeting completion, child participation, action follow-through, and

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE DIVERSITY & EQUALITY SERVICE
+// CARA — WORKFORCE DIVERSITY & EQUALITY SERVICE
 // Tracks staff diversity monitoring, equality training,
 // reasonable adjustments, and equality impact assessments.
 // CHR 2015 Reg 16 (providing suitable staff — diversity),

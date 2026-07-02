@@ -321,7 +321,7 @@ describe("Child Daily Life Intelligence Engine", () => {
     expect(r.recommendations.some((rec) => rec.urgency === "immediate")).toBe(true);
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for no entries", () => {
     const r = computeChildDailyLife(baseInput());

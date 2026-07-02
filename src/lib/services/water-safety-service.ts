@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WATER SAFETY & LEGIONELLA SERVICE
+// CARA — WATER SAFETY & LEGIONELLA SERVICE
 // Tracks water temperature monitoring, legionella risk assessments,
 // flushing schedules, shower head cleaning, and dead-leg management.
 // CHR 2015 Reg 25 (health and safety — water safety),

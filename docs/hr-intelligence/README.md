@@ -1,13 +1,13 @@
 # HR Intelligence, Safeguarding and Workforce Assurance
 
-A children's-home HR module integrated with ARIA Intelligence. The module
+A children's-home HR module integrated with Cara Intelligence. The module
 supports fair employment practice, safer recruitment, workforce fitness,
 employee relations, safeguarding-linked HR decisions, supervision intelligence,
 agency compliance, inspection evidence, and Registered Manager / Responsible
 Individual oversight.
 
-ARIA supports, drafts, prompts, challenges, risk-assesses and evidences. ARIA
-never makes the final decision. Every ARIA output is `Aria suggested draft`
+Cara supports, drafts, prompts, challenges, risk-assesses and evidences. Cara
+never makes the final decision. Every Cara output is `Cara suggested draft`
 until a human approves, edits, or rejects it. Every decision is audit-logged.
 
 ## Phased delivery
@@ -22,11 +22,11 @@ re-migration.
 - Comprehensive schema (all 25 sections)
 - Role-based access matrix
 - Typed models
-- ARIA HR Process Guardian engine, API, and UI
+- Cara HR Process Guardian engine, API, and UI
 - HR Cases API (open, fetch, list, update, close) with audit logging
 - Empty-state guidance
 - Documentation (this file)
-- Nav entry under Intelligence > Aria
+- Nav entry under Intelligence > Cara
 
 ### Phase 2 (in progress)
 
@@ -62,13 +62,13 @@ Shipped in Phase 2.3:
 
 - HR Risk Command Centre — strategic dashboard with risk heatmap, open cases,
   overdue tasks, RI oversight, safer recruitment position, active suspensions,
-  and ARIA professional insight. Lives at
+  and Cara professional insight. Lives at
   `/intelligence/hr/risk-command-centre`.
 - Investigation Builder — 6-stage structured investigation tool (terms of
   reference, investigation plan, witnesses, evidence log, findings, report).
   Covers 8 investigation types: disciplinary, conduct, safeguarding
   allegation, capability, grievance, whistleblowing, sickness, probation.
-  ARIA generates investigation report drafts. Lives at
+  Cara generates investigation report drafts. Lives at
   `/intelligence/hr/investigation-builder`.
 - Safeguarding / LADO Pathway — 5-stage LADO allegation pathway (initial
   concern, LADO consultation, strategy meeting, investigation, outcome).
@@ -115,7 +115,7 @@ Migration `supabase/migrations/012_hr_intelligence_schema.sql` creates:
 | `hr_case_actions` | Append-only timeline of actions on a case |
 | `hr_case_chronology` | Inspector-ready chronology of significant events |
 | `hr_letters` | Letters generated for the case |
-| `hr_process_guardian_reviews` | ARIA HR Process Guardian draft reviews |
+| `hr_process_guardian_reviews` | Cara HR Process Guardian draft reviews |
 | `hr_process_guardian_audit_log` | Append-only audit trail of Guardian decisions |
 | `hr_oversight_reviews` | RM/RI oversight on closed or significant cases |
 | `hr_probation` | Probation pathway record |
@@ -136,7 +136,7 @@ have read-only access scoped at the application layer.
 src/
   lib/
     aria/
-      hrProcessGuardian.ts        // ARIA HR Process Guardian engine
+      hrProcessGuardian.ts        // Cara HR Process Guardian engine
       writingStyleRules.ts        // Shared style + post-processor (already shipped)
     hr/
       types.ts                    // Typed models mirroring the schema
@@ -155,7 +155,7 @@ supabase/
     012_hr_intelligence_schema.sql
 ```
 
-### ARIA HR Process Guardian
+### Cara HR Process Guardian
 
 The Process Guardian is the integration spine. Every formal HR action draft
 (letter, suspension decision, disciplinary outcome, dismissal, probation
@@ -177,12 +177,12 @@ before approval. The Guardian checks:
 
 The engine is deterministic and audit-traceable. Optional Anthropic LLM
 enhancement adds a redrafted "safer wording" suggestion when
-`ANTHROPIC_API_KEY` is configured. Every output is run through the Aria
+`ANTHROPIC_API_KEY` is configured. Every output is run through the Cara
 writing-style post-processor, so American spellings and AI-tell phrasing are
 removed before the manager sees it.
 
 The Guardian never makes the decision. Output is always
-`Aria suggested draft`. Manager decisions (approve, edit, reject, request
+`Cara suggested draft`. Manager decisions (approve, edit, reject, request
 rewrite) are recorded in `hr_process_guardian_audit_log` and mirrored into
 `hr_audit_log`.
 
@@ -237,12 +237,12 @@ safer-wording template.
 
 ## Assumptions
 
-- The existing Cornerstone Supabase setup is in place. Migration 012 follows
+- The existing Cara Supabase setup is in place. Migration 012 follows
   migrations 010 (Management Oversight Engine) and 011 (Voice of the Child
   Summariser) and reuses the same patterns.
 - The `Database` typed Supabase client does not yet include the HR tables.
   The route handlers use a deliberately loose-typed client (matching the
-  pattern used in the other Aria engine routes) until the typed client is
+  pattern used in the other Cara engine routes) until the typed client is
   regenerated.
 - Per-home RLS scoping is enforced at the application layer for now.
   Production deployment should add per-home RLS policies that consume claims

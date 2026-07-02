@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BOUNDARY MANAGEMENT SERVICE
+// CARA — BOUNDARY MANAGEMENT SERVICE
 // Tracks how boundaries are maintained with children including
 // appropriate limits, boundary-testing responses, consistency,
 // and therapeutic boundary work.

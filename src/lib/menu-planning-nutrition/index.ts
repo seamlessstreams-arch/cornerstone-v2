@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Menu Planning & Nutrition Intelligence — Public API
+// Cara Menu Planning & Nutrition Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

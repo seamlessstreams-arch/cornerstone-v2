@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       homeId,
       entityType: recordType,
       entityId: recordId,
-      action: "aria_draft_generated",
+      action: "cara_draft_generated",
       actorUserId,
       actorRole,
       detail: { confidence: result.confidence, riskFlags: result.riskFlags },
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       ok: true,
       result,
-      ariaLabel: "Aria suggested draft — requires manager review and approval",
+      caraLabel: "Cara suggested draft — requires manager review and approval",
     });
   } catch (err) {
     console.error("[api/intelligence/humanised-oversight] Error:", err);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MISSING & RETURN INTELLIGENCE API ROUTE
+// CARA — CHILD MISSING & RETURN INTELLIGENCE API ROUTE
 // GET /api/v1/child-missing-intelligence?childId=yp_alex
 // Per-child engine analysing missing episodes: frequency, duration trends,
 // risk escalation, return interview compliance, contextual safeguarding.
@@ -8,16 +8,22 @@
 
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { getStore } from "@/lib/db/store";
 import {
   computeChildMissing,
   type MissingEpisodeInput,
 } from "@/lib/engines/child-missing-intelligence-engine";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const childId = searchParams.get("childId");
+
+  const identity = await getRequestIdentity(request);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
   if (!childId) {
     return NextResponse.json({ error: "childId is required" }, { status: 400 });
   }

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- BIRTHDAY, CHRISTMAS & CELEBRATION MANAGEMENT SERVICE
+// CARA -- BIRTHDAY, CHRISTMAS & CELEBRATION MANAGEMENT SERVICE
 // Tracks gift-giving, celebrations, cultural occasions, and special events for
 // looked-after children. Covers occasion types (Birthday, Christmas, Eid, Diwali,
 // Hanukkah, Easter, cultural celebrations, achievement celebrations, leaving/welcome
@@ -516,7 +516,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: CelebrationGiftRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFER RECRUITMENT SERVICE TESTS
+// CARA — SAFER RECRUITMENT SERVICE TESTS
 // Pure-function tests for recruitment compliance computation, alert
 // identification, and constant validation under CHR 2015 Reg 32/33.
 // ══════════════════════════════════════════════════════════════════════════════

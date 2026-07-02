@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S ASPIRATIONS & GOALS SERVICE
+// CARA — CHILDREN'S ASPIRATIONS & GOALS SERVICE
 // Tracks children's dreams, ambitions, future planning,
 // goal setting, and progress toward personal aspirations.
 // CHR 2015 Reg 7 (children's wishes — future aspirations),

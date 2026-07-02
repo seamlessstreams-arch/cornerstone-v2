@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Inspection Snapshot Bundle  (Milestone 30)
+// CARA — Inspection Snapshot Bundle  (Milestone 30)
 //
 // Generates a single immutable point-in-time bundle of every live signal an
 // inspector or Responsible Individual would ask for. Stateless: each call
@@ -87,11 +87,11 @@ export function generateInspectionSnapshot(
   const notifications        = loadNotifications(homeId);
   const saved_time           = loadSavedTimeDashboard(homeId);
 
-  const reg40_open = db.ariaReg40Triages
+  const reg40_open = db.caraReg40Triages
     .findAll(homeId)
     .filter((t) => t.status === "pending").length;
 
-  const reg45_ai_draft = db.ariaReg45EvidenceItems
+  const reg45_ai_draft = db.caraReg45EvidenceItems
     .findAll(homeId)
     .filter((r) => r.status === "ai_draft").length;
 

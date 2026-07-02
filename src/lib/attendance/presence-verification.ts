@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Presence verification for sign-in (Phase 5)
+// CARA — Presence verification for sign-in (Phase 5)
 //
 // Discrete, opt-in ways to confirm a staff member is physically at the home when
 // they clock in — without any continuous location tracking and without storing raw

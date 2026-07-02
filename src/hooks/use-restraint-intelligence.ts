@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTRAINT INTELLIGENCE HOOK
+// CARA — RESTRAINT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/restraint-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

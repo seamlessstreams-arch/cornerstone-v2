@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ROTA & WORKFORCE SERVICE
+// CARA — STAFF ROTA & WORKFORCE SERVICE
 // Manages shift rotas (CHR 2015 Reg 16), absence tracking, staffing compliance,
 // agency usage monitoring, and lone working detection.
-// Powers ARIA's workforce intelligence and regulatory compliance.
+// Powers Cara's workforce intelligence and regulatory compliance.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

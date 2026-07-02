@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESTORATIVE JUSTICE PRACTICE SERVICE
+// CARA — RESTORATIVE JUSTICE PRACTICE SERVICE
 // Tracks restorative conversations, mediation sessions,
 // relationship repair, and conflict resolution through
 // restorative approaches.

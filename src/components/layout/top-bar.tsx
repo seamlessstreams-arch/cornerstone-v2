@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOP BAR (AppShell variant)
+// CARA — TOP BAR (AppShell variant)
 // Minimal persistent bar: home name, search trigger, role badge, bell, avatar.
 // Sits above the main content area alongside the sidebar.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -44,7 +44,7 @@ export function TopBar() {
         <Building2 className="h-4.5 w-4.5 shrink-0 text-slate-400" />
         {!isMobile && (
           <span className="text-sm font-semibold text-slate-800 truncate">
-            Oak House
+            Chamberlain House
           </span>
         )}
       </div>

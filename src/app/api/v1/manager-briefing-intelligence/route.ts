@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER'S INTELLIGENCE BRIEFING API ROUTE
+// CARA — MANAGER'S INTELLIGENCE BRIEFING API ROUTE
 // GET /api/v1/manager-briefing-intelligence
 //
 // Meta-route that aggregates outputs from all major domain intelligence
@@ -705,7 +705,7 @@ export async function GET() {
     children_attention: childrenAttention,
     total_children: store.youngPeople.length,
     total_staff: store.staff.filter((s) => s.is_active).length,
-    home_name: store.home?.name ?? "Oak House",
+    home_name: store.home?.name ?? "Chamberlain House",
     today,
   });
 

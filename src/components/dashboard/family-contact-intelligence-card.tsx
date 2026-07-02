@@ -102,7 +102,7 @@ export function FamilyContactIntelligenceCard({ childId }: FamilyContactIntellig
   useEffect(() => {
     async function fetch_data() {
       try {
-        const res = await fetch(`/api/aria/family-contact?childId=${childId}`);
+        const res = await fetch(`/api/cara/family-contact?childId=${childId}`);
         const json = await res.json();
         if (json.success) setData(json.data);
       } catch (err) {
@@ -201,7 +201,7 @@ export function FamilyContactIntelligenceCard({ childId }: FamilyContactIntellig
                 )}>
                   <AlertTriangle className={cn(
                     "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHighSeverity ? "text-red-600" : "text-amber-600",
+                    isHighSeverity ? "text-[--cs-risk]" : "text-[--cs-warning]",
                   )} />
                   <span className={isHighSeverity ? "text-red-700" : "text-amber-700"}>
                     {concern.description}
@@ -220,8 +220,8 @@ export function FamilyContactIntelligenceCard({ childId }: FamilyContactIntellig
                 key={i}
                 className={cn(
                   "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  flag.status === "not_met" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200" :
+                  "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
                 )}
                 title={flag.description}
               >

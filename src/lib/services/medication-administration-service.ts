@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ADMINISTRATION SERVICE
+// CARA — MEDICATION ADMINISTRATION SERVICE
 // Tracks medication rounds, MAR charts, PRN administrations,
 // controlled drugs, and administration compliance.
 // CHR 2015 Reg 23 (health — medication management),

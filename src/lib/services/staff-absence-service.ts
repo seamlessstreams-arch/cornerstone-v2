@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ABSENCE SERVICE
+// CARA — STAFF ABSENCE SERVICE
 // Manages staff absence recording, return-to-work tracking, pattern
 // identification, and impact on staffing levels.
 // CHR 2015 Reg 34 (employment of staff — fitness to work),

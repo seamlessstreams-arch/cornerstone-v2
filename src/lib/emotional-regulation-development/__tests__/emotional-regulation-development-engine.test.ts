@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Emotional Regulation Development Intelligence — Engine Tests
+// Cara Emotional Regulation Development Intelligence — Engine Tests
 //
 // Covers all evaluators, helpers, label getters, child profiles, and the
 // main orchestrator. 50+ tests covering empty, perfect, partial, and edge cases.
 //
-// Demo data: Oak House — Alex, Jordan, Morgan
+// Demo data: Chamberlain House — Alex, Jordan, Morgan
 // Staff: Sarah Johnson, Tom Richards, Lisa Williams, Darren Laville
 // ══════════════════════════════════════════════════════════════════════════════
 

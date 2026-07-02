@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SIGNIFICANT EVENTS SERVICE
+// CARA — SIGNIFICANT EVENTS SERVICE
 // Records and tracks significant events in children's lives — positive
 // achievements, milestones, life changes, and important moments.
 // CHR 2015 Reg 36 (daily log — significant events),

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT UPLOAD MODAL
+// CARA — DOCUMENT UPLOAD MODAL
 // Multi-step: Select → Paste/Name → Analyse → Review → Action
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -86,7 +86,7 @@ export function DocumentUploadModal({
   const [extractedText, setExtractedText] = useState("");
   const [context, setContext] = useState(uploadContext ?? "");
   const [result, setResult] = useState<UploadedDocument | null>(null);
-  const [ariaError, setAriaError] = useState<string | null>(null);
+  const [caraError, setCaraError] = useState<string | null>(null);
   const [approvedTaskIds, setApprovedTaskIds] = useState<Set<string>>(new Set());
   const [createEvidence, setCreateEvidence] = useState(false);
   const [createChronology, setCreateChronology] = useState(false);
@@ -127,7 +127,7 @@ export function DocumentUploadModal({
   const handleAnalyse = async () => {
     if (!fileName.trim() || !extractedText.trim()) return;
     setStep("analysing");
-    setAriaError(null);
+    setCaraError(null);
 
     try {
       const res = await uploadMutation.mutateAsync({
@@ -141,13 +141,13 @@ export function DocumentUploadModal({
         upload_context: context || null,
       });
       setResult(res.data);
-      if (res.aria_error) setAriaError(res.aria_error);
+      if (res.cara_error) setCaraError(res.cara_error);
       // Pre-select all suggested tasks
       const allIds = new Set(res.data.ai_result?.suggested_tasks.map((t) => t.id) ?? []);
       setApprovedTaskIds(allIds);
       setStep("review");
     } catch {
-      setAriaError("Upload failed. Please try again.");
+      setCaraError("Upload failed. Please try again.");
       setStep("select");
     }
   };
@@ -195,16 +195,16 @@ export function DocumentUploadModal({
       >
         {/* Header */}
         <div className="sticky top-0 z-10 bg-white rounded-t-2xl border-b border-[var(--cs-border-subtle)] px-6 py-4 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--cs-aria-gold-bg)]">
-            <Sparkles className="h-4.5 w-4.5 text-[var(--cs-aria-gold)]" style={{ width: "1.125rem", height: "1.125rem" }} />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--cs-cara-gold-bg)]">
+            <Sparkles className="h-4.5 w-4.5 text-[var(--cs-cara-gold)]" style={{ width: "1.125rem", height: "1.125rem" }} />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-bold text-[var(--cs-navy)]">ARIA Document Intelligence</p>
+            <p className="text-sm font-bold text-[var(--cs-navy)]">Cara Document Intelligence</p>
             <p className="text-xs text-[var(--cs-text-muted)]">
-              {step === "select" ? "Upload a document — ARIA will classify, extract, and generate action intelligence"
-               : step === "analysing" ? "ARIA is reading and analysing your document…"
+              {step === "select" ? "Upload a document — Cara will classify, extract, and generate action intelligence"
+               : step === "analysing" ? "Cara is reading and analysing your document…"
                : actionComplete ? "Document processed and actions created"
-               : "Review ARIA's analysis before approving"}
+               : "Review Cara's analysis before approving"}
             </p>
           </div>
           {/* Step indicator */}
@@ -236,7 +236,7 @@ export function DocumentUploadModal({
                 onClick={() => fileInputRef.current?.click()}
                 className={cn(
                   "rounded-2xl border-2 border-dashed p-10 text-center cursor-pointer transition-all",
-                  dragOver ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)]" : "border-[var(--cs-border)] hover:border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]/30",
+                  dragOver ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)]" : "border-[var(--cs-border)] hover:border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]/30",
                   fileName && "border-emerald-300 bg-emerald-50/30",
                 )}
               >
@@ -257,8 +257,8 @@ export function DocumentUploadModal({
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-3">
-                    <div className="h-12 w-12 rounded-2xl bg-[var(--cs-aria-gold-bg)] flex items-center justify-center">
-                      <Upload className="h-6 w-6 text-[var(--cs-aria-gold)]" />
+                    <div className="h-12 w-12 rounded-2xl bg-[var(--cs-cara-gold-bg)] flex items-center justify-center">
+                      <Upload className="h-6 w-6 text-[var(--cs-cara-gold)]" />
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-[var(--cs-navy)]">Drop your document here</div>
@@ -278,7 +278,7 @@ export function DocumentUploadModal({
                     value={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                     placeholder="e.g. Alex_W_Risk_Assessment_April_2026.pdf"
-                    className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)]"
                   />
                 </div>
               )}
@@ -295,22 +295,22 @@ export function DocumentUploadModal({
                   value={extractedText}
                   onChange={(e) => setExtractedText(e.target.value)}
                   rows={8}
-                  placeholder="Paste the document content here. ARIA will read, classify, and extract intelligence from the full text…"
-                  className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3.5 py-3 text-xs text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)] placeholder:text-[var(--cs-text-muted)] leading-relaxed"
+                  placeholder="Paste the document content here. Cara will read, classify, and extract intelligence from the full text…"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3.5 py-3 text-xs text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)] placeholder:text-[var(--cs-text-muted)] leading-relaxed"
                 />
               </div>
 
               {/* Context hint */}
               <div>
                 <label className="text-xs font-semibold text-[var(--cs-text-secondary)] block mb-1.5">
-                  Context hint for ARIA <span className="text-[var(--cs-text-muted)] font-normal">(optional)</span>
+                  Context hint for Cara <span className="text-[var(--cs-text-muted)] font-normal">(optional)</span>
                 </label>
                 <input
                   type="text"
                   value={context}
                   onChange={(e) => setContext(e.target.value)}
                   placeholder="e.g. 'Uploaded after Alex's strategy meeting' or 'Staff training record for Ryan'"
-                  className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)]"
                 />
               </div>
 
@@ -321,7 +321,7 @@ export function DocumentUploadModal({
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--cs-navy)] px-5 py-3 text-sm font-bold text-white hover:bg-[var(--cs-navy)]/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <Sparkles className="h-4 w-4" />
-                  Analyse with ARIA
+                  Analyse with Cara
                 </button>
                 <button onClick={onClose} className="rounded-xl border border-[var(--cs-border)] px-5 py-3 text-sm font-medium text-[var(--cs-text-secondary)] hover:bg-[var(--cs-surface)] transition-colors">
                   Cancel
@@ -332,7 +332,7 @@ export function DocumentUploadModal({
               <div className="rounded-xl border border-[var(--cs-border-subtle)] bg-[var(--cs-surface)] p-3 flex items-start gap-2">
                 <Shield className="h-3.5 w-3.5 text-[var(--cs-text-muted)] shrink-0 mt-0.5" />
                 <p className="text-[10px] text-[var(--cs-text-muted)] leading-relaxed">
-                  ARIA treats document content as data only. Embedded instructions within documents are detected and ignored. All analysis requires your approval before creating records.
+                  Cara treats document content as data only. Embedded instructions within documents are detected and ignored. All analysis requires your approval before creating records.
                 </p>
               </div>
             </div>
@@ -342,20 +342,20 @@ export function DocumentUploadModal({
           {step === "analysing" && (
             <div className="py-12 flex flex-col items-center gap-6">
               <div className="relative">
-                <div className="h-20 w-20 rounded-full border-4 border-[var(--cs-aria-gold-soft)] border-t-[var(--cs-aria-gold)] animate-spin" />
+                <div className="h-20 w-20 rounded-full border-4 border-[var(--cs-cara-gold-soft)] border-t-[var(--cs-cara-gold)] animate-spin" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Sparkles className="h-8 w-8 text-[var(--cs-aria-gold)]" />
+                  <Sparkles className="h-8 w-8 text-[var(--cs-cara-gold)]" />
                 </div>
               </div>
               <div className="text-center space-y-2">
-                <p className="text-base font-bold text-[var(--cs-navy)]">ARIA is analysing your document</p>
+                <p className="text-base font-bold text-[var(--cs-navy)]">Cara is analysing your document</p>
                 <p className="text-sm text-[var(--cs-text-muted)] max-w-sm text-center leading-relaxed">
                   Classifying document type, extracting entities, identifying risks, suggesting tasks, mapping to regulations…
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
                 {["Classifying", "Extracting entities", "Identifying risks", "Suggesting tasks", "Mapping regulations", "Checking safeguarding"].map((label) => (
-                  <span key={label} className="inline-flex items-center gap-1 rounded-full bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-2.5 py-1 text-[10px] font-medium text-[var(--cs-aria-gold)]">
+                  <span key={label} className="inline-flex items-center gap-1 rounded-full bg-[var(--cs-cara-gold-bg)] border border-[var(--cs-cara-gold-soft)] px-2.5 py-1 text-[10px] font-medium text-[var(--cs-cara-gold)]">
                     <Loader2 className="h-2.5 w-2.5 animate-spin" />
                     {label}
                   </span>
@@ -375,20 +375,20 @@ export function DocumentUploadModal({
                   <div>
                     <div className="text-sm font-bold text-red-800">⚠️ Suspicious content detected</div>
                     <div className="text-xs text-red-700 mt-1 leading-relaxed">
-                      This document contains text that attempted to manipulate ARIA. The content has been treated as data only and no instructions were followed.
+                      This document contains text that attempted to manipulate Cara. The content has been treated as data only and no instructions were followed.
                       {aiResult.suspicious_content && <div className="mt-1 font-mono bg-red-100 rounded px-2 py-1 text-[10px]">"{aiResult.suspicious_content}"</div>}
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* ARIA error */}
-              {ariaError && (
+              {/* Cara error */}
+              {caraError && (
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
                   <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-sm font-semibold text-amber-800">ARIA analysis incomplete</div>
-                    <div className="text-xs text-amber-700 mt-0.5">{ariaError}</div>
+                    <div className="text-sm font-semibold text-amber-800">Cara analysis incomplete</div>
+                    <div className="text-xs text-amber-700 mt-0.5">{caraError}</div>
                   </div>
                 </div>
               )}
@@ -491,7 +491,7 @@ export function DocumentUploadModal({
                   <div className="flex items-center gap-2">
                     <ClipboardList className="h-4 w-4 text-[var(--cs-text-secondary)]" />
                     <span className="text-xs font-bold text-[var(--cs-navy)]">{aiResult.suggested_tasks.length} suggested task{aiResult.suggested_tasks.length !== 1 ? "s" : ""}</span>
-                    <span className="text-[10px] text-[var(--cs-text-muted)] ml-auto">Tick to create in Cornerstone</span>
+                    <span className="text-[10px] text-[var(--cs-text-muted)] ml-auto">Tick to create in Cara</span>
                   </div>
                   {aiResult.suggested_tasks.map((task) => (
                     <div
@@ -504,7 +504,7 @@ export function DocumentUploadModal({
                       className={cn(
                         "flex items-start gap-3 rounded-xl border p-3.5 cursor-pointer transition-all",
                         approvedTaskIds.has(task.id)
-                          ? "border-[var(--cs-aria-gold-soft)] bg-[var(--cs-aria-gold-bg)]"
+                          ? "border-[var(--cs-cara-gold-soft)] bg-[var(--cs-cara-gold-bg)]"
                           : "border-[var(--cs-border-subtle)] bg-white hover:bg-[var(--cs-surface)]",
                       )}
                     >
@@ -569,7 +569,7 @@ export function DocumentUploadModal({
                 <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-4 space-y-2">
                   <div className="flex items-center gap-2">
                     <Brain className="h-4 w-4 text-indigo-600" />
-                    <span className="text-xs font-bold text-indigo-900">ARIA oversight draft</span>
+                    <span className="text-xs font-bold text-indigo-900">Cara oversight draft</span>
                     <span className="text-[10px] text-indigo-500 ml-auto">Edit before using</span>
                   </div>
                   <p className="text-xs text-indigo-800 leading-relaxed">{aiResult.oversight_draft}</p>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORD QUALITY SCORE
+// CARA — RECORD QUALITY SCORE
 //
 // A deterministic assessment of how well a record is written, across the
 // dimensions Ofsted actually scrutinises: is it complete, clear, professional,
@@ -19,5 +19,5 @@ export type RecordQualityScore = {
   childCentredness: number;
   riskRelevance: number;
   missingFields: string[];
-  ariaSuggestions: string[];
+  caraSuggestions: string[];
 };

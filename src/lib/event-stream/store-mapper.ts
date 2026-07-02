@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STORE → EVENT-PROJECTOR MAPPER
+// CARA — STORE → EVENT-PROJECTOR MAPPER
 // Single source of truth for projecting the store's domain collections into the
 // EventProjectorInput. Used by both the unified event-stream route and the
 // stream-native event-intelligence route, so "capture once" feeds both.

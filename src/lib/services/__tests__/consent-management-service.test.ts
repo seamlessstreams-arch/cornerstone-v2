@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONSENT MANAGEMENT SERVICE TESTS
+// CARA — CONSENT MANAGEMENT SERVICE TESTS
 // Pure-function tests for consent metrics computation, alert identification,
 // constant validation, and CRUD fallback under CHR 2015 Reg 7/8/14/32.
 // ══════════════════════════════════════════════════════════════════════════════

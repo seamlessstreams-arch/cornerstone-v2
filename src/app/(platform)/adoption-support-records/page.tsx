@@ -21,8 +21,8 @@ import { useAdoptionRecords } from "@/hooks/use-adoption-records";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { AdoptionStatus, AdoptionIntroductionPhase, AdoptionRecord } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -138,11 +138,11 @@ export default function AdoptionSupportRecordsPage() {
     <PageShell
       title="Adoption Support Records"
       subtitle="Tracking children whose care plan is adoption — preparation, introductions, post-placement support"
-      ariaContext={{ pageTitle: "Adoption Support Records", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Adoption Support Records", sourceType: "child_record" }}
       actions={[
         <PrintButton key="p" title="Adoption Support Records" />,
         <ExportButton key="e" data={filtered} columns={exportCols} filename="adoption-support-records" />,
-        <AriaStudioQuickActionButton key="a" context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />,
+        <CaraStudioQuickActionButton key="a" context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />,
       ]}
     >
       <div id="print-area" className="space-y-6">
@@ -152,7 +152,7 @@ export default function AdoptionSupportRecordsPage() {
           <Heart className="h-5 w-5 text-pink-600 mt-0.5" />
           <div>
             <p className="font-semibold">A positive permanence outcome</p>
-            <p className="text-xs mt-1">Adoption is one of several routes to permanence and, when it is the right plan, can offer a child a lifelong family. Oak House&apos;s role is to prepare each child carefully — emotionally, practically and through life story work — so they arrive at their adoptive family with their history understood, their attachments honoured, and their voice heard. We hold transitions with care and continue to support the child where adopters welcome our involvement.</p>
+            <p className="text-xs mt-1">Adoption is one of several routes to permanence and, when it is the right plan, can offer a child a lifelong family. Chamberlain House&apos;s role is to prepare each child carefully — emotionally, practically and through life story work — so they arrive at their adoptive family with their history understood, their attachments honoured, and their voice heard. We hold transitions with care and continue to support the child where adopters welcome our involvement.</p>
           </div>
         </div>
 
@@ -243,7 +243,7 @@ export default function AdoptionSupportRecordsPage() {
                       <div>
                         <p className="text-xs font-semibold mb-1 flex items-center gap-1"><Calendar className="h-3 w-3" />Key dates</p>
                         <ul className="text-xs space-y-0.5">
-                          <li><span className="text-muted-foreground">Arrived at Oak House:</span> <strong>{r.arrival_date}</strong></li>
+                          <li><span className="text-muted-foreground">Arrived at Chamberlain House:</span> <strong>{r.arrival_date}</strong></li>
                           <li><span className="text-muted-foreground">Placement order:</span> <strong>{r.placement_order_date || "—"}</strong></li>
                           <li><span className="text-muted-foreground">Matching panel:</span> <strong>{r.matching_panel_date || "—"}</strong></li>
                           <li><span className="text-muted-foreground">Local authority:</span> <strong>{r.local_authority}</strong></li>
@@ -356,7 +356,7 @@ export default function AdoptionSupportRecordsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Adoption Support Records — post-adoption support, ASF, therapeutic intervention, contact arrangements, adoption breakdown prevention, support plans, court orders, letterbox"
         recordType="placement_plan"

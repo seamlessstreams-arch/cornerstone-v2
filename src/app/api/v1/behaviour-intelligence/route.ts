@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR INTELLIGENCE API ROUTE
+// CARA — BEHAVIOUR INTELLIGENCE API ROUTE
 // GET /api/v1/behaviour-intelligence
 // Returns aggregated behaviour support intelligence from the engine.
 // ══════════════════════════════════════════════════════════════════════════════

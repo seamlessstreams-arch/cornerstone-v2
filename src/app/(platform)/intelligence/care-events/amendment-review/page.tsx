@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Amendment Review Queue  (Milestone 19)
+// CARA — Amendment Review Queue  (Milestone 19)
 //
 // Surfaces sensitive amendments awaiting manager re-verification, with a
 // per-row diff against the previous version. The amended record is never

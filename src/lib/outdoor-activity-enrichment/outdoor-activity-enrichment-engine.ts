@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Outdoor Activity & Enrichment Intelligence Engine
+// Cara Outdoor Activity & Enrichment Intelligence Engine
 //
 // Evaluates the quality, breadth, and safety of outdoor activities and
 // enrichment experiences provided to children in residential care.

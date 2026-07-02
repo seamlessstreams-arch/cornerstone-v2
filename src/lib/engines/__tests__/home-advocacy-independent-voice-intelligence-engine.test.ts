@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE TESTS
+// CARA — HOME ADVOCACY & INDEPENDENT VOICE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for advocacy access, independent advocate usage,
 // child voice capture, private sessions, and type variety scoring.
 // Covers CHR 2015 Reg 7 and SCCIF Voice requirements.
@@ -1624,7 +1624,7 @@ describe("Score clamping and boundary edge cases", () => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 describe("Complete scenario tests", () => {
-  it("Oak House ideal scenario produces outstanding rating", () => {
+  it("Chamberlain House ideal scenario produces outstanding rating", () => {
     const records = [
       makeRecord({ child_id: "c1", advocacy_type: "independent", status: "active", has_child_view: true, visit_count: 4, private_session_count: 3 }),
       makeRecord({ child_id: "c2", advocacy_type: "legal", status: "active", has_child_view: true, visit_count: 3, private_session_count: 2 }),

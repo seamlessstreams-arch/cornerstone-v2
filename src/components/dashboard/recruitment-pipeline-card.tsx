@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECRUITMENT PIPELINE CARD
+// CARA — RECRUITMENT PIPELINE CARD
 // Dashboard widget showing active vacancies, candidate funnel, SCR alerts,
 // and time-to-appoint metrics at a glance.
 // Critical for RMs under constant staffing pressure — Reg 32/33 compliance.
@@ -24,8 +24,8 @@ const FUNNEL_STAGES: { key: string; label: string; color: string }[] = [
   { key: "enquiry",               label: "Enquiry",        color: "bg-[var(--cs-text-gentle)]" },
   { key: "application_received",  label: "Application",    color: "bg-blue-300" },
   { key: "sift",                  label: "Sift",           color: "bg-blue-400" },
-  { key: "interview_scheduled",   label: "Interview",      color: "bg-[var(--cs-aria-gold)]" },
-  { key: "interview_completed",   label: "Interviewed",    color: "bg-[var(--cs-aria-gold-bg)]0" },
+  { key: "interview_scheduled",   label: "Interview",      color: "bg-[var(--cs-cara-gold)]" },
+  { key: "interview_completed",   label: "Interviewed",    color: "bg-[var(--cs-cara-gold-bg)]0" },
   { key: "references_requested",  label: "References",     color: "bg-amber-400" },
   { key: "conditional_offer",     label: "Offer",          color: "bg-emerald-400" },
   { key: "pre_start_checks",     label: "Pre-Start",      color: "bg-emerald-500" },
@@ -87,7 +87,7 @@ export function RecruitmentPipelineCard() {
             Recruitment Pipeline
           </CardTitle>
           <Link href="/recruitment">
-            <Badge className="text-[9px] bg-blue-100 text-blue-700 border-0 rounded-full hover:bg-blue-200 cursor-pointer">
+            <Badge className="text-[9px] bg-[--cs-info-bg] text-[--cs-info] border-0 rounded-full hover:bg-blue-200 cursor-pointer">
               {activeCandidates.length} active
             </Badge>
           </Link>
@@ -101,10 +101,10 @@ export function RecruitmentPipelineCard() {
             <div className="text-sm font-bold text-blue-700 tabular-nums">{activeVacancies.length}</div>
             <div className="text-[9px] text-blue-500">Vacancies</div>
           </div>
-          <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] p-2 text-center">
-            <Users className="h-3 w-3 text-[var(--cs-aria-gold)] mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-[var(--cs-aria-gold)] tabular-nums">{activeCandidates.length}</div>
-            <div className="text-[9px] text-[var(--cs-aria-gold)]">In Pipeline</div>
+          <div className="rounded-xl bg-[var(--cs-cara-gold-bg)] p-2 text-center">
+            <Users className="h-3 w-3 text-[var(--cs-cara-gold)] mx-auto mb-0.5" />
+            <div className="text-sm font-bold text-[var(--cs-cara-gold)] tabular-nums">{activeCandidates.length}</div>
+            <div className="text-[9px] text-[var(--cs-cara-gold)]">In Pipeline</div>
           </div>
           <div className={cn("rounded-xl p-2 text-center", hasBlockers ? "bg-red-50" : "bg-emerald-50")}>
             <Shield className={cn("h-3 w-3 mx-auto mb-0.5", hasBlockers ? "text-red-500" : "text-emerald-500")} />

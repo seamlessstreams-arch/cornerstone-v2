@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WHISTLEBLOWING INVESTIGATION SERVICE
+// CARA — STAFF WHISTLEBLOWING INVESTIGATION SERVICE
 // Manages investigation records following whistleblowing disclosures,
 // investigation outcomes, protection for whistleblowers, organisational
 // learning, and regulatory notifications.
@@ -279,7 +279,7 @@ export function computeStaffWhistleblowingAlerts(
   return alerts;
 }
 
-export function generateStaffWhistleblowingAriaInsights(
+export function generateStaffWhistleblowingCaraInsights(
   metrics: ReturnType<typeof computeStaffWhistleblowingMetrics>,
   alerts: ReturnType<typeof computeStaffWhistleblowingAlerts>,
 ): string[] {
@@ -339,5 +339,5 @@ export function generateStaffWhistleblowingAriaInsights(
 export const _testing = {
   computeStaffWhistleblowingMetrics,
   computeStaffWhistleblowingAlerts,
-  generateStaffWhistleblowingAriaInsights,
+  generateStaffWhistleblowingCaraInsights,
 };

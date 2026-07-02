@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- INDIVIDUAL RISK ASSESSMENT SERVICE TESTS
+// CARA -- INDIVIDUAL RISK ASSESSMENT SERVICE TESTS
 // Pure-function unit tests for individual child risk assessment metrics
 // computation, alert identification, and constant validation.
 // CHR 2015 Reg 12 (protection of children),

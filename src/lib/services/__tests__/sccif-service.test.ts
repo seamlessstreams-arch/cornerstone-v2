@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SCCIF SELF-EVALUATION SERVICE TESTS
+// CARA -- SCCIF SELF-EVALUATION SERVICE TESTS
 // Pure-function tests for self-evaluation summaries, judgment grade suggestions,
 // inspection readiness alerts, and constant validation.
 // ==============================================================================

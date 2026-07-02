@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MANAGER PRIORITY BRIEFING API ROUTE
+// CARA — MANAGER PRIORITY BRIEFING API ROUTE
 // GET /api/v1/manager-priority-briefing
 //
 // Broad critical-signal SWEEP across the fleet of home-*-intelligence engines.
@@ -16,6 +16,12 @@ import {
   computeManagerPriorityBriefing,
   type EngineSignalInput,
 } from "@/lib/engines/manager-priority-briefing-engine";
+import {
+  mapInspectionToSignal,
+  mapOutcomeHomeToSignal,
+  mapRelationshipHomeToSignal,
+  mapSopRealityCheckToSignal,
+} from "@/lib/engines/briefing-native-mappers";
 
 export const dynamic = "force-dynamic";
 
@@ -162,20 +168,58 @@ async function fetchSignal(baseUrl: string, route: string, domain: string): Prom
   }
 }
 
+/**
+ * The newer CARA intelligence engines (relationship / outcome / inspection) have
+ * richer, differently-shaped payloads than the home-* fleet, so map them to
+ * manager signals natively rather than via the generic extractor. This surfaces
+ * the new intelligence in the same "what needs me" feed — one feed, many
+ * contributors, never a duplicate dashboard.
+ */
+async function fetchNativeSignals(baseUrl: string): Promise<EngineSignalInput[]> {
+  const get = async (route: string): Promise<any | null> => {
+    try {
+      const res = await fetch(`${baseUrl}/api/v1/${route}`, { cache: "no-store" });
+      if (!res.ok) return null;
+      return (await res.json())?.data ?? null;
+    } catch {
+      return null;
+    }
+  };
+
+  const [insp, outc, rel, sop] = await Promise.all([
+    get("inspection-intelligence"),
+    get("outcome-intelligence/home"),
+    get("relationship-intelligence/home"),
+    get("sop-reality-check"),
+  ]);
+
+  return [
+    mapInspectionToSignal(insp),
+    mapOutcomeHomeToSignal(outc),
+    mapRelationshipHomeToSignal(rel),
+    mapSopRealityCheckToSignal(sop),
+  ].filter((s): s is EngineSignalInput => s !== null);
+}
+
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const baseUrl = `${url.protocol}//${url.host}`;
     const today = new Date().toISOString().slice(0, 10);
 
-    const results = await Promise.allSettled(ENGINES.map(([route, domain]) => fetchSignal(baseUrl, route, domain)));
-    const signals = results
+    const [results, nativeSignals] = await Promise.all([
+      Promise.allSettled(ENGINES.map(([route, domain]) => fetchSignal(baseUrl, route, domain))),
+      fetchNativeSignals(baseUrl),
+    ]);
+    const httpSignals = results
       .map((r) => (r.status === "fulfilled" ? r.value : null))
       .filter((v): v is EngineSignalInput => v !== null);
+    const signals = [...httpSignals, ...nativeSignals];
 
+    const NATIVE_COUNT = 4;
     const result = computeManagerPriorityBriefing({
       signals,
-      engines_queried: ENGINES.length,
+      engines_queried: ENGINES.length + NATIVE_COUNT,
       engines_responded: signals.length,
       today,
     });

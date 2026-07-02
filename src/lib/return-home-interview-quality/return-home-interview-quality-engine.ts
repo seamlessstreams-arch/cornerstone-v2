@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Return Home Interview Quality Intelligence Engine
+// Cara — Return Home Interview Quality Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses the quality and timeliness of Return Home Interviews (RHIs)

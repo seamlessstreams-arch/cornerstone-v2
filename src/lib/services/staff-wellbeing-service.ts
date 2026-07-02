@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF WELLBEING SERVICE
+// CARA — STAFF WELLBEING SERVICE
 // Manages staff mental health, wellbeing checks, stress levels,
 // workload monitoring, debriefing records, and support access.
 // CHR 2015 Reg 33 (employment of staff — support and welfare),

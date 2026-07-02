@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MUTABLE IN-MEMORY DATA STORE
+// CARA — MUTABLE IN-MEMORY DATA STORE
 //
 // This is the single source of truth for all API routes.
 // Initialized from seed data on first access.
@@ -19,6 +19,10 @@ import type {
   TrainingRecord, Home, CareForm, Supervision,
 } from "@/types";
 import type { CornerstoneEvent } from "@/types/cornerstone-event";
+import type { RestrictionReview } from "@/lib/rights-restriction/types";
+import { freshStages, type PostIncidentReflection } from "@/lib/post-incident-reflection/types";
+import type { StayingSafePlan } from "@/lib/staying-safe-plan/types";
+import type { RelationshipEntry } from "@/lib/protective-relationships/types";
 import type {
   CommsChannel,
   CommsChannelMember,
@@ -29,6 +33,31 @@ import type {
 } from "@/types/comms";
 import type { SignInVerification } from "@/lib/attendance/presence-verification";
 import type { EmergencyAlert } from "@/lib/staffing/emergency-types";
+import type { EmployerValuesProfile, CandidateValuesProfile } from "@/lib/engines/values-match-engine";
+import type { ReflectiveSupervisionRecord } from "@/lib/engines/supervision-engine";
+import type { IncidentSession, IncidentTimelineEntry, CaraRecordingReview, PromptBankEntry } from "@/lib/cara-incident/cara-incident-engine";
+import { defaultPromptBank } from "@/lib/cara-incident/cara-incident-engine";
+import type { RestorativeConversationRecord, PostIncidentReflectionRecord } from "@/lib/cara-incident/post-incident-engine";
+import type { AlertStateRecord } from "@/lib/cara-incident/manager-oversight-engine";
+import type { HqOrganisation, HqUsageEvent, HqAiUsageRow, HqBreakGlassGrant, HqApiCallRow, HqDecisionRow } from "@/lib/hq/hq-types";
+import { seedHqOrganisations, seedHqUsageEvents, seedHqApiCalls, seedHqDecisions } from "@/lib/hq/hq-seeds";
+import type { PaceAnalysisRecord, WritingReviewRecord } from "@/lib/practice-history/types";
+import { seedPaceAnalyses, seedWritingReviews } from "@/lib/practice-history/seeds";
+import type { CalendarEvent } from "@/lib/calendar/calendar-types";
+import { seedCalendarEvents } from "@/lib/calendar/calendar-seeds";
+import { seedStaffSicknessRecords } from "@/lib/workforce/absence-seeds";
+import { seedStaffCompetencyRecords, seedTrainingMatrixRows, seedCpdRecords, seedStaffHandbookAcknowledgementRecords } from "@/lib/workforce/competence-seeds";
+import type { ShiftPattern } from "@/lib/rota/shift-patterns";
+import type { StaffingPolicy } from "@/lib/rota/staffing-cover-engine";
+import { seedShiftPatterns, seedStaffingPolicy, seedShiftCoverNotes, type ShiftCoverNote } from "@/lib/rota/rota-seeds";
+import {
+  seedFireEquipmentChecks, seedWaterHygieneRecords, seedWindowChecks, seedPestRecords,
+  seedAgencyStaffLog, seedAgencyInductions, seedAgencyFeedback,
+  seedCommunityEngagements, seedIndependentTravelRecords,
+  seedHomePolicies, seedPolicyReviewSchedule, seedPolicyVersionControl,
+  seedPolicyAcknowledgements, seedPolicyAlignment, seedPolicyAccessibility,
+} from "@/lib/seed-dead-cell-collections";
+import type { ChildPACEProfile } from "@/lib/cara-intelligence/pace";
 import type {
   Building, BuildingCheck, Vehicle, VehicleCheck,
   MissingEpisode, ChronologyEntry, HandoverEntry,
@@ -250,6 +279,10 @@ import type {
   ConditionalOffer, RecruitmentAuditEntry,
 } from "@/types/recruitment";
 import type {
+  CaraChildLearningProfile, CaraSavedOutput, CaraLibraryResource,
+  CaraAiRun, CaraGuardrailEvent,
+} from "@/lib/cara-studio/cara-types";
+import type {
   StaffCompetencyProfile, CompetencyScore, DevelopmentPlan,
   PracticeObservation, CareerReadinessReport, SuccessionPlan,
   AppraisalRecord, InductionRecord, QualificationRecord,
@@ -384,6 +417,8 @@ import type {
   HealthRecordEntry,
 } from "@/types/extended";
 import { generateId, todayStr, daysFromNow } from "@/lib/utils";
+import type { WritingAssistantSettings, WritingAuditEvent } from "@/lib/writing-assistant/types";
+import { DEFAULT_WA_SETTINGS } from "@/lib/writing-assistant/types";
 import type {
   CareEvent, CareEventRoute, CareEventJob, CareEventAuditLog,
   Reg45EvidenceItem, AnnexAEvidenceItem, ChildDailySummary,
@@ -391,15 +426,15 @@ import type {
 } from "@/types/care-events";
 import type { InspectionRecord } from "@/types/extended";
 import type {
-  AriaPracticeAssessment,
-  AriaDevelopmentalGapRecord,
-  AriaProtectiveFactorReview,
-  AriaRelationshipDepthReview,
-  AriaThresholdConsultation,
-  AriaStaffWellbeingSignal,
-  AriaPracticeFlag,
-  AriaGuidanceRule,
-} from "@/lib/aria-practice/types";
+  CaraPracticeAssessment,
+  CaraDevelopmentalGapRecord,
+  CaraProtectiveFactorReview,
+  CaraRelationshipDepthReview,
+  CaraThresholdConsultation,
+  CaraStaffWellbeingSignal,
+  CaraPracticeFlag,
+  CaraGuidanceRule,
+} from "@/lib/cara-practice/types";
 import type {
   WakeUpRoutine,
   OutcomeMeasure,
@@ -427,18 +462,18 @@ import {
   SEED_FILING_CABINET, SEED_SAVED_TIME_METRICS,
 } from "@/lib/seed-care-events";
 import type {
-  AriaArtifact, AriaSource, AriaArtifactVersion, AriaArtifactReview,
-  AriaArtifactAction, AriaQualityCheck, AriaGap, AriaStudioAuditLog,
-  AriaHomeDynamicsSnapshot,
-  AriaSafeguardingPattern, AriaEarlyWarning,
-  AriaCareGraphNode, AriaCareGraphEdge,
-  AriaFormulation, AriaDecisionRecommendation, AriaReg45EvidenceItem,
-  AriaAnnexASnapshot,
-  AriaReg45Report,
-  AriaSuggestedRecord,
-  AriaCommittedRecord,
-  AriaReg40Triage,
-} from "@/types/aria-studio";
+  CaraArtifact, CaraSource, CaraArtifactVersion, CaraArtifactReview,
+  CaraArtifactAction, CaraQualityCheck, CaraGap, CaraStudioAuditLog,
+  CaraHomeDynamicsSnapshot,
+  CaraSafeguardingPattern, CaraEarlyWarning,
+  CaraCareGraphNode, CaraCareGraphEdge,
+  CaraFormulation, CaraDecisionRecommendation, CaraReg45EvidenceItem,
+  CaraAnnexASnapshot,
+  CaraReg45Report,
+  CaraSuggestedRecord,
+  CaraCommittedRecord,
+  CaraReg40Triage,
+} from "@/types/cara-studio";
 
 // ── Persisted inspection snapshot envelope (M31) ─────────────────────────────
 // Self-contained immutable record. Payload is the full InspectionSnapshot
@@ -562,14 +597,14 @@ export interface ExportHistoryEntry {
 }
 
 /**
- * A learned ARIA answer — produced once by Claude, then replayed for near-identical
+ * A learned Cara answer — produced once by Claude, then replayed for near-identical
  * future requests so the API isn't called again. Only ever populated for LOW-risk,
  * non-sensitive commands, and bucketed by child so an answer is never served across
  * different children. (The intelligence chain: rules → this learned cache → Claude.)
  */
-export interface AriaCachedResponse {
+export interface CaraCachedResponse {
   id: string;
-  /** ARIA command this answer was produced for (the cache bucket). */
+  /** Cara command this answer was produced for (the cache bucket). */
   command_id: string;
   /** Child bucket — a learned answer is NEVER matched across different children. */
   child_id: string | null;
@@ -593,6 +628,180 @@ export interface StoredPushSubscription {
   created_at: string;
 }
 
+// ── Writing Assistant audit seed (demo realism) ──────────────────────────────
+
+const WA_AUDIT_SEED: WritingAuditEvent[] = [
+  // staff_darren — daily log entries
+  { id: "waud_s001", user_id: "staff_darren", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "safeguarding-quality", action: "accepted", original_text: "kicked off", replacement_text: "became distressed and dysregulated", created_at: daysFromNow(-1) },
+  { id: "waud_s002", user_id: "staff_darren", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "tone", action: "accepted", original_text: "attention-seeking", replacement_text: "seeking connection", created_at: daysFromNow(-1) },
+  { id: "waud_s003", user_id: "staff_darren", record_type: "incident", field_name: "description", child_id: "yp_jordan", issue_type: "safeguarding-quality", action: "accepted", original_text: "refusing to engage", replacement_text: "", created_at: daysFromNow(-2) },
+  { id: "waud_s004", user_id: "staff_darren", record_type: "handover", field_name: "key_notes", child_id: "yp_alex", issue_type: "grammar", action: "accepted", original_text: "didnt", replacement_text: "didn't", created_at: daysFromNow(-2) },
+  { id: "waud_s005", user_id: "staff_darren", record_type: "daily_log", field_name: "content", child_id: "yp_casey", issue_type: "clarity", action: "ignored", original_text: "the situation", replacement_text: "", created_at: daysFromNow(-3) },
+  { id: "waud_s006", user_id: "staff_darren", record_type: "incident", field_name: "immediate_action", child_id: "yp_jordan", issue_type: "tone", action: "accepted", original_text: "manipulative", replacement_text: "presenting behaviours that appear controlling", created_at: daysFromNow(-4) },
+  { id: "waud_s007", user_id: "staff_darren", record_type: "return_interview", field_name: "interview_notes", child_id: "yp_alex", issue_type: "safeguarding-quality", action: "accepted", original_text: "returned safe and well", replacement_text: "", created_at: daysFromNow(-5) },
+  { id: "waud_s008", user_id: "staff_darren", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "spelling", action: "accepted", original_text: "behavior", replacement_text: "behaviour", created_at: daysFromNow(-6) },
+  { id: "waud_s009", user_id: "staff_darren", record_type: "handover", field_name: "general_notes", issue_type: "professional-language", action: "ignored", original_text: "the kid was fine", replacement_text: "", created_at: daysFromNow(-7) },
+  { id: "waud_s010", user_id: "staff_darren", record_type: "sanction_reward", field_name: "description", child_id: "yp_jordan", issue_type: "writing-to-child", action: "accepted", original_text: "the child", replacement_text: "", created_at: daysFromNow(-8) },
+  // staff_anna — daily log + key-work
+  { id: "waud_s011", user_id: "staff_anna", record_type: "daily_log", field_name: "content", child_id: "yp_jordan", issue_type: "safeguarding-quality", action: "ignored", original_text: "kicked off", replacement_text: "", created_at: daysFromNow(-1) },
+  { id: "waud_s012", user_id: "staff_anna", record_type: "daily_log", field_name: "content", child_id: "yp_jordan", issue_type: "grammar", action: "accepted", original_text: "wouldnt", replacement_text: "wouldn't", created_at: daysFromNow(-2) },
+  { id: "waud_s013", user_id: "staff_anna", record_type: "1to1_keywork", field_name: "child_brought_up", child_id: "yp_jordan", issue_type: "clarity", action: "accepted", original_text: "various things", replacement_text: "", created_at: daysFromNow(-3) },
+  { id: "waud_s014", user_id: "staff_anna", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "tone", action: "accepted", original_text: "noncompliant", replacement_text: "not following the agreed boundaries", created_at: daysFromNow(-5) },
+  { id: "waud_s015", user_id: "staff_anna", record_type: "incident", field_name: "description", child_id: "yp_casey", issue_type: "safeguarding-quality", action: "accepted", original_text: "kicked off", replacement_text: "", created_at: daysFromNow(-6) },
+  { id: "waud_s016", user_id: "staff_anna", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "spelling", action: "accepted", original_text: "accomodation", replacement_text: "accommodation", created_at: daysFromNow(-9) },
+  { id: "waud_s017", user_id: "staff_anna", record_type: "handover", field_name: "key_notes", child_id: "yp_jordan", issue_type: "writing-to-child", action: "ignored", original_text: "the YP", replacement_text: "", created_at: daysFromNow(-12) },
+  // staff_ryan — incidents + handovers
+  { id: "waud_s018", user_id: "staff_ryan", record_type: "incident", field_name: "description", child_id: "yp_alex", issue_type: "tone", action: "ignored", original_text: "aggressive", replacement_text: "", created_at: daysFromNow(-2) },
+  { id: "waud_s019", user_id: "staff_ryan", record_type: "incident", field_name: "immediate_action", child_id: "yp_alex", issue_type: "safeguarding-quality", action: "accepted", original_text: "de-escalated", replacement_text: "", created_at: daysFromNow(-2) },
+  { id: "waud_s020", user_id: "staff_ryan", record_type: "daily_log", field_name: "content", child_id: "yp_casey", issue_type: "grammar", action: "accepted", original_text: "couldnt", replacement_text: "couldn't", created_at: daysFromNow(-4) },
+  { id: "waud_s021", user_id: "staff_ryan", record_type: "behaviour_log", field_name: "behaviour", child_id: "yp_jordan", issue_type: "safeguarding-quality", action: "accepted", original_text: "kicked off again", replacement_text: "", created_at: daysFromNow(-7) },
+  { id: "waud_s022", user_id: "staff_ryan", record_type: "handover", field_name: "general_notes", issue_type: "clarity", action: "ignored", original_text: "as per usual", replacement_text: "", created_at: daysFromNow(-10) },
+  // staff_chervelle — sanctions + behaviour
+  { id: "waud_s023", user_id: "staff_chervelle", record_type: "sanction_reward", field_name: "description", child_id: "yp_casey", issue_type: "tone", action: "accepted", original_text: "misbehaving", replacement_text: "presenting challenging behaviour", created_at: daysFromNow(-1) },
+  { id: "waud_s024", user_id: "staff_chervelle", record_type: "behaviour_log", field_name: "behaviour", child_id: "yp_casey", issue_type: "safeguarding-quality", action: "accepted", original_text: "went mental", replacement_text: "", created_at: daysFromNow(-3) },
+  { id: "waud_s025", user_id: "staff_chervelle", record_type: "daily_log", field_name: "content", child_id: "yp_casey", issue_type: "spelling", action: "accepted", original_text: "seperate", replacement_text: "separate", created_at: daysFromNow(-5) },
+  { id: "waud_s026", user_id: "staff_chervelle", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "writing-to-child", action: "accepted", original_text: "the resident", replacement_text: "", created_at: daysFromNow(-8) },
+  { id: "waud_s027", user_id: "staff_chervelle", record_type: "handover", field_name: "key_notes", child_id: "yp_casey", issue_type: "clarity", action: "ignored", original_text: "things were ok", replacement_text: "", created_at: daysFromNow(-14) },
+  // staff_lackson + staff_edward — recent entries
+  { id: "waud_s028", user_id: "staff_lackson", record_type: "incident", field_name: "description", child_id: "yp_jordan", issue_type: "tone", action: "accepted", original_text: "challenging behaviour", replacement_text: "", created_at: daysFromNow(-3) },
+  { id: "waud_s029", user_id: "staff_lackson", record_type: "daily_log", field_name: "content", child_id: "yp_jordan", issue_type: "grammar", action: "accepted", original_text: "wasnt", replacement_text: "wasn't", created_at: daysFromNow(-6) },
+  { id: "waud_s030", user_id: "staff_lackson", record_type: "daily_log", field_name: "content", child_id: "yp_alex", issue_type: "safeguarding-quality", action: "ignored", original_text: "kicking off", replacement_text: "", created_at: daysFromNow(-10) },
+  { id: "waud_s031", user_id: "staff_edward", record_type: "incident", field_name: "description", child_id: "yp_alex", issue_type: "safeguarding-quality", action: "accepted", original_text: "refused to engage", replacement_text: "", created_at: daysFromNow(-2) },
+  { id: "waud_s032", user_id: "staff_edward", record_type: "daily_log", field_name: "content", child_id: "yp_casey", issue_type: "spelling", action: "accepted", original_text: "recieved", replacement_text: "received", created_at: daysFromNow(-4) },
+  { id: "waud_s033", user_id: "staff_edward", record_type: "return_interview", field_name: "interview_notes", child_id: "yp_casey", issue_type: "safeguarding-quality", action: "accepted", original_text: "came back fine", replacement_text: "", created_at: daysFromNow(-18) },
+  { id: "waud_s034", user_id: "staff_mirela", record_type: "daily_log", field_name: "content", child_id: "yp_jordan", issue_type: "tone", action: "ignored", original_text: "acting out", replacement_text: "", created_at: daysFromNow(-5) },
+  { id: "waud_s035", user_id: "staff_mirela", record_type: "handover", field_name: "key_notes", child_id: "yp_alex", issue_type: "grammar", action: "accepted", original_text: "hasnt", replacement_text: "hasn't", created_at: daysFromNow(-7) },
+];
+
+// ── Rights, Liberty & Restriction reviews (seed) ─────────────────────────────
+const RESTRICTION_REVIEWS_SEED: RestrictionReview[] = [
+  {
+    id: "rr_alex_night", child_id: "yp_alex", home_id: "home_oak",
+    review_date: daysFromNow(-3), decision_considered: "Continue overnight door sensor",
+    restriction_kind: "surveillance_monitoring", restriction_description: "Movement sensor on bedroom door, overnight only",
+    reason: "Repeated high-risk night-time absconding", immediate_safety_concern: "Left at 2am twice last week, found near a known exploitation address",
+    risk_being_managed: "Child sexual exploitation risk when missing at night",
+    child_understands: "yes", child_wishes_feelings: "Alex says it feels a bit like being watched but he gets why we worry about him at night",
+    child_objects: "no", capacity_competence_notes: "Understands the reason when it's explained calmly and one-to-one",
+    parental_social_worker_views: "Social worker agrees it is proportionate as a short-term measure",
+    best_interests_reasoning: "Keeping Alex safe at night outweighs the limited intrusion of a door-only sensor, which is time-limited and reviewed",
+    least_restrictive_alternatives: "Considered hourly checks and a waking-night member of staff sitting outside the door",
+    alternatives_outcome: "Hourly checks did not prevent absconding; a door-only sensor is less intrusive than a staff member at the door all night",
+    proportionality_reasoning: "Monitoring is limited to overnight and to the door only — proportionate to a serious, evidenced exploitation risk",
+    duration: "Overnight, until next review", next_review_date: daysFromNow(18),
+    legal_advice_required: "no", escalation_notes: "", manager_decision: "approved", manager_id: "staff_dl",
+    responsible_person: "Registered Manager", evidence_relied_upon: "Missing episodes log, return home interviews, risk assessment",
+    linked_record_ids: [], status: "active",
+    created_at: daysFromNow(-3), updated_at: daysFromNow(-3), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rr_jordan_phone", child_id: "yp_jordan", home_id: "home_oak",
+    review_date: daysFromNow(-12), decision_considered: "Restrict phone access in the evenings",
+    restriction_kind: "movement_limitation", restriction_description: "Phone handed in 8pm–8am",
+    reason: "Late-night contact with a risky peer group", immediate_safety_concern: "Online contact linked to going missing",
+    risk_being_managed: "Exploitation via online contact",
+    child_understands: "unknown", child_wishes_feelings: "",
+    child_objects: "yes", capacity_competence_notes: "",
+    parental_social_worker_views: "",
+    best_interests_reasoning: "Keeps Jordan safer at night",
+    least_restrictive_alternatives: "",
+    alternatives_outcome: "",
+    proportionality_reasoning: "",
+    duration: "Ongoing", next_review_date: null,
+    legal_advice_required: "unknown", escalation_notes: "", manager_decision: "pending", manager_id: null,
+    responsible_person: "Senior on shift", evidence_relied_upon: "",
+    linked_record_ids: [], status: "active",
+    created_at: daysFromNow(-12), updated_at: daysFromNow(-12), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
+// ── Post-Incident Reflections (seed) ─────────────────────────────────────────
+const POST_INCIDENT_REFLECTIONS_SEED: PostIncidentReflection[] = [
+  {
+    id: "pir_alex_001", incident_id: "inc_001", child_id: "yp_alex", home_id: "home_oak",
+    incident_date: daysFromNow(-8), severity: "high",
+    what_happened: "Alex damaged property after a family contact call was cancelled at short notice",
+    location: "Living room", who_involved: "Alex; staff Mirela and Tom",
+    impact_on_child: "Very distressed at the time, regretful afterwards", impact_on_others: "Another young person left the room",
+    impact_on_staff: "Mirela felt shaken", impact_on_environment: "A lamp was broken",
+    likely_triggers: "Family contact phone call cancelled with no notice",
+    contributing_factors: "Had been looking forward to the call all day", communication_factors: "Felt no one understood how much it mattered",
+    sensory_environmental_factors: "Busy, noisy living room",
+    staff_response: "Gave space, then offered a walk outside", response_helped: "yes", response_escalated: "no",
+    what_went_well: "No physical intervention was needed", what_could_be_different: "Prepare Alex earlier for the risk that contact can change",
+    child_view: "", staff_reflection: "We could have had a backup plan ready for if contact fell through", manager_reflection: "",
+    learning_points: "",
+    actions: [{ id: "act_pir1", description: "Add a contact-contingency to Alex's Staying Safe Plan", owner: "Key worker", due_date: daysFromNow(-1), status: "open" }],
+    support_needed: "Reflective supervision offered to Mirela",
+    staying_safe_plan_review: false, risk_assessment_review: false, behaviour_support_review: false, relationship_map_review: false, restrictive_practice_review: false,
+    staff_debrief_done: "yes", child_debrief_done: "no",
+    stages: freshStages(daysFromNow(-8)).map((s) =>
+      ["incident_recorded", "immediate_safety", "staff_reflection"].includes(s.key)
+        ? { ...s, status: "completed" as const, updated_at: daysFromNow(-7) }
+        : s,
+    ),
+    status: "in_progress", manager_id: null, signed_off_by: null, signed_off_at: null,
+    created_at: daysFromNow(-8), updated_at: daysFromNow(-2), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
+// ── Staying Safe Plans (seed) ────────────────────────────────────────────────
+const STAYING_SAFE_PLANS_SEED: StayingSafePlan[] = [
+  {
+    id: "ssp_alex", child_id: "yp_alex", home_id: "home_oak",
+    preferred_name: "Alex", communication_style: "Short sentences, give me time to answer", theme: "blue",
+    when_to_use: "Use this when you can see I'm starting to struggle, or after something has upset me.",
+    early_warning_signs: "I go quiet, stop eating, pace around, headphones on loud.",
+    green: { signs: "Chatty, joining in, asking for plans", staff_do: "Keep things normal, notice the good stuff", staff_dont: "Don't make a big deal of it" },
+    amber: { signs: "Snappy, restless, short answers", staff_do: "Offer a walk or my music, give me a choice", staff_dont: "Don't crowd me or raise your voice" },
+    red: { signs: "Shouting, throwing things, wanting to leave", staff_do: "Give me space, stay calm, let one familiar adult speak", staff_dont: "Don't grab me, don't bring lots of people over" },
+    helpful_words: "“Take your time”, “I'm here”, “You're not in trouble”",
+    unhelpful_words: "“Calm down”, “You're being silly”, “Last warning”",
+    calming_tools: "Music, a walk outside, cold water on my face, my weighted blanket",
+    trusted_people: "Mirela (my key worker); my nan on the phone; Tom on nights",
+    safe_spaces: "My room, the garden bench", sensory_needs: "Hates bright lights and loud TV when stressed",
+    contact_preferences: "Likes to call nan when really upset",
+    repair_recovery: "A quiet chat the next day, not straight after. Doing something normal together helps.",
+    what_helps_feel_safe_again: "Knowing I'm not in trouble for being upset, and that people still like me.",
+    my_choices: "I choose who talks to me first and whether we talk now or later.",
+    child_contribution: "Alex co-wrote this in key work and chose the words.", staff_contribution: "Reviewed with the team after the last debrief.",
+    manager_approved: false, manager_id: null, approved_at: null,
+    review_date: daysFromNow(40), status: "active",
+    created_at: daysFromNow(-30), updated_at: daysFromNow(-5), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
+// ── Protective Relationships (seed) ──────────────────────────────────────────
+const RELATIONSHIP_ENTRIES_SEED: RelationshipEntry[] = [
+  {
+    id: "rel_alex_mirela", child_id: "yp_alex", home_id: "home_oak",
+    name: "Mirela", relationship_to_child: "Key worker", category: "goto_when_upset", rating: "protective",
+    child_view: "She gets me and I can talk to her", staff_view: "Strong, consistent relationship", manager_view: "Key protective relationship",
+    known_concerns: "", known_strengths: "Warm, reliable, knows Alex's history",
+    contact_arrangements: "Most shifts", restrictions: "", linked_record_ids: [],
+    review_date: daysFromNow(60), status: "active",
+    created_at: daysFromNow(-90), updated_at: daysFromNow(-10), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rel_alex_nan", child_id: "yp_alex", home_id: "home_oak",
+    name: "Pauline (Nan)", relationship_to_child: "Grandmother", category: "family_support", rating: "protective",
+    child_view: "I love calling Nan", staff_view: "Calming influence", manager_view: "",
+    known_concerns: "", known_strengths: "Unconditional support, helps Alex regulate",
+    contact_arrangements: "Weekly phone calls", restrictions: "", linked_record_ids: [],
+    review_date: daysFromNow(80), status: "active",
+    created_at: daysFromNow(-90), updated_at: daysFromNow(-30), created_by: "staff_dl", updated_by: "staff_dl",
+  },
+  {
+    id: "rel_alex_danny", child_id: "yp_alex", home_id: "home_oak",
+    name: "Danny", relationship_to_child: "Older peer from the precinct", category: "exploitation_risk", rating: "risk",
+    child_view: "He's sound, gives me stuff", staff_view: "Suspected to be exploiting Alex", manager_view: "Contextual safeguarding concern",
+    known_concerns: "Linked to two missing episodes; gives Alex money and a phone", known_strengths: "",
+    contact_arrangements: "None permitted", restrictions: "No contact; report sightings", linked_record_ids: [],
+    review_date: daysFromNow(-3), status: "active",
+    created_at: daysFromNow(-40), updated_at: daysFromNow(-3), created_by: "staff_mirela", updated_by: "staff_mirela",
+  },
+];
+
 // ── Mutable collections ───────────────────────────────────────────────────────
 
 const store = {
@@ -604,7 +813,7 @@ const store = {
   shifts: [...SHIFTS] as Shift[],
   signInVerifications: [] as SignInVerification[],
   emergencyAlerts: [] as EmergencyAlert[],
-  ariaResponseCache: [] as AriaCachedResponse[],
+  caraResponseCache: [] as CaraCachedResponse[],
   pushSubscriptions: [] as StoredPushSubscription[],
   medications: [...MEDICATIONS] as Medication[],
   medicationAdministrations: [] as MedicationAdministration[],
@@ -612,9 +821,20 @@ const store = {
   leaveRequests: [...LEAVE_REQUESTS] as LeaveRequest[],
   trainingRecords: [...TRAINING_RECORDS] as TrainingRecord[],
   missingEpisodes: [] as MissingEpisode[],
+  // Rights, Liberty & Restriction reviews (decision-support write path).
+  restrictionReviews: [...RESTRICTION_REVIEWS_SEED] as RestrictionReview[],
+  // Post-incident reflection & learning workflow records.
+  postIncidentReflections: [...POST_INCIDENT_REFLECTIONS_SEED] as PostIncidentReflection[],
+  // Child-friendly Staying Safe Plans.
+  stayingSafePlans: [...STAYING_SAFE_PLANS_SEED] as StayingSafePlan[],
+  // Protective Relationships Map entries.
+  relationshipEntries: [...RELATIONSHIP_ENTRIES_SEED] as RelationshipEntry[],
   // Canonical persisted event spine (forms-as-views write path). Empty by default —
   // the read-only projection of domain collections is unchanged until events are captured here.
   cornerstoneEvents: [] as CornerstoneEvent[],
+  // ── Writing Assistant ─────────────────────────────────────────────────────
+  writingAssistantSettings: {} as Record<string, WritingAssistantSettings>,
+  writingAssistantAuditEvents: [...WA_AUDIT_SEED] as WritingAuditEvent[],
   chronology: [] as ChronologyEntry[],
   handovers: [] as HandoverEntry[],
   // ── Comms Centre (Phase 1) ────────────────────────────────────────────────
@@ -740,6 +960,54 @@ const store = {
   supervisions: [] as Supervision[],
   vacancies: [] as Vacancy[],
   candidateProfiles: [] as CandidateProfile[],
+  employerValuesProfiles: [] as EmployerValuesProfile[],
+  candidateValuesProfiles: [] as CandidateValuesProfile[],
+  reflectiveSupervisions: [] as ReflectiveSupervisionRecord[],
+  caraIncidentSessions: [] as IncidentSession[],
+  caraIncidentTimeline: [] as IncidentTimelineEntry[],
+  caraRecordingReviews: [] as CaraRecordingReview[],
+  caraRestorativeConversations: [] as RestorativeConversationRecord[],
+  caraPostIncidentReflections: [] as PostIncidentReflectionRecord[],
+  caraManagerAlertStates: [] as AlertStateRecord[],
+  caraPromptBank: defaultPromptBank() as PromptBankEntry[],
+  caraLearningProfiles: [] as CaraChildLearningProfile[],
+  caraStudioOutputs: [] as CaraSavedOutput[],
+  caraLibraryResources: [] as CaraLibraryResource[],
+  caraAiRuns: [] as CaraAiRun[],
+  caraGuardrailEvents: [] as CaraGuardrailEvent[],
+  // Cara HQ (platform owner) — metadata only, never children's records
+  hqOrganisations: seedHqOrganisations() as HqOrganisation[],
+  hqUsageEvents: seedHqUsageEvents() as HqUsageEvent[],
+  hqAiUsage: [] as HqAiUsageRow[],
+  hqApiCalls: seedHqApiCalls() as HqApiCallRow[],
+  hqDecisions: seedHqDecisions() as HqDecisionRow[],
+  hqBreakGlassGrants: [] as HqBreakGlassGrant[],
+  // Practice analysis history (metadata only) — powers the recording-quality trend.
+  caraPaceAnalyses: seedPaceAnalyses() as PaceAnalysisRecord[],
+  caraWritingReviews: seedWritingReviews() as WritingReviewRecord[],
+  // Calendar — ONE editable collection; everything else is projected live
+  calendarEvents: seedCalendarEvents() as CalendarEvent[],
+  // Rota — shift patterns, the home staffing policy (singleton), and over-cover reason notes
+  shiftPatterns: seedShiftPatterns() as ShiftPattern[],
+  staffingPolicy: seedStaffingPolicy() as StaffingPolicy,
+  shiftCoverNotes: seedShiftCoverNotes() as ShiftCoverNote[],
+  // PACE — child-specific "what works for this child" profiles (permission-controlled, auditable)
+  childPaceProfiles: [
+    {
+      childId: "yp_alex", homeId: "home_oak",
+      knownTriggers: ["Family contact being cancelled", "Being told 'no' in front of peers", "Sudden changes to plans"],
+      calmingApproaches: ["Time in his room with music", "A walk in the garden", "Kicking a ball with a trusted adult"],
+      trustedAdults: ["Olivia (RM)", "Marcus (key worker)"],
+      phrasesThatHelp: ["I'm here when you're ready.", "It makes sense this feels hard.", "We'll sort this out together."],
+      phrasesThatEscalate: ["Calm down.", "Why did you do that?", "You've lost your privileges."],
+      sensoryNeeds: ["Sensitive to noise in the evenings — offer a quiet space"],
+      repairApproaches: ["Give space first, then return with something ordinary (a snack, a game)"],
+      preferredDebriefStyle: "Side-by-side, not face-to-face; short and low-pressure",
+      traumaInformedStrategies: ["Predictable routines", "Name the feeling, hold the boundary", "Co-regulate before problem-solving"],
+      riskLinkedEscalationRules: ["If he leaves the home, follow the missing-from-care plan and notify the manager"],
+      updatedBy: "staff_darren", updatedAt: "2026-06-01T09:00:00Z",
+    },
+  ] as ChildPACEProfile[],
   candidateChecks: [] as CandidateCheck[],
   candidateReferences: [] as CandidateReference[],
   employmentHistory: [] as EmploymentHistoryEntry[],
@@ -909,7 +1177,7 @@ const store = {
       assigned_to: "staff_darren", investigation_notes: "Reflective discussion held; no further conduct concern.",
       lessons_learned: "Reflective session held; communication approach reviewed.", learning_shared: true,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-52), updated_at: daysFromNow(-45), created_by: "staff_edward",
     },
     {
@@ -923,7 +1191,7 @@ const store = {
       assigned_to: "staff_darren", investigation_notes: "Reviewed last three interventions with the team.",
       lessons_learned: "Behaviour support plan and de-escalation strategies revisited with Alex.", learning_shared: true,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-45), updated_at: daysFromNow(-36), created_by: "staff_anna",
     },
     {
@@ -937,7 +1205,7 @@ const store = {
       assigned_to: "staff_darren", investigation_notes: "Stage 2 review underway with the placing authority.",
       lessons_learned: null, learning_shared: false,
       escalated_to_stage2_at: daysFromNow(-30), escalated_reason: "Advocate not satisfied that Alex's safety concerns were acted on at stage 1.", ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: true, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: true, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-38), updated_at: daysFromNow(-30), created_by: "staff_darren",
     },
     {
@@ -951,7 +1219,7 @@ const store = {
       assigned_to: "staff_edward", investigation_notes: "Debrief with Alex scheduled.",
       lessons_learned: null, learning_shared: false,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: "inc_007", aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: "inc_007", cara_summary: null,
       created_at: daysFromNow(-5), updated_at: daysFromNow(-4), created_by: "staff_edward",
     },
     {
@@ -965,7 +1233,7 @@ const store = {
       assigned_to: "staff_ryan", investigation_notes: "Rota and contact scheduling reviewed.",
       lessons_learned: "Family contact now logged in a protected contact diary.", learning_shared: true,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-40), updated_at: daysFromNow(-32), created_by: "staff_ryan",
     },
     {
@@ -979,7 +1247,7 @@ const store = {
       assigned_to: "staff_chervelle", investigation_notes: "Discussed and resolved at house meeting.",
       lessons_learned: "Protected quiet study time introduced.", learning_shared: true,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: "inc_003", aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: "inc_003", cara_summary: null,
       created_at: daysFromNow(-14), updated_at: daysFromNow(-6), created_by: "staff_chervelle",
     },
     {
@@ -993,7 +1261,7 @@ const store = {
       assigned_to: "staff_chervelle", investigation_notes: "Key-working session arranged to hear Casey's views.",
       lessons_learned: null, learning_shared: false,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-6), updated_at: daysFromNow(-5), created_by: "staff_diane",
     },
     {
@@ -1007,7 +1275,7 @@ const store = {
       assigned_to: "staff_ryan", investigation_notes: "Reviewed communication records with school.",
       lessons_learned: "Shared a single point of contact for school communication.", learning_shared: true,
       escalated_to_stage2_at: null, escalated_reason: null, ombudsman_reference: null, timeline: [],
-      includes_safeguarding_element: false, linked_incident_id: null, aria_summary: null,
+      includes_safeguarding_element: false, linked_incident_id: null, cara_summary: null,
       created_at: daysFromNow(-25), updated_at: daysFromNow(-16), created_by: "staff_ryan",
     },
   ] as Complaint[],
@@ -1082,8 +1350,8 @@ const store = {
     },
   ] as AdvocacyRecord[],
   afterCareRecords: [] as AfterCareRecord[],
-  agencyInductions: [] as AgencyInduction[],
-  agencyStaffLog: [] as AgencyStaffRecord[],
+  agencyInductions: seedAgencyInductions() as AgencyInduction[],
+  agencyStaffLog: seedAgencyStaffLog() as AgencyStaffRecord[],
   annualDevelopmentReviews: [] as AnnualDevelopmentReview[],
   annualHealthAssessments: [] as AnnualHealthAssessment[],
   annualOutcomes: [] as AnnualOutcome[],
@@ -1447,7 +1715,7 @@ const store = {
   familyTimeSessions: [] as FamilyTimeSession[],
   genogramEntries: [] as GenogramEntry[],
   fireRiskItems: [] as FireRiskItem[],
-  fireEquipmentChecks: [] as FireEquipmentCheck[],
+  fireEquipmentChecks: seedFireEquipmentChecks() as FireEquipmentCheck[],
   firstAiderRecords: [] as FirstAiderRecord[],
   foodBudgetWeekRecords: [] as FoodBudgetWeekRecord[],
   foodHygieneRecords: [] as FoodHygieneRecord[],
@@ -1476,7 +1744,7 @@ const store = {
   impactAssessments: [] as ImpactAssessment[],
   incidentTrends: [] as IncidentTrendRecord[],
   clubRecords: [] as ClubRecord[],
-  agencyFeedback: [] as AgencyFeedback[],
+  agencyFeedback: seedAgencyFeedback() as AgencyFeedback[],
   bedroomProfiles: [] as BedroomProfile[],
   bedtimeRoutines: [] as BedtimeRoutine[],
   wakeUpRoutines: [] as WakeUpRoutine[],
@@ -1499,8 +1767,8 @@ const store = {
   cardRecords: [] as CardRecord[],
   boardReports: [] as BoardReport[],
   asbestosRecords: [] as AsbestosRecord[],
-  pestRecords: [] as PestRecord[],
-  windowChecks: [] as WindowCheck[],
+  pestRecords: seedPestRecords() as PestRecord[],
+  windowChecks: seedWindowChecks() as WindowCheck[],
   bcpScenarios: [] as BcpScenarioPlan[],
   caseFileAudits: [] as CaseFileAudit[],
   moneyRecords: [] as MoneyRecord[],
@@ -1514,7 +1782,7 @@ const store = {
   workExpRecords: [] as WorkExpRecord[],
   childPledges: [] as ChildPledge[],
   cleaningEntries: [] as CleaningEntry[],
-  communityEngagements: [] as CommunityEngagement[],
+  communityEngagements: seedCommunityEngagements() as CommunityEngagement[],
   resolutionMeetings: [] as ResolutionMeeting[],
   consequenceRecords: [] as ConsequenceRecord[],
   contactPlans: [] as ContactPlan[],
@@ -1585,7 +1853,7 @@ const store = {
     },
   ] as IndependenceSkillsRecord[],
   independenceLivingAssessments: [] as IndependenceLivingAssessment[],
-  independentTravelRecords: [] as IndependentTravelRecord[],
+  independentTravelRecords: seedIndependentTravelRecords() as IndependentTravelRecord[],
   visitorReports: [] as VisitorReport[],
   infectionRecords: [] as InfectionRecord[],
   readinessItems: [] as ReadinessItem[],
@@ -1681,7 +1949,7 @@ const store = {
   loneWorkingRiskAssessments: [] as LoneWorkingRiskAssessment[],
   maintenanceScheduleItems: [] as MaintenanceScheduleItem[],
   managementWalkrounds: [] as ManagementWalkround[],
-  trainingMatrixRows: [] as TrainingMatrixRow[],
+  trainingMatrixRows: seedTrainingMatrixRows() as TrainingMatrixRow[],
   marEntries: [] as MarEntry[],
   matchingReferrals: [] as MatchingReferral[],
   mediaPublicityConsents: [] as MediaPublicityConsent[],
@@ -1700,9 +1968,9 @@ const store = {
       id: "mam_001", child_id: "yp_alex", meeting_type: "lac_review" as const,
       meeting_status: "completed" as const, date: daysFromNow(-45), time: "10:00",
       venue: "Virtual — Teams", chaired_by: "S. Williams (IRO)",
-      home_representative: "Darren Laville",
+      home_representative: "Olivia Hayes",
       attendees: [
-        { name: "Darren Laville", role: "Registered Manager", organisation: "Oak House", attended: true },
+        { name: "Olivia Hayes", role: "Registered Manager", organisation: "Chamberlain House", attended: true },
         { name: "S. Williams", role: "IRO", organisation: "Local Authority", attended: true },
         { name: "J. Cooper", role: "Social Worker", organisation: "Local Authority", attended: true },
         { name: "Alex", role: "Young Person", organisation: "", attended: true },
@@ -1714,7 +1982,7 @@ const store = {
       action_items: [
         { action: "Update PEP to reflect college aspirations", owner: "T. Evans", due_date: daysFromNow(-30), status: "completed" as const },
         { action: "Arrange CAMHS reassessment", owner: "J. Cooper", due_date: daysFromNow(-15), status: "completed" as const },
-        { action: "MACE update to IRO", owner: "Darren Laville", due_date: daysFromNow(-30), status: "completed" as const },
+        { action: "MACE update to IRO", owner: "Olivia Hayes", due_date: daysFromNow(-30), status: "completed" as const },
       ],
       next_meeting_date: daysFromNow(45), notes: "Positive review. Alex engaged throughout.",
       created_at: daysFromNow(-45) + "T10:00:00Z",
@@ -1722,10 +1990,10 @@ const store = {
     {
       id: "mam_002", child_id: "yp_jordan", meeting_type: "lac_review" as const,
       meeting_status: "scheduled" as const, date: daysFromNow(5), time: "14:00",
-      venue: "Oak House", chaired_by: "M. Khan (IRO)",
-      home_representative: "Darren Laville",
+      venue: "Chamberlain House", chaired_by: "M. Khan (IRO)",
+      home_representative: "Olivia Hayes",
       attendees: [
-        { name: "Darren Laville", role: "Registered Manager", organisation: "Oak House", attended: false },
+        { name: "Olivia Hayes", role: "Registered Manager", organisation: "Chamberlain House", attended: false },
         { name: "M. Khan", role: "IRO", organisation: "Local Authority", attended: false },
         { name: "L. Patel", role: "Social Worker", organisation: "Local Authority", attended: false },
         { name: "Jordan", role: "Young Person", organisation: "", attended: false },
@@ -1739,9 +2007,9 @@ const store = {
       id: "mam_003", child_id: "yp_casey", meeting_type: "pep" as const,
       meeting_status: "completed" as const, date: daysFromNow(-20), time: "11:00",
       venue: "School", chaired_by: "Designated Teacher",
-      home_representative: "Anna Mitchell",
+      home_representative: "Priya Mitchell",
       attendees: [
-        { name: "Anna Mitchell", role: "Key Worker", organisation: "Oak House", attended: true },
+        { name: "Priya Mitchell", role: "Key Worker", organisation: "Chamberlain House", attended: true },
         { name: "H. Brooks", role: "Designated Teacher", organisation: "Academy School", attended: true },
         { name: "Casey", role: "Young Person", organisation: "", attended: true },
         { name: "T. Evans", role: "Virtual School Head", organisation: "Local Authority", attended: true },
@@ -1751,7 +2019,7 @@ const store = {
       child_participation: "Casey completed her views form and contributed to target-setting",
       action_items: [
         { action: "Arrange maths tutor (2x weekly)", owner: "H. Brooks", due_date: daysFromNow(-5), status: "completed" as const },
-        { action: "Monitor attendance weekly", owner: "Anna Mitchell", due_date: daysFromNow(60), status: "in_progress" as const },
+        { action: "Monitor attendance weekly", owner: "Priya Mitchell", due_date: daysFromNow(60), status: "in_progress" as const },
       ],
       next_meeting_date: daysFromNow(70), notes: "Positive PEP. Casey's attendance has improved significantly.",
       created_at: daysFromNow(-20) + "T11:00:00Z",
@@ -1760,9 +2028,9 @@ const store = {
       id: "mam_004", child_id: "yp_alex", meeting_type: "strategy" as const,
       meeting_status: "completed" as const, date: daysFromNow(-19), time: "09:00",
       venue: "Virtual — Teams", chaired_by: "J. Cooper (SW)",
-      home_representative: "Darren Laville",
+      home_representative: "Olivia Hayes",
       attendees: [
-        { name: "Darren Laville", role: "Registered Manager", organisation: "Oak House", attended: true },
+        { name: "Olivia Hayes", role: "Registered Manager", organisation: "Chamberlain House", attended: true },
         { name: "J. Cooper", role: "Social Worker", organisation: "Local Authority", attended: true },
         { name: "DC Watkins", role: "Police", organisation: "Police", attended: true },
         { name: "MACE Coordinator", role: "MACE", organisation: "Local Authority", attended: true },
@@ -1771,7 +2039,7 @@ const store = {
       decisions_reached: ["Safety plan strengthened", "Police patrols increased near home", "MACE referral confirmed"],
       child_participation: "Not present — strategy meeting",
       action_items: [
-        { action: "Strengthen safety plan — add evening escort", owner: "Darren Laville", due_date: daysFromNow(-17), status: "completed" as const },
+        { action: "Strengthen safety plan — add evening escort", owner: "Olivia Hayes", due_date: daysFromNow(-17), status: "completed" as const },
         { action: "Share intel on associate 'D'", owner: "DC Watkins", due_date: daysFromNow(-14), status: "completed" as const },
         { action: "Reconvene in 4 weeks", owner: "J. Cooper", due_date: daysFromNow(9), status: "in_progress" as const },
       ],
@@ -1781,20 +2049,20 @@ const store = {
     {
       id: "mam_005", child_id: "yp_jordan", meeting_type: "professionals" as const,
       meeting_status: "completed" as const, date: daysFromNow(-35), time: "15:00",
-      venue: "Oak House", chaired_by: "Darren Laville",
-      home_representative: "Darren Laville",
+      venue: "Chamberlain House", chaired_by: "Olivia Hayes",
+      home_representative: "Olivia Hayes",
       attendees: [
-        { name: "Darren Laville", role: "Registered Manager", organisation: "Oak House", attended: true },
+        { name: "Olivia Hayes", role: "Registered Manager", organisation: "Chamberlain House", attended: true },
         { name: "L. Patel", role: "Social Worker", organisation: "Local Authority", attended: true },
         { name: "Dr. Singh", role: "CAMHS Therapist", organisation: "NHS", attended: false },
-        { name: "Anna Mitchell", role: "Key Worker", organisation: "Oak House", attended: true },
+        { name: "Priya Mitchell", role: "Key Worker", organisation: "Chamberlain House", attended: true },
       ],
       key_discussion_points: ["CAMHS engagement", "Emotional wellbeing", "Pathway planning"],
       decisions_reached: ["Alternative CAMHS offer to be explored", "Wellbeing check-ins increased"],
       child_participation: "Jordan's views gathered beforehand via key worker",
       action_items: [
         { action: "Explore art therapy as CAMHS alternative", owner: "L. Patel", due_date: daysFromNow(-20), status: "in_progress" as const },
-        { action: "Weekly wellbeing check-ins", owner: "Anna Mitchell", due_date: daysFromNow(25), status: "in_progress" as const },
+        { action: "Weekly wellbeing check-ins", owner: "Priya Mitchell", due_date: daysFromNow(25), status: "in_progress" as const },
       ],
       next_meeting_date: daysFromNow(25), notes: "CAMHS therapist did not attend — 3rd cancellation. Escalated.",
       created_at: daysFromNow(-35) + "T15:00:00Z",
@@ -1803,9 +2071,9 @@ const store = {
       id: "mam_006", child_id: "yp_casey", meeting_type: "lac_review" as const,
       meeting_status: "completed" as const, date: daysFromNow(-60), time: "10:00",
       venue: "Local Authority offices", chaired_by: "M. Khan (IRO)",
-      home_representative: "Darren Laville",
+      home_representative: "Olivia Hayes",
       attendees: [
-        { name: "Darren Laville", role: "Registered Manager", organisation: "Oak House", attended: true },
+        { name: "Olivia Hayes", role: "Registered Manager", organisation: "Chamberlain House", attended: true },
         { name: "M. Khan", role: "IRO", organisation: "Local Authority", attended: true },
         { name: "R. Hughes", role: "Social Worker", organisation: "Local Authority", attended: true },
         { name: "Casey", role: "Young Person", organisation: "", attended: true },
@@ -1815,7 +2083,7 @@ const store = {
       child_participation: "Casey completed consultation booklet and attended meeting",
       action_items: [
         { action: "Increase family contact to weekly", owner: "R. Hughes", due_date: daysFromNow(-45), status: "completed" as const },
-        { action: "Submit home report 3 days before next review", owner: "Darren Laville", due_date: daysFromNow(-3), status: "in_progress" as const },
+        { action: "Submit home report 3 days before next review", owner: "Olivia Hayes", due_date: daysFromNow(-3), status: "in_progress" as const },
       ],
       next_meeting_date: daysFromNow(30), notes: "Good progress noted. Casey settling well.",
       created_at: daysFromNow(-60) + "T10:00:00Z",
@@ -1899,7 +2167,7 @@ const store = {
         "PEP records showing attendance improvement trajectory",
         "Key working session logs with child voice extracts",
         "Children's consultation feedback forms (quarterly)",
-        "Placement stability data — Cornerstone dashboard",
+        "Placement stability data — Cara dashboard",
         "Life story books (sample pages on file)",
         "Health assessment tracker",
         "Pathway plan reviews",
@@ -1914,10 +2182,10 @@ const store = {
         "Outdoor activity provision limited in winter months",
       ],
       actions: [
-        { action: "Night shift recording training for all staff", owner: "Darren Laville", target_date: daysFromNow(-10), status: "completed" },
-        { action: "Implement mood capture prompt in daily log template", owner: "Anna Mitchell", target_date: daysFromNow(10), status: "in_progress" },
-        { action: "Add sleep log verification to night shift checklist", owner: "Darren Laville", target_date: daysFromNow(-5), status: "completed" },
-        { action: "Winter activity programme — indoor alternatives and community venues", owner: "Chervelle Grant", target_date: daysFromNow(20), status: "in_progress" },
+        { action: "Night shift recording training for all staff", owner: "Olivia Hayes", target_date: daysFromNow(-10), status: "completed" },
+        { action: "Implement mood capture prompt in daily log template", owner: "Priya Mitchell", target_date: daysFromNow(10), status: "in_progress" },
+        { action: "Add sleep log verification to night shift checklist", owner: "Olivia Hayes", target_date: daysFromNow(-5), status: "completed" },
+        { action: "Winter activity programme — indoor alternatives and community venues", owner: "Naomi Grant", target_date: daysFromNow(20), status: "in_progress" },
       ],
       created_at: daysFromNow(-90) + "T09:00:00Z",
     },
@@ -1956,11 +2224,11 @@ const store = {
         "Need to improve evidence of impact for exploitation safety plans",
       ],
       actions: [
-        { action: "Implement child consultation checklist for all restriction reviews", owner: "Darren Laville", target_date: daysFromNow(5), status: "in_progress" },
-        { action: "Escalate CAMHS non-attendance to team manager", owner: "Anna Mitchell", target_date: daysFromNow(-15), status: "completed" },
-        { action: "Complete overdue locality risk reviews", owner: "Darren Laville", target_date: daysFromNow(3), status: "in_progress" },
-        { action: "Return interview training session for all staff", owner: "Darren Laville", target_date: daysFromNow(14), status: "open" },
-        { action: "Create safety plan impact evidence template", owner: "Chervelle Grant", target_date: daysFromNow(-20), status: "completed" },
+        { action: "Implement child consultation checklist for all restriction reviews", owner: "Olivia Hayes", target_date: daysFromNow(5), status: "in_progress" },
+        { action: "Escalate CAMHS non-attendance to team manager", owner: "Priya Mitchell", target_date: daysFromNow(-15), status: "completed" },
+        { action: "Complete overdue locality risk reviews", owner: "Olivia Hayes", target_date: daysFromNow(3), status: "in_progress" },
+        { action: "Return interview training session for all staff", owner: "Olivia Hayes", target_date: daysFromNow(14), status: "open" },
+        { action: "Create safety plan impact evidence template", owner: "Naomi Grant", target_date: daysFromNow(-20), status: "completed" },
       ],
       created_at: daysFromNow(-90) + "T09:00:00Z",
     },
@@ -1976,7 +2244,7 @@ const store = {
         "Staff morale is positive — team stability with low turnover",
         "Governance is effective — responsible individual engaged and involved",
         "Complaints are handled transparently with learning shared across team",
-        "Cornerstone platform provides data-driven management oversight",
+        "Cara platform provides data-driven management oversight",
       ],
       evidence: [
         "Manager qualification certificates",
@@ -1987,7 +2255,7 @@ const store = {
         "Staff survey results",
         "RI governance meeting minutes",
         "Complaints log and outcomes",
-        "Cornerstone dashboard exports",
+        "Cara dashboard exports",
       ],
       areas_for_development: [
         "Deputy manager development — formal qualification pathway not yet in place",
@@ -1997,11 +2265,11 @@ const store = {
         "Appraisal completion rate needs improvement — 1 overdue",
       ],
       actions: [
-        { action: "Enrol deputy on Level 5 leadership programme", owner: "Darren Laville", target_date: daysFromNow(30), status: "in_progress" },
-        { action: "Schedule monthly peer observations into rota", owner: "Darren Laville", target_date: daysFromNow(7), status: "in_progress" },
-        { action: "Review notification process — add manager alert system", owner: "Darren Laville", target_date: daysFromNow(-10), status: "completed" },
-        { action: "Reflective practice sessions added to team meetings", owner: "Anna Mitchell", target_date: daysFromNow(14), status: "open" },
-        { action: "Complete overdue staff appraisal", owner: "Darren Laville", target_date: daysFromNow(-90), status: "completed" },
+        { action: "Enrol deputy on Level 5 leadership programme", owner: "Olivia Hayes", target_date: daysFromNow(30), status: "in_progress" },
+        { action: "Schedule monthly peer observations into rota", owner: "Olivia Hayes", target_date: daysFromNow(7), status: "in_progress" },
+        { action: "Review notification process — add manager alert system", owner: "Olivia Hayes", target_date: daysFromNow(-10), status: "completed" },
+        { action: "Reflective practice sessions added to team meetings", owner: "Priya Mitchell", target_date: daysFromNow(14), status: "open" },
+        { action: "Complete overdue staff appraisal", owner: "Olivia Hayes", target_date: daysFromNow(-90), status: "completed" },
       ],
       created_at: daysFromNow(-90) + "T09:00:00Z",
     },
@@ -2076,7 +2344,7 @@ const store = {
       education_employment_training: "Apprenticeship in IT support starting September 2026",
       health_needs: ["GP registered", "Dental check booked", "Mental health support via CAMHS"],
       financial_support: ["Setting Up Home Allowance confirmed", "Bursary for apprenticeship"],
-      support_network: ["Personal advisor", "Key worker (Darren)", "CAMHS worker", "College tutor", "CiCC peer mentor"],
+      support_network: ["Personal advisor", "Key worker (Olivia)", "CAMHS worker", "College tutor", "CiCC peer mentor"],
       aspirations: ["Complete apprenticeship", "Live independently", "Learn to drive"],
       risks: ["Anxiety around transitions", "Limited family support"],
       independent_living_skills: { cooking: "developing" as const, budgeting: "established" as const, laundry: "established" as const, travel: "established" as const, health: "developing" as const, communication: "established" as const, job_skills: "developing" as const },
@@ -2091,7 +2359,7 @@ const store = {
       education_employment_training: "Currently disengaged from education — exploring construction apprenticeship",
       health_needs: ["GP registered", "Sleep issues discussed with GP"],
       financial_support: ["Standard leaving care grant eligible"],
-      support_network: ["Personal advisor", "Key worker (Anna)"],
+      support_network: ["Personal advisor", "Key worker (Priya)"],
       aspirations: ["Get a job", "Own flat", "Reconnect with older brother"],
       risks: ["Peer influence", "Disengagement from education", "Limited financial literacy"],
       independent_living_skills: { cooking: "emerging" as const, budgeting: "emerging" as const, laundry: "developing" as const, travel: "established" as const, health: "emerging" as const, communication: "developing" as const, job_skills: "not_yet" as const },
@@ -2106,7 +2374,7 @@ const store = {
       education_employment_training: "Full-time education Year 11",
       health_needs: ["Emotional wellbeing support"],
       financial_support: [],
-      support_network: ["Key worker (Chervelle)", "School pastoral lead"],
+      support_network: ["Key worker (Naomi)", "School pastoral lead"],
       aspirations: ["Art college", "Own creative studio"],
       risks: ["Identity exploration", "Emotional regulation"],
       independent_living_skills: { cooking: "emerging" as const, budgeting: "not_yet" as const, laundry: "emerging" as const, travel: "developing" as const, health: "emerging" as const, communication: "developing" as const, job_skills: "not_yet" as const },
@@ -2182,9 +2450,15 @@ const store = {
   successFactors: [] as SuccessFactor[],
   pocketMoneyTransactions: [] as PocketMoneyTransaction[],
   pocketMoneyAccounts: [] as PocketMoneyAccount[],
-  homePolicies: [] as HomePolicy[],
+  homePolicies: seedHomePolicies() as HomePolicy[],
   policyImpactAnalyses: [] as PolicyImpactAnalysis[],
   policyReviewRecords: [] as PolicyReviewRecord[],
+  // Policy review-cycle compliance source collections (feed home-policy-review-cycle-compliance-intelligence)
+  policyReviewScheduleRecords: seedPolicyReviewSchedule(),
+  policyVersionControlRecords: seedPolicyVersionControl(),
+  policyAcknowledgementRecords: seedPolicyAcknowledgements(),
+  policyAlignmentRecords: seedPolicyAlignment(),
+  policyAccessibilityRecords: seedPolicyAccessibility(),
   childrensRights: [] as ChildrensRightEntry[],
   localOfferSections: [] as LocalOfferSection[],
   locationAssessmentAreas: [] as LocationAssessmentArea[],
@@ -2195,7 +2469,7 @@ const store = {
   preventRecords: [] as PreventRecord[],
   professionalConsultations: [] as ProfessionalConsultation[],
   curiosityLogEntries: [] as CuriosityLogEntry[],
-  cpdRecords: [] as CPDRecord[],
+  cpdRecords: seedCpdRecords() as CPDRecord[],
   professionalFeeRecords: [] as ProfessionalFeeRecord[],
   professionalMeetingAttendances: [] as ProfessionalMeetingAttendance[],
   professionalNetworkContacts: [
@@ -2216,7 +2490,7 @@ const store = {
   qaAuditRecords: [] as QAAuditRecord[],
   qualityOfCareReviews: [
     {
-      id: "qoc_001", date: daysFromNow(-120), type: "annual" as const, lead_reviewer: "Darren Laville",
+      id: "qoc_001", date: daysFromNow(-120), type: "annual" as const, lead_reviewer: "Olivia Hayes",
       overall_rating: "good" as const,
       domains: [
         { domain: "safety" as const, rating: "good" as const, evidence: "Safeguarding procedures robust", trend: "stable" as const },
@@ -2228,8 +2502,8 @@ const store = {
       children_feedback: "All three children contributed views. Overall positive about care.",
       staff_feedback: "Staff feel supported. Some concern about workload during short-staffing.",
       actions: [
-        { action: "Night shift recording training", owner: "Darren Laville", due_date: daysFromNow(-90), status: "completed" as const, priority: "medium" as const },
-        { action: "Supervision calendar review", owner: "Darren Laville", due_date: daysFromNow(-100), status: "completed" as const, priority: "high" as const },
+        { action: "Night shift recording training", owner: "Olivia Hayes", due_date: daysFromNow(-90), status: "completed" as const, priority: "medium" as const },
+        { action: "Supervision calendar review", owner: "Olivia Hayes", due_date: daysFromNow(-100), status: "completed" as const, priority: "high" as const },
       ],
       next_review_date: daysFromNow(60), notes: "Shared with RI and Ofsted as part of Reg 45 evidence.",
     },
@@ -2269,7 +2543,7 @@ const store = {
   sleepInRecords: [] as SleepInRecord[],
   socialWorkerContactRecords: [] as SocialWorkerContactRecord[],
   staffCommunicationPreferenceRecords: [] as StaffCommunicationPreferenceRecord[],
-  staffCompetencyRecords: [] as StaffCompetencyRecord[],
+  staffCompetencyRecords: seedStaffCompetencyRecords() as StaffCompetencyRecord[],
   staffDebriefRecords: [] as StaffDebriefRecord[],
   staffDisciplinaryRecords: [
     {
@@ -2291,7 +2565,7 @@ const store = {
       lado_notified: false, dbs_referral: false, ofsted_notified: false,
       confidentiality_level: "standard" as const, trade_union_rep: null,
       lessons_learned: "Reminder issued to all staff about professional language in front of YP",
-      notes: "Edward was receptive and reflective. No repeat incidents.",
+      notes: "Daniel was receptive and reflective. No repeat incidents.",
     },
     {
       id: "disc_002", staff_member: "staff_agency_01", date_raised: daysFromNow(-160),
@@ -2334,7 +2608,7 @@ const store = {
       support_offered: ["Flexible start time (temporary)", "Wellbeing check-in"],
       lado_notified: false, dbs_referral: false, ofsted_notified: false,
       confidentiality_level: "standard" as const, trade_union_rep: null,
-      lessons_learned: "", notes: "Resolved informally. Ryan's attendance has since improved.",
+      lessons_learned: "", notes: "Resolved informally. Marcus's attendance has since improved.",
     },
     {
       id: "disc_004", staff_member: "staff_edward", date_raised: daysFromNow(-14),
@@ -2367,7 +2641,7 @@ const store = {
         { date: daysFromNow(-7), action: "Informal capability conversation held", by: "staff_darren" },
         { date: daysFromNow(-5), action: "Support plan agreed — mentor assigned", by: "staff_darren" },
       ],
-      support_offered: ["Additional recording training", "Mentor assigned (Anna)", "Weekly check-ins"],
+      support_offered: ["Additional recording training", "Mentor assigned (Priya)", "Weekly check-ins"],
       lado_notified: false, dbs_referral: false, ofsted_notified: false,
       confidentiality_level: "standard" as const, trade_union_rep: null,
       lessons_learned: "", notes: "Capability matter, not misconduct. Supportive approach being taken.",
@@ -2375,14 +2649,14 @@ const store = {
   ] as StaffDisciplinaryRecord[],
   staffExitInterviewRecords: [] as StaffExitInterviewRecord[],
   staffGrievanceRecords: [] as StaffGrievanceRecord[],
-  staffHandbookAcknowledgementRecords: [] as StaffHandbookAcknowledgementRecord[],
+  staffHandbookAcknowledgementRecords: seedStaffHandbookAcknowledgementRecords() as StaffHandbookAcknowledgementRecord[],
   staffInductionRecords: [] as StaffInductionRecord[],
   staffMeetingRecords: [] as StaffMeetingRecord[],
   staffRecognitionRecords: [] as StaffRecognitionRecord[],
   staffReflectionRecords: [] as StaffReflectionRecord[],
   staffSaferCaringRecords: [] as StaffSaferCaringRecord[],
   staffShadowingRecords: [] as StaffShadowingRecord[],
-  staffSicknessRecords: [] as StaffSicknessRecord[],
+  staffSicknessRecords: seedStaffSicknessRecords() as StaffSicknessRecord[],
   staffSupervisionThemeRecords: [] as StaffSupervisionThemeRecord[],
   staffWellbeingRecords: [] as StaffWellbeingRecord[],
   stakeholderFeedbackRecords: [] as StakeholderFeedbackRecord[],
@@ -2402,7 +2676,7 @@ const store = {
   idVerificationRecords: [] as IdVerificationRecord[],
   safeguardingProtocolRecords: [] as SafeguardingProtocolRecord[],
   visitorLogRecords: [] as VisitorLogRecord[],
-  waterHygieneRecords: [] as WaterHygieneRecord[],
+  waterHygieneRecords: seedWaterHygieneRecords() as WaterHygieneRecord[],
   wellbeingPulseSurveyRecords: [] as WellbeingPulseSurveyRecord[],
   whistleblowingRecords: [
     {
@@ -2477,7 +2751,7 @@ const store = {
       status: "resolved" as const,
       subject_of_concern: "Concerns about previous agency staff conduct",
       summary: "Concern raised about agency staff member not engaging with young person during waking night shift",
-      detail: "Chervelle observed on two occasions that an agency night worker was sleeping during waking night duty. CCTV confirmed staff member was not conducting checks at required intervals.",
+      detail: "Naomi observed on two occasions that an agency night worker was sleeping during waking night duty. CCTV confirmed staff member was not conducting checks at required intervals.",
       evidence_provided: ["CCTV timestamps", "Missing check entries in log"],
       assigned_to: "staff_darren",
       external_referral: "LADO",
@@ -2517,7 +2791,37 @@ const store = {
 
   // ── Persisted Reg 44 Packs (M35) ────────────────────────────────────────
   reg44Packs: [] as PersistedReg44Pack[],
-  inspectionBundles: [] as PersistedInspectionBundle[],
+  // Demo trajectory for home_oak: inspection readiness regressing 82 → 73 → 57
+  // over ~6 weeks. The latest (6-day-old) bundle is BOTH a large single-step drop
+  // (−16) and a net regression (−25) → two critical trajectory alerts. Left
+  // unacknowledged past 48h (reminder) + 72h (escalation) they surface as
+  // Responsible-Individual escalations — lighting up the full M49–M52 chain
+  // (trajectory page → ack-overdue reminders → RI escalations) instead of an
+  // empty demo. Bundles are user-generated in real use; this seeds a realistic
+  // declining home so the oversight feature is visible.
+  inspectionBundles: [
+    {
+      id: "inspection_bundle_home_oak_seed_a", home_id: "home_oak", generated_at: daysFromNow(-40),
+      generated_by: "staff_darren", schema_version: 1, reg44_packs_included: 2, filing_total: 184,
+      reg45_evidence_items: 12, annex_a_evidence_items: 9, recent_exports_included: 4,
+      readiness_score: 82, readiness_severity: "good", trajectory_alerts_open: 0, trajectory_acks_recent: 0,
+      payload: { trajectory_alerts_open: [], trajectory_acks_recent: [] },
+    },
+    {
+      id: "inspection_bundle_home_oak_seed_b", home_id: "home_oak", generated_at: daysFromNow(-20),
+      generated_by: "staff_darren", schema_version: 1, reg44_packs_included: 2, filing_total: 178,
+      reg45_evidence_items: 10, annex_a_evidence_items: 8, recent_exports_included: 3,
+      readiness_score: 73, readiness_severity: "requires_improvement", trajectory_alerts_open: 1, trajectory_acks_recent: 0,
+      payload: { trajectory_alerts_open: [], trajectory_acks_recent: [] },
+    },
+    {
+      id: "inspection_bundle_home_oak_seed_c", home_id: "home_oak", generated_at: daysFromNow(-6),
+      generated_by: "staff_darren", schema_version: 1, reg44_packs_included: 1, filing_total: 171,
+      reg45_evidence_items: 8, annex_a_evidence_items: 6, recent_exports_included: 2,
+      readiness_score: 57, readiness_severity: "inadequate", trajectory_alerts_open: 2, trajectory_acks_recent: 0,
+      payload: { trajectory_alerts_open: [], trajectory_acks_recent: [] },
+    },
+  ] as PersistedInspectionBundle[],
   trajectoryAlertAcks: [] as TrajectoryAlertAck[],
   trajectoryRiEscalationAcks: [] as TrajectoryRiEscalationAck[],
 
@@ -2534,8 +2838,8 @@ const store = {
     secondary_colour: "#2dd4bf",
     accent_colour: "#3b82f6",
     background_colour: "#f8fafc",
-    default_footer_text: "Generated securely through Cornerstone",
-    support_email: "support@cornerstone.care",
+    default_footer_text: "Generated securely through Cara",
+    support_email: "support@cara.care",
     created_at: "2026-01-01T00:00:00Z",
     updated_at: "2026-01-01T00:00:00Z",
   },
@@ -2544,7 +2848,7 @@ const store = {
       id: "obr_default",
       organisation_id: "org_oak",
       company_name: "Seamless Streams Care Ltd",
-      trading_name: "Oak House Residential Care",
+      trading_name: "Chamberlain House Residential Care",
       registered_provider_name: "Seamless Streams Care Ltd",
       company_registration_number: "12345678",
       ofsted_provider_reference: "SC123456",
@@ -2560,7 +2864,7 @@ const store = {
       website: "www.oakhouse.care",
       responsible_individual_name: "Eleanor Hartley",
       default_footer_text:
-        "Generated securely through Cornerstone on behalf of Seamless Streams Care Ltd",
+        "Generated securely through Cara on behalf of Seamless Streams Care Ltd",
       confidentiality_notice:
         "This document is confidential. It contains sensitive information about children in care and must not be shared without authorisation from the Registered Manager or Responsible Individual.",
       created_at: "2026-01-01T00:00:00Z",
@@ -2572,10 +2876,10 @@ const store = {
       id: "hbr_oak",
       home_id: "home_oak",
       organisation_id: "org_oak",
-      home_name: "Oak House",
+      home_name: "Chamberlain House",
       home_address: "1 Care Lane, Oak Town, OA1 2BC",
       ofsted_urn: "SC123456",
-      registered_manager_name: "Darren Cartwright",
+      registered_manager_name: "Olivia Cartwright",
       responsible_individual_name: "Eleanor Hartley",
       emergency_contact: "01234 567891",
       safeguarding_contact: "01234 567892",
@@ -2590,8 +2894,8 @@ const store = {
   documentBrandingSnapshots: [] as Array<Record<string, unknown>>,
   brandingAuditLog: [] as Array<Record<string, unknown>>,
 
-  // ── ARIA Studio ──────────────────────────────────────────────────────────────
-  ariaArtifacts: [
+  // ── Cara Studio ──────────────────────────────────────────────────────────────
+  caraArtifacts: [
     {
       id: "art_demo_001",
       artifact_type: "keywork_session",
@@ -2606,7 +2910,7 @@ const store = {
       framework: "pace",
       tone: "warm",
       creative_mode: "therapeutic",
-      generated_content: `## Keywork Session Plan\n\n**Child:** Alex | **Framework:** PACE\n\n### Purpose\nTo explore Alex's feelings about the upcoming school transition and build a shared plan for managing the change.\n\n### Evidence used\nThree recent daily log entries note Alex becoming withdrawn before school days. A risk assessment flags education engagement as a current concern.\n\n### Child voice currently known\nAlex has said: "I don't want to go to a new school." This was recorded during the last keywork session.\n\n### Therapeutic rationale\nUsing PACE, we aim to hold Alex's anxiety with curiosity rather than reassurance, helping him feel understood before problem-solving begins.\n\n### Suggested opening\n"I know school changes can feel really big. I'm wondering what the hardest bit feels like for you?"\n\n### Scaling question\n"If 10 is feeling totally ready and 1 is feeling really scared, where are you today?"\n\n### Follow-up actions\n- Arrange a visit to the new school with a familiar staff member\n- Update care plan section on education\n- Review with manager\n\n**This is an ARIA draft. A human must review and approve before use.**`,
+      generated_content: `## Keywork Session Plan\n\n**Child:** Alex | **Framework:** PACE\n\n### Purpose\nTo explore Alex's feelings about the upcoming school transition and build a shared plan for managing the change.\n\n### Evidence used\nThree recent daily log entries note Alex becoming withdrawn before school days. A risk assessment flags education engagement as a current concern.\n\n### Child voice currently known\nAlex has said: "I don't want to go to a new school." This was recorded during the last keywork session.\n\n### Therapeutic rationale\nUsing PACE, we aim to hold Alex's anxiety with curiosity rather than reassurance, helping him feel understood before problem-solving begins.\n\n### Suggested opening\n"I know school changes can feel really big. I'm wondering what the hardest bit feels like for you?"\n\n### Scaling question\n"If 10 is feeling totally ready and 1 is feeling really scared, where are you today?"\n\n### Follow-up actions\n- Arrange a visit to the new school with a familiar staff member\n- Update care plan section on education\n- Review with manager\n\n**This is an Cara draft. A human must review and approve before use.**`,
       structured_content: null,
       plain_text_content: null,
       quality_score: 88,
@@ -2688,7 +2992,7 @@ const store = {
       framework: "safeguarding_led",
       tone: "professional",
       creative_mode: "conservative",
-      generated_content: `## Risk Review — Missing From Care\n\n**Child:** Maya\n\n**ARIA draft — requires human review before any action is taken.**\n\n### Current risk summary\nMaya has had two missing episodes in the past four weeks. Both returns were within three hours. Return home conversations were completed.\n\n### Recent indicators\n- Increased secrecy around phone use (noted in 4 daily logs)\n- Reluctance to attend education (3 days missed this week)\n- Emotional presentation described as "flat" by night staff\n\n### Protective factors\n- Strong relationship with key worker\n- Consistent engagement with therapeutic sessions\n- Supportive family contact\n\n### Possible escalation signs to watch\n- Overnight missing episodes\n- New adults appearing in contact\n- Unexplained money or gifts\n- Withdrawal from trusted adults\n\n### Recommended actions (for manager review)\n1. Update risk assessment — required within 5 days\n2. CSE screening review — consider request\n3. Next return home conversation to include exploitation screening questions\n4. Update key worker plan\n\n**This is an ARIA-generated draft. A manager must review and approve all content before any action is taken.**`,
+      generated_content: `## Risk Review — Missing From Care\n\n**Child:** Maya\n\n**Cara draft — requires human review before any action is taken.**\n\n### Current risk summary\nMaya has had two missing episodes in the past four weeks. Both returns were within three hours. Return home conversations were completed.\n\n### Recent indicators\n- Increased secrecy around phone use (noted in 4 daily logs)\n- Reluctance to attend education (3 days missed this week)\n- Emotional presentation described as "flat" by night staff\n\n### Protective factors\n- Strong relationship with key worker\n- Consistent engagement with therapeutic sessions\n- Supportive family contact\n\n### Possible escalation signs to watch\n- Overnight missing episodes\n- New adults appearing in contact\n- Unexplained money or gifts\n- Withdrawal from trusted adults\n\n### Recommended actions (for manager review)\n1. Update risk assessment — required within 5 days\n2. CSE screening review — consider request\n3. Next return home conversation to include exploitation screening questions\n4. Update key worker plan\n\n**This is an Cara-generated draft. A manager must review and approve all content before any action is taken.**`,
       structured_content: null,
       plain_text_content: null,
       quality_score: null,
@@ -2715,37 +3019,37 @@ const store = {
       quality_checks_passed: false,
       amendment_reason: null,
     },
-  ] as AriaArtifact[],
-  ariaSources: [] as AriaSource[],
-  ariaArtifactVersions: [] as AriaArtifactVersion[],
-  ariaArtifactReviews: [] as AriaArtifactReview[],
-  ariaArtifactActions: [] as AriaArtifactAction[],
-  ariaQualityChecks: [] as AriaQualityCheck[],
-  ariaGaps: [] as AriaGap[],
-  ariaStudioAuditLog: [] as AriaStudioAuditLog[],
-  ariaHomeDynamicsSnapshots: [] as AriaHomeDynamicsSnapshot[],
-  ariaSafeguardingPatterns: [] as AriaSafeguardingPattern[],
-  ariaEarlyWarnings: [] as AriaEarlyWarning[],
-  ariaCareGraphNodes: [] as AriaCareGraphNode[],
-  ariaCareGraphEdges: [] as AriaCareGraphEdge[],
-  ariaFormulations: [] as AriaFormulation[],
-  ariaDecisionRecommendations: [] as AriaDecisionRecommendation[],
-  ariaReg45EvidenceItems: [] as AriaReg45EvidenceItem[],
-  ariaAnnexASnapshots: [] as AriaAnnexASnapshot[],
-  ariaReg45Reports: [] as AriaReg45Report[],
-  ariaSuggestedRecords: [] as AriaSuggestedRecord[],
-  ariaCommittedRecords: [] as AriaCommittedRecord[],
-  ariaReg40Triages: [] as AriaReg40Triage[],
+  ] as CaraArtifact[],
+  caraSources: [] as CaraSource[],
+  caraArtifactVersions: [] as CaraArtifactVersion[],
+  caraArtifactReviews: [] as CaraArtifactReview[],
+  caraArtifactActions: [] as CaraArtifactAction[],
+  caraQualityChecks: [] as CaraQualityCheck[],
+  caraGaps: [] as CaraGap[],
+  caraStudioAuditLog: [] as CaraStudioAuditLog[],
+  caraHomeDynamicsSnapshots: [] as CaraHomeDynamicsSnapshot[],
+  caraSafeguardingPatterns: [] as CaraSafeguardingPattern[],
+  caraEarlyWarnings: [] as CaraEarlyWarning[],
+  caraCareGraphNodes: [] as CaraCareGraphNode[],
+  caraCareGraphEdges: [] as CaraCareGraphEdge[],
+  caraFormulations: [] as CaraFormulation[],
+  caraDecisionRecommendations: [] as CaraDecisionRecommendation[],
+  caraReg45EvidenceItems: [] as CaraReg45EvidenceItem[],
+  caraAnnexASnapshots: [] as CaraAnnexASnapshot[],
+  caraReg45Reports: [] as CaraReg45Report[],
+  caraSuggestedRecords: [] as CaraSuggestedRecord[],
+  caraCommittedRecords: [] as CaraCommittedRecord[],
+  caraReg40Triages: [] as CaraReg40Triage[],
 
-  // ARIA Practice Intelligence
-  ariaPracticeAssessments: [] as AriaPracticeAssessment[],
-  ariaDevelopmentalGaps: [] as AriaDevelopmentalGapRecord[],
-  ariaProtectiveFactorReviews: [] as AriaProtectiveFactorReview[],
-  ariaRelationshipDepthReviews: [] as AriaRelationshipDepthReview[],
-  ariaThresholdConsultations: [] as AriaThresholdConsultation[],
-  ariaStaffWellbeingSignals: [] as AriaStaffWellbeingSignal[],
-  ariaPracticeFlags: [] as AriaPracticeFlag[],
-  ariaGuidanceRules: [] as AriaGuidanceRule[],
+  // Cara Practice Intelligence
+  caraPracticeAssessments: [] as CaraPracticeAssessment[],
+  caraDevelopmentalGaps: [] as CaraDevelopmentalGapRecord[],
+  caraProtectiveFactorReviews: [] as CaraProtectiveFactorReview[],
+  caraRelationshipDepthReviews: [] as CaraRelationshipDepthReview[],
+  caraThresholdConsultations: [] as CaraThresholdConsultation[],
+  caraStaffWellbeingSignals: [] as CaraStaffWellbeingSignal[],
+  caraPracticeFlags: [] as CaraPracticeFlag[],
+  caraGuidanceRules: [] as CaraGuidanceRule[],
 
   // Shift Swap Requests
   shiftSwaps: [
@@ -2756,7 +3060,7 @@ const store = {
       requester_shift_id: "shift_004",
       target_shift_id: "shift_003",
       status: "pending",
-      reason: "Medical appointment on this date — happy to swap sleep-in for Edward's day shift.",
+      reason: "Medical appointment on this date — happy to swap sleep-in for Daniel's day shift.",
       manager_notes: null,
       decided_by: null,
       decided_at: null,
@@ -2769,7 +3073,7 @@ const store = {
       requester_shift_id: "shift_005",
       target_shift_id: null,
       status: "pending",
-      reason: "Family commitment — need to swap my day shift, Diane has agreed informally.",
+      reason: "Family commitment — need to swap my day shift, Maria has agreed informally.",
       manager_notes: null,
       decided_by: null,
       decided_at: null,
@@ -2913,7 +3217,7 @@ store.missingEpisodes = [
     date_missing: "2026-01-15", time_missing: "21:30",
     date_returned: "2026-01-15", time_returned: "23:25",
     duration_hours: 1.9, risk_level: "medium",
-    location_last_seen: "Outside Oak House — said going to shop",
+    location_last_seen: "Outside Chamberlain House — said going to shop",
     return_location: "Local park, returned voluntarily",
     reported_to_police: false, police_reference: null,
     reported_to_la: true, la_notified_at: "2026-01-16T09:00:00Z",
@@ -2967,7 +3271,7 @@ store.missingEpisodes = [
 // Seed chronology
 store.chronology = [
   // Alex chronology
-  { id: "chr_001", child_id: "yp_alex", date: "2025-09-01", time: "14:00", category: "placement", title: "Placement commenced at Oak House", description: "Alex admitted to Oak House under S20. Initial placement meeting held with LA, IRO, and social worker. Risk assessment reviewed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-09-01T14:00:00Z" },
+  { id: "chr_001", child_id: "yp_alex", date: "2025-09-01", time: "14:00", category: "placement", title: "Placement commenced at Chamberlain House", description: "Alex admitted to Chamberlain House under S20. Initial placement meeting held with LA, IRO, and social worker. Risk assessment reviewed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-09-01T14:00:00Z" },
   { id: "chr_002", child_id: "yp_alex", date: "2025-10-01", time: null, category: "education", title: "School placement arranged — Derby Alternative Provision", description: "Education arranged with Derby AP following exclusion from previous school. Alex settled well in first week.", significance: "significant", recorded_by: "staff_ryan", linked_incident_id: null, home_id: "home_oak", created_at: "2025-10-01T10:00:00Z" },
   { id: "chr_003", child_id: "yp_alex", date: "2026-01-15", time: "21:30", category: "missing", title: "First missing from care episode (MFC-2026-001)", description: "Alex absent 1h 55m. Returned voluntarily. Low-risk return interview completed.", significance: "significant", recorded_by: "staff_edward", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-15T23:30:00Z" },
   { id: "chr_004", child_id: "yp_alex", date: "2026-02-05", time: null, category: "review", title: "LAC Review — Alex W", description: "Looked After Child review held at Derby City Council. Placement stable. Education engagement improved. No change to Care Order.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-02-05T11:00:00Z" },
@@ -2975,11 +3279,11 @@ store.chronology = [
   { id: "chr_006", child_id: "yp_alex", date: "2026-04-01", time: "20:45", category: "missing", title: "Third missing from care episode (MFC-2026-003) — pattern escalated", description: "Alex absent 1h 35m. Police informed. Contextual safeguarding escalation — MASH referral made. Unknown peer group suspected.", significance: "critical", recorded_by: "staff_edward", linked_incident_id: "inc_001", home_id: "home_oak", created_at: "2026-04-01T20:55:00Z" },
   { id: "chr_007", child_id: "yp_alex", date: "2026-04-14", time: "19:10", category: "safeguarding", title: "Safeguarding disclosure — criminal exploitation risk", description: "Alex disclosed older peer asking him to carry items. Immediate safeguarding response. Social worker, police, and RM notified. Strategy discussion arranged.", significance: "critical", recorded_by: "staff_edward", linked_incident_id: "inc_004", home_id: "home_oak", created_at: "2026-04-14T19:15:00Z" },
   // Jordan chronology
-  { id: "chr_010", child_id: "yp_jordan", date: "2025-11-15", time: null, category: "placement", title: "Placement commenced at Oak House", description: "Jordan admitted under Full Care Order (S31). Placement plan agreed with Nottinghamshire CC. Halal food and dietary requirements confirmed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-11-15T12:00:00Z" },
+  { id: "chr_010", child_id: "yp_jordan", date: "2025-11-15", time: null, category: "placement", title: "Placement commenced at Chamberlain House", description: "Jordan admitted under Full Care Order (S31). Placement plan agreed with Nottinghamshire CC. Halal food and dietary requirements confirmed.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2025-11-15T12:00:00Z" },
   { id: "chr_011", child_id: "yp_jordan", date: "2025-12-01", time: null, category: "education", title: "School placement — Highfields Academy", description: "Jordan started at Highfields Academy. Initial settling in period. Positive engagement with PE.", significance: "significant", recorded_by: "staff_ryan", linked_incident_id: null, home_id: "home_oak", created_at: "2025-12-01T09:00:00Z" },
   { id: "chr_012", child_id: "yp_jordan", date: "2026-04-14", time: "14:30", category: "behaviour", title: "Complaint raised — noise during study time (INC-2026-0042)", description: "Jordan raised formal complaint about noise levels. Complaint logged and investigation commenced.", significance: "significant", recorded_by: "staff_chervelle", linked_incident_id: "inc_003", home_id: "home_oak", created_at: "2026-04-14T14:35:00Z" },
   // Casey chronology
-  { id: "chr_020", child_id: "yp_casey", date: "2026-01-10", time: null, category: "placement", title: "Placement commenced at Oak House", description: "Casey admitted under Full Care Order. From previous placement that broke down. Settling-in plan agreed. CAMHS referral in place.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-10T13:00:00Z" },
+  { id: "chr_020", child_id: "yp_casey", date: "2026-01-10", time: null, category: "placement", title: "Placement commenced at Chamberlain House", description: "Casey admitted under Full Care Order. From previous placement that broke down. Settling-in plan agreed. CAMHS referral in place.", significance: "critical", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-10T13:00:00Z" },
   { id: "chr_021", child_id: "yp_casey", date: "2026-01-15", time: null, category: "health", title: "Melatonin prescribed — sleep support", description: "Dr Chen prescribed Melatonin 3mg for sleep difficulties. MAR commenced.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-01-15T10:00:00Z" },
   { id: "chr_022", child_id: "yp_casey", date: "2026-02-01", time: null, category: "health", title: "Fluoxetine prescribed — mood support", description: "Dr Chen prescribed Fluoxetine 10mg for low mood. Risk assessment updated. CAMHS oversight confirmed.", significance: "significant", recorded_by: "staff_darren", linked_incident_id: null, home_id: "home_oak", created_at: "2026-02-01T11:00:00Z" },
   { id: "chr_023", child_id: "yp_casey", date: "2026-04-13", time: "08:15", category: "health", title: "Medication late administration — refusal episode (INC-2026-0040)", description: "Casey refused morning Fluoxetine. Incident logged. Late administration at 08:45 following second attempt.", significance: "significant", recorded_by: "staff_anna", linked_incident_id: "inc_002", home_id: "home_oak", created_at: "2026-04-13T08:20:00Z" },
@@ -3013,8 +3317,8 @@ store.medicationAdministrations = [
 // Seed buildings and H&S
 store.buildings = [
   {
-    id: "bld_001", home_id: "home_oak", name: "Oak House — Main Building",
-    type: "residential", address: "Oak House, Derby, DE1 3AA",
+    id: "bld_001", home_id: "home_oak", name: "Chamberlain House — Main Building",
+    type: "residential", address: "Chamberlain House, Derby, DE1 3AA",
     areas: ["bedroom_alex", "bedroom_jordan", "bedroom_casey", "lounge", "kitchen", "bathroom_main", "bathroom_staff", "office", "medication_room", "garden"],
     gas_cert_expiry: "2026-12-01", electrical_cert_expiry: "2027-03-01",
     fire_risk_assessment_date: "2026-01-15", epc_rating: "C",
@@ -3072,10 +3376,10 @@ store.handovers = [
     created_by: "staff_darren", signed_off_by: null, sign_offs: [],
     child_updates: [
       { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled day overall. Engaged with education in the morning. Some low mood around 4pm — disclosed worrying about court proceedings. Supported with 1:1 time.", alerts: ["Phone usage overnight — third time this week", "Court proceedings anxiety"] },
-      { child_id: "yp_jordan", mood_score: 9, key_notes: "Jordan had an excellent day. Went to football training with Lackson. Made positive comments about feeling settled at Oak House.", alerts: [] },
+      { child_id: "yp_jordan", mood_score: 9, key_notes: "Jordan had an excellent day. Went to football training with Samuel. Made positive comments about feeling settled at Chamberlain House.", alerts: [] },
       { child_id: "yp_casey", mood_score: 4, key_notes: "Casey struggled this afternoon. Became distressed about a phone call from her mother. Supported to regulate. Refused evening medication initially — accepted 30 minutes later.", alerts: ["Contact distress", "Medication delay — administered 30 mins late"] },
     ],
-    general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed. Strategy discussion tomorrow re: Alex safeguarding.",
+    general_notes: "Rear gate latch needs fixing urgently — flagged to Marcus. CCTV camera still not installed. Strategy discussion tomorrow re: Alex safeguarding.",
     flags: ["gate_security", "casey_medication_delay", "alex_safeguarding_strategy_tomorrow"],
     linked_incident_ids: ["inc_004"],
     created_at: new Date().toISOString(),
@@ -3093,9 +3397,9 @@ store.handovers = [
     child_updates: [
       { child_id: "yp_alex", mood_score: 6, key_notes: "Alex had a settled night. Some restlessness at 02:00 — checked, was on phone. Phone discussion needed. Mood okay this morning.", alerts: ["Phone usage overnight — third time this week"] },
       { child_id: "yp_jordan", mood_score: 8, key_notes: "Jordan slept well. Up at 07:00, positive this morning. Prepared own breakfast.", alerts: [] },
-      { child_id: "yp_casey", mood_score: 5, key_notes: "Casey had a difficult night. Woke at 01:30 distressed — contact with mother earlier affected mood. Settled with support from Edward.", alerts: ["Sleep disturbance linked to contact", "Medication refusal risk for morning"] },
+      { child_id: "yp_casey", mood_score: 5, key_notes: "Casey had a difficult night. Woke at 01:30 distressed — contact with mother earlier affected mood. Settled with support from Daniel.", alerts: ["Sleep disturbance linked to contact", "Medication refusal risk for morning"] },
     ],
-    general_notes: "Rear gate latch needs fixing urgently — flagged to Ryan. CCTV camera still not installed.",
+    general_notes: "Rear gate latch needs fixing urgently — flagged to Marcus. CCTV camera still not installed.",
     flags: ["gate_security", "alex_phone_overnight", "casey_sleep_disturbance"],
     linked_incident_ids: ["inc_001", "inc_004"],
     created_at: daysFromNow(0) + "T07:30:00Z",
@@ -3117,7 +3421,7 @@ store.vacancies = [
     hours: 40,
     shift_pattern: "Rotating days, evenings and sleep-ins across a 4-week rota",
     reports_to: "staff_darren",
-    safeguarding_statement: "Oak House is committed to safeguarding and promoting the welfare of children and young people. All posts are subject to an enhanced DBS check, barred list check, and satisfactory references.",
+    safeguarding_statement: "Chamberlain House is committed to safeguarding and promoting the welfare of children and young people. All posts are subject to an enhanced DBS check, barred list check, and satisfactory references.",
     status: "open",
     approval_status: "approved",
     created_by: "staff_darren",
@@ -3138,7 +3442,7 @@ store.vacancies = [
     hours: 40,
     shift_pattern: "Supernumerary management shifts plus on-call cover",
     reports_to: "staff_darren",
-    safeguarding_statement: "Oak House is committed to safeguarding and promoting the welfare of children and young people. All posts are subject to an enhanced DBS check, barred list check, and satisfactory references.",
+    safeguarding_statement: "Chamberlain House is committed to safeguarding and promoting the welfare of children and young people. All posts are subject to an enhanced DBS check, barred list check, and satisfactory references.",
     status: "open",
     approval_status: "approved",
     created_by: "staff_darren",
@@ -3240,6 +3544,402 @@ store.candidateProfiles = [
     created_by: "staff_darren",
   },
 ];
+
+// ── Employer values profile (for values-based matching) ──────────────────────
+store.employerValuesProfiles = [
+  {
+    id: "evp_oak",
+    home_id: "home_oak",
+    organisation_name: "Avisaar Children's Care Ltd",
+    home_name: "Chamberlain House",
+    core_values: ["child-centred", "warmth", "resilience", "honesty", "consistency", "respect"],
+    care_approach: "Relational, trauma-informed care that treats every behaviour as communication. We build safety through predictable, warm relationships and high expectations held with kindness.",
+    leadership_style: "Visible, supportive leadership. Managers are on the floor, model the practice they expect, and make time for reflective supervision.",
+    therapeutic_model: "Attachment-informed practice underpinned by PACE and co-regulation, with input from our therapeutic team.",
+    pace_commitment: "We expect PACE — Playfulness, Acceptance, Curiosity and Empathy — to show up in everyday interactions, not just formal sessions.",
+    trauma_informed_expectations: "Staff understand the impact of developmental trauma, stay curious about what behaviour communicates, and never take dysregulation personally.",
+    safeguarding_culture: "Speak up, always. Concerns are recorded and escalated without hesitation; nobody is ever in trouble for raising a worry about a child.",
+    expected_behaviours: ["curiosity over judgement", "reliability and consistency", "emotional regulation", "team-first attitude", "honesty"],
+    non_negotiables: ["No physical punishment, ever", "Always record and escalate safeguarding concerns", "No shaming or sarcasm towards children", "Confidentiality respected"],
+    what_makes_us_different: "A small, nurturing home where relationships come first and staff are supported to do reflective, therapeutic work — not just manage behaviour.",
+    relational_practice_priority: "high",
+    updated_at: "2026-02-01T09:00:00Z",
+    updated_by: "staff_darren",
+  },
+];
+
+// ── Safer-recruitment training (panel eligibility for vacancy setup) ─────────
+// APPENDED to the seed-data.ts records (never reassign — that wipes them).
+// Deliberately is_mandatory:false (specialist CPD) so the mandatory-training
+// compliance engines are unaffected by these records.
+store.trainingRecords.push(
+  {
+    id: "tr_diane_safer_rec",
+    staff_id: "staff_diane",
+    course_name: "Safer Recruitment in Children's Residential Care",
+    category: "safeguarding",
+    provider: "NSPCC Learning",
+    completed_date: "2025-09-12",
+    expiry_date: "2027-09-12",
+    certificate_url: null,
+    status: "compliant",
+    is_mandatory: false,
+    notes: "Panel-lead refresher completed.",
+    home_id: "home_oak",
+    created_at: "2025-09-12T09:00:00Z",
+    updated_at: "2025-09-12T09:00:00Z",
+    created_by: "staff_darren",
+    updated_by: "staff_darren",
+  },
+  {
+    id: "tr_edward_safer_rec",
+    staff_id: "staff_edward",
+    course_name: "Safer Recruitment Training (Level 2)",
+    category: "safeguarding",
+    provider: "Local Safeguarding Partnership",
+    completed_date: "2024-07-03",
+    expiry_date: "2026-07-03",
+    certificate_url: null,
+    status: "expiring_soon",
+    is_mandatory: false,
+    notes: "Refresher due — book before July.",
+    home_id: "home_oak",
+    created_at: "2024-07-03T09:00:00Z",
+    updated_at: "2026-05-20T09:00:00Z",
+    created_by: "staff_darren",
+    updated_by: "staff_darren",
+  },
+  {
+    id: "tr_anna_safer_rec",
+    staff_id: "staff_anna",
+    course_name: "Safer Recruitment Essentials",
+    category: "safeguarding",
+    provider: "Local Safeguarding Partnership",
+    completed_date: "2023-04-18",
+    expiry_date: "2026-04-18",
+    certificate_url: null,
+    status: "expired",
+    is_mandatory: false,
+    notes: "Lapsed — cannot panel until renewed.",
+    home_id: "home_oak",
+    created_at: "2023-04-18T09:00:00Z",
+    updated_at: "2026-05-20T09:00:00Z",
+    created_by: "staff_darren",
+    updated_by: "staff_darren",
+  },
+);
+
+// ── Cara Studio seeds: learning profiles + approved library resources ────────
+// APPENDED (never reassign). Profiles power adapted session/material/
+// conversation generation for the demo children.
+store.caraLearningProfiles.push(
+  {
+    id: "clp_alex",
+    child_id: "yp_alex",
+    age: 14,
+    developmental_age_notes: "Emotionally working at around 11–12; strong practical reasoning.",
+    communication_needs: "Short sentences, real wait time; struggles with 'why' questions when stressed.",
+    send_needs: "ADHD traits; suspected dyslexia (no formal assessment on file).",
+    learning_style: { visual: true, audio: false, practical: true, movement_based: true, conversation_based: false, creative: true, low_literacy: true, short_bursts: true },
+    attention_profile: "Engages in 5–10 minute bursts; movement helps.",
+    sensory_profile: "Noise-sensitive in the evenings; dislikes being faced head-on.",
+    emotional_triggers: "Being told no in front of peers; family contact cancellations.",
+    calming_strategies: "Music through one earphone; kicking a ball outside; food.",
+    trauma_considerations: "Neglect; multiple placement moves — endings and goodbyes are loaded.",
+    cultural_identity_notes: null,
+    literacy_level: "Reads reluctantly, writes very little — never make reading the gateway.",
+    preferred_activities: "Football, drawing, helping with cooking.",
+    avoided_topics: "Dad; the last foster placement.",
+    trusted_adults: "Olivia, Marcus",
+    known_strengths: "Funny, loyal, protective of younger children, notices when staff are down.",
+    current_goals: "Settle at school; manage family-time disappointment without going missing.",
+    risk_themes: ["missing", "cannabis"],
+    review_notes: null,
+    created_by: "staff_olivia",
+    updated_by: "staff_olivia",
+    created_at: "2026-05-20T09:00:00Z",
+    updated_at: "2026-06-08T09:00:00Z",
+  },
+  {
+    id: "clp_jordan",
+    child_id: "yp_jordan",
+    age: 15,
+    developmental_age_notes: "Age-appropriate cognition; emotional literacy growing fast.",
+    communication_needs: "Articulate but masks — check understanding gently rather than assuming.",
+    send_needs: "Autistic (diagnosed 2023); demand avoidance under stress.",
+    learning_style: { visual: true, audio: true, practical: false, movement_based: false, conversation_based: true, creative: false, low_literacy: false, short_bursts: false },
+    attention_profile: "Can sustain 30+ minutes on chosen topics; drops fast on imposed ones.",
+    sensory_profile: "Overwhelmed by overlapping voices; needs predictable structure announced first.",
+    emotional_triggers: "Sudden plan changes; perceived unfairness between children.",
+    calming_strategies: "Exact information about what happens next; drawing routines; quiet room.",
+    trauma_considerations: "Witnessed domestic violence; startle response to raised male voices.",
+    cultural_identity_notes: "Strong faith identity via grandmother — a stabilising thread worth honouring.",
+    literacy_level: "Strong reader and writer.",
+    preferred_activities: "Coding videos, chess, baking with exact recipes.",
+    avoided_topics: null,
+    trusted_adults: "Priya",
+    known_strengths: "Precise, honest, kind in one-to-ones, brilliant memory.",
+    current_goals: "Build tolerance for plan changes; one peer connection in the home.",
+    risk_themes: ["isolation", "online"],
+    review_notes: null,
+    created_by: "staff_olivia",
+    updated_by: "staff_olivia",
+    created_at: "2026-05-20T09:00:00Z",
+    updated_at: "2026-06-05T09:00:00Z",
+  },
+);
+
+store.caraLibraryResources.push(
+  {
+    id: "clr_trust",
+    title: "Trusting adults toolkit (PACE openers and trust-map activity)",
+    resource_type: "activity_pack",
+    domain: "Trust and safe adults",
+    age_range: "10-17",
+    send_tags: ["low_literacy", "visual"],
+    trauma_tags: ["attachment", "multiple_moves"],
+    content: "Trust-map drawing activity, safe-adults circle template and six PACE-informed opening lines reviewed by the home's therapeutic lead.",
+    source: "Internal therapeutic lead",
+    source_type: "internal",
+    approved: true,
+    approved_by: "staff_olivia",
+    created_by: "staff_marcus",
+    created_at: "2026-04-10T09:00:00Z",
+    updated_at: "2026-04-10T09:00:00Z",
+  },
+  {
+    id: "clr_exploitation",
+    title: "Exploitation awareness scenario set (contextual safeguarding)",
+    resource_type: "scenario_cards",
+    domain: "Exploitation awareness",
+    age_range: "12-17",
+    send_tags: ["short_bursts"],
+    trauma_tags: ["exploitation"],
+    content: "Eight age-banded scenarios on grooming hooks, gifts, debt bondage and safe exits, mapped to the local contextual-safeguarding guidance.",
+    source: "Local safeguarding partnership materials, adapted",
+    source_type: "internal",
+    approved: true,
+    approved_by: "staff_olivia",
+    created_by: "staff_marcus",
+    created_at: "2026-04-22T09:00:00Z",
+    updated_at: "2026-04-22T09:00:00Z",
+  },
+  {
+    id: "clr_feelings_draft",
+    title: "Feelings vocabulary builder (draft — awaiting review)",
+    resource_type: "worksheet",
+    domain: "Emotional literacy",
+    age_range: "10-14",
+    send_tags: ["low_literacy"],
+    trauma_tags: [],
+    content: "Draft feelings-word ladder; needs therapeutic lead review before use.",
+    source: "Staff-created",
+    source_type: "internal",
+    approved: false,
+    approved_by: null,
+    created_by: "staff_daniel",
+    created_at: "2026-06-01T09:00:00Z",
+    updated_at: "2026-06-01T09:00:00Z",
+  },
+);
+
+// ── Candidate values profiles (overlay the recruitment candidate records) ────
+store.candidateValuesProfiles = [
+  {
+    id: "cvp_amara",
+    candidate_id: CAND_AMARA,
+    candidate_name: "Amara Osei",
+    values: ["child-centred", "warmth", "resilience", "honesty", "respect"],
+    what_matters_in_employer: "A team that genuinely puts children first and supports staff to reflect, not just react. Good supervision and a learning culture.",
+    childrens_home_experience_years: 4,
+    preferred_role: "residential_care_worker",
+    availability: "Full-time, flexible including some sleep-ins",
+    qualifications: ["Level 3 Diploma in Residential Childcare", "Team Teach", "Safeguarding Level 2"],
+    confidence_areas: ["building relationships with hard-to-reach young people", "key-working", "de-escalation"],
+    development_areas: ["report writing", "chairing meetings"],
+    safeguarding_mindset: "If a child made a disclosure I would stay calm, listen without leading, reassure them they did the right thing, record it accurately in their words and escalate to the designated safeguarding lead straight away. Safeguarding is everyone's job.",
+    relational_indicators: ["PACE", "co-regulation", "attunement", "reflective practice"],
+    scenario_answers: [
+      { prompt: "A young person refuses to go to school and becomes aggressive.", answer: "I'd stay regulated, give space, get curious about what's really going on rather than enforce, and co-regulate before problem-solving with them later." },
+    ],
+    updated_at: "2026-03-20T10:30:00Z",
+  },
+  {
+    id: "cvp_daniel",
+    candidate_id: CAND_DANIEL,
+    candidate_name: "Daniel Wright",
+    values: ["resilience", "consistency", "honesty"],
+    what_matters_in_employer: "Clear structure, a supportive manager, and the chance to develop my qualifications.",
+    childrens_home_experience_years: 2,
+    preferred_role: "residential_care_worker",
+    availability: "Full-time",
+    qualifications: ["Level 3 Diploma in Residential Childcare (in progress)", "First Aid"],
+    confidence_areas: ["routines and boundaries", "activities and engagement"],
+    development_areas: ["de-escalation under pressure", "trauma-informed responses"],
+    safeguarding_mindset: "I'd report any concern to my manager and make sure it's written down. I know there's a safeguarding policy to follow.",
+    relational_indicators: ["empathy", "reflective"],
+    scenario_answers: [
+      { prompt: "A young person refuses to go to school and becomes aggressive.", answer: "I'd try to keep things calm and remind them of the routine and expectations, and let a senior know if it escalated." },
+    ],
+    updated_at: "2026-03-18T14:00:00Z",
+  },
+  {
+    id: "cvp_priscilla",
+    candidate_id: CAND_PRISCILLA,
+    candidate_name: "Priscilla Mensah",
+    values: ["warmth", "child-centred", "respect"],
+    what_matters_in_employer: "A caring home where I can make a real difference to children's lives and grow into the role.",
+    childrens_home_experience_years: 1,
+    preferred_role: "residential_care_worker",
+    availability: "Full-time, flexible",
+    qualifications: ["Level 2 Health & Social Care", "NVQ working towards Level 3"],
+    confidence_areas: ["warmth and nurture", "daily care and routines"],
+    development_areas: ["recording and report writing", "managing challenging behaviour", "safeguarding thresholds"],
+    safeguarding_mindset: "I would always protect the child and tell my manager if I was worried about something.",
+    relational_indicators: ["empathy", "nurture"],
+    scenario_answers: [
+      { prompt: "A young person refuses to go to school and becomes aggressive.", answer: "I'd stay kind and patient, try to understand why they're upset and reassure them." },
+    ],
+    updated_at: "2026-03-15T11:00:00Z",
+  },
+];
+
+// ── Reflective supervision records (more than tick-box; slice 3) ─────────────
+// ── Cara Incident Mode demo sessions ───────────────────────────────────────────
+// ais_demo_0: an earlier family-contact incident (record completed, but child's
+// voice + restorative follow-up missing) — lights up oversight alerts and, with
+// ais_demo_1, the family-contact pattern insight.
+const caraIncDay0 = daysFromNow(-12);
+const caraIncDay = daysFromNow(-2);
+store.caraIncidentSessions = [
+  {
+    id: "ais_demo_0", home_id: "home_oak", child_id: "yp_alex", started_by_user_id: "staff_lackson",
+    started_at: caraIncDay0 + "T20:15:00Z", ended_at: caraIncDay0 + "T20:55:00Z",
+    incident_type: "family_contact_distress", incident_status: "record_created", immediate_risk_level: "low",
+    manager_notified: true, manager_notified_at: caraIncDay0 + "T20:25:00Z",
+    ai_support_used: true, final_record_created: true,
+    workflow_progress: { reassure: true, trigger: true },
+    created_at: caraIncDay0 + "T20:15:00Z", updated_at: caraIncDay0 + "T20:55:00Z",
+  },
+  {
+    id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", started_by_user_id: "staff_edward",
+    started_at: caraIncDay + "T19:42:00Z", ended_at: caraIncDay + "T20:20:00Z",
+    incident_type: "family_contact_distress", incident_status: "ended", immediate_risk_level: "medium",
+    manager_notified: true, manager_notified_at: caraIncDay + "T19:50:00Z",
+    ai_support_used: true, final_record_created: false,
+    workflow_progress: { reassure: true, space: true, trigger: true, staff_response: true },
+    created_at: caraIncDay + "T19:42:00Z", updated_at: caraIncDay + "T20:20:00Z",
+  },
+];
+store.caraIncidentTimeline = [
+  { id: "ait_d0a", incident_session_id: "ais_demo_0", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_lackson", entry_type: "observation", raw_text: "Alex became tearful and slammed his door after the phone call with his mum was cut short.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay0 + "T20:15:00Z", created_at: caraIncDay0 + "T20:15:00Z" },
+  { id: "ait_d0b", incident_session_id: "ais_demo_0", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_lackson", entry_type: "staff_action", raw_text: "Staff gave space and checked in gently after ten minutes.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay0 + "T20:30:00Z", created_at: caraIncDay0 + "T20:30:00Z" },
+  { id: "ait_d0c", incident_session_id: "ais_demo_0", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_lackson", entry_type: "manager_notification", raw_text: "Duty manager made aware.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay0 + "T20:25:00Z", created_at: caraIncDay0 + "T20:25:00Z" },
+  { id: "ait_d1", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "observation", raw_text: "Young person became distressed after family phone contact.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T19:42:00Z", created_at: caraIncDay + "T19:42:00Z" },
+  { id: "ait_d2", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "staff_action", raw_text: "Staff reduced demands and offered space.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T19:44:00Z", created_at: caraIncDay + "T19:44:00Z" },
+  { id: "ait_d3", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "observation", raw_text: "Young person declined support but remained in the communal area.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T19:47:00Z", created_at: caraIncDay + "T19:47:00Z" },
+  { id: "ait_d4", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "manager_notification", raw_text: "Duty manager made aware by phone.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T19:50:00Z", created_at: caraIncDay + "T19:50:00Z" },
+  { id: "ait_d5", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "deescalation_attempt", raw_text: "Staff offered a drink and reassurance.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T19:52:00Z", created_at: caraIncDay + "T19:52:00Z" },
+  { id: "ait_d6", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "child_voice", raw_text: "Alex said the call made him miss home and he didn't want to talk yet.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T20:05:00Z", created_at: caraIncDay + "T20:05:00Z" },
+  { id: "ait_d7", incident_session_id: "ais_demo_1", home_id: "home_oak", child_id: "yp_alex", user_id: "staff_edward", entry_type: "restorative_action", raw_text: "Restorative conversation planned with trusted staff member once settled.", ai_rewritten_text: null, accepted_text: null, timestamp: caraIncDay + "T20:20:00Z", created_at: caraIncDay + "T20:20:00Z" },
+];
+
+// ── Restorative conversation completed for the demo incident session ──────────
+store.caraRestorativeConversations = [
+  {
+    id: "arc_demo_1", home_id: "home_oak", child_id: "yp_alex", incident_session_id: "ais_demo_1",
+    completed_by_user_id: "staff_edward", conversation_date: daysFromNow(-1),
+    child_ready_to_engage: true,
+    child_voice: "Alex said the call made him miss home, and that he hates feeling like he can't do anything about it.",
+    what_happened: "Alex became distressed and raised his voice after the family phone call ended early.",
+    who_was_affected: "Alex, and briefly the other young people in the communal area.",
+    what_helped: "Space, a drink, and Daniel sitting nearby without asking questions.",
+    what_made_it_worse: "",
+    repair_actions: "Alex will help plan the next call with his key worker so it doesn't end abruptly; staff will check in before and after calls.",
+    follow_up_required: true,
+    ai_summary: null,
+    manager_review_required: true,
+    created_at: daysFromNow(-1) + "T17:30:00Z", updated_at: daysFromNow(-1) + "T17:30:00Z",
+  },
+];
+
+store.reflectiveSupervisions = [
+  {
+    id: "rsup_001", staff_id: "staff_edward", staff_name: "Daniel Frost", supervisor_id: "staff_darren", supervisor_name: "Olivia Hayes",
+    date: daysFromNow(-21), type: "1:1", wellbeing_score: 4, confidence_level: 4,
+    emotional_wellbeing: "Settled and positive. Feels part of the team and is sleeping/eating well. Named some stress around a recent missing-from-care episode but felt well supported afterwards.",
+    workload: "Manageable. Happy with shift balance; would like a few more day shifts where possible.",
+    safeguarding_concerns: "No new concerns. Confident about reporting routes; we revisited the disclosure flow together as good practice.",
+    relationships_with_children: "Building a strong key-working relationship with Alex — Alex sought him out after a difficult day, which is real progress.",
+    reflective_practice: "Reflected on a moment he stayed regulated when Alex was shouting; recognised that giving space rather than enforcing helped de-escalate.",
+    pace_examples: "Used playfulness to re-engage Alex over breakfast after a tense morning. Showed acceptance of Alex's feelings without accepting the behaviour.",
+    professional_boundaries: "Clear and appropriate. Discussed managing social-media boundaries with older young people.",
+    training_needs: ["Report writing"],
+    manager_feedback: "Daniel is doing relationally skilled work and modelling calm. Encouraged him to keep capturing these moments in the daily log so the practice is evidenced.",
+    actions: [{ action: "Book report-writing refresher", owner: "staff_darren", due: daysFromNow(21), done: false }],
+    follow_up_date: daysFromNow(21), created_at: daysFromNow(-21),
+  },
+  {
+    id: "rsup_002", staff_id: "staff_lackson", staff_name: "Samuel Boateng", supervisor_id: "staff_ryan", supervisor_name: "Marcus Bell",
+    date: daysFromNow(-37), type: "1:1", wellbeing_score: 3, confidence_level: 3,
+    emotional_wellbeing: "Generally okay but tired after a run of sleep-ins. We agreed to review the rota balance.",
+    workload: "Feels stretched on busy evenings. Would value clearer handover at shift change.",
+    safeguarding_concerns: "Raised a low-level concern about a young person's online contact — recorded and being monitored. Knew to escalate.",
+    relationships_with_children: "Good rapport with Jordan; less sure how to respond when Jordan withdraws.",
+    reflective_practice: "Reflected that he sometimes reaches for boundaries first when anxious; wants to pause and get curious instead.",
+    pace_examples: "Working on curiosity — asked Jordan what was behind a refusal rather than insisting.",
+    professional_boundaries: "Appropriate. Discussed not over-promising to young people.",
+    training_needs: ["De-escalation refresher", "Trauma-informed practice"],
+    manager_feedback: "Samuel is reflective and honest about what he finds hard — a real strength. Pairing him with an experienced colleague on busy evenings.",
+    actions: [{ action: "Review sleep-in balance on rota", owner: "staff_ryan", due: daysFromNow(-9), done: false }, { action: "Book de-escalation refresher", owner: "staff_ryan", due: daysFromNow(7), done: false }],
+    follow_up_date: daysFromNow(5), created_at: daysFromNow(-37),
+  },
+  {
+    id: "rsup_003", staff_id: "staff_anna", staff_name: "Priya Sharma", supervisor_id: "staff_darren", supervisor_name: "Olivia Hayes",
+    date: daysFromNow(-58), type: "1:1", wellbeing_score: 2, confidence_level: 3,
+    emotional_wellbeing: "Lower than usual — feeling the emotional weight of a recent incident and some life stress outside work. We talked about support options including the EAP.",
+    workload: "Heavy stretch recently; agreed to protect some non-contact time.",
+    safeguarding_concerns: "No new safeguarding concerns about children. Focus this session was staff wellbeing.",
+    relationships_with_children: "Still warm and attuned with the children; worried she has less to give right now.",
+    reflective_practice: "Reflected on compassion fatigue and the importance of her own regulation and rest.",
+    pace_examples: "Continues to show empathy and acceptance even when depleted.",
+    professional_boundaries: "Strong. We discussed protecting her own boundaries to avoid burnout.",
+    training_needs: ["Trauma-informed practice"],
+    manager_feedback: "Priya is a valued, skilled practitioner showing early signs of strain. Priority is support and workload relief, with a follow-up wellbeing check — a RETENTION/SUPPORT indicator, not a performance concern.",
+    actions: [{ action: "Wellbeing follow-up check-in", owner: "staff_darren", due: daysFromNow(-30), done: false }, { action: "Protect non-contact time on rota", owner: "staff_darren", due: daysFromNow(-44), done: true }],
+    follow_up_date: daysFromNow(-16), created_at: daysFromNow(-58),
+  },
+  {
+    id: "rsup_004", staff_id: "staff_chervelle", staff_name: "Naomi Reid", supervisor_id: "staff_ryan", supervisor_name: "Marcus Bell",
+    date: daysFromNow(-14), type: "1:1", wellbeing_score: 4, confidence_level: 2,
+    emotional_wellbeing: "Positive and motivated, enjoying the role.",
+    workload: "Comfortable. Keen to take on more key-working responsibility.",
+    safeguarding_concerns: "Newer to the role — we revisited safeguarding thresholds and when to escalate, which she found helpful.",
+    relationships_with_children: "Warm and nurturing; building trust well with Casey.",
+    reflective_practice: "Reflected that she sometimes second-guesses her judgement and defers to others — building confidence to trust her instincts.",
+    pace_examples: "Naturally warm and accepting; good use of empathy with Casey at bedtime.",
+    professional_boundaries: "Appropriate; discussed confidence in holding boundaries kindly.",
+    training_needs: ["Safeguarding thresholds", "Recording & report writing"],
+    manager_feedback: "Naomi has lovely relational instincts; the focus is building her professional confidence through shadowing and reflective supervision. Low confidence is developmental, not a concern about competence.",
+    actions: [{ action: "Shadow a safeguarding referral with the DSL", owner: "staff_ryan", due: daysFromNow(14), done: false }],
+    follow_up_date: daysFromNow(28), created_at: daysFromNow(-14),
+  },
+  {
+    id: "rsup_005", staff_id: "staff_diane", staff_name: "Maria Okafor", supervisor_id: "staff_darren", supervisor_name: "Olivia Hayes",
+    date: daysFromNow(-30), type: "1:1", wellbeing_score: 5, confidence_level: 5,
+    emotional_wellbeing: "Thriving. A steadying presence on the team.",
+    workload: "Well-balanced; mentoring newer staff informally.",
+    safeguarding_concerns: "No concerns. Strong, confident safeguarding practice.",
+    relationships_with_children: "Trusted by all three young people; excellent at co-regulation.",
+    reflective_practice: "Reflected on supporting a colleague after a hard shift — modelled debriefing well.",
+    pace_examples: "Consistently models PACE; used curiosity to unpick a conflict between two young people.",
+    professional_boundaries: "Exemplary.",
+    training_needs: [],
+    manager_feedback: "Maria is an anchor for the team. Explored a possible route into a senior/team-leader role and supporting reflective practice for others.",
+    actions: [{ action: "Discuss team-leader development pathway", owner: "staff_darren", due: daysFromNow(30), done: false }],
+    follow_up_date: daysFromNow(12), created_at: daysFromNow(-30),
+  },
+] as any;
 
 // Checks — Amara
 store.candidateChecks = [
@@ -3637,7 +4337,7 @@ store.careForms = [
   },
   {
     id: "form_004", home_id: "home_oak",
-    title: "Oak House — Monthly Health & Safety Check", form_type: "health_safety_check",
+    title: "Chamberlain House — Monthly Health & Safety Check", form_type: "health_safety_check",
     status: "pending_review", priority: "medium",
     linked_child_id: null, linked_staff_id: "staff_chervelle",
     linked_incident_id: null, linked_shift_id: null, linked_task_id: null,
@@ -3674,7 +4374,7 @@ store.supervisions = [
     id: "sup_001", staff_id: "staff_edward", supervisor_id: "staff_ryan",
     type: "formal", scheduled_date: "2026-03-26", actual_date: "2026-03-26",
     duration_minutes: 60, status: "completed",
-    discussion_points: "Performance review following incident involvement on 2026-02-28. Alex's contextual safeguarding risk — Edward's response was timely and appropriate. Discussed de-escalation techniques. Identified further training need: trauma-informed practice refresher.",
+    discussion_points: "Performance review following incident involvement on 2026-02-28. Alex's contextual safeguarding risk — Daniel's response was timely and appropriate. Discussed de-escalation techniques. Identified further training need: trauma-informed practice refresher.",
     actions_agreed: [
       { id: "act_001a", description: "Book trauma-informed practice refresher", owner: "staff_edward", due_date: "2026-04-15", status: "pending", completed_at: null },
       { id: "act_001b", description: "Shadow senior staff at next strategy discussion", owner: "staff_edward", due_date: "2026-04-30", status: "pending", completed_at: null },
@@ -3688,7 +4388,7 @@ store.supervisions = [
     id: "sup_002", staff_id: "staff_anna", supervisor_id: "staff_ryan",
     type: "formal", scheduled_date: "2026-04-03", actual_date: "2026-04-03",
     duration_minutes: 55, status: "completed",
-    discussion_points: "Monthly formal supervision. Anna managing a full caseload and on sleep-in rota. Discussed medication refusal incident on 2026-04-13 — handled well initially. Concern raised around fatigue from consecutive shifts. Reviewed MAR competency sign-off. Wellbeing discussed — Anna reported feeling supported.",
+    discussion_points: "Monthly formal supervision. Priya managing a full caseload and on sleep-in rota. Discussed medication refusal incident on 2026-04-13 — handled well initially. Concern raised around fatigue from consecutive shifts. Reviewed MAR competency sign-off. Wellbeing discussed — Priya reported feeling supported.",
     actions_agreed: [
       { id: "act_002a", description: "Complete online GDPR refresher before next shift", owner: "staff_anna", due_date: "2026-04-10", status: "completed", completed_at: "2026-04-08T18:00:00Z" },
     ],
@@ -3701,7 +4401,7 @@ store.supervisions = [
     id: "sup_003", staff_id: "staff_lackson", supervisor_id: "staff_ryan",
     type: "formal", scheduled_date: "2026-03-28", actual_date: "2026-03-28",
     duration_minutes: 50, status: "completed",
-    discussion_points: "Monthly supervision. Lackson has settled well and relationships with young people are strong. Discussed Alex's missing pattern — Lackson was present during the second episode and handled it appropriately. Punctuality concern raised — two late arrivals this month. Agreed plan to address.",
+    discussion_points: "Monthly supervision. Samuel has settled well and relationships with young people are strong. Discussed Alex's missing pattern — Samuel was present during the second episode and handled it appropriately. Punctuality concern raised — two late arrivals this month. Agreed plan to address.",
     actions_agreed: [
       { id: "act_003a", description: "No further late arrivals — review at next supervision", owner: "staff_lackson", due_date: "2026-04-25", status: "pending", completed_at: null },
     ],
@@ -3798,7 +4498,7 @@ store.documents = [
     created_by: "staff_darren", updated_by: "staff_darren",
   },
   {
-    id: "doc_3", title: "Oak House — Child Protection Policy",
+    id: "doc_3", title: "Chamberlain House — Child Protection Policy",
     category: "policy", description: "Whole-home child protection and safeguarding policy",
     file_url: "#", file_name: "CP_Policy_2026.pdf", file_size: 320000, mime_type: "application/pdf",
     version: 4, previous_version_id: "doc_3_v3", requires_read_sign: true,
@@ -3828,7 +4528,7 @@ store.documents = [
     created_by: "staff_darren", updated_by: "staff_darren",
   },
   {
-    id: "doc_6", title: "Ryan Forsythe — Employment Contract",
+    id: "doc_6", title: "Marcus Bell — Employment Contract",
     category: "contract", description: "Permanent contract — Deputy Manager",
     file_url: "#", file_name: "Ryan_Contract_2024.pdf", file_size: 145000, mime_type: "application/pdf",
     version: 1, previous_version_id: null, requires_read_sign: false,
@@ -4010,7 +4710,7 @@ store.maintenance = [
   {
     id: "m6", title: "Deep clean — kitchen", category: "cleaning",
     priority: "low", status: "completed", due_date: daysFromNow(-7),
-    assigned_to: "Cleaning company", notes: "Done — signed off by Ryan", recurring: true,
+    assigned_to: "Cleaning company", notes: "Done — signed off by Marcus", recurring: true,
     home_id: "home_oak", created_by: "staff_darren", updated_by: "staff_darren",
     created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
   },
@@ -4029,13 +4729,13 @@ store.competencyProfiles = [
     strengths: [
       "Exceptional safeguarding oversight and child protection decision-making",
       "Strategic leadership — holds the home's regulatory and governance framework",
-      "ARIA utilisation — consistently drives ARIA-first intelligence processes",
+      "Cara utilisation — consistently drives Cara-first intelligence processes",
     ],
     development_areas: [
       "Formal leadership coaching to sustain RM role long-term",
       "Level 5 Diploma in Leadership for Health and Social Care (in progress)",
     ],
-    aria_narrative: "Darren demonstrates outstanding strategic and operational leadership. His competency profile across all domains places him firmly at Registered Manager level. ARIA identifies no blocking gaps for his current stage. Continued investment in formal qualification completion (Level 5) and reflective leadership practice is recommended.",
+    cara_narrative: "Olivia demonstrates outstanding strategic and operational leadership. His competency profile across all domains places him firmly at Registered Manager level. Cara identifies no blocking gaps for his current stage. Continued investment in formal qualification completion (Level 5) and reflective leadership practice is recommended.",
     last_assessed_at: "2026-03-15T10:00:00Z",
     next_review_date: "2026-09-15",
     created_at: NOW, updated_at: NOW,
@@ -4053,9 +4753,9 @@ store.competencyProfiles = [
     development_areas: [
       "Leadership under pressure — needs more exposure to complex RI challenge situations",
       "Formal Level 5 Diploma (enrolled, 40% complete)",
-      "ARIA engagement — lower utilisation than expected at deputy level",
+      "Cara engagement — lower utilisation than expected at deputy level",
     ],
-    aria_narrative: "Ryan has a strong foundation at Deputy Manager level with a clear pathway to Registered Manager. His primary development gap is formal leadership qualification and strategic ARIA use. ARIA recommends a structured 12-month succession development plan targeting RM readiness by Q1 2027.",
+    cara_narrative: "Marcus has a strong foundation at Deputy Manager level with a clear pathway to Registered Manager. His primary development gap is formal leadership qualification and strategic Cara use. Cara recommends a structured 12-month succession development plan targeting RM readiness by Q1 2027.",
     last_assessed_at: "2026-03-15T10:00:00Z",
     next_review_date: "2026-09-15",
     created_at: NOW, updated_at: NOW,
@@ -4075,7 +4775,7 @@ store.competencyProfiles = [
       "Leadership foundations — ready to begin senior RSW responsibilities",
       "Level 3 Diploma (first unit completed — ongoing)",
     ],
-    aria_narrative: "Edward is performing above the standard RSW benchmark, particularly in trauma-informed practice. ARIA identifies him as a strong candidate for Senior RSW promotion within 6 months pending risk assessment upskill and Level 3 progress.",
+    cara_narrative: "Daniel is performing above the standard RSW benchmark, particularly in trauma-informed practice. Cara identifies him as a strong candidate for Senior RSW promotion within 6 months pending risk assessment upskill and Level 3 progress.",
     last_assessed_at: "2026-02-20T09:00:00Z",
     next_review_date: "2026-08-20",
     created_at: NOW, updated_at: NOW,
@@ -4095,7 +4795,7 @@ store.competencyProfiles = [
       "Statutory compliance — occasional gaps in recording timeliness",
       "Level 3 Diploma (in progress, 60% complete)",
     ],
-    aria_narrative: "Lackson demonstrates strong practice and cultural intelligence. His EDI competence is a model for the team. ARIA recommends structured leadership exposure (buddy supervision, co-leading team meetings) as preparation for Team Leader candidacy within 9 months.",
+    cara_narrative: "Samuel demonstrates strong practice and cultural intelligence. His EDI competence is a model for the team. Cara recommends structured leadership exposure (buddy supervision, co-leading team meetings) as preparation for Team Leader candidacy within 9 months.",
     last_assessed_at: "2026-02-20T09:00:00Z",
     next_review_date: "2026-08-20",
     created_at: NOW, updated_at: NOW,
@@ -4114,7 +4814,7 @@ store.competencyProfiles = [
       "Communication — verbal confidence in multi-agency meetings",
       "Level 3 Diploma (not yet started)",
     ],
-    aria_narrative: "Anna is a reliable and conscientious RSW. ARIA identifies medication administration as a key strength. Priority development areas are trauma-informed practice training and enrolment on Level 3 Diploma to unlock progression pathway.",
+    cara_narrative: "Priya is a reliable and conscientious RSW. Cara identifies medication administration as a key strength. Priority development areas are trauma-informed practice training and enrolment on Level 3 Diploma to unlock progression pathway.",
     last_assessed_at: "2026-03-01T09:00:00Z",
     next_review_date: "2026-09-01",
     created_at: NOW, updated_at: NOW,
@@ -4124,30 +4824,30 @@ store.competencyProfiles = [
 store.developmentPlans = [
   {
     id: "devplan_ryan_rm", staff_id: "staff_ryan", home_id: "home_oak",
-    title: "Ryan Forsythe — Registered Manager Readiness Plan",
+    title: "Marcus Bell — Registered Manager Readiness Plan",
     from_stage: "deputy_manager", to_stage: "registered_manager",
-    status: "active", aria_generated: true,
-    aria_rationale: "ARIA analysis of Ryan's competency profile, supervision records, and practice observations indicates strong foundational capability with specific gaps in strategic leadership and regulatory governance. This plan targets RM readiness by Q1 2027.",
+    status: "active", cara_generated: true,
+    cara_rationale: "Cara analysis of Marcus's competency profile, supervision records, and practice observations indicates strong foundational capability with specific gaps in strategic leadership and regulatory governance. This plan targets RM readiness by Q1 2027.",
     actions: [
       { id: "dpa_r1", title: "Complete Level 5 Diploma in Leadership for Health and Social Care", description: "Complete remaining 60% of Level 5 Diploma. Target submission of final units by December 2026.", domain: "learning_and_professional_development", target_date: "2026-12-01", completed: false },
-      { id: "dpa_r2", title: "Lead RI Challenge Log responses (x3)", description: "Take primary responsibility for drafting 3 responses to RI challenge log entries, supported by Darren.", domain: "leadership_and_supervision", target_date: "2026-09-01", completed: false },
-      { id: "dpa_r3", title: "Attend Reg 45 review as lead author", description: "Co-author the next Reg 45 independent review with Alicia. Take lead on evidence collation.", domain: "statutory_compliance", target_date: "2026-07-01", completed: false },
-      { id: "dpa_r4", title: "Shadow RI Governance Scorecard submission", description: "Participate fully in next RI scorecard governance meeting. Prepare briefing notes.", domain: "statutory_compliance", target_date: "2026-06-15", completed: true, completed_at: "2026-04-20T09:00:00Z", evidence_notes: "Ryan attended RI scorecard review on 20 April. Contributed detailed analysis of safeguarding themes. Darren noted excellent strategic thinking." },
-      { id: "dpa_r5", title: "ARIA Strategic Analysis training", description: "Complete ARIA platform deep-dive: safeguarding scan, succession, oversight generator. Produce one strategic analysis per month.", domain: "learning_and_professional_development", target_date: "2026-06-01", completed: false },
+      { id: "dpa_r2", title: "Lead RI Challenge Log responses (x3)", description: "Take primary responsibility for drafting 3 responses to RI challenge log entries, supported by Olivia.", domain: "leadership_and_supervision", target_date: "2026-09-01", completed: false },
+      { id: "dpa_r3", title: "Attend Reg 45 review as lead author", description: "Co-author the next Reg 45 independent review with Patricia. Take lead on evidence collation.", domain: "statutory_compliance", target_date: "2026-07-01", completed: false },
+      { id: "dpa_r4", title: "Shadow RI Governance Scorecard submission", description: "Participate fully in next RI scorecard governance meeting. Prepare briefing notes.", domain: "statutory_compliance", target_date: "2026-06-15", completed: true, completed_at: "2026-04-20T09:00:00Z", evidence_notes: "Marcus attended RI scorecard review on 20 April. Contributed detailed analysis of safeguarding themes. Olivia noted excellent strategic thinking." },
+      { id: "dpa_r5", title: "Cara Strategic Analysis training", description: "Complete Cara platform deep-dive: safeguarding scan, succession, oversight generator. Produce one strategic analysis per month.", domain: "learning_and_professional_development", target_date: "2026-06-01", completed: false },
     ],
     created_by: "staff_darren", created_at: NOW, updated_at: NOW,
   },
   {
     id: "devplan_edward_senior", staff_id: "staff_edward", home_id: "home_oak",
-    title: "Edward Fitzpatrick — Senior RSW Development Plan",
+    title: "Daniel Frost — Senior RSW Development Plan",
     from_stage: "rsw", to_stage: "senior_rsw",
-    status: "active", aria_generated: true,
-    aria_rationale: "ARIA assessment identifies Edward as high-potential for Senior RSW promotion. His strengths in trauma-informed practice and communication are well above RSW benchmark. Risk assessment writing and early leadership exposure are the targeted development areas.",
+    status: "active", cara_generated: true,
+    cara_rationale: "Cara assessment identifies Daniel as high-potential for Senior RSW promotion. His strengths in trauma-informed practice and communication are well above RSW benchmark. Risk assessment writing and early leadership exposure are the targeted development areas.",
     actions: [
       { id: "dpa_e1", title: "Complete Level 3 Diploma Unit 2 — Safeguarding", description: "Submit Level 3 Diploma Unit 2 assessment by June 2026.", domain: "safeguarding_and_child_protection", target_date: "2026-06-30", completed: false },
-      { id: "dpa_e2", title: "Complete 3 written risk assessments with supervision review", description: "Write 3 risk assessments for young people's plans under Darren's supervision. Each to be reviewed and scored.", domain: "risk_management", target_date: "2026-07-01", completed: false },
+      { id: "dpa_e2", title: "Complete 3 written risk assessments with supervision review", description: "Write 3 risk assessments for young people's plans under Olivia's supervision. Each to be reviewed and scored.", domain: "risk_management", target_date: "2026-07-01", completed: false },
       { id: "dpa_e3", title: "Lead one team handover briefing per month", description: "Chair the evening handover briefing monthly — develop confidence in leading practice discussions.", domain: "leadership_and_supervision", target_date: "2026-09-01", completed: false },
-      { id: "dpa_e4", title: "Attend trauma-informed practice refresher workshop", description: "Complete Acacia Therapy Homes TIP refresher (online, 4 hours). Produce a reflective account.", domain: "trauma_informed_practice", target_date: "2026-05-31", completed: true, completed_at: "2026-04-10T11:00:00Z", evidence_notes: "Workshop completed. Reflective account submitted and approved by Ryan." },
+      { id: "dpa_e4", title: "Attend trauma-informed practice refresher workshop", description: "Complete Avisaar Childrens Care Ltd TIP refresher (online, 4 hours). Produce a reflective account.", domain: "trauma_informed_practice", target_date: "2026-05-31", completed: true, completed_at: "2026-04-10T11:00:00Z", evidence_notes: "Workshop completed. Reflective account submitted and approved by Marcus." },
     ],
     created_by: "staff_darren", created_at: NOW, updated_at: NOW,
   },
@@ -4159,7 +4859,7 @@ store.practiceObservations = [
     observer_id: "staff_ryan", observation_date: "2026-04-10",
     context: "Evening keywork session with Alex W",
     domains_observed: ["therapeutic_relationships", "communication_and_recording", "safeguarding_and_child_protection"],
-    narrative: "Edward facilitated a structured keywork session with Alex covering identity and self-esteem. His approach was warm, unhurried, and consistently trauma-informed. He followed Alex's lead and demonstrated excellent active listening. Recording in the keywork log was detailed and captured Alex's voice authentically.",
+    narrative: "Daniel facilitated a structured keywork session with Alex covering identity and self-esteem. His approach was warm, unhurried, and consistently trauma-informed. He followed Alex's lead and demonstrated excellent active listening. Recording in the keywork log was detailed and captured Alex's voice authentically.",
     strengths_noted: ["Child-led approach throughout", "Accurate and detailed recording", "Seamless safeguarding check-in"],
     areas_for_development: ["Could be more confident challenging avoidance — gently persisted but could go further"],
     outcome: "outstanding",
@@ -4170,7 +4870,7 @@ store.practiceObservations = [
     ],
     linked_development_plan_id: "devplan_edward_senior",
     signed_off_by_staff: true, signed_off_at: "2026-04-11T09:00:00Z",
-    aria_summary: "Edward's observed practice in this keywork session meets the standard expected at Senior RSW level. ARIA recommends this observation is used as positive evidence in his promotion case.",
+    cara_summary: "Daniel's observed practice in this keywork session meets the standard expected at Senior RSW level. Cara recommends this observation is used as positive evidence in his promotion case.",
     created_at: NOW, updated_at: NOW,
   },
   {
@@ -4178,7 +4878,7 @@ store.practiceObservations = [
     observer_id: "staff_darren", observation_date: "2026-03-22",
     context: "Medication administration — morning round",
     domains_observed: ["statutory_compliance", "communication_and_recording", "self_care_and_resilience"],
-    narrative: "Lackson administered morning medications with confidence and precision. MAR completion was accurate and timely. He communicated clearly with Casey about the medication, explaining its purpose without being patronising. Some minor delay in countersigning the controlled drugs register — flagged as learning point.",
+    narrative: "Samuel administered morning medications with confidence and precision. MAR completion was accurate and timely. He communicated clearly with Casey about the medication, explaining its purpose without being patronising. Some minor delay in countersigning the controlled drugs register — flagged as learning point.",
     strengths_noted: ["Accurate MAR completion", "Clear communication with young person", "Calm and consistent manner"],
     areas_for_development: ["CD register countersigning to be done immediately — not at end of round"],
     outcome: "meets_standard",
@@ -4187,7 +4887,7 @@ store.practiceObservations = [
       { domain: "communication_and_recording", delta: 0 },
     ],
     signed_off_by_staff: true, signed_off_at: "2026-03-22T14:00:00Z",
-    aria_summary: "Lackson meets medication administration standards. The CD register timing issue is a minor procedural point, not a competency concern. Overall performance is solid.",
+    cara_summary: "Samuel meets medication administration standards. The CD register timing issue is a minor procedural point, not a competency concern. Overall performance is solid.",
     created_at: NOW, updated_at: NOW,
   },
 ];
@@ -4210,11 +4910,11 @@ store.appraisals = [
       learning_and_professional_development: 3,
       equality_diversity_inclusion: 4,
     },
-    key_achievements: "Led the introduction of the ARIA Key Work builder for all YP. Successfully managed two complex safeguarding referrals independently. Completed RI scorecard shadowing.",
-    areas_for_improvement: "Level 5 Diploma completion — 60% remaining. ARIA strategic use needs to increase to monthly minimum.",
+    key_achievements: "Led the introduction of the Cara Key Work builder for all YP. Successfully managed two complex safeguarding referrals independently. Completed RI scorecard shadowing.",
+    areas_for_improvement: "Level 5 Diploma completion — 60% remaining. Cara strategic use needs to increase to monthly minimum.",
     objectives_next_period: "Complete Level 5 Diploma. Lead 3 RI Challenge Log responses. Take lead on Reg 45 evidence collation.",
     linked_development_plan_id: "devplan_ryan_rm",
-    aria_insights: "Ryan's appraisal scores are consistent with a high-performing Deputy Manager with strong RM potential. ARIA recommends structured succession exposure in the next 12 months.",
+    cara_insights: "Marcus's appraisal scores are consistent with a high-performing Deputy Manager with strong RM potential. Cara recommends structured succession exposure in the next 12 months.",
     signed_by_staff: true, signed_at: "2026-03-17T10:00:00Z",
     next_review_date: "2027-03-15",
     created_at: NOW, updated_at: NOW,
@@ -4239,7 +4939,7 @@ store.appraisals = [
     areas_for_improvement: "Risk assessment writing — needs development. Level 3 Diploma to accelerate.",
     objectives_next_period: "Complete 3 supervised risk assessments. Submit Level 3 Unit 2 by June 2026.",
     linked_development_plan_id: "devplan_edward_senior",
-    aria_insights: "Edward passed probation with commendation on therapeutic practice. ARIA identifies Senior RSW readiness trajectory of 4-6 months with focused risk management development.",
+    cara_insights: "Daniel passed probation with commendation on therapeutic practice. Cara identifies Senior RSW readiness trajectory of 4-6 months with focused risk management development.",
     signed_by_staff: true, signed_at: "2026-03-03T09:00:00Z",
     next_review_date: "2026-09-01",
     created_at: NOW, updated_at: NOW,
@@ -4274,7 +4974,7 @@ store.appraisals = [
     key_achievements: "Outstanding therapeutic relationship with all three young people. Led a successful integration support plan for Casey. Demonstrated exceptional cultural sensitivity in family work.",
     areas_for_improvement: "Recording quality — needs to be more analytical. Leadership shadowing opportunities to be increased for Deputy readiness.",
     objectives_next_period: "Complete 4 shift lead shadowing sessions. Submit reflective piece on leadership. Achieve Level 3 Diploma Unit 3 by August 2026.",
-    aria_insights: "Lackson's EDI and therapeutic relationship scores are the highest in the team. ARIA identifies Deputy Manager readiness potential within 6-9 months with structured leadership exposure.",
+    cara_insights: "Samuel's EDI and therapeutic relationship scores are the highest in the team. Cara identifies Deputy Manager readiness potential within 6-9 months with structured leadership exposure.",
     signed_by_staff: true, signed_at: "2026-02-22T11:00:00Z",
     next_review_date: "2027-02-20",
     created_at: NOW, updated_at: NOW,
@@ -4299,7 +4999,7 @@ store.appraisals = [
     key_achievements: "Led the Reg 45 evidence collation for Q4 2025 — resulting in the strongest submission in 2 years. Completed SEND specialist pathway qualification. Mentored two new RSWs.",
     areas_for_improvement: "Work–life balance monitoring — tendency to take on too many additional responsibilities. Delegate more to developing staff.",
     objectives_next_period: "Lead Reg 45 Q1 2026 submission. Complete coaching qualification module. Take 3 days' AL in next quarter (overdue).",
-    aria_insights: "Chervelle is the strongest all-round practitioner in the team. ARIA recommends she be the RI evidence quality lead for the next inspection cycle. Outstanding across all statutory compliance domains.",
+    cara_insights: "Naomi is the strongest all-round practitioner in the team. Cara recommends she be the RI evidence quality lead for the next inspection cycle. Outstanding across all statutory compliance domains.",
     signed_by_staff: true, signed_at: "2026-01-17T14:00:00Z",
     next_review_date: "2026-07-15",
     created_at: NOW, updated_at: NOW,
@@ -4357,7 +5057,7 @@ store.successionPlans = [
     candidates: [
       { staff_id: "staff_ryan", readiness_score: 74, ready_now: false, estimated_ready_date: "2027-03-01", development_plan_id: "devplan_ryan_rm", notes: "Primary succession candidate. On track with RM readiness plan." },
     ],
-    aria_narrative: "Oak House has one clear succession candidate for the Registered Manager role: Ryan Forsythe. His current readiness score of 74/100 reflects strong operational performance with a Level 5 qualification gap as the primary blocking factor. ARIA projects RM readiness by Q1 2027 subject to development plan milestones being met. No immediate risk to regulatory continuity — recommend activating succession plan review at 6-month mark.",
+    cara_narrative: "Chamberlain House has one clear succession candidate for the Registered Manager role: Marcus Bell. His current readiness score of 74/100 reflects strong operational performance with a Level 5 qualification gap as the primary blocking factor. Cara projects RM readiness by Q1 2027 subject to development plan milestones being met. No immediate risk to regulatory continuity — recommend activating succession plan review at 6-month mark.",
     review_date: "2026-10-01",
     created_by: "staff_darren", created_at: NOW, updated_at: NOW,
   },
@@ -4369,7 +5069,7 @@ store.successionPlans = [
       { staff_id: "staff_edward", readiness_score: 62, ready_now: false, estimated_ready_date: "2026-12-01", development_plan_id: "devplan_edward_senior", notes: "Strong TI practice. Risk management development needed before Deputy consideration." },
       { staff_id: "staff_lackson", readiness_score: 68, ready_now: false, estimated_ready_date: "2026-11-01", notes: "EDI and therapeutic relationship strengths. Leadership exposure programme to be activated." },
     ],
-    aria_narrative: "Two viable internal candidates exist for Deputy Manager succession: Edward Fitzpatrick and Lackson Phiri. Lackson holds a marginally higher readiness score. Both require 6-9 months of structured development. ARIA recommends running both on parallel leadership development tracks and conducting a formal comparison at Q3 2026.",
+    cara_narrative: "Two viable internal candidates exist for Deputy Manager succession: Daniel Frost and Samuel Boateng. Samuel holds a marginally higher readiness score. Both require 6-9 months of structured development. Cara recommends running both on parallel leadership development tracks and conducting a formal comparison at Q3 2026.",
     review_date: "2026-07-01",
     created_by: "staff_darren", created_at: NOW, updated_at: NOW,
   },
@@ -4391,7 +5091,7 @@ store.inductionRecords = [
       { id: "ii_d6", title: "Regulation 44 awareness", required_by_day: 28, status: "completed", completed_at: "2025-02-10T11:00:00Z", completed_by: "staff_darren" },
       { id: "ii_d7", title: "Level 3 Diploma enrolment", required_by_day: 90, status: "completed", completed_at: "2025-03-30T09:00:00Z", completed_by: "staff_diane" },
     ],
-    notes: "Diane completed induction smoothly. Probation passed March 2026.",
+    notes: "Maria completed induction smoothly. Probation passed March 2026.",
     created_at: NOW, updated_at: NOW,
   },
   {
@@ -4408,7 +5108,7 @@ store.inductionRecords = [
       { id: "ii_a6", title: "Regulation 44 awareness", required_by_day: 28, status: "completed", completed_at: "2025-03-25T11:00:00Z", completed_by: "staff_darren" },
       { id: "ii_a7", title: "Level 3 Diploma enrolment", required_by_day: 90, status: "not_started" },
     ],
-    notes: "Alex (Bennett) progressing well. Level 3 enrolment overdue — chase at next supervision.",
+    notes: "Alex (Walker) progressing well. Level 3 enrolment overdue — chase at next supervision.",
     created_at: NOW, updated_at: NOW,
   },
 ];
@@ -4474,7 +5174,7 @@ store.outcomeTargets = [
   // Jordan — 5 targets
   { ...outBase, id: "ot_007", child_id: "yp_jordan", domain: "education", target_description: "Achieve expected progress in English and Maths at Highfields Academy", success_criteria: "End of year report shows at least 'expected progress' in both subjects", baseline_rating: 3 as const, current_rating: 4 as const, target_rating: 5 as const, direction: "improving" as const, status: "active" as const, review_date: daysFromNow(30), set_by: "staff_anna", set_date: daysFromNow(-80), yp_voice: "I'm doing well in maths. English is harder but I'm trying.", notes: "PEP meeting confirmed good progress. Reading age up 6 months.", evidence_notes: "PEP report on file", created_at: outNow, updated_at: outNow },
   { ...outBase, id: "ot_008", child_id: "yp_jordan", domain: "health", target_description: "Maintain healthy eating and physical activity routine", success_criteria: "Participation in 3+ physical activities per week and balanced diet", baseline_rating: 4 as const, current_rating: 4 as const, target_rating: 5 as const, direction: "stable" as const, status: "active" as const, review_date: daysFromNow(30), set_by: "staff_anna", set_date: daysFromNow(-60), yp_voice: "I love football. Can we get more sessions?", notes: "Football Mon/Wed, swimming Saturdays. Eating well.", evidence_notes: null, created_at: outNow, updated_at: outNow },
-  { ...outBase, id: "ot_009", child_id: "yp_jordan", domain: "emotional_wellbeing", target_description: "Feel settled and safe at Oak House", success_criteria: "Express feeling safe and happy in keywork sessions consistently", baseline_rating: 3 as const, current_rating: 4 as const, target_rating: 5 as const, direction: "improving" as const, status: "active" as const, review_date: daysFromNow(21), set_by: "staff_anna", set_date: daysFromNow(-45), yp_voice: "I like it here. The staff are nice. I feel safe.", notes: "Very settled. No incidents this month. Positive keywork engagement.", evidence_notes: null, created_at: outNow, updated_at: outNow },
+  { ...outBase, id: "ot_009", child_id: "yp_jordan", domain: "emotional_wellbeing", target_description: "Feel settled and safe at Chamberlain House", success_criteria: "Express feeling safe and happy in keywork sessions consistently", baseline_rating: 3 as const, current_rating: 4 as const, target_rating: 5 as const, direction: "improving" as const, status: "active" as const, review_date: daysFromNow(21), set_by: "staff_anna", set_date: daysFromNow(-45), yp_voice: "I like it here. The staff are nice. I feel safe.", notes: "Very settled. No incidents this month. Positive keywork engagement.", evidence_notes: null, created_at: outNow, updated_at: outNow },
   { ...outBase, id: "ot_010", child_id: "yp_jordan", domain: "independence", target_description: "Develop age-appropriate independence skills — cooking and laundry", success_criteria: "Prepare a simple meal independently and manage own laundry weekly", baseline_rating: 2 as const, current_rating: 3 as const, target_rating: 4 as const, direction: "improving" as const, status: "active" as const, review_date: daysFromNow(14), set_by: "staff_anna", set_date: daysFromNow(-40), yp_voice: "I made pasta last week! It was actually good.", notes: "Can make 3 simple meals. Does own laundry with prompting.", evidence_notes: null, created_at: outNow, updated_at: outNow },
   { ...outBase, id: "ot_011", child_id: "yp_jordan", domain: "family_social", target_description: "Maintain positive contact with family and develop peer friendships", success_criteria: "Regular family contact without distress; at least 2 peer social activities per month", baseline_rating: 3 as const, current_rating: 4 as const, target_rating: 5 as const, direction: "improving" as const, status: "active" as const, review_date: daysFromNow(21), set_by: "staff_anna", set_date: daysFromNow(-45), yp_voice: "I like seeing mum at the weekend. I've made friends at football.", notes: "Family contact consistently positive. 2 friends from football team.", evidence_notes: null, created_at: outNow, updated_at: outNow },
   // Casey — 5 targets
@@ -4539,7 +5239,7 @@ store.reg44VisitReports = [
       "One staff supervision session was completed 3 days late — while content was thorough, the delay means it fell outside the 6-weekly frequency requirement",
     ],
     recommendations: [
-      { id: "rec44_2a", recommendation: "Review supervision scheduling to build in buffer time. Consider a tracker that alerts the manager 1 week before supervision is due.", priority: "medium", rm_response: "Cornerstone supervision tracker now set to alert 7 days before due date. Deputy to cover if RM unavailable. No supervisions will be more than 1 day late going forward.", status: "completed", evidence_notes: "Tracker screenshot uploaded. Deputy coverage confirmed in team minutes.", completed_at: r44d(-30) },
+      { id: "rec44_2a", recommendation: "Review supervision scheduling to build in buffer time. Consider a tracker that alerts the manager 1 week before supervision is due.", priority: "medium", rm_response: "Cara supervision tracker now set to alert 7 days before due date. Deputy to cover if RM unavailable. No supervisions will be more than 1 day late going forward.", status: "completed", evidence_notes: "Tracker screenshot uploaded. Deputy coverage confirmed in team minutes.", completed_at: r44d(-30) },
       { id: "rec44_2b", recommendation: "Ensure Casey is spoken to at the next visit — visitor to consider scheduling an additional brief visit if Casey is unavailable again.", priority: "medium", rm_response: "Noted. Casey's school schedule shared with visitor to support planning. Casey confirmed she is happy to speak at next visit.", status: "completed", evidence_notes: null, completed_at: r44d(-8) },
     ],
     previous_actions_status: "All previous actions closed",
@@ -4586,7 +5286,7 @@ store.reg44VisitReports = [
     ],
     recommendations: [
       { id: "rec44_4a", recommendation: "Review the notification process to identify why the delay occurred. Implement a checklist for notifiable events that includes immediate notification as step one, before any other actions.", priority: "high", rm_response: "Root cause identified — RM was on leave and deputy was unsure of the classification. Notifiable events decision tree created and laminated for office. All senior staff briefed. Deputy completed notification training refresher.", status: "completed", evidence_notes: "Decision tree photographed and shared. Training attendance log.", completed_at: r44d(-90) },
-      { id: "rec44_4b", recommendation: "Display the current staffing plan in the staff office and ensure it is updated whenever changes occur. All staff should know where to find it.", priority: "medium", rm_response: "Staffing plan now displayed in staff office (laminated, on noticeboard). Updated version uploaded to Cornerstone. All staff informed at team meeting.", status: "completed", evidence_notes: "Photo of noticeboard. Team meeting minutes.", completed_at: r44d(-92) },
+      { id: "rec44_4b", recommendation: "Display the current staffing plan in the staff office and ensure it is updated whenever changes occur. All staff should know where to find it.", priority: "medium", rm_response: "Staffing plan now displayed in staff office (laminated, on noticeboard). Updated version uploaded to Cara. All staff informed at team meeting.", status: "completed", evidence_notes: "Photo of noticeboard. Team meeting minutes.", completed_at: r44d(-92) },
       { id: "rec44_4c", recommendation: "Consider adding notification timescales to the staff induction pack so all staff (including agency) understand the urgency requirements.", priority: "low", rm_response: "Induction pack updated to include notification timescales and decision tree. Agency staff receive a summary card on arrival.", status: "completed", evidence_notes: "Updated induction pack PDF uploaded.", completed_at: r44d(-85) },
       { id: "rec44_4d", recommendation: "Review whether the activities programme is being consistently recorded in daily logs — two activity sessions were referenced by children but not recorded in the log.", priority: "low", rm_response: "Acknowledged. Staff reminded to log all structured activities. Daily log template updated to include a specific activities section to prompt recording.", status: "completed", evidence_notes: null, completed_at: r44d(-88) },
     ],
@@ -4921,15 +5621,15 @@ store.riskAssessments = [
 store.lacReviews = [
   {
     id: "lac_001", child_id: "yp_alex", date: daysFromNow(-30), review_type: "subsequent",
-    iro: "Sarah Mitchell", venue: "Oak House — Quiet Room",
+    iro: "Sarah Mitchell", venue: "Chamberlain House — Quiet Room",
     attendees: [
-      { name: "Sarah Mitchell", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
+      { name: "Sarah Mitchell", role: "IRO" }, { name: "Olivia Hayes", role: "Registered Manager" },
       { name: "Lisa Chen", role: "Social Worker" }, { name: "Alex", role: "Young Person" },
     ],
     child_participation: "attended",
     child_views: "I like it here. I want to stay. I'm doing better at school and I want to go to college next year.",
     key_discussions: ["Education progress and college plans", "Contact with birth family", "Anger management progress", "Pathway planning"],
-    recommendations: ["Continue placement at Oak House", "Support college application", "Maintain CAMHS sessions"],
+    recommendations: ["Continue placement at Chamberlain House", "Support college application", "Maintain CAMHS sessions"],
     outcome: "placement_continues",
     actions_agreed: [
       { action: "Support Alex with college application", owner: "Key worker", due_date: daysFromNow(30), completed: false },
@@ -4942,10 +5642,10 @@ store.lacReviews = [
   },
   {
     id: "lac_002", child_id: "yp_jordan", date: daysFromNow(-45), review_type: "subsequent",
-    iro: "David Wright", venue: "Oak House — Office",
+    iro: "David Wright", venue: "Chamberlain House — Office",
     attendees: [
-      { name: "David Wright", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
-      { name: "Mark Evans", role: "Social Worker" }, { name: "Anna Kovacs", role: "Key Worker" },
+      { name: "David Wright", role: "IRO" }, { name: "Olivia Hayes", role: "Registered Manager" },
+      { name: "Mark Evans", role: "Social Worker" }, { name: "Priya Kovacs", role: "Key Worker" },
     ],
     child_participation: "views_submitted",
     child_views: "I don't want to come to the meeting but I wrote down what I think. I want more contact with mum and I want to stay here.",
@@ -4963,15 +5663,15 @@ store.lacReviews = [
   },
   {
     id: "lac_003", child_id: "yp_casey", date: daysFromNow(-60), review_type: "first_review",
-    iro: "Sarah Mitchell", venue: "Oak House — Living Room",
+    iro: "Sarah Mitchell", venue: "Chamberlain House — Living Room",
     attendees: [
-      { name: "Sarah Mitchell", role: "IRO" }, { name: "Darren Laville", role: "Registered Manager" },
+      { name: "Sarah Mitchell", role: "IRO" }, { name: "Olivia Hayes", role: "Registered Manager" },
       { name: "Priya Sharma", role: "Social Worker" }, { name: "Casey", role: "Young Person" },
-      { name: "Chervelle Duporte", role: "Key Worker" },
+      { name: "Naomi Duporte", role: "Key Worker" },
     ],
     child_participation: "attended",
     child_views: "I feel safe here. The staff listen to me. I want to keep going to the same school. I like my key worker.",
-    key_discussions: ["Settling in at Oak House", "School attendance", "Identity and wellbeing", "CAMHS referral", "Life story work"],
+    key_discussions: ["Settling in at Chamberlain House", "School attendance", "Identity and wellbeing", "CAMHS referral", "Life story work"],
     recommendations: ["Maintain current school placement", "Prioritise CAMHS referral", "Begin life story work when ready", "Explore cultural identity support"],
     outcome: "placement_continues",
     actions_agreed: [
@@ -5030,7 +5730,7 @@ store.behaviourSupportPlans = [
     ],
     staff_guidance: ["Always offer choice rather than demand", "Avoid confrontation in front of peers", "Debrief privately after incidents"],
     restrictive_interventions: [
-      { intervention: "Team Teach standing hold", last_resort: true, authorised_by: "Darren Laville (RM)", conditions: "Only when imminent risk of serious harm to self or others" },
+      { intervention: "Team Teach standing hold", last_resort: true, authorised_by: "Olivia Hayes (RM)", conditions: "Only when imminent risk of serious harm to self or others" },
     ],
     review_history: [
       { date: daysFromNow(-30), reviewed_by: "staff_darren", changes: "Reduced frequency of verbal aggression from daily to weekly", outcome: "Plan continues with updated strategies" },
@@ -5094,7 +5794,7 @@ store.behaviourLog = [
   { ...behBase, id: "beh_004", child_id: "yp_alex", date: daysFromNow(-4), time: "21:45", direction: "concerning" as const, intensity: "high" as const, title: "Property damage in bedroom", antecedent: "Request to turn off gaming console at bedtime", behaviour: "Alex threw controller at wall, cracking plaster. Shouted and kicked door.", consequence: "Staff maintained calm presence. Repair discussed next day.", trigger: "Perceived restriction on gaming", strategy_used: "Low-arousal approach and minimal language", outcome: "Alex eventually settled but refused debrief until morning.", recorded_by: "staff_chervelle" },
   { ...behBase, id: "beh_005", child_id: "yp_alex", date: daysFromNow(-5), time: "14:30", direction: "positive" as const, intensity: "low" as const, title: "Completed full day at school", antecedent: "Key worker preparation talk in morning", behaviour: "Attended all lessons, positive teacher feedback", consequence: "Takeaway Friday earned", trigger: "", strategy_used: "Morning preparation and social story", outcome: "Best school day this term. Alex proud of achievement.", recorded_by: "staff_ryan" },
   { ...behBase, id: "beh_006", child_id: "yp_alex", date: daysFromNow(-6), time: "18:45", direction: "concerning" as const, intensity: "medium" as const, title: "Refused evening meal and became argumentative", antecedent: "Peer made comment about Alex's appearance", behaviour: "Verbal aggression towards peer, refused to eat, went to room", consequence: "Staff offered alternative meal later. 1:1 discussion.", trigger: "Peer comment", strategy_used: "Verbal reassurance and space", outcome: "Alex regulated after 20 minutes. Ate snack later.", recorded_by: "staff_edward" },
-  { ...behBase, id: "beh_007", child_id: "yp_alex", date: daysFromNow(-8), time: "10:30", direction: "positive" as const, intensity: "low" as const, title: "Positive key worker session", antecedent: "Scheduled 1:1 time with Edward", behaviour: "Engaged openly, discussed feelings about court proceedings", consequence: "Alex expressed gratitude for support", trigger: "", strategy_used: "", outcome: "Excellent engagement. Alex identified two coping strategies.", recorded_by: "staff_edward" },
+  { ...behBase, id: "beh_007", child_id: "yp_alex", date: daysFromNow(-8), time: "10:30", direction: "positive" as const, intensity: "low" as const, title: "Positive key worker session", antecedent: "Scheduled 1:1 time with Daniel", behaviour: "Engaged openly, discussed feelings about court proceedings", consequence: "Alex expressed gratitude for support", trigger: "", strategy_used: "", outcome: "Excellent engagement. Alex identified two coping strategies.", recorded_by: "staff_edward" },
   { ...behBase, id: "beh_008", child_id: "yp_alex", date: daysFromNow(-10), time: "20:15", direction: "concerning" as const, intensity: "severe" as const, title: "Self-harm attempt following difficult conversation", antecedent: "Discussion about upcoming court proceedings", behaviour: "Alex attempted to use sharp object. Staff intervened.", consequence: "PI required. Body map completed. Medical attention.", trigger: "Court proceedings anxiety", strategy_used: "Verbal de-escalation attempted but insufficient", outcome: "PI used. Alex assessed by ambulance. Settled with 1:1 support.", recorded_by: "staff_ryan" },
   { ...behBase, id: "beh_009", child_id: "yp_alex", date: daysFromNow(-12), time: "15:00", direction: "positive" as const, intensity: "low" as const, title: "Used grounding technique independently", antecedent: "Started becoming agitated during group activity", behaviour: "Alex recognised escalation and asked to leave. Used 5-4-3-2-1.", consequence: "Staff praised self-awareness", trigger: "", strategy_used: "Self-initiated grounding technique", outcome: "Excellent self-regulation. Returned to group after 10 minutes.", recorded_by: "staff_anna" },
   { ...behBase, id: "beh_010", child_id: "yp_alex", date: daysFromNow(-14), time: "22:00", direction: "concerning" as const, intensity: "medium" as const, title: "Late evening agitation and verbal threats", antecedent: "Peer conflict earlier unresolved", behaviour: "Pacing corridor, making verbal threats towards peer's bedroom door", consequence: "Staff separated YP, offered cooling off walk", trigger: "Unresolved peer conflict", strategy_used: "Physical separation and offered walk", outcome: "Alex calmed after walk with staff. Agreed to debrief in morning.", recorded_by: "staff_edward" },
@@ -5110,7 +5810,7 @@ store.behaviourLog = [
   { ...behBase, id: "beh_018", child_id: "yp_jordan", date: daysFromNow(-7), time: "08:30", direction: "positive" as const, intensity: "low" as const, title: "Independent morning routine without prompts", antecedent: "Established routine", behaviour: "Shower, breakfast, school prep all completed independently", consequence: "Earned cinema trip points", trigger: "", strategy_used: "", outcome: "Third consecutive independent morning. Excellent progress.", recorded_by: "staff_ryan" },
   { ...behBase, id: "beh_019", child_id: "yp_jordan", date: daysFromNow(-9), time: "16:30", direction: "positive" as const, intensity: "low" as const, title: "Managed frustration during homework", antecedent: "Difficult maths problem", behaviour: "Asked for help calmly instead of giving up", consequence: "Praise for communication", trigger: "", strategy_used: "Self-regulation — asking for help", outcome: "Completed homework. Jordan recognised own progress.", recorded_by: "staff_anna" },
   // Casey — mostly positive, very few concerning
-  { ...behBase, id: "beh_020", child_id: "yp_casey", date: daysFromNow(-1), time: "15:30", direction: "concerning" as const, intensity: "medium" as const, title: "Distressed after phone call from mother", antecedent: "Unplanned phone call from mum", behaviour: "Crying, refusing to speak, withdrew to room", consequence: "1:1 support from Chervelle", trigger: "Family contact", strategy_used: "Active listening and grounding", outcome: "Casey settled after 20 minutes. Reviewed contact agreement.", recorded_by: "staff_chervelle" },
+  { ...behBase, id: "beh_020", child_id: "yp_casey", date: daysFromNow(-1), time: "15:30", direction: "concerning" as const, intensity: "medium" as const, title: "Distressed after phone call from mother", antecedent: "Unplanned phone call from mum", behaviour: "Crying, refusing to speak, withdrew to room", consequence: "1:1 support from Naomi", trigger: "Family contact", strategy_used: "Active listening and grounding", outcome: "Casey settled after 20 minutes. Reviewed contact agreement.", recorded_by: "staff_chervelle" },
   { ...behBase, id: "beh_021", child_id: "yp_casey", date: daysFromNow(-2), time: "11:00", direction: "positive" as const, intensity: "low" as const, title: "Creative writing session — excellent work", antecedent: "Scheduled education time", behaviour: "Produced creative story, shared with group", consequence: "Displayed on notice board with permission", trigger: "", strategy_used: "", outcome: "Casey proud of work. Growing confidence in literacy.", recorded_by: "staff_anna" },
   { ...behBase, id: "beh_022", child_id: "yp_casey", date: daysFromNow(-4), time: "09:00", direction: "positive" as const, intensity: "low" as const, title: "Took morning medication willingly", antecedent: "Staff offered choice of timing", behaviour: "Accepted medication with no refusal", consequence: "Praise for cooperation", trigger: "", strategy_used: "Offering choice and control", outcome: "Three consecutive days of willing medication. Progress noted.", recorded_by: "staff_darren" },
   { ...behBase, id: "beh_023", child_id: "yp_casey", date: daysFromNow(-6), time: "14:00", direction: "positive" as const, intensity: "low" as const, title: "Positive CAMHS session", antecedent: "Scheduled therapy appointment", behaviour: "Engaged openly with therapist", consequence: "Therapist reported good progress", trigger: "", strategy_used: "", outcome: "Casey discussed trauma memories safely. Big step.", recorded_by: "staff_chervelle" },
@@ -5624,7 +6324,7 @@ store.complaintOutcomeRecords = [
 
 store.qaAuditRecords = [
   { id: "qa_001", title: "Medication Management Audit", date: daysFromNow(-60), auditor: "staff_darren", scope: "medication", overall_rating: "excellent" as const, score: 4, findings: ["All MAR records complete and witnessed", "Stock reconciliation up to date"], strengths: ["Consistent double-witness process", "Timely PRN documentation"], areas_for_improvement: ["Storage temperature log gap on 2 days"], actions: [{ action: "Implement daily temperature check reminder", owner: "staff_anna", deadline: daysFromNow(-30), status: "completed" as const }, { action: "Laminate temperature log sheet for fridge", owner: "staff_ryan", deadline: daysFromNow(-30), status: "completed" as const }], notes: "" },
-  { id: "qa_002", title: "Safeguarding Practice Audit", date: daysFromNow(-45), auditor: "staff_darren", scope: "safeguarding", overall_rating: "good" as const, score: 3, findings: ["DBS tracker current for all staff", "Safeguarding referrals timely"], strengths: ["Strong multi-agency communication", "Children know how to raise concerns"], areas_for_improvement: ["Risk assessment template needs updating", "Body map training due for 2 staff"], actions: [{ action: "Update risk assessment template", owner: "staff_darren", deadline: daysFromNow(-15), status: "completed" as const }, { action: "Book body map training for Anna and Lackson", owner: "staff_ryan", deadline: daysFromNow(-10), status: "completed" as const }, { action: "Review safeguarding policy cross-references", owner: "staff_darren", deadline: daysFromNow(-5), status: "overdue" as const }], notes: "" },
+  { id: "qa_002", title: "Safeguarding Practice Audit", date: daysFromNow(-45), auditor: "staff_darren", scope: "safeguarding", overall_rating: "good" as const, score: 3, findings: ["DBS tracker current for all staff", "Safeguarding referrals timely"], strengths: ["Strong multi-agency communication", "Children know how to raise concerns"], areas_for_improvement: ["Risk assessment template needs updating", "Body map training due for 2 staff"], actions: [{ action: "Update risk assessment template", owner: "staff_darren", deadline: daysFromNow(-15), status: "completed" as const }, { action: "Book body map training for Priya and Samuel", owner: "staff_ryan", deadline: daysFromNow(-10), status: "completed" as const }, { action: "Review safeguarding policy cross-references", owner: "staff_darren", deadline: daysFromNow(-5), status: "overdue" as const }], notes: "" },
   { id: "qa_003", title: "Daily Recording Quality Audit", date: daysFromNow(-30), auditor: "staff_darren", scope: "recording", overall_rating: "requires_improvement" as const, score: 2, findings: ["Missing reflective analysis in 40% of entries", "Timestamp gaps on evening records"], strengths: ["Good factual recording of events"], areas_for_improvement: ["Reflective practice training needed", "Evening handover recording protocol", "Child voice not consistently captured", "Timestamps missing on 6 entries"], actions: [{ action: "Deliver reflective recording workshop", owner: "staff_darren", deadline: daysFromNow(-10), status: "completed" as const }, { action: "Create evening recording template", owner: "staff_ryan", deadline: daysFromNow(-5), status: "in_progress" as const }, { action: "Audit child voice inclusion monthly", owner: "staff_anna", deadline: daysFromNow(10), status: "pending" as const }, { action: "Implement timestamp auto-fill on mobile app", owner: "staff_darren", deadline: daysFromNow(-7), status: "overdue" as const }], notes: "" },
   { id: "qa_004", title: "Health & Safety Audit", date: daysFromNow(-20), auditor: "staff_ryan", scope: "health_safety", overall_rating: "excellent" as const, score: 4, findings: ["All areas clean and well-maintained", "Fire exits clear"], strengths: ["Excellent premises condition", "Regular deep cleaning schedule", "COSHH records up to date"], areas_for_improvement: ["Garden shed needs new lock"], actions: [{ action: "Replace garden shed lock", owner: "staff_edward", deadline: daysFromNow(-5), status: "completed" as const }, { action: "Order replacement first aid supplies", owner: "staff_anna", deadline: daysFromNow(-3), status: "completed" as const }], notes: "" },
   { id: "qa_005", title: "Care Planning Audit", date: daysFromNow(-10), auditor: "staff_darren", scope: "care_planning", overall_rating: "good" as const, score: 3, findings: ["All children have current care plans", "Placement plans reviewed on time"], strengths: ["Child participation in care plan reviews", "Multi-agency input evidenced"], areas_for_improvement: ["Pathway plan for Jordan needs update"], actions: [{ action: "Update Jordan pathway plan with leaving care PA", owner: "staff_darren", deadline: daysFromNow(14), status: "pending" as const }, { action: "Schedule Casey care plan review", owner: "staff_anna", deadline: daysFromNow(7), status: "pending" as const }, { action: "File Alex annual review minutes", owner: "staff_ryan", deadline: daysFromNow(-2), status: "completed" as const }], notes: "" },
@@ -5683,9 +6383,9 @@ store.staffWellbeingRecords = [
     stressors: ["Long shifts this week", "Missing episode paperwork backlog"],
     positives: ["Good relationship with Alex", "Team support"],
     support_needed: "Help catching up on recording",
-    action_agreed: "Ryan to cover one shift next week to allow admin catch-up",
+    action_agreed: "Marcus to cover one shift next week to allow admin catch-up",
     follow_up_date: daysFromNow(25), conducted_by: "staff_ryan",
-    confidential: false, notes: "Edward generally positive. Enjoys the work but finding paperwork challenging.",
+    confidential: false, notes: "Daniel generally positive. Enjoys the work but finding paperwork challenging.",
   },
   {
     id: "swbr_002", staff_id: "staff_anna", date: daysFromNow(-10),
@@ -5694,9 +6394,9 @@ store.staffWellbeingRecords = [
     stressors: ["Witnessing physical intervention with Alex", "Worry about doing the right thing"],
     positives: ["Felt supported by team after incident", "Debrief was helpful"],
     support_needed: "Refresher on Team Teach techniques",
-    action_agreed: "Book onto next Team Teach refresher. Darren to provide 1:1 reflective session.",
+    action_agreed: "Book onto next Team Teach refresher. Olivia to provide 1:1 reflective session.",
     follow_up_date: daysFromNow(4), conducted_by: "staff_darren",
-    confidential: false, notes: "Anna shaken after witnessing PI. No signs of burnout but needs reassurance.",
+    confidential: false, notes: "Priya shaken after witnessing PI. No signs of burnout but needs reassurance.",
   },
   {
     id: "swbr_003", staff_id: "staff_diane", date: daysFromNow(-7),
@@ -5705,9 +6405,9 @@ store.staffWellbeingRecords = [
     stressors: ["Returning after sickness", "Catching up with changes"],
     positives: ["Glad to be back", "Children happy to see her"],
     support_needed: "Briefing on any changes during absence",
-    action_agreed: "Ryan to provide catch-up briefing on shift. Phased return first two days.",
+    action_agreed: "Marcus to provide catch-up briefing on shift. Phased return first two days.",
     follow_up_date: daysFromNow(7), conducted_by: "staff_ryan",
-    confidential: false, notes: "Diane returning from stomach bug. Phased return agreed.",
+    confidential: false, notes: "Maria returning from stomach bug. Phased return agreed.",
   },
   {
     id: "swbr_004", staff_id: "staff_lackson", date: daysFromNow(-14),
@@ -5718,7 +6418,7 @@ store.staffWellbeingRecords = [
     support_needed: "None at present",
     action_agreed: "Continue as is. Review shift pattern if tiredness persists.",
     follow_up_date: daysFromNow(16), conducted_by: "staff_darren",
-    confidential: false, notes: "Lackson thriving. Very positive about the home and his role.",
+    confidential: false, notes: "Samuel thriving. Very positive about the home and his role.",
   },
   {
     id: "swbr_005", staff_id: "staff_chervelle", date: daysFromNow(-5),
@@ -5727,9 +6427,9 @@ store.staffWellbeingRecords = [
     stressors: ["Casey's emotional dysregulation can be draining", "Wants more training on trauma-informed care"],
     positives: ["Strong bond with Casey", "Feels valued by management"],
     support_needed: "Trauma-informed care training",
-    action_agreed: "Darren to source TIC training. Chervelle to attend within 8 weeks.",
+    action_agreed: "Olivia to source TIC training. Naomi to attend within 8 weeks.",
     follow_up_date: daysFromNow(23), conducted_by: "staff_darren",
-    confidential: false, notes: "Chervelle is a dedicated worker. Trauma-informed training will strengthen her practice.",
+    confidential: false, notes: "Naomi is a dedicated worker. Trauma-informed training will strengthen her practice.",
   },
   {
     id: "swbr_006", staff_id: "staff_mirela", date: daysFromNow(-20),
@@ -5738,9 +6438,9 @@ store.staffWellbeingRecords = [
     stressors: ["Language barrier in documentation", "Feeling isolated at times", "Unsure about probation expectations"],
     positives: ["Children like her", "Willing to learn"],
     support_needed: "Mentoring from experienced staff member. English support for recording.",
-    action_agreed: "Anna assigned as mentor. Darren to review probation objectives with Mirela. Recording templates provided.",
+    action_agreed: "Priya assigned as mentor. Olivia to review probation objectives with Elena. Recording templates provided.",
     follow_up_date: daysFromNow(-6), conducted_by: "staff_darren",
-    confidential: false, notes: "Mirela struggling with confidence. Needs structured support during probation.",
+    confidential: false, notes: "Elena struggling with confidence. Needs structured support during probation.",
   },
   {
     id: "swbr_007", staff_id: "staff_alex", date: daysFromNow(-12),
@@ -5749,20 +6449,20 @@ store.staffWellbeingRecords = [
     stressors: ["New to residential care", "Learning curve steep"],
     positives: ["Enthusiastic", "Good rapport with young people"],
     support_needed: "Shadowing opportunities with experienced staff",
-    action_agreed: "Schedule shadowing with Edward and Anna over next fortnight.",
+    action_agreed: "Schedule shadowing with Daniel and Priya over next fortnight.",
     follow_up_date: daysFromNow(2), conducted_by: "staff_ryan",
-    confidential: false, notes: "Alex Bennett settling in well. Needs continued induction support.",
+    confidential: false, notes: "Alex Walker settling in well. Needs continued induction support.",
   },
   {
     id: "swbr_008", staff_id: "staff_ryan", date: daysFromNow(-8),
     type: "monthly_checkin" as const,
     overall_score: 7, workload_score: 6, support_score: 7, moral_score: 8,
-    stressors: ["Workload increasing with deputy responsibilities", "Covering supervisions when Darren unavailable"],
+    stressors: ["Workload increasing with deputy responsibilities", "Covering supervisions when Olivia unavailable"],
     positives: ["Enjoys leadership role", "Good relationship with whole team"],
     support_needed: "Protected admin time",
-    action_agreed: "Darren to ensure Ryan has one protected admin day per fortnight.",
+    action_agreed: "Olivia to ensure Marcus has one protected admin day per fortnight.",
     follow_up_date: daysFromNow(22), conducted_by: "staff_darren",
-    confidential: false, notes: "Ryan managing well but workload needs monitoring as deputy demands increase.",
+    confidential: false, notes: "Marcus managing well but workload needs monitoring as deputy demands increase.",
   },
 ] as StaffWellbeingRecord[];
 
@@ -5790,7 +6490,7 @@ store.peerDynamics = [
     concerns: ["Alex's behaviour escalation triggers Casey's anxiety", "Casey avoids communal areas when Alex is dysregulated", "Power imbalance — Alex older and more physically imposing"],
     strategies: ["Never leave unsupervised together", "Proactive separation during Alex's escalation", "Casey given safe space signal"],
     entries: [
-      { id: "pe_004", date: daysFromNow(-3), type: "incident" as const, description: "Alex slammed door during argument with staff. Casey had panic attack in her room.", staff_witness: "staff_chervelle", intervention_used: "Chervelle supported Casey with grounding techniques. Edward de-escalated Alex separately.", outcome: "Casey settled after 20 mins. Alex apologised later." },
+      { id: "pe_004", date: daysFromNow(-3), type: "incident" as const, description: "Alex slammed door during argument with staff. Casey had panic attack in her room.", staff_witness: "staff_chervelle", intervention_used: "Naomi supported Casey with grounding techniques. Daniel de-escalated Alex separately.", outcome: "Casey settled after 20 mins. Alex apologised later." },
       { id: "pe_005", date: daysFromNow(-15), type: "observation" as const, description: "Casey chose to eat in dining room with Alex present. Conversation was polite. Positive step.", staff_witness: "staff_diane", intervention_used: "", outcome: "Successful shared mealtime. Staff praised both." },
       { id: "pe_006", date: daysFromNow(-25), type: "review" as const, description: "Formal review of Alex-Casey dynamic. Risk assessment updated. Strategies reinforced.", staff_witness: "staff_darren", intervention_used: "Risk assessment reviewed with team.", outcome: "Strategies updated. Team briefed." },
     ],
@@ -5858,7 +6558,7 @@ store.onCallShifts = [
       { datetime: daysFromNow(-3) + "T21:00:00Z", from_contact: "staff_edward", call_type: "advisory", duration_mins: 12, outcome: "Follow-up re: Alex settling. Advice on bedtime supervision.", escalated: false },
     ],
     critical_incidents_handled: 1, routine_calls_handled: 0, advisory_calls_handled: 1,
-    staff_wellbeing_during_on_call: "Stressful evening due to safeguarding disclosure. Darren debriefed with RI next morning.",
+    staff_wellbeing_during_on_call: "Stressful evening due to safeguarding disclosure. Olivia debriefed with RI next morning.",
     feedback_on_arrangements: "System worked well. Escalation was appropriate. RM attended within 25 minutes.",
     review_notes: "Consider adding specific safeguarding on-call protocol.", created_at: daysFromNow(-3) + "T17:00:00Z",
   },
@@ -5891,7 +6591,7 @@ store.onCallShifts = [
     role: "first_line_rm" as const, on_call_staff: "staff_darren", backup_staff: "staff_ryan",
     contact_number: "07700 000001", shift_pattern: "weekend_full" as const,
     calls_received: [
-      { datetime: daysFromNow(-14) + "T18:45:00Z", from_contact: "staff_mirela", call_type: "advisory", duration_mins: 20, outcome: "Mirela unsure about recording process. Guided through template.", escalated: false },
+      { datetime: daysFromNow(-14) + "T18:45:00Z", from_contact: "staff_mirela", call_type: "advisory", duration_mins: 20, outcome: "Elena unsure about recording process. Guided through template.", escalated: false },
     ],
     critical_incidents_handled: 0, routine_calls_handled: 0, advisory_calls_handled: 1,
     staff_wellbeing_during_on_call: "Fine. Quiet weekend apart from one advisory call.",
@@ -6194,14 +6894,14 @@ store.sleepLog = [
 ] as SleepLogEntry[];
 
 // ── Additional Daily Log entries (Reg 36 — Recording quality) ───────────────
-const dlBase = { home_id: "home_oak", created_at: new Date().toISOString(), updated_at: new Date().toISOString(), created_by: "staff_darren", updated_by: "staff_darren", aria_assist_used: false };
+const dlBase = { home_id: "home_oak", created_at: new Date().toISOString(), updated_at: new Date().toISOString(), created_by: "staff_darren", updated_by: "staff_darren", cara_assist_used: false };
 const additionalDailyLogs: DailyLogEntry[] = [
   // Day -2
   { ...dlBase, id: "log_101", child_id: "yp_alex", date: daysFromNow(-2), time: "08:45", entry_type: "general" as const, content: "Alex had a relaxed morning. Good engagement at breakfast. Discussed plans for the day — wants to practice guitar.", mood_score: 7, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_102", child_id: "yp_jordan", date: daysFromNow(-2), time: "09:00", entry_type: "education" as const, content: "Jordan completed maths revision. Good focus for 40 minutes. Positive interaction with tutor.", mood_score: 7, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_103", child_id: "yp_casey", date: daysFromNow(-2), time: "14:00", entry_type: "health" as const, content: "Casey attended CAMHS appointment. Positive session — discussed coping strategies for anxiety.", mood_score: 6, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: true },
   // Day -3
-  { ...dlBase, id: "log_104", child_id: "yp_alex", date: daysFromNow(-3), time: "10:30", entry_type: "activity" as const, content: "Alex went swimming with Edward. Completed 20 lengths — personal best. Very proud.", mood_score: 9, staff_id: "staff_edward", linked_incident_id: null, is_significant: true },
+  { ...dlBase, id: "log_104", child_id: "yp_alex", date: daysFromNow(-3), time: "10:30", entry_type: "activity" as const, content: "Alex went swimming with Daniel. Completed 20 lengths — personal best. Very proud.", mood_score: 9, staff_id: "staff_edward", linked_incident_id: null, is_significant: true },
   { ...dlBase, id: "log_105", child_id: "yp_jordan", date: daysFromNow(-3), time: "16:00", entry_type: "contact" as const, content: "Jordan had scheduled phone call with mum. Call was positive — discussed plans for half-term.", mood_score: 8, staff_id: "staff_lackson", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_106", child_id: "yp_casey", date: daysFromNow(-3), time: "20:00", entry_type: "mood" as const, content: "Casey reported feeling anxious before bed. Used breathing exercises from CAMHS. Settled after 15 minutes.", mood_score: 4, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
   // Day -4
@@ -6223,7 +6923,7 @@ const additionalDailyLogs: DailyLogEntry[] = [
   { ...dlBase, id: "log_118", child_id: "yp_alex", date: daysFromNow(-8), time: "09:00", entry_type: "general" as const, content: "Routine morning. Alex ate breakfast and completed personal care independently.", mood_score: 7, staff_id: "staff_edward", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_119", child_id: "yp_jordan", date: daysFromNow(-9), time: "11:00", entry_type: "education" as const, content: "Jordan attended tuition session. Some difficulty with concentration today.", mood_score: 5, staff_id: "staff_ryan", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_120", child_id: "yp_casey", date: daysFromNow(-10), time: "15:00", entry_type: "contact" as const, content: "Casey had video call with social worker. Discussed placement review.", mood_score: 6, staff_id: "staff_darren", linked_incident_id: null, is_significant: false },
-  { ...dlBase, id: "log_121", child_id: "yp_alex", date: daysFromNow(-11), time: "14:00", entry_type: "activity" as const, content: "Alex went to climbing wall with Lackson. Great engagement and confidence building.", mood_score: 9, staff_id: "staff_lackson", linked_incident_id: null, is_significant: true },
+  { ...dlBase, id: "log_121", child_id: "yp_alex", date: daysFromNow(-11), time: "14:00", entry_type: "activity" as const, content: "Alex went to climbing wall with Samuel. Great engagement and confidence building.", mood_score: 9, staff_id: "staff_lackson", linked_incident_id: null, is_significant: true },
   { ...dlBase, id: "log_122", child_id: "yp_jordan", date: daysFromNow(-12), time: "09:00", entry_type: "general" as const, content: "Jordan had a good morning. Calm and engaged.", mood_score: 7, staff_id: "staff_anna", linked_incident_id: null, is_significant: false },
   { ...dlBase, id: "log_123", child_id: "yp_casey", date: daysFromNow(-13), time: "10:30", entry_type: "health" as const, content: "Casey attended GP appointment. Routine check — no concerns.", mood_score: 6, staff_id: "staff_chervelle", linked_incident_id: null, is_significant: false },
   // Day -10, 21:30 — night welfare log that contradicts the restraint injury recorded earlier the same day (rst_003, 18:30: minor bruise to left forearm). Intentional recording inconsistency for the conflict-detection engine to surface for human reconciliation.
@@ -6231,28 +6931,30 @@ const additionalDailyLogs: DailyLogEntry[] = [
 ];
 store.dailyLog.push(...additionalDailyLogs);
 
-// ── ARIA Practice Intelligence — demo signals (so the dashboard renders cards) ──
-const ariaPracticeSeedAt = new Date().toISOString();
-store.ariaPracticeFlags = [
-  { id: "apf_seed_1", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", flag_type: "activity_over_impact", severity: "medium", title: "Activity recorded, but child impact not yet evidenced", description: "The record shows activity took place but does not evidence what changed in the child's lived experience.", evidence: "completed key work; engaged well; no concerns", recommended_action: "Add what the child said, showed or felt, and what is now different for the child.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_2", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Reassurance language is used without evidence of impact or the child's voice.", evidence: "engaged well; no concerns", recommended_action: "Replace reassurance with specifics: what happened and what the child experienced.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_3", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "care_plan", source_id: null, flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Settled / no concerns recorded without analysis.", evidence: "settled; no concerns", recommended_action: "Record what the child said, showed, feared or avoided.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_4", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: null, flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Compliant / settled recorded without the child's experience.", evidence: "compliant; settled", recommended_action: "Describe the child's lived experience, not adult engagement.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_5", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "care_plan", source_id: null, flag_type: "developmental_gap", severity: "high", title: "Developmental gap detected (stability, belonging, emotional security)", description: "The plan describes domains of childhood that are missing or insufficient.", evidence: "stability; belonging; emotional security", recommended_action: "Add owned plan actions that close each gap and define what will be different for the child.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_6", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "risk_assessment", source_id: null, flag_type: "overstated_protective_factor", severity: "medium", title: "Possible overstated protective factor", description: "Mum attends meetings — needs strengthening into a real protective factor.", evidence: "attends meetings; engages with professionals", recommended_action: "Test what harm it reduces, reliability under stress, and strength for the current risk.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_7", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "safeguarding_concern", source_id: null, flag_type: "safeguarding_threshold", severity: "high", title: "Possible safeguarding threshold concern", description: "Disclosure / harm language that may meet a safeguarding threshold. Manager review advised.", evidence: "disclosed; scared", recommended_action: "Manager to complete a threshold consultation and consider a strategy discussion.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_8", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "key_work", source_id: null, flag_type: "relationship_depth", severity: "low", title: "Relationship at Interaction stage", description: "The record describes contact. ARIA does not assume this is trust; emotional safety is not yet evidenced.", evidence: "Interaction — “I speak with you.”", recommended_action: "Move from contact toward cooperation and notice what the child allows the adult to see.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
-  { id: "apf_seed_9", tenant_id: null, child_id: null, staff_id: "staff_ryan", home_id: "home_oak", source_type: "supervision", source_id: null, flag_type: "staff_wellbeing", severity: "medium", title: "Staff wellbeing signal — offer support", description: "Wellbeing signals are present. Support indicators, not disciplinary evidence.", evidence: "overwhelmed; drained", recommended_action: "Offer reflective supervision and a wellbeing check-in; review workload.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: ariaPracticeSeedAt, resolved_at: null },
+// ── Cara Practice Intelligence — demo signals (so the dashboard renders cards) ──
+const caraPracticeSeedAt = new Date().toISOString();
+store.caraPracticeFlags = [
+  { id: "apf_seed_1", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", flag_type: "activity_over_impact", severity: "medium", title: "Activity recorded, but child impact not yet evidenced", description: "The record shows activity took place but does not evidence what changed in the child's lived experience.", evidence: "completed key work; engaged well; no concerns", recommended_action: "Add what the child said, showed or felt, and what is now different for the child.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_2", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Reassurance language is used without evidence of impact or the child's voice.", evidence: "engaged well; no concerns", recommended_action: "Replace reassurance with specifics: what happened and what the child experienced.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_3", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "care_plan", source_id: null, flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Settled / no concerns recorded without analysis.", evidence: "settled; no concerns", recommended_action: "Record what the child said, showed, feared or avoided.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_4", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: null, flag_type: "vague_recording", severity: "medium", title: "Vague recording — limited child-centred detail", description: "Compliant / settled recorded without the child's experience.", evidence: "compliant; settled", recommended_action: "Describe the child's lived experience, not adult engagement.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_5", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "care_plan", source_id: null, flag_type: "developmental_gap", severity: "high", title: "Developmental gap detected (stability, belonging, emotional security)", description: "The plan describes domains of childhood that are missing or insufficient.", evidence: "stability; belonging; emotional security", recommended_action: "Add owned plan actions that close each gap and define what will be different for the child.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_6", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "risk_assessment", source_id: null, flag_type: "overstated_protective_factor", severity: "medium", title: "Possible overstated protective factor", description: "Mum attends meetings — needs strengthening into a real protective factor.", evidence: "attends meetings; engages with professionals", recommended_action: "Test what harm it reduces, reliability under stress, and strength for the current risk.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_7", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "safeguarding_concern", source_id: null, flag_type: "safeguarding_threshold", severity: "high", title: "Possible safeguarding threshold concern", description: "Disclosure / harm language that may meet a safeguarding threshold. Manager review advised.", evidence: "disclosed; scared", recommended_action: "Manager to complete a threshold consultation and consider a strategy discussion.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_8", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "key_work", source_id: null, flag_type: "relationship_depth", severity: "low", title: "Relationship at Interaction stage", description: "The record describes contact. Cara does not assume this is trust; emotional safety is not yet evidenced.", evidence: "Interaction — “I speak with you.”", recommended_action: "Move from contact toward cooperation and notice what the child allows the adult to see.", requires_manager_review: false, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_9", tenant_id: null, child_id: null, staff_id: "staff_ryan", home_id: "home_oak", source_type: "supervision", source_id: null, flag_type: "staff_wellbeing", severity: "medium", title: "Staff wellbeing signal — offer support", description: "Wellbeing signals are present. Support indicators, not disciplinary evidence.", evidence: "overwhelmed; drained", recommended_action: "Offer reflective supervision and a wellbeing check-in; review workload.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_10", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: null, flag_type: "extra_familial_harm", severity: "high", title: "Possible extra-familial harm — apply the contextual-safeguarding lens", description: "The record mentions risks that may sit in a context beyond the home (peer networks, neighbourhood). Assess and disrupt the context, not the child; survival strategies are constrained choices to understand, not grounds to criminalise. Cara advises; the manager decides on screening or referral.", evidence: "older associates; out of area", recommended_action: "Record where harm is happening (locations, peers, online), consider exploitation screening, and whether the manager should make a contextual or multi-agency referral. Keep child-level data out of context-sharing with non-traditional partners.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
+  { id: "apf_seed_11", tenant_id: null, child_id: "yp_jordan", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: null, flag_type: "nrm_consideration", severity: "high", title: "Consider a National Referral Mechanism (NRM) referral", description: "Possible modern-slavery / trafficking indicators (criminal exploitation, debt). A child who is exploited is a victim, not an offender (Section 45 may apply). No consent is needed to refer a child. The manager / DSL should consider whether an NRM referral is required, alongside the usual safeguarding referrals.", evidence: "county line; owes a debt", recommended_action: "Manager / DSL to consider an NRM referral for suspected modern slavery or trafficking — Cara advises, the manager decides. Recognise the child as a victim and guard against adultification bias.", requires_manager_review: true, requires_ri_review: false, resolved: false, created_at: caraPracticeSeedAt, resolved_at: null },
 ];
-store.ariaThresholdConsultations = [
-  { id: "atc_seed_1", tenant_id: null, child_id: "yp_jordan", concern_type: "safeguarding", source_type: "safeguarding_concern", source_id: null, child_lived_experience: "Jordan describes feeling unsafe and unheard at home.", evidence_and_harm_analysis: "Disclosure of harm; corroborating low mood recorded over two weeks.", family_functioning_parental_capacity: "Manager to complete — parental capacity assessment outstanding.", threshold_and_escalation_analysis: "Concern may meet threshold; structured consultation required.", decision_rationale: "Manager to complete — ARIA does not make the statutory decision.", recommended_next_step: "Complete a threshold consultation and consider a strategy discussion.", reasonable_cause_to_suspect_significant_harm: null, strategy_discussion_recommended: true, lado_consultation_recommended: false, emergency_action_recommended: false, aria_summary: "Possible safeguarding threshold concern — manager review advised.", manager_decision: null, manager_rationale: null, created_by: "staff_darren", created_at: ariaPracticeSeedAt },
+store.caraThresholdConsultations = [
+  { id: "atc_seed_1", tenant_id: null, child_id: "yp_jordan", concern_type: "safeguarding", source_type: "safeguarding_concern", source_id: null, child_lived_experience: "Jordan describes feeling unsafe and unheard at home.", evidence_and_harm_analysis: "Disclosure of harm; corroborating low mood recorded over two weeks.", family_functioning_parental_capacity: "Manager to complete — parental capacity assessment outstanding.", threshold_and_escalation_analysis: "Concern may meet threshold; structured consultation required.", decision_rationale: "Manager to complete — Cara does not make the statutory decision.", recommended_next_step: "Complete a threshold consultation and consider a strategy discussion.", reasonable_cause_to_suspect_significant_harm: null, strategy_discussion_recommended: true, lado_consultation_recommended: false, emergency_action_recommended: false, cara_summary: "Possible safeguarding threshold concern — manager review advised.", manager_decision: null, manager_rationale: null, created_by: "staff_darren", created_at: caraPracticeSeedAt },
 ];
-store.ariaStaffWellbeingSignals = [
-  { id: "aws_seed_1", tenant_id: null, staff_id: "staff_ryan", home_id: "home_oak", signal_type: "burnout", signal_source: "supervision", severity: "medium", evidence: "Reported feeling overwhelmed and emotionally drained over recent shifts.", support_recommendation: "Reflective supervision, wellbeing check-in, and a workload/rota review.", manager_action: null, resolved: false, created_at: ariaPracticeSeedAt },
+store.caraStaffWellbeingSignals = [
+  { id: "aws_seed_1", tenant_id: null, staff_id: "staff_ryan", home_id: "home_oak", signal_type: "burnout", signal_source: "supervision", severity: "medium", evidence: "Reported feeling overwhelmed and emotionally drained over recent shifts.", support_recommendation: "Reflective supervision, wellbeing check-in, and a workload/rota review.", manager_action: null, resolved: false, created_at: caraPracticeSeedAt },
 ];
-store.ariaPracticeAssessments = [
-  { id: "apa_seed_1", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", assessment_type: "practice_quality", status: "open", created_by: "staff_anna", created_at: ariaPracticeSeedAt, updated_at: ariaPracticeSeedAt, developmental_gap_score: 100, child_lived_experience_score: 35, protective_factor_score: 100, relationship_depth_score: 28, safeguarding_threshold_score: 100, supervision_quality_score: 55, workforce_wellbeing_score: 100, overall_practice_quality_score: 55, summary: "Activity recorded without evidencing child impact.", aria_advice: [], aria_flags: [], aria_recommendations: [], aria_questions: [], aria_draft_output: null, reviewer_id: null, reviewed_at: null, manager_decision: null, manager_rationale: null },
-  { id: "apa_seed_2", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "key_work", source_id: null, assessment_type: "practice_quality", status: "open", created_by: "staff_chervelle", created_at: ariaPracticeSeedAt, updated_at: ariaPracticeSeedAt, developmental_gap_score: 78, child_lived_experience_score: 90, protective_factor_score: 100, relationship_depth_score: 64, safeguarding_threshold_score: 100, supervision_quality_score: 72, workforce_wellbeing_score: 100, overall_practice_quality_score: 72, summary: "Strong child-centred record evidencing what changed for the child.", aria_advice: [], aria_flags: [], aria_recommendations: [], aria_questions: [], aria_draft_output: null, reviewer_id: null, reviewed_at: null, manager_decision: null, manager_rationale: null },
+store.caraPracticeAssessments = [
+  { id: "apa_seed_1", tenant_id: null, child_id: "yp_alex", staff_id: null, home_id: "home_oak", source_type: "daily_record", source_id: "log_120", assessment_type: "practice_quality", status: "open", created_by: "staff_anna", created_at: caraPracticeSeedAt, updated_at: caraPracticeSeedAt, developmental_gap_score: 100, child_lived_experience_score: 35, protective_factor_score: 100, relationship_depth_score: 28, safeguarding_threshold_score: 100, supervision_quality_score: 55, workforce_wellbeing_score: 100, overall_practice_quality_score: 55, summary: "Activity recorded without evidencing child impact.", cara_advice: [], cara_flags: [], cara_recommendations: [], cara_questions: [], cara_draft_output: null, reviewer_id: null, reviewed_at: null, manager_decision: null, manager_rationale: null },
+  { id: "apa_seed_2", tenant_id: null, child_id: "yp_casey", staff_id: null, home_id: "home_oak", source_type: "key_work", source_id: null, assessment_type: "practice_quality", status: "open", created_by: "staff_chervelle", created_at: caraPracticeSeedAt, updated_at: caraPracticeSeedAt, developmental_gap_score: 78, child_lived_experience_score: 90, protective_factor_score: 100, relationship_depth_score: 64, safeguarding_threshold_score: 100, supervision_quality_score: 72, workforce_wellbeing_score: 100, overall_practice_quality_score: 72, summary: "Strong child-centred record evidencing what changed for the child.", cara_advice: [], cara_flags: [], cara_recommendations: [], cara_questions: [], cara_draft_output: null, reviewer_id: null, reviewed_at: null, manager_decision: null, manager_rationale: null },
 ];
 
 // ── Outcome Star assessments (seed) ───────────────────────────────────────────
@@ -6571,7 +7273,7 @@ store.selfHarmSafetyPlanRecords = [
     status: "active_preventive" as const,
     co_produced_with: [
       "Alex W",
-      "Edward (key worker)",
+      "Daniel (key worker)",
       "CAMHS practitioner (Dr Olubayo)",
     ],
     warning_signs_external: [
@@ -6599,11 +7301,11 @@ store.selfHarmSafetyPlanRecords = [
     social_distractions: [
       "Playing pool with staff in the games room",
       "Walking the dog at the local park",
-      "Cooking dinner with Edward on shift",
+      "Cooking dinner with Daniel on shift",
     ],
     people_to_contact: [
-      { name: "Edward", relationship: "Key worker", how: "Find on shift or ask any staff to call him" },
-      { name: "Diane", relationship: "Trusted staff member", how: "On shift or via the office phone" },
+      { name: "Daniel", relationship: "Key worker", how: "Find on shift or ask any staff to call him" },
+      { name: "Maria", relationship: "Trusted staff member", how: "On shift or via the office phone" },
       { name: "Auntie Sam", relationship: "Approved family contact", how: "Supervised call arranged through staff" },
     ],
     professional_contacts: [
@@ -6647,7 +7349,7 @@ store.selfHarmSafetyPlanRecords = [
     child_id: "yp_jordan",
     plan_date: daysFromNow(-48),
     status: "not_currently_needed" as const,
-    co_produced_with: ["Jordan M", "Anna (key worker)"],
+    co_produced_with: ["Jordan M", "Priya (key worker)"],
     warning_signs_external: [
       "Becomes quieter than usual and avoids eye contact",
       "Reluctant to go to school in the morning",
@@ -6662,14 +7364,14 @@ store.selfHarmSafetyPlanRecords = [
     internal_coping_strategies: [
       "Going to his room to listen to music until he feels calmer",
       "Kicking a football in the garden to let off steam",
-      "Talking it through with Anna",
+      "Talking it through with Priya",
     ],
     social_distractions: [
       "Football with peers and staff",
       "Playing on the games console in the lounge",
     ],
     people_to_contact: [
-      { name: "Anna", relationship: "Key worker", how: "On shift or ask staff to contact her" },
+      { name: "Priya", relationship: "Key worker", how: "On shift or ask staff to contact her" },
       { name: "Any staff on shift", relationship: "Trusted adults", how: "Approach anyone in the staff team" },
     ],
     professional_contacts: [
@@ -6705,7 +7407,7 @@ store.selfHarmSafetyPlanRecords = [
     status: "active_preventive" as const,
     co_produced_with: [
       "Casey T",
-      "Chervelle (key worker)",
+      "Naomi (key worker)",
       "CAMHS clinician",
     ],
     warning_signs_external: [
@@ -6730,13 +7432,13 @@ store.selfHarmSafetyPlanRecords = [
       "Holding ice cubes as an agreed alternative to self-harm",
     ],
     social_distractions: [
-      "Baking with Chervelle on shift",
+      "Baking with Naomi on shift",
       "Watching a favourite series in the lounge with staff",
       "Caring for the plants in the garden",
     ],
     people_to_contact: [
-      { name: "Chervelle", relationship: "Key worker", how: "On shift or ask staff to call her" },
-      { name: "Ryan", relationship: "Deputy Manager", how: "In the office during the day or on call" },
+      { name: "Naomi", relationship: "Key worker", how: "On shift or ask staff to call her" },
+      { name: "Marcus", relationship: "Deputy Manager", how: "In the office during the day or on call" },
       { name: "Mum", relationship: "Approved family contact", how: "Phone call arranged with staff support" },
     ],
     professional_contacts: [
@@ -6756,7 +7458,7 @@ store.selfHarmSafetyPlanRecords = [
     ],
     reasons_for_hope: [
       "Days are starting to feel 'a bit lighter' since the medication review",
-      "Feels listened to by Chervelle",
+      "Feels listened to by Naomi",
     ],
     child_signed_off: true,
     child_signed_date: daysFromNow(-37),
@@ -6771,7 +7473,7 @@ store.selfHarmSafetyPlanRecords = [
     child_voice:
       "Casey said the ice-cube strategy and her weighted blanket help most. She asked staff not to remove her journal as writing things down 'gets them out of my head'.",
     staff_observation:
-      "Plan co-produced after a period of low mood; Casey engages well with Chervelle. Monthly review is now seven days overdue — CAMHS appointment and key-worker session needed to refresh the plan and confirm medication response.",
+      "Plan co-produced after a period of low mood; Casey engages well with Naomi. Monthly review is now seven days overdue — CAMHS appointment and key-worker session needed to refresh the plan and confirm medication response.",
     flags_for_review: [
       "Monthly review overdue — reschedule key-worker session",
       "Confirm response to recent Fluoxetine review with CAMHS and GP",
@@ -7037,7 +7739,7 @@ store.attachmentProfiles = [
     early_history:
       "Significant early relational trauma. Exposed to domestic abuse and parental substance misuse from infancy; multiple unplanned separations from primary carer before age 5. No consistent attachment figure in early years.",
     placement_history:
-      "Three previous placements before Oak House (one foster, two residential), all ending in placement breakdown linked to escalation and going missing. Current placement under Section 20 since admission, now 17 weeks.",
+      "Three previous placements before Chamberlain House (one foster, two residential), all ending in placement breakdown linked to escalation and going missing. Current placement under Section 20 since admission, now 17 weeks.",
     behaviours: [
       {
         context: "When asked direct questions about his day or his family",
@@ -7067,14 +7769,14 @@ store.attachmentProfiles = [
     ],
     key_relationships: [
       {
-        person: "Edward (key worker)",
+        person: "Daniel (key worker)",
         role: "Key worker",
         quality: "developing" as const,
         notes:
-          "Trust is slowly building. Alex now seeks Edward out at difficult moments roughly twice a week, though can reject him sharply the next day. Consistency is key.",
+          "Trust is slowly building. Alex now seeks Daniel out at difficult moments roughly twice a week, though can reject him sharply the next day. Consistency is key.",
       },
       {
-        person: "Diane (night staff)",
+        person: "Maria (night staff)",
         role: "Residential support worker",
         quality: "developing" as const,
         notes:
@@ -7100,7 +7802,7 @@ store.attachmentProfiles = [
       "Log self-harm incidents factually and share with CAMHS; keep means-restriction plan current",
     ],
     protective_factors: [
-      "Emerging trusted relationship with key worker Edward",
+      "Emerging trusted relationship with key worker Daniel",
       "Engaged and responsive CAMHS practitioner",
       "Stable, low-arousal placement with a consistent staff team",
       "Responds well to predictable routines and sensory regulation tools",
@@ -7111,7 +7813,7 @@ store.attachmentProfiles = [
       "Disrupted contact with birth mother is a recurring destabiliser",
     ],
     child_views:
-      "Alex says he 'doesn't really do feelings talk' but told Edward he 'feels less wound up than the last place'. He has asked to keep the same key worker.",
+      "Alex says he 'doesn't really do feelings talk' but told Daniel he 'feels less wound up than the last place'. He has asked to keep the same key worker.",
     professional_input:
       "CAMHS clinician supports a disorganised-attachment formulation and recommends a consistent dyadic relational approach. Social worker agrees placement should be protected from change wherever possible.",
     notes:
@@ -7135,7 +7837,7 @@ store.attachmentProfiles = [
     early_history:
       "Experienced neglect and inconsistent care, but had one warm, fairly reliable relationship with an older sibling who often took a caregiving role. Some early protective relational experience despite adversity.",
     placement_history:
-      "One previous short-term foster placement that ended due to carer ill-health, not breakdown. Placed at Oak House under Section 31; settling well over the first 6 weeks.",
+      "One previous short-term foster placement that ended due to carer ill-health, not breakdown. Placed at Chamberlain House under Section 31; settling well over the first 6 weeks.",
     behaviours: [
       {
         context: "On days when contact with his sibling is due or has just happened",
@@ -7158,11 +7860,11 @@ store.attachmentProfiles = [
     ],
     key_relationships: [
       {
-        person: "Anna (key worker)",
+        person: "Priya (key worker)",
         role: "Key worker",
         quality: "strong" as const,
         notes:
-          "Warm, trusting relationship established quickly. Jordan seeks Anna out to share news and worries and responds well to her encouragement.",
+          "Warm, trusting relationship established quickly. Jordan seeks Priya out to share news and worries and responds well to her encouragement.",
       },
       {
         person: "Older sibling (in separate placement)",
@@ -7172,11 +7874,11 @@ store.attachmentProfiles = [
           "Central protective relationship. Jordan misses his sibling and is motivated by maintaining regular contact.",
       },
       {
-        person: "Ryan (deputy manager)",
+        person: "Marcus (deputy manager)",
         role: "Deputy manager",
         quality: "developing" as const,
         notes:
-          "Jordan is increasingly comfortable approaching Ryan; sees him as a fair and steady figure in the home.",
+          "Jordan is increasingly comfortable approaching Marcus; sees him as a fair and steady figure in the home.",
       },
     ],
     therapeutic_approach: [
@@ -7190,7 +7892,7 @@ store.attachmentProfiles = [
       "Praise effort and name strengths; he responds strongly to genuine encouragement",
     ],
     protective_factors: [
-      "Strong, trusting relationship with key worker Anna",
+      "Strong, trusting relationship with key worker Priya",
       "Meaningful and protective sibling relationship maintained through contact",
       "Genuine capacity to seek comfort and accept reassurance from trusted adults",
       "Settling well with a positive early trajectory in placement",
@@ -7200,7 +7902,7 @@ store.attachmentProfiles = [
       "Fear of rejection may lead to masking distress or over-compliance",
     ],
     child_views:
-      "Jordan says he 'likes it here' and that Anna 'actually listens'. His main worry is making sure he still gets to see his brother regularly.",
+      "Jordan says he 'likes it here' and that Priya 'actually listens'. His main worry is making sure he still gets to see his brother regularly.",
     professional_input:
       "Social worker notes a positive early trajectory and supports prioritising sibling contact as a protective factor. No CAMHS involvement required at this stage; key-worker-led support assessed as sufficient.",
     notes:
@@ -7224,7 +7926,7 @@ store.attachmentProfiles = [
     early_history:
       "Emotional neglect and unpredictable parental availability; learned early that expressing need rarely brought comfort, so became highly self-reliant and emotionally contained.",
     placement_history:
-      "Two previous placements; the most recent residential placement was reasonably stable but ended on a planned basis to move closer to her home area. Placed at Oak House under Section 31.",
+      "Two previous placements; the most recent residential placement was reasonably stable but ended on a planned basis to move closer to her home area. Placed at Chamberlain House under Section 31.",
     behaviours: [
       {
         context: "When she has had a low day or poor night's sleep",
@@ -7246,11 +7948,11 @@ store.attachmentProfiles = [
     ],
     key_relationships: [
       {
-        person: "Chervelle (key worker)",
+        person: "Naomi (key worker)",
         role: "Key worker",
         quality: "developing" as const,
         notes:
-          "Casey is cautious but warming up; she has started accepting brief chats over a hot drink and is testing whether Chervelle is consistent.",
+          "Casey is cautious but warming up; she has started accepting brief chats over a hot drink and is testing whether Naomi is consistent.",
       },
       {
         person: "School pastoral lead",
@@ -7278,7 +7980,7 @@ store.attachmentProfiles = [
       "Monitor mood and sleep patterns and share concerns discreetly without making her feel watched",
     ],
     protective_factors: [
-      "Cautiously developing trust with key worker Chervelle",
+      "Cautiously developing trust with key worker Naomi",
       "A trusted confiding relationship with the school pastoral lead",
       "Strong capacity for self-reliance and resilience that can be built on",
       "Relationships described by staff as gradually improving",
@@ -7289,7 +7991,7 @@ store.attachmentProfiles = [
       "Avoidant pattern means she may not seek help in a crisis",
     ],
     child_views:
-      "Casey says she 'doesn't really need anyone' but admitted to Chervelle that the drinks-and-chat catch-ups are 'alright'. She would like help with her sleep.",
+      "Casey says she 'doesn't really need anyone' but admitted to Naomi that the drinks-and-chat catch-ups are 'alright'. She would like help with her sleep.",
     professional_input:
       "Social worker supports the low-demand relational approach. Referral to the GP regarding sleep agreed; CAMHS not currently indicated but to be revisited at review if low mood persists.",
     notes:
@@ -7787,7 +8489,7 @@ store.postIncidentChildDebriefs = [
     what_child_wishes_had_been_different: "Wishes staff had not stood between him and the door, and that someone had told him earlier in the day that contact was cancelled rather than 'springing it on him'.",
     what_helped_child: [
       "Staff giving him space once he was in the lounge",
-      "Edward sitting with him afterwards and not 'making a big deal of it'",
+      "Daniel sitting with him afterwards and not 'making a big deal of it'",
       "Being offered a walk later that evening",
     ],
     what_did_not_help: [
@@ -7800,10 +8502,10 @@ store.postIncidentChildDebriefs = [
       "Use the agreed signal (hand up) to mean he needs to leave a room",
     ],
     apologies_offered: "Alex apologised to the member of staff he pushed past and said he 'didn't mean for it to go that way'.",
-    apologies_received: "Edward acknowledged that the way the contact news was shared had not helped and apologised on behalf of the team for that.",
+    apologies_received: "Daniel acknowledged that the way the contact news was shared had not helped and apologised on behalf of the team for that.",
     repairs_agreed: [
       "Alex to help reset the lounge furniture that was moved",
-      "A short repair conversation with the staff member involved, supported by Edward",
+      "A short repair conversation with the staff member involved, supported by Daniel",
       "Key-worker session booked to update Alex's de-escalation plan together",
     ],
     child_accepts_outcome: true,
@@ -7906,7 +8608,7 @@ store.postIncidentChildDebriefs = [
       "Let her ask the nurse questions herself",
     ],
     apologies_offered: "",
-    apologies_received: "Chervelle and the shift team apologised to Casey for the medication error and explained the steps being taken to prevent it happening again.",
+    apologies_received: "Naomi and the shift team apologised to Casey for the medication error and explained the steps being taken to prevent it happening again.",
     repairs_agreed: [
       "Medication administration process reviewed and second-signature check reinforced for Casey's medication",
       "Casey to be shown her own medication chart so she can recognise her usual doses",
@@ -7939,7 +8641,7 @@ store.socialWorkerContactRecords = [
     purpose: "Six-weekly statutory visit under Care Planning Regulations — review of placement, safety and missing/exploitation risk.",
     summary: "Karen visited and saw Alex alone in his bedroom for 40 minutes. Discussed his progress at college, his safety plan and the reduction in missing episodes since the return-home interview work. Reviewed his wishes about contact with his mother. Placement plan and risk assessment confirmed as up to date.",
     key_decisions: [
-      "Maintain current placement at Oak House; no change to S20 arrangements",
+      "Maintain current placement at Chamberlain House; no change to S20 arrangements",
       "Continue weekly return-home interview follow-up with keyworker staff_edward",
       "Refer to CSE/exploitation MACE panel for ongoing multi-agency oversight",
     ],
@@ -7948,7 +8650,7 @@ store.socialWorkerContactRecords = [
       { action: "Send MACE referral form to placing authority", owner: "staff_darren", due_date: daysFromNow(-2), status: "completed" as const },
     ],
     child_aware: true,
-    child_views: "Alex said he feels safer at Oak House than at his last placement and wants to keep going to college. He asked whether he could see his mum more often.",
+    child_views: "Alex said he feels safer at Chamberlain House than at his last placement and wants to keep going to college. He asked whether he could see his mum more often.",
     follow_up_required: true,
     follow_up_date: daysFromNow(33),
     documents_shared: ["Placement plan", "Risk assessment", "Missing-episode log"],
@@ -8002,7 +8704,7 @@ store.socialWorkerContactRecords = [
     initiated_by: "social_worker" as const,
     staff_member: "staff_anna",
     purpose: "Statutory Looked After Child review chaired by the IRO — review of care plan and progress.",
-    summary: "LAC review held at Oak House with the IRO, Michael, keyworker staff_anna and Jordan. Jordan presented as settled and engaged. Education attendance strong. Care plan reviewed and remains appropriate under his full care order. Jordan was seen alone by the IRO before the meeting.",
+    summary: "LAC review held at Chamberlain House with the IRO, Michael, keyworker staff_anna and Jordan. Jordan presented as settled and engaged. Education attendance strong. Care plan reviewed and remains appropriate under his full care order. Jordan was seen alone by the IRO before the meeting.",
     key_decisions: [
       "Care plan endorsed by IRO; no changes required",
       "Continue current education placement and therapeutic support",
@@ -8012,7 +8714,7 @@ store.socialWorkerContactRecords = [
       { action: "Circulate IRO review minutes to all attendees", owner: "staff_anna", due_date: daysFromNow(-6), status: "completed" as const },
     ],
     child_aware: true,
-    child_views: "Jordan said he is happy at Oak House, likes his school and his keyworker, and does not want anything to change.",
+    child_views: "Jordan said he is happy at Chamberlain House, likes his school and his keyworker, and does not want anything to change.",
     follow_up_required: false,
     follow_up_date: null,
     documents_shared: ["Care plan", "IRO review minutes", "Education report"],
@@ -8087,13 +8789,13 @@ store.siblingContactProtocolRecords = [
     child_id: "yp_jordan",
     sibling_name: "Liam M",
     sibling_placement: "Foster placement (separate)",
-    sibling_location: "Greenfield Fostering, approx. 18 miles from Oak House",
+    sibling_location: "Greenfield Fostering, approx. 18 miles from Chamberlain House",
     relationship_pre_oak_house: "Jordan and his older brother Liam lived together until Jordan's admission. Liam was a consistent protective figure throughout childhood, often shielding Jordan during periods of family disruption.",
     current_relationship_quality: "strong" as const,
     contact_frequency: "fortnightly" as const,
     contact_types: ["face_to_face_supervised", "phone", "video_call"],
     agreed_contact_plan: "Fortnightly supervised face-to-face contact at a neutral community venue, alternating with a midweek video call. Plan agreed at the LAC review and signed off by Jordan's social worker.",
-    child_preferences: "Jordan has said he wants to keep seeing Liam 'as much as possible' and prefers visits where they can do an activity together rather than just sitting and talking. He asked that staff he knows, ideally Anna, support the visits.",
+    child_preferences: "Jordan has said he wants to keep seeing Liam 'as much as possible' and prefers visits where they can do an activity together rather than just sitting and talking. He asked that staff he knows, ideally Priya, support the visits.",
     sibling_preferences: "Liam has expressed a strong wish to remain a positive presence in Jordan's life and is happy with the fortnightly rhythm. He has asked to be kept informed of any changes to Jordan's circumstances.",
     risk_factors_to_contact: [],
     protective_factors_to_contact: [
@@ -8103,11 +8805,11 @@ store.siblingContactProtocolRecords = [
     ],
     supervision_required: true,
     supervision_level: "Light-touch supervision by a familiar key worker; staff remain present but step back to allow natural interaction.",
-    transport_arrangements: "Oak House staff transport Jordan to and from the contact venue by car; journey time approx. 30 minutes each way.",
+    transport_arrangements: "Chamberlain House staff transport Jordan to and from the contact venue by car; journey time approx. 30 minutes each way.",
     contact_costs_budget: "Covered within the placement contact budget; approx. £25 per session for venue and activity costs.",
-    locations_for_contact: ["Riverside Community Centre", "Local leisure centre", "Oak House (occasional)"],
+    locations_for_contact: ["Riverside Community Centre", "Local leisure centre", "Chamberlain House (occasional)"],
     favourite_sibling_activities: ["Five-a-side football", "Bowling", "Cooking a meal together"],
-    birthday_celebration_plan: "Both boys' birthdays fall in the summer. Plan agreed for Liam to attend a small celebration at Oak House for Jordan's birthday, and for Jordan to be supported to choose and send a gift for Liam's.",
+    birthday_celebration_plan: "Both boys' birthdays fall in the summer. Plan agreed for Liam to attend a small celebration at Chamberlain House for Jordan's birthday, and for Jordan to be supported to choose and send a gift for Liam's.",
     christmas_arrangements: "A pre-Christmas joint visit is planned with a shared meal and present exchange, agreed in advance with both placements and the local authority.",
     court_ordered_contact: true,
     court_order_terms: "Contact order specifies a minimum of monthly direct contact between Jordan and Liam, to be supervised and reviewed at each LAC review. Current arrangements exceed the ordered minimum.",
@@ -8542,13 +9244,13 @@ store.staffRecognitionRecords = [
     staff_member: "staff_edward",
     recognition_type: "above_and_beyond" as const,
     recognised_by: "registered_manager" as const,
-    recognised_by_name: "Darren Laville",
+    recognised_by_name: "Olivia Hayes",
     what_happened:
-      "During a period of heightened distress, Edward stayed calm and used trauma-informed de-escalation with Alex, naming the feeling, offering choice, and giving space without withdrawing connection. He stayed past the end of his shift to make sure Alex felt safe before handover.",
+      "During a period of heightened distress, Daniel stayed calm and used trauma-informed de-escalation with Alex, naming the feeling, offering choice, and giving space without withdrawing connection. He stayed past the end of his shift to make sure Alex felt safe before handover.",
     impact_description:
       "Alex moved from crisis to settled within the hour without any physical intervention, and later told staff he 'felt heard for once'. The approach modelled exactly the relational practice the home is working towards.",
     child_impact:
-      "Alex avoided a likely restraint and went to bed settled. He has since sought Edward out as a trusted adult on three separate occasions.",
+      "Alex avoided a likely restraint and went to bed settled. He has since sought Daniel out as a trusted adult on three separate occasions.",
     organisational_impact:
       "Demonstrates trauma-informed practice in line with the home's behaviour support ethos; used as a worked example in the following team meeting.",
     way_marked: ["verbal_recognition", "team_meeting_share", "wall_of_awesome"] as const,
@@ -8558,7 +9260,7 @@ store.staffRecognitionRecords = [
     staff_response:
       "Thanked the team and said it 'means a lot to know the slower, relational approach is valued — it's why I came into this work'.",
     reflection_from_manager:
-      "Edward consistently models the regulated, curious adult our young people need. A genuine strength to build the wider team's practice around.",
+      "Daniel consistently models the regulated, curious adult our young people need. A genuine strength to build the wider team's practice around.",
   },
   {
     id: "rec_anna_1",
@@ -8566,11 +9268,11 @@ store.staffRecognitionRecords = [
     staff_member: "staff_anna",
     recognition_type: "quiet_excellence" as const,
     recognised_by: "deputy" as const,
-    recognised_by_name: "Ryan Forsythe",
+    recognised_by_name: "Marcus Bell",
     what_happened:
-      "Anna quietly and consistently supported Jordan through a difficult first fortnight in placement — building a predictable morning routine, sitting with him at mealtimes, and noticing the small things that helped him settle, without ever making it a fuss.",
+      "Priya quietly and consistently supported Jordan through a difficult first fortnight in placement — building a predictable morning routine, sitting with him at mealtimes, and noticing the small things that helped him settle, without ever making it a fuss.",
     impact_description:
-      "Jordan's transition into the home was markedly smoother than expected. Anna's steady, low-key consistency was the single biggest factor staff identified in him settling.",
+      "Jordan's transition into the home was markedly smoother than expected. Priya's steady, low-key consistency was the single biggest factor staff identified in him settling.",
     child_impact:
       "Jordan went from refusing breakfast and isolating in his room to joining the household for meals and engaging in education planning within two weeks.",
     organisational_impact:
@@ -8590,9 +9292,9 @@ store.staffRecognitionRecords = [
     staff_member: "staff_chervelle",
     recognition_type: "innovation" as const,
     recognised_by: "registered_manager" as const,
-    recognised_by_name: "Darren Laville",
+    recognised_by_name: "Olivia Hayes",
     what_happened:
-      "Chervelle designed and led a personalised sleep plan for Casey, drawing on what she had noticed about Casey's bedtime triggers — adjusting lighting, introducing a wind-down routine and a consistent check-in, and coordinating it across the staff team so it was applied the same way every night.",
+      "Naomi designed and led a personalised sleep plan for Casey, drawing on what she had noticed about Casey's bedtime triggers — adjusting lighting, introducing a wind-down routine and a consistent check-in, and coordinating it across the staff team so it was applied the same way every night.",
     impact_description:
       "A creative, child-led intervention that the whole team could follow consistently. Casey's recorded night-time disturbances dropped from most nights to occasional within three weeks.",
     child_impact:
@@ -8606,7 +9308,7 @@ store.staffRecognitionRecords = [
     staff_response:
       "Pleased the plan was being shared more widely and offered to coach colleagues through adapting it for other young people.",
     reflection_from_manager:
-      "Chervelle turned close observation into a practical, replicable intervention. Exactly the kind of initiative we want to grow.",
+      "Naomi turned close observation into a practical, replicable intervention. Exactly the kind of initiative we want to grow.",
   },
   {
     id: "rec_lackson_1",
@@ -8614,9 +9316,9 @@ store.staffRecognitionRecords = [
     staff_member: "staff_lackson",
     recognition_type: "team_contribution" as const,
     recognised_by: "peer" as const,
-    recognised_by_name: "Diane",
+    recognised_by_name: "Maria",
     what_happened:
-      "Peer nomination: Lackson covered two short-notice shifts during a staffing gap and stayed back to support a colleague through a difficult incident debrief, all without being asked and without complaint.",
+      "Peer nomination: Samuel covered two short-notice shifts during a staffing gap and stayed back to support a colleague through a difficult incident debrief, all without being asked and without complaint.",
     impact_description:
       "Kept the home safely staffed during a pressured week and made sure a colleague didn't carry a hard shift alone. Lifted morale across the team at exactly the right moment.",
     child_impact:
@@ -8630,7 +9332,7 @@ store.staffRecognitionRecords = [
     staff_response:
       "Said the team 'are like family' and that he was glad to help out when it was needed.",
     reflection_from_manager:
-      "A peer nomination like this speaks volumes. Lackson is the colleague everyone is quietly grateful for.",
+      "A peer nomination like this speaks volumes. Samuel is the colleague everyone is quietly grateful for.",
   },
   {
     id: "rec_diane_1",
@@ -8640,11 +9342,11 @@ store.staffRecognitionRecords = [
     recognised_by: "child" as const,
     recognised_by_name: "Young person (Casey)",
     what_happened:
-      "Casey asked a member of staff to pass on a quiet thank-you to Diane for 'always listening and never making a big deal of it' when she was having a hard time, and for helping her feel okay about going to her football trial.",
+      "Casey asked a member of staff to pass on a quiet thank-you to Maria for 'always listening and never making a big deal of it' when she was having a hard time, and for helping her feel okay about going to her football trial.",
     impact_description:
-      "A child-led recognition of the trusting, dependable relationship Diane has built. The kind of feedback that matters most because it comes directly from a young person.",
+      "A child-led recognition of the trusting, dependable relationship Maria has built. The kind of feedback that matters most because it comes directly from a young person.",
     child_impact:
-      "Casey attended her football trial and has been more willing to talk to staff when things are difficult, citing Diane as someone she trusts.",
+      "Casey attended her football trial and has been more willing to talk to staff when things are difficult, citing Maria as someone she trusts.",
     organisational_impact:
       "Evidence of relationship-based practice landing where it counts — in how safe a young person feels.",
     way_marked: ["card_handwritten_note"] as const,
@@ -8654,7 +9356,7 @@ store.staffRecognitionRecords = [
     staff_response:
       "Was visibly moved and asked that her thanks be passed back to Casey for trusting her.",
     reflection_from_manager:
-      "Recognition from a young person is the highest form there is. Diane has quietly earned Casey's trust, and that is everything in this work.",
+      "Recognition from a young person is the highest form there is. Maria has quietly earned Casey's trust, and that is everything in this work.",
   },
 ];
 
@@ -8673,7 +9375,7 @@ store.managementWalkrounds = [
     observations_positive: [
       { area: "Kitchen", observation: "Breakfast running calmly; staff sat with young people rather than supervising from the doorway.", staff_or_child_or_thing: "staff_edward" },
       { area: "Lounge", observation: "Young person's artwork displayed on the wall — home feels personalised and cared for.", staff_or_child_or_thing: "Environment" },
-      { area: "Garden", observation: "Edward had set up a football activity that two young people were genuinely enjoying.", staff_or_child_or_thing: "staff_edward" },
+      { area: "Garden", observation: "Daniel had set up a football activity that two young people were genuinely enjoying.", staff_or_child_or_thing: "staff_edward" },
     ],
     observations_for_improvement: [
       { area: "Hallway", observation: "Fire exit signage by the back door partially obscured by a coat rack.", action_agreed: "Coat rack relocated and signage line-of-sight checked." },
@@ -8684,7 +9386,7 @@ store.managementWalkrounds = [
     ],
     staff_interactions: [
       { staff_member: "staff_edward", observation: "Warm, attuned interactions with the young people; modelled good boundaries calmly." },
-      { staff_member: "staff_anna", observation: "Handover notes thorough; Anna flagged a low mood for one young person proactively." },
+      { staff_member: "staff_anna", observation: "Handover notes thorough; Priya flagged a low mood for one young person proactively." },
     ],
     environmental_checks: [
       { area: "Kitchen", status: "good" as const },
@@ -8698,7 +9400,7 @@ store.managementWalkrounds = [
       { action: "Confirm fire signage sight-lines on next health & safety walk.", owner: "staff_ryan", deadline: daysFromNow(-1) },
     ],
     themes_emerging: ["Warm staff-child relationships", "Home environment well personalised"],
-    positive_staff_practice_noted: ["Edward's attuned engagement during the football activity"],
+    positive_staff_practice_noted: ["Daniel's attuned engagement during the football activity"],
     follow_up_date: daysFromNow(5),
     created_at: daysFromNow(-2),
   },
@@ -8712,7 +9414,7 @@ store.managementWalkrounds = [
     areas_visited: ["Lounge", "Kitchen", "Dining area", "Bedrooms (landing)", "Bathroom"],
     observations_positive: [
       { area: "Dining area", observation: "Evening meal eaten together at the table; relaxed conversation, no devices out.", staff_or_child_or_thing: "staff_chervelle" },
-      { area: "Lounge", observation: "Chervelle supporting a young person with homework patiently after dinner.", staff_or_child_or_thing: "staff_chervelle" },
+      { area: "Lounge", observation: "Naomi supporting a young person with homework patiently after dinner.", staff_or_child_or_thing: "staff_chervelle" },
     ],
     observations_for_improvement: [
       { area: "Bathroom", observation: "Shared bathroom low on hand towels and toiletries running down.", action_agreed: "Restock from store cupboard tonight; add to weekly order." },
@@ -8723,7 +9425,7 @@ store.managementWalkrounds = [
     ],
     staff_interactions: [
       { staff_member: "staff_chervelle", observation: "Calm, nurturing approach over the evening routine; good use of praise." },
-      { staff_member: "staff_diane", observation: "Diane managing the kitchen well but seemed stretched covering two tasks at once." },
+      { staff_member: "staff_diane", observation: "Maria managing the kitchen well but seemed stretched covering two tasks at once." },
     ],
     environmental_checks: [
       { area: "Kitchen", status: "good" as const },
@@ -8738,7 +9440,7 @@ store.managementWalkrounds = [
       { action: "Add bathroom toiletries to the standing weekly order.", owner: "staff_diane", deadline: daysFromNow(-3) },
     ],
     themes_emerging: ["Evening routines settled and homely", "Minor environment/maintenance items recurring"],
-    positive_staff_practice_noted: ["Chervelle's patient homework support after a busy shift"],
+    positive_staff_practice_noted: ["Naomi's patient homework support after a busy shift"],
     follow_up_date: daysFromNow(1),
     created_at: daysFromNow(-6),
   },
@@ -8773,7 +9475,7 @@ store.managementWalkrounds = [
       { action: "Re-brief whole team on overnight key-safe protocol at next team meeting.", owner: "staff_darren", deadline: daysFromNow(-2) },
     ],
     themes_emerging: ["Strong night-time oversight culture", "Occasional security-routine slips"],
-    positive_staff_practice_noted: ["Anna's vigilance and accurate overnight recording during an unannounced check"],
+    positive_staff_practice_noted: ["Priya's vigilance and accurate overnight recording during an unannounced check"],
     follow_up_date: daysFromNow(-2),
     created_at: daysFromNow(-11),
   },
@@ -8790,15 +9492,15 @@ store.managementWalkrounds = [
       { area: "Communal areas", observation: "House feels warm and lived-in — children's achievements displayed.", staff_or_child_or_thing: "Environment" },
     ],
     observations_for_improvement: [
-      { area: "Kitchen", observation: "Cleaning rota on the fridge two weeks out of date.", action_agreed: "Refreshed rota printed and signed; Diane to own weekly update." },
+      { area: "Kitchen", observation: "Cleaning rota on the fridge two weeks out of date.", action_agreed: "Refreshed rota printed and signed; Maria to own weekly update." },
     ],
     child_interactions: [
       { child_initial: "J", observation: "J walked me round his room and talked about wanting to redecorate; agreed to raise at his next key-work session." },
       { child_initial: "C", observation: "C asked about her pocket money plan for the weekend; explained clearly and she was satisfied." },
     ],
     staff_interactions: [
-      { staff_member: "staff_diane", observation: "Diane took feedback on the cleaning rota positively and actioned it immediately." },
-      { staff_member: "staff_edward", observation: "Edward proactively decluttered the activity cupboard during the themed walk." },
+      { staff_member: "staff_diane", observation: "Maria took feedback on the cleaning rota positively and actioned it immediately." },
+      { staff_member: "staff_edward", observation: "Daniel proactively decluttered the activity cupboard during the themed walk." },
     ],
     environmental_checks: [
       { area: "Bedrooms", status: "good" as const },
@@ -8810,11 +9512,11 @@ store.managementWalkrounds = [
     book_or_record_reviews: ["Cleaning rota", "Health & safety folder", "Fire log"],
     immediate_actions_taken: ["Printed and displayed an up-to-date cleaning rota."],
     follow_up_actions_logged: [
-      { action: "Diane to take ownership of weekly cleaning-rota updates.", owner: "staff_diane", deadline: daysFromNow(-9) },
+      { action: "Maria to take ownership of weekly cleaning-rota updates.", owner: "staff_diane", deadline: daysFromNow(-9) },
       { action: "Add J's redecoration request to his key-work session agenda.", owner: "staff_edward", deadline: daysFromNow(-5) },
     ],
     themes_emerging: ["High standard of physical environment", "Children proud of their personalised spaces"],
-    positive_staff_practice_noted: ["Responsive, non-defensive reaction to walkround feedback (Diane, Edward)"],
+    positive_staff_practice_noted: ["Responsive, non-defensive reaction to walkround feedback (Maria, Daniel)"],
     follow_up_date: daysFromNow(-9),
     created_at: daysFromNow(-16),
   },
@@ -8853,9 +9555,1653 @@ store.managementWalkrounds = [
       { action: "Reflective supervision booked with staff involved in the incident.", owner: "staff_darren", deadline: daysFromNow(-14) },
     ],
     themes_emerging: ["Strong post-incident reflection culture", "Recording detail (body maps) occasionally incomplete"],
-    positive_staff_practice_noted: ["Chervelle's openness in debrief and Anna's peer support after a difficult shift"],
+    positive_staff_practice_noted: ["Naomi's openness in debrief and Priya's peer support after a difficult shift"],
     follow_up_date: daysFromNow(7),
     created_at: daysFromNow(-22),
+  },
+];
+
+// ── Family time sessions (seed) ───────────────────────────────────────────────
+// Feeds child-360's relationships profile (and the Child Review Pack's "Family
+// time" section). Mixed: Alex's mother contact valued but inconsistent; Jordan's
+// strong protective sibling bond; Casey's warm but mood-dependent mother contact.
+store.familyTimeSessions = [
+  {
+    id: "fts_alex_1", child_id: "yp_alex", date: daysFromNow(-22), time: "15:30", duration_minutes: 60,
+    location: "contact_centre" as const, family_member: "Mother", family_member_name: "Alex's mother",
+    supervised_by: "staff_edward", supervision_level: "supervised" as const,
+    child_presentation_before: "anxious" as const,
+    child_presentation_during: "Settled once his mother arrived; chatty and engaged.",
+    child_presentation_after: "A little flat — said he wished the visit was longer.",
+    interactions_observed: "Warm conversation about school and football, with some awkward silences.",
+    warmth_affection_shown: "Brief hug on arrival and departure.",
+    boundary_issues: "None.",
+    concerns_raised: ["Mother arrived 20 minutes late, which unsettled Alex beforehand"],
+    positive_observations: ["Genuine warmth between Alex and his mother", "Alex opened up about college"],
+    child_voice_after: "Alex said he was glad to see his mum but upset she nearly didn't come.",
+    parent_engagement: "Engaged and attentive once present.",
+    gifts_exchanged: "Mother brought his favourite snacks.",
+    food_shared_who: "Shared snacks together.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Confirm timing with mother the day before to reduce Alex's anxiety"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-21), created_at: daysFromNow(-22),
+  },
+  {
+    id: "fts_alex_2", child_id: "yp_alex", date: daysFromNow(-8), time: "16:00", duration_minutes: 75,
+    location: "contact_centre" as const, family_member: "Mother", family_member_name: "Alex's mother",
+    supervised_by: "staff_anna", supervision_level: "supervised" as const,
+    child_presentation_before: "settled" as const,
+    child_presentation_during: "Relaxed and playful; they played cards together.",
+    child_presentation_after: "Happy and settled for the rest of the evening.",
+    interactions_observed: "Easy, warm interaction throughout.",
+    warmth_affection_shown: "Hugs and laughter.",
+    boundary_issues: "None.",
+    concerns_raised: [],
+    positive_observations: ["Mother on time and well prepared", "Alex visibly relaxed and happy"],
+    child_voice_after: "Alex said it was 'a good one' and he's looking forward to the next visit.",
+    parent_engagement: "Warm and consistent.",
+    gifts_exchanged: "None.",
+    food_shared_who: "Shared a meal together.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Maintain the current fortnightly pattern"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-7), created_at: daysFromNow(-8),
+  },
+  {
+    id: "fts_jordan_1", child_id: "yp_jordan", date: daysFromNow(-13), time: "14:00", duration_minutes: 120,
+    location: "public_venue" as const, family_member: "Sibling", family_member_name: "Liam (older brother)",
+    supervised_by: "staff_anna", supervision_level: "supported" as const,
+    child_presentation_before: "excited" as const,
+    child_presentation_during: "Animated and joyful; they played five-a-side football.",
+    child_presentation_after: "Buzzing and talked about it all evening.",
+    interactions_observed: "Strong, natural sibling bond; Liam encouraging and protective.",
+    warmth_affection_shown: "Lots of laughter and easy affection.",
+    boundary_issues: "None.",
+    concerns_raised: [],
+    positive_observations: ["Clearly a central, protective relationship for Jordan", "Both boys regulated well throughout"],
+    child_voice_after: "Jordan said seeing Liam is 'the best part of his week'.",
+    parent_engagement: "N/A — sibling contact.",
+    gifts_exchanged: "None.",
+    food_shared_who: "Shared chips afterwards.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Continue fortnightly face-to-face; explore an additional video call"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-12), created_at: daysFromNow(-13),
+  },
+  {
+    id: "fts_jordan_2", child_id: "yp_jordan", date: daysFromNow(-6), time: "17:00", duration_minutes: 60,
+    location: "oak_house" as const, family_member: "Sibling", family_member_name: "Liam (older brother)",
+    supervised_by: "staff_diane", supervision_level: "supported" as const,
+    child_presentation_before: "settled" as const,
+    child_presentation_during: "Calm and content; they cooked a meal together at the home.",
+    child_presentation_after: "Settled and cheerful.",
+    interactions_observed: "Warm, easy interaction; Liam took an interest in Jordan's room and school.",
+    warmth_affection_shown: "Comfortable affection.",
+    boundary_issues: "None.",
+    concerns_raised: [],
+    positive_observations: ["Jordan proud to show Liam his room", "Relaxed home-based contact worked well"],
+    child_voice_after: "Jordan asked if Liam could visit Chamberlain House again soon.",
+    parent_engagement: "N/A — sibling contact.",
+    gifts_exchanged: "None.",
+    food_shared_who: "Cooked and ate together.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Alternate venue between community and Chamberlain House"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-5), created_at: daysFromNow(-6),
+  },
+  {
+    id: "fts_casey_1", child_id: "yp_casey", date: daysFromNow(-18), time: "13:00", duration_minutes: 180,
+    location: "family_home" as const, family_member: "Mother", family_member_name: "Casey's mother",
+    supervised_by: "staff_chervelle", supervision_level: "supervised" as const,
+    child_presentation_before: "settled" as const,
+    child_presentation_during: "Relaxed at home; helped her mum bake and saw the family dog.",
+    child_presentation_after: "Calm and content.",
+    interactions_observed: "Warm and affectionate; mother attentive to Casey's mood.",
+    warmth_affection_shown: "Plenty of warmth and affection.",
+    boundary_issues: "None.",
+    concerns_raised: [],
+    positive_observations: ["Casey settled and at ease at home", "Mother responsive to Casey's needs"],
+    child_voice_after: "Casey said it was nice to be home for a bit and see the dog.",
+    parent_engagement: "Warm and attentive.",
+    gifts_exchanged: "None.",
+    food_shared_who: "Baked and ate together.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Continue home-based contact while mood is stable"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-17), created_at: daysFromNow(-18),
+  },
+  {
+    id: "fts_casey_2", child_id: "yp_casey", date: daysFromNow(-5), time: "15:00", duration_minutes: 90,
+    location: "contact_centre" as const, family_member: "Mother", family_member_name: "Casey's mother",
+    supervised_by: "staff_chervelle", supervision_level: "supervised" as const,
+    child_presentation_before: "withdrawn" as const,
+    child_presentation_during: "Quiet and low; engaged a little but mood was flat.",
+    child_presentation_after: "Subdued; took time to settle back at the home.",
+    interactions_observed: "Mother gentle and patient; Casey responsive but reserved.",
+    warmth_affection_shown: "Quiet affection.",
+    boundary_issues: "None.",
+    concerns_raised: ["Casey was quiet and low in mood throughout"],
+    positive_observations: ["Mother adapted well to Casey's low mood", "Casey still chose to attend"],
+    child_voice_after: "Casey didn't say much but agreed to the next visit.",
+    parent_engagement: "Patient and understanding.",
+    gifts_exchanged: "None.",
+    food_shared_who: "Shared a drink.",
+    was_it_safe: true, incidents_during: "None.",
+    recommendations_for_next: ["Check Casey's mood before the next visit; offer a debrief after"],
+    report_sent_to_sw: true, report_sent_date: daysFromNow(-4), created_at: daysFromNow(-5),
+  },
+];
+
+// ── Activities & enrichment (seed) ────────────────────────────────────────────
+// Lights home-activity-enrichment. Mixed engagement across the 3 children
+// (Alex motor-vehicles/football/gym, Jordan football/cooking/volunteering,
+// Casey art/baking + one low-mood withdrawal), recent dates, 3 new experiences.
+store.activities = [
+  {
+    id: "act_seed_1", date: daysFromNow(-2), child_id: "yp_alex",
+    category: "community" as const, title: "Visit to classic car restoration garage",
+    description: "Alex visited a local restoration garage and watched mechanics strip a vintage engine. Asked detailed questions about parts.",
+    location: "Derby — Vintage Motors workshop", duration_minutes: 120, staff_id: "staff_edward",
+    engagement: "enthusiastic" as const,
+    yp_feedback: "Best trip we've done. Want to do work experience somewhere like this.",
+    outcome_notes: "Strong vocational interest. Explore mechanics work-experience placement.",
+    is_new_experience: true, photos_taken: true, linked_outcome_domain: "identity", created_at: daysFromNow(-2),
+  },
+  {
+    id: "act_seed_2", date: daysFromNow(-5), child_id: "yp_alex",
+    category: "sport" as const, title: "5-a-side football at leisure centre",
+    description: "Alex played in the Friday 5-a-side session with peers and staff. Good teamwork, no conflict.",
+    location: "Moorways Leisure Centre", duration_minutes: 60, staff_id: "staff_ryan",
+    engagement: "willing" as const,
+    yp_feedback: "It was alright. My team won.",
+    outcome_notes: "Positive peer interaction throughout. Channelled energy well.",
+    is_new_experience: false, photos_taken: false, linked_outcome_domain: "health", created_at: daysFromNow(-5),
+  },
+  {
+    id: "act_seed_3", date: daysFromNow(-13), child_id: "yp_alex",
+    category: "life_skills" as const, title: "Gym induction and first session",
+    description: "Alex completed a supervised gym induction and first workout as part of his identity/health outcome.",
+    location: "Chamberlain House — local gym", duration_minutes: 75, staff_id: "staff_darren",
+    engagement: "suggested_by_yp" as const,
+    yp_feedback: "I asked to join the gym. Makes me feel good about myself.",
+    outcome_notes: "Self-initiated. Booked 3x/week routine. Links to OT_003 identity goal.",
+    is_new_experience: false, photos_taken: false, linked_outcome_domain: "identity", created_at: daysFromNow(-13),
+  },
+  {
+    id: "act_seed_4", date: daysFromNow(-1), child_id: "yp_jordan",
+    category: "sport" as const, title: "Football training with the team",
+    description: "Jordan attended regular midweek football training. Full participation, positive interactions with teammates.",
+    location: "Highfields playing fields", duration_minutes: 90, staff_id: "staff_anna",
+    engagement: "enthusiastic" as const,
+    yp_feedback: "Love football. Can we get more sessions?",
+    outcome_notes: "Excellent engagement. Two friends from the team. Supports settling.",
+    is_new_experience: false, photos_taken: true, linked_outcome_domain: "family_social", created_at: daysFromNow(-1),
+  },
+  {
+    id: "act_seed_5", date: daysFromNow(-8), child_id: "yp_jordan",
+    category: "life_skills" as const, title: "Cooking a meal independently",
+    description: "Jordan planned, shopped for and cooked pasta for the house with light staff support.",
+    location: "Chamberlain House kitchen", duration_minutes: 60, staff_id: "staff_anna",
+    engagement: "willing" as const,
+    yp_feedback: "I made pasta and everyone ate it! It was actually good.",
+    outcome_notes: "Independence skills progressing. Links to OT_010.",
+    is_new_experience: false, photos_taken: false, linked_outcome_domain: "independence", created_at: daysFromNow(-8),
+  },
+  {
+    id: "act_seed_6", date: daysFromNow(-16), child_id: "yp_jordan",
+    category: "community" as const, title: "Community volunteering — youth group helper",
+    description: "Jordan volunteered at a community group supporting younger children. Patient and supportive throughout.",
+    location: "St Mary's community centre", duration_minutes: 90, staff_id: "staff_chervelle",
+    engagement: "enthusiastic" as const,
+    yp_feedback: "The little kids were funny. I liked helping.",
+    outcome_notes: "Received certificate from group leader. Strong prosocial behaviour.",
+    is_new_experience: true, photos_taken: true, linked_outcome_domain: "family_social", created_at: daysFromNow(-16),
+  },
+  {
+    id: "act_seed_7", date: daysFromNow(-3), child_id: "yp_casey",
+    category: "creative" as const, title: "Acrylic painting workshop",
+    description: "Casey attended a guided acrylic painting workshop and completed a canvas for her bedroom.",
+    location: "Chamberlain House — art room", duration_minutes: 90, staff_id: "staff_chervelle",
+    engagement: "enthusiastic" as const,
+    yp_feedback: "I love art. Can I do another one next week?",
+    outcome_notes: "Growing confidence and self-expression. Displayed with permission.",
+    is_new_experience: false, photos_taken: true, linked_outcome_domain: "emotional_wellbeing", created_at: daysFromNow(-3),
+  },
+  {
+    id: "act_seed_8", date: daysFromNow(-10), child_id: "yp_casey",
+    category: "life_skills" as const, title: "Baking — first attempt at a Victoria sponge",
+    description: "Casey baked a Victoria sponge from scratch with staff. Followed the recipe carefully and shared it with the house.",
+    location: "Chamberlain House kitchen", duration_minutes: 75, staff_id: "staff_diane",
+    engagement: "willing" as const,
+    yp_feedback: "It rose properly! I was proud of it.",
+    outcome_notes: "Calming, regulating activity. Good for self-esteem.",
+    is_new_experience: true, photos_taken: false, linked_outcome_domain: "self_care", created_at: daysFromNow(-10),
+  },
+  {
+    id: "act_seed_9", date: daysFromNow(-19), child_id: "yp_casey",
+    category: "outdoor" as const, title: "Group woodland walk",
+    description: "Whole-house woodland walk. Casey joined but was low in mood after a difficult contact call and disengaged partway.",
+    location: "Allestree Park", duration_minutes: 45, staff_id: "staff_edward",
+    engagement: "reluctant" as const,
+    yp_feedback: null,
+    outcome_notes: "Attended but withdrew. Contact-related low mood. Offered 1:1 on return.",
+    is_new_experience: false, photos_taken: false, linked_outcome_domain: null, created_at: daysFromNow(-19),
+  },
+];
+
+// ── Cultural identity plans (seed) ────────────────────────────────────────────
+// Lights home-cultural-identity. Mixed: Jordan (Black British/Muslim/Halal —
+// strong, child-contributed, in-date); Casey (mixed heritage, exploring, review
+// overdue); Alex (White British, thin plan, not child-contributed, overdue).
+store.culturalIdentityPlans = [
+  {
+    id: "cip_seed_1",
+    child_id: "yp_jordan",
+    ethnicity: "Black British",
+    heritage: "Black British (Caribbean — Jamaican maternal line)",
+    religion: "Islam (Muslim)",
+    first_language: "English",
+    other_languages: [],
+    dietary_needs: "Halal — no pork or non-halal meat; halal chicken/lamb provided. Mindful of Ramadan fasting from age-appropriate point.",
+    identity_areas: [
+      { area: "Faith & religious observance", child_view: "It's important I can pray and eat halal here. Staff get it now.", current_support: "Halal meal plan embedded; prayer mat and quiet space provided; Friday Jummah attendance at local mosque supported by staff.", status: "well_supported" as const },
+      { area: "Cultural heritage & history", child_view: "I like learning about where my family's from.", current_support: "Life-story work covering Jamaican heritage; Black History Month activities; books and music reflecting heritage in the home.", status: "well_supported" as const },
+      { area: "Hair & skin care", child_view: "Glad someone finally got the right products.", current_support: "Appropriate Afro hair and skin products sourced; barber familiar with Afro hair booked monthly.", status: "well_supported" as const },
+      { area: "Positive role models", child_view: "Want to meet more people like me doing well.", current_support: "Introduced to local community mentor; exploring sports club with diverse membership.", status: "needs_attention" as const },
+    ],
+    celebrations: ["Eid al-Fitr", "Eid al-Adha", "Black History Month"],
+    resources: ["Local mosque link", "Afro hair care kit", "Heritage life-story book", "Halal recipe collection"],
+    action_plan: "Sustain faith and dietary support; deepen role-model connections; review during Ramadan to ensure fasting wishes are supported safely with medical advice.",
+    last_reviewed: daysFromNow(-40),
+    next_review: daysFromNow(50),
+    reviewed_by: "staff_chervelle",
+    child_contributed: true,
+    notes: "Jordan settled and confident in his identity. Strong co-production throughout.",
+    created_at: daysFromNow(-180),
+  },
+  {
+    id: "cip_seed_2",
+    child_id: "yp_casey",
+    ethnicity: "Mixed Heritage",
+    heritage: "Mixed — White British (maternal) and Black African (paternal, Nigerian)",
+    religion: "None stated / exploring",
+    first_language: "English",
+    other_languages: [],
+    dietary_needs: "No specific cultural or religious dietary needs; vegetarian by choice.",
+    identity_areas: [
+      { area: "Dual heritage & belonging", child_view: "Sometimes I feel like I don't fully fit either side. I want to understand my dad's culture more.", current_support: "Life-story and memory-box work in progress; exploring Nigerian heritage through food, music and online resources.", status: "exploring" as const },
+      { area: "Cultural foods", child_view: "Trying Nigerian dishes has been cool.", current_support: "Cooked jollof rice and plantain together during a cultural cooking session; recipes added to home menu rotation.", status: "needs_attention" as const },
+      { area: "Identity & self-image", child_view: "The memory box helps me feel proud of both sides.", current_support: "Key-worker sessions on positive identity; photographs and family information collated where safe to do so.", status: "exploring" as const },
+    ],
+    celebrations: ["Cultural cooking nights"],
+    resources: ["Memory box", "Heritage life-story book", "Nigerian recipe collection"],
+    action_plan: "Continue heritage exploration through life-story work; arrange a cultural activity at least monthly; identify a community link reflecting Casey's paternal heritage.",
+    last_reviewed: daysFromNow(-115),
+    next_review: daysFromNow(-7),
+    reviewed_by: "staff_chervelle",
+    child_contributed: true,
+    notes: "Casey actively engaged. Review now overdue — reschedule to capture progress on Nigerian heritage strand.",
+    created_at: daysFromNow(-150),
+  },
+  {
+    id: "cip_seed_3",
+    child_id: "yp_alex",
+    ethnicity: "White British",
+    heritage: "White British (English)",
+    religion: "None",
+    first_language: "English",
+    other_languages: [],
+    dietary_needs: "No specific cultural or religious dietary needs.",
+    identity_areas: [
+      { area: "Personal & cultural identity", child_view: "Not fussed about culture stuff really, but I like local history.", current_support: "Discussion in key-worker sessions; visit to local heritage site offered.", status: "needs_attention" as const },
+      { area: "Community connection", child_view: "I'd go to the football if someone took me.", current_support: "Exploring local stadium tour and community sports; not yet arranged.", status: "needs_attention" as const },
+    ],
+    celebrations: ["Local heritage open day"],
+    resources: ["Local history leaflet"],
+    action_plan: "Engage Alex through interests (history, football) as a route into identity work; arrange a community/heritage activity and capture Alex's voice at the next review.",
+    last_reviewed: daysFromNow(-130),
+    next_review: daysFromNow(-16),
+    reviewed_by: "staff_edward",
+    child_contributed: false,
+    notes: "Limited engagement so far. Plan is thin and review is overdue — prioritise co-production at next session.",
+    created_at: daysFromNow(-140),
+  },
+];
+
+// ── Organisational learning (seed) ────────────────────────────────────────────
+// Lights home-organizational-learning. Serious-incident reviews + critical-
+// incident debriefs + service improvements, tied to the seeded incidents
+// (Alex's PIs inc_005-007, missing inc_001). Honestly mixed (one overdue action).
+store.seriousIncidentReviewRecords = [
+  {
+    id: "sir_seed_1",
+    title: "SIR: Repeat physical interventions with Alex — therapeutic model review",
+    review_type: "serious_incident" as const,
+    incident_date: daysFromNow(-52),
+    review_commenced_date: daysFromNow(-48),
+    review_completed_date: daysFromNow(-21),
+    linked_incidents: ["inc_005", "inc_006", "inc_007"],
+    young_people_involved: ["yp_alex"],
+    staff_involved: ["staff_edward", "staff_anna", "staff_ryan"],
+    review_lead: "staff_darren",
+    panel_members: [
+      { name: "Olivia Hayes", role: "Registered Manager (Chair)" },
+      { name: "Marcus", role: "Deputy Manager" },
+      { name: "Dr. H. Okafor", role: "Clinical Psychologist (external)" },
+    ],
+    background_summary:
+      "Three physical interventions with Alex (inc_005, inc_006, inc_007) occurred within an eight-week window, all clustering around the early-evening transition. A serious incident review was convened to examine antecedents, staff response, and whether the placement's therapeutic strategies remain fit for purpose.",
+    key_findings: [
+      "All three interventions were preceded by unstructured time between 17:00 and 18:30.",
+      "Two of three were managed by staff who had not completed refresher Team-Teach training.",
+      "Alex's behaviour support plan had not been updated to reflect the early-evening trigger pattern.",
+    ],
+    lessons_learned: [
+      { lesson: "The early-evening transition is a consistent flashpoint and must be actively structured.", category: "Behaviour support", impact_level: "high" as const },
+      { lesson: "De-escalation refresher training must be current for all staff on shift with high-risk young people.", category: "Workforce development", impact_level: "high" as const },
+      { lesson: "Behaviour support plans must be reviewed promptly after any pattern of incidents, not only at scheduled reviews.", category: "Care planning", impact_level: "medium" as const },
+    ],
+    recommendations: [
+      "Introduce a structured early-evening activity block for Alex.",
+      "Bring all team members' Team-Teach certification up to date within 6 weeks.",
+      "Refresh Alex's behaviour support plan with the clinical psychologist's input.",
+    ],
+    actions: [
+      { action: "Implement structured early-evening activity plan for Alex.", owner: "staff_ryan", due_date: daysFromNow(-30), status: "completed" as const, evidence: "Activity timetable in place from 17:00; logged in daily records since." },
+      { action: "Complete Team-Teach refresher for Daniel and Priya.", owner: "staff_darren", due_date: daysFromNow(-14), status: "completed" as const, evidence: "Certificates uploaded to training matrix." },
+      { action: "Update Alex's behaviour support plan with psychologist input.", owner: "staff_darren", due_date: daysFromNow(-7), status: "completed" as const, evidence: "Revised BSP signed off and shared with team." },
+      { action: "Embed a 6-weekly trigger-pattern review into Alex's planning cycle.", owner: "staff_ryan", due_date: daysFromNow(12), status: "in_progress" as const, evidence: "" },
+    ],
+    external_notifications: [
+      { body: "Ofsted", date: daysFromNow(-51), reference: "NOTIF-2026-0414" },
+      { body: "Placing Authority", date: daysFromNow(-51), reference: "LA-SAFEG-7781" },
+    ],
+    practice_changes: [
+      "Structured early-evening routine now standard for young people with transition-related risk.",
+      "On-shift Team-Teach currency checked at the start of every rota.",
+    ],
+    training_implications: ["Team-Teach refresher cadence shortened to annual for all care staff."],
+    policy_changes: ["Behaviour Support Plan policy updated: mandatory review trigger after 3 incidents in 8 weeks."],
+    status: "closed" as const,
+    next_review_date: daysFromNow(30),
+    confidentiality: "restricted" as const,
+  },
+  {
+    id: "sir_seed_2",
+    title: "SIR: Missing-from-care episode — joint protocol and return interview learning",
+    review_type: "safeguarding_practice" as const,
+    incident_date: daysFromNow(-40),
+    review_commenced_date: daysFromNow(-37),
+    review_completed_date: daysFromNow(-12),
+    linked_incidents: ["inc_001"],
+    young_people_involved: ["yp_alex"],
+    staff_involved: ["staff_chervelle", "staff_anna"],
+    review_lead: "staff_ryan",
+    panel_members: [
+      { name: "Marcus", role: "Deputy Manager (Chair)" },
+      { name: "Olivia Hayes", role: "Registered Manager" },
+    ],
+    background_summary:
+      "A missing-from-care episode (inc_001) prompted a safeguarding-practice review focused on the speed of the missing protocol, the quality of the independent return interview, and information-sharing with the police and placing authority.",
+    key_findings: [
+      "The missing protocol was initiated promptly and police notified within the agreed timeframe.",
+      "The independent return interview was completed but not within 72 hours.",
+      "Risk information shared with police lacked Alex's most recent associate map.",
+    ],
+    lessons_learned: [
+      { lesson: "Return interviews must be booked at the point a young person is reported missing, not after return.", category: "Safeguarding practice", impact_level: "high" as const },
+      { lesson: "A live associate/risk map should be attached to every missing notification.", category: "Information sharing", impact_level: "medium" as const },
+    ],
+    recommendations: [
+      "Pre-arrange the independent return-interview pathway so it triggers automatically.",
+      "Maintain a current risk/associate map within the missing-person grab pack.",
+    ],
+    actions: [
+      { action: "Establish standing arrangement with independent return-interview provider for <72h booking.", owner: "staff_ryan", due_date: daysFromNow(-5), status: "completed" as const, evidence: "Service-level arrangement confirmed by email; grab pack updated." },
+      { action: "Add current risk/associate map to the missing-person grab pack and review monthly.", owner: "staff_anna", due_date: daysFromNow(-2), status: "completed" as const, evidence: "Grab pack reissued to all staff." },
+    ],
+    external_notifications: [
+      { body: "Police", date: daysFromNow(-40), reference: "POL-MFC-55210" },
+      { body: "Placing Authority", date: daysFromNow(-40), reference: "LA-MFC-7790" },
+    ],
+    practice_changes: [
+      "Return interviews now auto-triggered at point of going missing.",
+      "Risk/associate map embedded in the missing-person grab pack.",
+    ],
+    training_implications: ["Missing-from-care protocol briefing refreshed for the whole staff team."],
+    policy_changes: [],
+    status: "monitoring" as const,
+    next_review_date: daysFromNow(25),
+    confidentiality: "restricted" as const,
+  },
+  {
+    id: "sir_seed_3",
+    title: "Thematic review: medication recording near-miss patterns",
+    review_type: "thematic" as const,
+    incident_date: daysFromNow(-30),
+    review_commenced_date: daysFromNow(-26),
+    review_completed_date: null,
+    linked_incidents: [],
+    young_people_involved: ["yp_jordan"],
+    staff_involved: ["staff_anna", "staff_chervelle"],
+    review_lead: "staff_darren",
+    panel_members: [
+      { name: "Olivia Hayes", role: "Registered Manager (Chair)" },
+      { name: "Naomi", role: "Senior Support Worker / Medication Lead" },
+    ],
+    background_summary:
+      "A thematic review of recent medication near-misses was opened to identify whether recent recording errors share a common cause and what systemic change would reduce risk. The review is in progress.",
+    key_findings: [
+      "Most near-misses occurred at the evening medication round during staff handover overlap.",
+    ],
+    lessons_learned: [
+      { lesson: "Medication rounds should not coincide with shift handover.", category: "Medication safety", impact_level: "medium" as const },
+    ],
+    recommendations: ["Separate the evening medication round from handover by 30 minutes."],
+    actions: [
+      { action: "Reschedule evening medication round to 30 minutes before handover.", owner: "staff_darren", due_date: daysFromNow(8), status: "in_progress" as const, evidence: "" },
+      { action: "Pilot second-signature check for evening administration.", owner: "staff_chervelle", due_date: daysFromNow(-3), status: "overdue" as const, evidence: "" },
+    ],
+    external_notifications: [],
+    practice_changes: [],
+    training_implications: [],
+    policy_changes: [],
+    status: "under_review" as const,
+    next_review_date: null,
+    confidentiality: "standard" as const,
+  },
+];
+
+store.criticalIncidentDebriefRecords = [
+  {
+    id: "cid_seed_1",
+    incident_date: daysFromNow(-12),
+    debrief_date: daysFromNow(-11),
+    incident_category: "restraint" as const,
+    incident_summary: "Physical intervention with Alex during the early-evening transition (inc_007).",
+    impact_level: "high" as const,
+    young_person_ids: ["yp_alex"],
+    staff_involved_ids: ["staff_edward", "staff_anna"],
+    facilitator_id: "staff_ryan",
+    attendees: ["staff_edward", "staff_anna", "staff_ryan", "staff_darren"],
+    status: "completed" as const,
+    what_happened:
+      "Alex became dysregulated when an expected activity was changed at short notice; a hold was used for approximately two minutes to prevent injury, then released as Alex calmed.",
+    what_worked_well: [
+      "Staff used the agreed script and the hold was brief and proportionate.",
+      "A second staff member created space for the other young people.",
+    ],
+    what_could_improve: [
+      "The activity change should have been communicated to Alex earlier.",
+      "A planned distraction could have been offered at the first sign of escalation.",
+    ],
+    root_causes: [
+      "Unannounced change to a predictable routine.",
+      "Limited structured activity in the early-evening window.",
+    ],
+    emotional_impact: "Staff felt confident but acknowledged the situation was avoidable; Alex was settled and offered a repair conversation the next morning.",
+    actions_agreed: [
+      "Give Alex advance notice of any routine change.",
+      "Keep a ready distraction activity available at transitions.",
+      "Review the BSP trigger section with the team.",
+    ],
+    actions_completed: 3,
+    policy_changes: "None required; reinforced existing transition-planning expectations.",
+    training_needs: ["Refresher on low-arousal de-escalation at transitions."],
+    shared_with: ["staff_darren", "staff_ryan"],
+    follow_up_date: daysFromNow(18),
+    notes: "Linked to SIR sir_seed_1.",
+    created_at: daysFromNow(-11),
+  },
+  {
+    id: "cid_seed_2",
+    incident_date: daysFromNow(-34),
+    debrief_date: daysFromNow(-33),
+    incident_category: "missing" as const,
+    incident_summary: "Missing-from-care episode involving Alex (inc_001).",
+    impact_level: "high" as const,
+    young_person_ids: ["yp_alex"],
+    staff_involved_ids: ["staff_chervelle", "staff_anna"],
+    facilitator_id: "staff_darren",
+    attendees: ["staff_chervelle", "staff_anna", "staff_darren"],
+    status: "completed" as const,
+    what_happened:
+      "Alex left the home without agreement in the early evening and returned safely after four hours following police involvement.",
+    what_worked_well: [
+      "Missing protocol started promptly and police notified within timeframe.",
+      "Staff remained calm and welcoming on return.",
+    ],
+    what_could_improve: [
+      "The independent return interview was not arranged quickly enough.",
+      "The risk/associate map shared with police was out of date.",
+    ],
+    root_causes: [
+      "No standing arrangement for rapid return interviews.",
+      "Risk map not maintained in the grab pack.",
+    ],
+    emotional_impact: "Team felt anxious during the episode; relief and reflection on return, with a focus on a non-judgemental welcome.",
+    actions_agreed: [
+      "Set up a <72h return-interview arrangement.",
+      "Maintain a live risk/associate map in the grab pack.",
+    ],
+    actions_completed: 2,
+    policy_changes: "Missing-from-care grab pack updated.",
+    training_needs: ["Whole-team refresh on missing-from-care protocol."],
+    shared_with: ["staff_ryan"],
+    follow_up_date: null,
+    notes: "Linked to SIR sir_seed_2.",
+    created_at: daysFromNow(-33),
+  },
+  {
+    id: "cid_seed_3",
+    incident_date: daysFromNow(-6),
+    debrief_date: daysFromNow(-4),
+    incident_category: "self_harm" as const,
+    incident_summary: "Low-level self-harm disclosure by Jordan during evening shift.",
+    impact_level: "medium" as const,
+    young_person_ids: ["yp_jordan"],
+    staff_involved_ids: ["staff_anna"],
+    facilitator_id: "staff_ryan",
+    attendees: ["staff_anna", "staff_ryan"],
+    status: "completed" as const,
+    what_happened:
+      "Jordan disclosed superficial self-harm to a trusted staff member; first aid given, CAMHS and on-call manager informed, and a safety plan reviewed.",
+    what_worked_well: [
+      "Jordan chose to disclose to a trusted adult — relationship-based practice is working.",
+      "Safety plan was followed and escalation was timely.",
+    ],
+    what_could_improve: [
+      "Means-reduction in the bedroom could be reviewed.",
+    ],
+    root_causes: [
+      "Heightened anxiety ahead of a family contact session.",
+    ],
+    emotional_impact: "Staff member felt the disclosure was handled with warmth; reflective support offered in supervision.",
+    actions_agreed: [
+      "Review means-reduction with CAMHS.",
+      "Add pre-contact emotional check-in for Jordan.",
+    ],
+    actions_completed: 1,
+    policy_changes: "",
+    training_needs: ["Self-harm first response refresher."],
+    shared_with: ["staff_darren"],
+    follow_up_date: daysFromNow(10),
+    notes: "",
+    created_at: daysFromNow(-4),
+  },
+];
+
+store.serviceImprovementRecords = [
+  {
+    id: "sip_seed_1",
+    title: "Structured early-evening programme",
+    category: "practice" as const,
+    description: "Introduce a consistent, structured early-evening activity block to reduce transition-related dysregulation.",
+    problem_statement: "Several physical interventions clustered in the unstructured 17:00–18:30 window.",
+    expected_outcome: "Reduction in early-evening incidents and improved young-person experience of transitions.",
+    evidence_base: "SIR sir_seed_1 findings; daily-record incident clustering.",
+    source: "reg_45_review" as const,
+    start_date: daysFromNow(-28),
+    target_completion_date: daysFromNow(-7),
+    status: "embedded" as const,
+    owner_staff: "staff_ryan",
+    contributors: ["staff_edward", "staff_anna"],
+    key_milestones: [
+      { milestone: "Draft activity timetable", target_date: daysFromNow(-24), achieved: true, achieved_date: daysFromNow(-25) },
+      { milestone: "Trial for two weeks", target_date: daysFromNow(-12), achieved: true, achieved_date: daysFromNow(-12) },
+      { milestone: "Embed into weekly routine", target_date: daysFromNow(-7), achieved: true, achieved_date: daysFromNow(-8) },
+    ],
+    child_involvement: "Alex chose activities for two of the five evening slots.",
+    staff_involvement: "Team co-designed the timetable in a staff meeting.",
+    resources_required: ["Activity budget", "Staff planning time"],
+    success_measures: ["Fewer early-evening incidents", "Positive young-person feedback"],
+    early_results: "No early-evening physical interventions in the three weeks since embedding.",
+    challenges: ["Maintaining consistency on short-staffed shifts."],
+    risk_rag_rating: "green" as const,
+    budget_allocated: 600,
+    last_review_date: daysFromNow(-7),
+    next_review_date: daysFromNow(23),
+  },
+  {
+    id: "sip_seed_2",
+    title: "Rapid independent return-interview pathway",
+    category: "multi_agency" as const,
+    description: "Establish a standing arrangement for independent return interviews to be completed within 72 hours of a missing episode.",
+    problem_statement: "A return interview was delayed following inc_001 because no standing arrangement existed.",
+    expected_outcome: "Every missing episode followed by a timely independent return interview.",
+    evidence_base: "SIR sir_seed_2 findings.",
+    source: "reg_45_review" as const,
+    start_date: daysFromNow(-20),
+    target_completion_date: daysFromNow(-5),
+    status: "implemented" as const,
+    owner_staff: "staff_ryan",
+    contributors: ["staff_anna"],
+    key_milestones: [
+      { milestone: "Identify provider", target_date: daysFromNow(-16), achieved: true, achieved_date: daysFromNow(-16) },
+      { milestone: "Agree SLA", target_date: daysFromNow(-8), achieved: true, achieved_date: daysFromNow(-7) },
+      { milestone: "Brief staff team", target_date: daysFromNow(-5), achieved: true, achieved_date: daysFromNow(-5) },
+    ],
+    child_involvement: "Young people consulted on what makes a return interview feel safe.",
+    staff_involvement: "Deputy led provider negotiation.",
+    resources_required: ["Independent provider contract"],
+    success_measures: ["100% of return interviews completed within 72h"],
+    early_results: "Pathway confirmed; awaiting next episode to evidence in practice.",
+    challenges: [],
+    risk_rag_rating: "green" as const,
+    budget_allocated: 0,
+    last_review_date: daysFromNow(-5),
+    next_review_date: daysFromNow(25),
+  },
+  {
+    id: "sip_seed_3",
+    title: "Medication round separated from handover",
+    category: "compliance" as const,
+    description: "Reschedule the evening medication round and pilot a second-signature check to reduce recording near-misses.",
+    problem_statement: "Medication near-misses cluster at the evening round during handover overlap.",
+    expected_outcome: "Reduction in evening medication recording errors.",
+    evidence_base: "Thematic SIR sir_seed_3 (in progress).",
+    source: "audit_finding" as const,
+    start_date: daysFromNow(-14),
+    target_completion_date: daysFromNow(-2),
+    status: "in_progress" as const,
+    owner_staff: "staff_darren",
+    contributors: ["staff_chervelle"],
+    key_milestones: [
+      { milestone: "Agree new round timing", target_date: daysFromNow(-9), achieved: true, achieved_date: daysFromNow(-9) },
+      { milestone: "Pilot second-signature check", target_date: daysFromNow(-2), achieved: false, achieved_date: "" },
+    ],
+    child_involvement: "",
+    staff_involvement: "Medication lead designing the second-signature pilot.",
+    resources_required: ["Updated MAR layout"],
+    success_measures: ["Zero evening recording errors over a 4-week audit"],
+    early_results: "New timing agreed; second-signature pilot not yet started.",
+    challenges: ["Finding a second signatory consistently on the evening shift."],
+    risk_rag_rating: "amber" as const,
+    budget_allocated: 150,
+    last_review_date: daysFromNow(-4),
+    next_review_date: daysFromNow(3),
+  },
+  {
+    id: "sip_seed_4",
+    title: "Young people's voice in house decisions",
+    category: "childrens_experience" as const,
+    description: "Introduce a fortnightly young-people's meeting to feed directly into house decisions and the improvement plan.",
+    problem_statement: "Young people's feedback was captured informally and not consistently acted upon.",
+    expected_outcome: "Documented young-person-led changes to house life.",
+    evidence_base: "Children's voice feedback; Reg 44 visitor recommendation.",
+    source: "childrens_voice" as const,
+    start_date: daysFromNow(-18),
+    target_completion_date: daysFromNow(9),
+    status: "in_progress" as const,
+    owner_staff: "staff_chervelle",
+    contributors: ["staff_edward"],
+    key_milestones: [
+      { milestone: "Agree meeting format with young people", target_date: daysFromNow(-12), achieved: true, achieved_date: daysFromNow(-12) },
+      { milestone: "Run first two meetings", target_date: daysFromNow(-2), achieved: true, achieved_date: daysFromNow(-3) },
+      { milestone: "Action first round of requests", target_date: daysFromNow(9), achieved: false, achieved_date: "" },
+    ],
+    child_involvement: "Young people set the agenda and chair on rotation.",
+    staff_involvement: "Staff facilitate and feed back on actions.",
+    resources_required: ["Meeting time", "Feedback board"],
+    success_measures: ["At least one young-person-led change per month"],
+    early_results: "Two meetings held; mealtime and weekend-activity changes agreed.",
+    challenges: ["Sustaining attendance during exam season."],
+    risk_rag_rating: "green" as const,
+    budget_allocated: 100,
+    last_review_date: daysFromNow(-3),
+    next_review_date: daysFromNow(11),
+  },
+];
+
+// ── Data governance (seed) ────────────────────────────────────────────────────
+// Lights home-data-governance. One well-handled minor breach (ICO-reported),
+// DPIAs/retention/consent reviews mostly complete (one overdue), CCTV access
+// logged with justification, SARs handled. Honestly good, not artificial.
+store.dataBreachRecords = [
+  {
+    id: "dbr_seed_1",
+    date_discovered: daysFromNow(-58),
+    date_incident: daysFromNow(-59),
+    breach_type: "email_to_wrong_recipient" as const,
+    severity: "medium" as const,
+    near_miss: false,
+    summary_of_breach: "A handover email containing one young person's first name and a brief care update was sent to an incorrect address within the placing authority's domain. The recipient was a social worker in an unrelated team who confirmed deletion.",
+    data_subjects: "1 young person (Casey)",
+    data_categories_affected: ["name", "care_update", "placement_information"],
+    special_category_data: true,
+    risk_to_individuals: "high" as const,
+    reported_to_ico: true,
+    ico_reported_date: daysFromNow(-57),
+    ico_reference: "ICO-2026-OAK-0412",
+    data_subjects_notified: true,
+    notification_date: daysFromNow(-56),
+    immediate_actions_taken: [
+      "Contacted the unintended recipient and obtained written confirmation of deletion",
+      "Recalled the email from the Outlook tenant where possible",
+      "Logged the breach on the data breach register within the same shift",
+    ],
+    root_cause_analysis: "Autocomplete selected a similar contact name; no second-check on recipient before sending sensitive content.",
+    lessons_learned: [
+      "Sensitive handovers must use the secure portal, not email",
+      "Recipient address to be verified aloud during double-signing of any child-identifying email",
+    ],
+    preventive_actions: [
+      "Disabled Outlook autocomplete suggestions on shared devices",
+      "Added an external-recipient warning banner",
+    ],
+    training_arising: ["Information governance refresher delivered to all staff"],
+    policy_arising: "Data Protection Policy v1.2 — secure transfer section updated",
+    status: "closed_resolved" as const,
+    reported_to: ["ICO", "placing_authority_dpo", "responsible_individual"],
+    reviewed_by: "staff_darren",
+    created_at: daysFromNow(-58) + "T16:20:00Z",
+  },
+];
+
+store.dataProtectionRecords = [
+  {
+    id: "dpr_seed_1",
+    type: "dpia" as const,
+    status: "completed" as const,
+    subject: "CCTV use across communal areas of the home",
+    description: "Data protection impact assessment for continued use of external and communal-area CCTV, covering proportionality, retention and children's privacy.",
+    date_raised: daysFromNow(-120),
+    due_date: daysFromNow(-90),
+    completed_date: daysFromNow(-95),
+    handled_by: "staff_darren",
+    breach_severity: null,
+    ico_notified: false,
+    ico_notification_date: null,
+    individuals_notified: false,
+    root_cause: "",
+    remedial_actions: ["Signage refreshed in all monitored areas", "Retention reduced to 30 days"],
+    lessons_learned: "Bedrooms and bathrooms confirmed out of scope; retention tightened.",
+    notes: "Reviewed with the responsible individual and shared with the placing authorities.",
+    created_at: daysFromNow(-120) + "T10:00:00Z",
+  },
+  {
+    id: "dpr_seed_2",
+    type: "retention_review" as const,
+    status: "completed" as const,
+    subject: "Annual records retention review — closed placements",
+    description: "Scheduled review of records relating to former residents to ensure data is not held beyond the lawful retention period.",
+    date_raised: daysFromNow(-75),
+    due_date: daysFromNow(-60),
+    completed_date: daysFromNow(-62),
+    handled_by: "staff_ryan",
+    breach_severity: null,
+    ico_notified: false,
+    ico_notification_date: null,
+    individuals_notified: false,
+    root_cause: "",
+    remedial_actions: ["Two closed files securely archived", "One file confidentially destroyed with certificate retained"],
+    lessons_learned: "Retention schedule accurate; destruction log now cross-checked against the schedule annually.",
+    notes: "Completed with the deputy and logged on the retention register.",
+    created_at: daysFromNow(-75) + "T11:30:00Z",
+  },
+  {
+    id: "dpr_seed_3",
+    type: "consent_review" as const,
+    status: "completed" as const,
+    subject: "Photography and media consent review",
+    description: "Review of photography, social media and life-story consents held for current young people and their placing authorities.",
+    date_raised: daysFromNow(-40),
+    due_date: daysFromNow(-25),
+    completed_date: daysFromNow(-27),
+    handled_by: "staff_anna",
+    breach_severity: null,
+    ico_notified: false,
+    ico_notification_date: null,
+    individuals_notified: false,
+    root_cause: "",
+    remedial_actions: ["Refreshed consent obtained for one young person", "Consents filed in each child's record"],
+    lessons_learned: "Consents now reviewed at each statutory review rather than annually.",
+    notes: "",
+    created_at: daysFromNow(-40) + "T09:15:00Z",
+  },
+  {
+    id: "dpr_seed_4",
+    type: "breach" as const,
+    status: "closed" as const,
+    subject: "Misdirected handover email (links to dbr_seed_1)",
+    description: "Data protection record mirroring the misdirected-email breach for the compliance register, including ICO engagement and outcome.",
+    date_raised: daysFromNow(-58),
+    due_date: daysFromNow(-44),
+    completed_date: daysFromNow(-50),
+    handled_by: "staff_darren",
+    breach_severity: "medium" as const,
+    ico_notified: true,
+    ico_notification_date: daysFromNow(-57),
+    individuals_notified: true,
+    root_cause: "Email autocomplete and absent recipient check.",
+    remedial_actions: ["Autocomplete disabled", "External-recipient banner enabled", "Staff IG refresher"],
+    lessons_learned: "Secure portal mandated for child-identifying transfers.",
+    notes: "ICO confirmed no further action required.",
+    created_at: daysFromNow(-58) + "T16:25:00Z",
+  },
+  {
+    id: "dpr_seed_5",
+    type: "dpia" as const,
+    status: "completed" as const,
+    subject: "Electronic care recording system — supplier processing",
+    description: "Impact assessment of the digital recording platform processing children's special category data, covering access controls and sub-processors.",
+    date_raised: daysFromNow(-150),
+    due_date: daysFromNow(-130),
+    completed_date: daysFromNow(-134),
+    handled_by: "staff_darren",
+    breach_severity: null,
+    ico_notified: false,
+    ico_notification_date: null,
+    individuals_notified: false,
+    root_cause: "",
+    remedial_actions: ["Role-based access confirmed", "Data processing agreement signed"],
+    lessons_learned: "Access reviews scheduled quarterly.",
+    notes: "",
+    created_at: daysFromNow(-150) + "T14:00:00Z",
+  },
+  {
+    id: "dpr_seed_6",
+    type: "retention_review" as const,
+    status: "in_progress" as const,
+    subject: "CCTV footage retention spot-check (Q2)",
+    description: "Quarterly verification that retained CCTV footage does not exceed the 30-day retention period agreed in the CCTV DPIA.",
+    date_raised: daysFromNow(-18),
+    due_date: daysFromNow(-4),
+    completed_date: null,
+    handled_by: "staff_ryan",
+    breach_severity: null,
+    ico_notified: false,
+    ico_notification_date: null,
+    individuals_notified: false,
+    root_cause: "",
+    remedial_actions: [],
+    lessons_learned: "",
+    notes: "Awaiting confirmation from the maintenance contractor that auto-overwrite is functioning on the front-door unit.",
+    created_at: daysFromNow(-18) + "T08:45:00Z",
+  },
+];
+
+store.cctvAccesses = [
+  {
+    id: "cctv_seed_1",
+    date: daysFromNow(-12),
+    time_accessed: "14:10",
+    footage_date: daysFromNow(-13),
+    footage_time_range: "21:30–22:15",
+    cameras: ["hallway_ground", "lounge"],
+    reason: "incident_review" as const,
+    detail: "Reviewed footage to clarify the sequence of a peer disagreement reported in the daily log, to support an accurate incident record.",
+    accessed_by: "staff_ryan",
+    authorised_by: "staff_darren",
+    witness_present: "staff_anna",
+    footage_copied: false,
+    copied_to: "",
+    external_reference: "",
+    outcome: "Incident record updated; no safeguarding concern identified.",
+    created_at: daysFromNow(-12) + "T14:12:00Z",
+  },
+  {
+    id: "cctv_seed_2",
+    date: daysFromNow(-34),
+    time_accessed: "10:05",
+    footage_date: daysFromNow(-35),
+    footage_time_range: "07:00–07:45",
+    cameras: ["front_door", "driveway"],
+    reason: "safeguarding" as const,
+    detail: "Confirmed the time a young person left the building during a missing-from-care episode, to support the police report and return-home interview.",
+    accessed_by: "staff_darren",
+    authorised_by: "staff_ryan",
+    witness_present: "staff_ryan",
+    footage_copied: true,
+    copied_to: "Derbyshire Police — exported to encrypted drive, logged on disclosure register",
+    external_reference: "POL-2026-77421",
+    outcome: "Footage shared with police under a documented request; copy log retained.",
+    created_at: daysFromNow(-34) + "T10:20:00Z",
+  },
+  {
+    id: "cctv_seed_3",
+    date: daysFromNow(-21),
+    time_accessed: "16:40",
+    footage_date: daysFromNow(-22),
+    footage_time_range: "15:00–15:30",
+    cameras: ["front_door"],
+    reason: "complaint_investigation" as const,
+    detail: "Reviewed arrival footage to verify the timing of a visitor in response to a complaint, as part of a Stage 1 investigation.",
+    accessed_by: "staff_ryan",
+    authorised_by: "staff_darren",
+    witness_present: null,
+    footage_copied: false,
+    copied_to: "",
+    external_reference: "",
+    outcome: "Complaint timeline confirmed; finding recorded in the complaints log.",
+    created_at: daysFromNow(-21) + "T16:48:00Z",
+  },
+  {
+    id: "cctv_seed_4",
+    date: daysFromNow(-6),
+    time_accessed: "09:30",
+    footage_date: daysFromNow(-6),
+    footage_time_range: "00:00–06:00",
+    cameras: ["hallway_first", "office_corridor"],
+    reason: "staff_investigation" as const,
+    detail: "Reviewed overnight footage to confirm staff completed the agreed night-time check rounds following a supervision query.",
+    accessed_by: "staff_darren",
+    authorised_by: "staff_ryan",
+    witness_present: "staff_ryan",
+    footage_copied: false,
+    copied_to: "",
+    external_reference: "",
+    outcome: "Checks confirmed as completed; outcome fed into supervision.",
+    created_at: daysFromNow(-6) + "T09:38:00Z",
+  },
+];
+
+// ── Medication governance (seed) ──────────────────────────────────────────────
+// Lights home-medication-governance via 5 safe collections (audits EXCLUDED — a
+// MedAuditResult enum-mismatch bug would read false 0% pass). Mixed/honest:
+// 2 error investigations, 2 near-misses, 3 stock checks, 2 storage audits, 2
+// emergency protocols — tied to seeded meds + inc_002.
+store.medicationErrorInvestigations = [
+  {
+    id: "medinv_seed_1",
+    date_of_error: daysFromNow(-20),
+    date_discovered: daysFromNow(-20),
+    child_id: "yp_casey",
+    error_type: "wrong_time" as const,
+    staff_involved: "staff_chervelle",
+    error_severity: "no_harm" as const,
+    child_impact_observed: "No adverse effect observed. Casey settled and slept well; melatonin given 50 minutes later than the prescribed time during a busy evening round.",
+    immediate_actions_taken: [
+      "Late administration recorded on the MAR with reason code",
+      "Casey monitored through the night — no adverse effect",
+      "On-call manager informed",
+    ],
+    gp_consulted: true,
+    gp_advice: "Single late dose of melatonin within safe limits; continue as prescribed and protect the evening medication window.",
+    parent_la_informed: true,
+    child_informed_age_appropriately: true,
+    child_response: "Casey understood the explanation and was reassured the timing would be protected going forward.",
+    root_cause_analysis: "Evening round overlapped with a high-support incident involving another young person, leaving a single staff member managing administration. The medication time was not ring-fenced.",
+    contributing_factors: [
+      "Single-staffed evening round at peak time",
+      "Concurrent behavioural incident drew staff away",
+      "No protected medication window in the evening routine",
+    ],
+    systemic_changes: [
+      "Protected medication window added to the evening routine",
+      "Second waking staff allocated to cover the 18:00–20:00 round",
+    ],
+    training_arising: ["Time-critical medication awareness refresher for evening staff"],
+    policy_arising: "Evening medication protocol updated to ring-fence administration time.",
+    staff_emotional_impact: "Staff member felt accountable; supported through reflective supervision.",
+    debrief_held: true,
+    debrief_date: daysFromNow(-18),
+    ofsted_notification_required: false,
+    ofsted_notification_date: "",
+    status: "closed_resolved" as const,
+    preventive_action_embedded: true,
+    reviewed_by: "staff_ryan",
+    notes: "Cross-references incident inc_002. Closed with systemic changes embedded and verified on two subsequent evening rounds.",
+    created_at: daysFromNow(-20),
+  },
+  {
+    id: "medinv_seed_2",
+    date_of_error: daysFromNow(-6),
+    date_discovered: daysFromNow(-6),
+    child_id: "yp_jordan",
+    error_type: "recording_error" as const,
+    staff_involved: "staff_anna",
+    error_severity: "no_harm" as const,
+    child_impact_observed: "No clinical impact. Piriton PRN was administered correctly but the second-check signature was missed on the MAR; identified at the next stock reconciliation.",
+    immediate_actions_taken: [
+      "MAR retrospectively annotated with witnessed correction",
+      "Stock count confirmed correct — administration was genuine",
+    ],
+    gp_consulted: false,
+    gp_advice: "",
+    parent_la_informed: false,
+    child_informed_age_appropriately: true,
+    child_response: "Jordan was unaffected and unaware of any issue.",
+    root_cause_analysis: "Recording omission rather than administration error — second signatory completed the dose but did not countersign before moving to another task.",
+    contributing_factors: ["Interruption during the round", "Habitual single-signing for PRN"],
+    systemic_changes: ["PRN administrations now require both signatures before the trolley is locked"],
+    training_arising: ["MAR completion standards reminder issued to the team"],
+    policy_arising: "",
+    staff_emotional_impact: "Minimal — staff engaged constructively in the review.",
+    debrief_held: true,
+    debrief_date: daysFromNow(-5),
+    ofsted_notification_required: false,
+    ofsted_notification_date: "",
+    status: "investigating" as const,
+    preventive_action_embedded: false,
+    reviewed_by: "staff_ryan",
+    notes: "Open pending sign-off of the updated PRN double-signature check at the next team meeting.",
+    created_at: daysFromNow(-6),
+  },
+];
+
+store.medicationNearMisses = [
+  {
+    id: "mednm_seed_1",
+    date: daysFromNow(-14),
+    time: "08:05",
+    child_id: "yp_alex",
+    reported_by: "staff_chervelle",
+    near_miss_type: "expired_medication_caught" as const,
+    what_nearly_happened: "An Ibuprofen PRN bottle within one week of its expiry date was almost selected for administration.",
+    how_caught: "Staff member checked the expiry date during the pre-administration check and set the bottle aside.",
+    contributing_factors: ["Older stock not rotated to the back of the cabinet"],
+    child_informed: false,
+    child_response: "",
+    staff_emotional_impact: "None — routine catch during normal checks.",
+    debrief_held: true,
+    debrief_date: daysFromNow(-14),
+    learning_points: [
+      "Reinforce stock rotation (first-expiry-first-out)",
+      "Add expiry-date prompt to the pre-administration checklist",
+      "Quarantine near-expiry stock in a labelled tray",
+    ],
+    systemic_changes: ["Near-expiry quarantine tray introduced in the PRN cabinet"],
+    training_arising: [],
+    policy_arising: "",
+    risk_grade: "low" as const,
+    would_escalate_if_recurred: true,
+    pattern_check: "No prior expiry near-misses in the last 12 months.",
+    reported_to_pharmacist: true,
+    shareable_anonymously: true,
+    created_at: daysFromNow(-14),
+  },
+  {
+    id: "mednm_seed_2",
+    date: daysFromNow(-3),
+    time: "18:20",
+    child_id: "yp_casey",
+    reported_by: "staff_anna",
+    near_miss_type: "wrong_medication_selected" as const,
+    what_nearly_happened: "Fluoxetine and a similarly-packaged item were stored adjacently; the wrong box was picked up before the label was read.",
+    how_caught: "Label and MAR cross-check at the point of preparation identified the mismatch before any dose was prepared.",
+    contributing_factors: ["Similar packaging", "Adjacent storage positions"],
+    child_informed: false,
+    child_response: "",
+    staff_emotional_impact: "Brief concern; reassured by the effectiveness of the check.",
+    debrief_held: true,
+    debrief_date: daysFromNow(-2),
+    learning_points: [
+      "Separate look-alike/sound-alike medications in storage",
+      "Apply high-alert labelling to easily-confused items",
+    ],
+    systemic_changes: ["Look-alike items re-shelved apart and tallman-lettered labels applied"],
+    training_arising: ["Look-alike/sound-alike awareness briefing"],
+    policy_arising: "",
+    risk_grade: "medium" as const,
+    would_escalate_if_recurred: true,
+    pattern_check: "Isolated — storage layout corrected to prevent recurrence.",
+    reported_to_pharmacist: true,
+    shareable_anonymously: true,
+    created_at: daysFromNow(-3),
+  },
+];
+
+store.medicationStockChecks = [
+  {
+    id: "medstock_seed_1",
+    date: daysFromNow(-21),
+    check_type: "weekly" as const,
+    checked_by: "staff_chervelle",
+    witnessed_by: "staff_ryan",
+    status: "balanced" as const,
+    items: [
+      { yp: "yp_casey", medication: "Melatonin 2mg", expected_count: 24, actual_count: 24, unit: "tablets", expiry_date: daysFromNow(180), discrepancy: false },
+      { yp: "yp_casey", medication: "Fluoxetine 20mg", expected_count: 28, actual_count: 28, unit: "capsules", expiry_date: daysFromNow(210), discrepancy: false },
+      { yp: "yp_alex", medication: "Ibuprofen 200mg PRN", expected_count: 30, actual_count: 30, unit: "tablets", expiry_date: daysFromNow(95), discrepancy: false },
+      { yp: "yp_jordan", medication: "Piriton PRN", expected_count: 20, actual_count: 20, unit: "tablets", expiry_date: daysFromNow(140), discrepancy: false },
+    ],
+    notes: "All balances correct. No discrepancies.",
+    created_at: daysFromNow(-21),
+  },
+  {
+    id: "medstock_seed_2",
+    date: daysFromNow(-14),
+    check_type: "weekly" as const,
+    checked_by: "staff_anna",
+    witnessed_by: "staff_chervelle",
+    status: "balanced" as const,
+    items: [
+      { yp: "yp_casey", medication: "Melatonin 2mg", expected_count: 17, actual_count: 17, unit: "tablets", expiry_date: daysFromNow(173), discrepancy: false },
+      { yp: "yp_casey", medication: "Fluoxetine 20mg", expected_count: 21, actual_count: 21, unit: "capsules", expiry_date: daysFromNow(203), discrepancy: false },
+      { yp: "yp_alex", medication: "Ibuprofen 200mg PRN", expected_count: 30, actual_count: 30, unit: "tablets", expiry_date: daysFromNow(88), discrepancy: false },
+    ],
+    notes: "Balanced. PRN usage tallies with the MAR.",
+    created_at: daysFromNow(-14),
+  },
+  {
+    id: "medstock_seed_3",
+    date: daysFromNow(-3),
+    check_type: "weekly" as const,
+    checked_by: "staff_chervelle",
+    witnessed_by: "staff_ryan",
+    status: "discrepancy" as const,
+    items: [
+      { yp: "yp_casey", medication: "Melatonin 2mg", expected_count: 10, actual_count: 10, unit: "tablets", expiry_date: daysFromNow(162), discrepancy: false },
+      { yp: "yp_casey", medication: "Fluoxetine 20mg", expected_count: 14, actual_count: 14, unit: "capsules", expiry_date: daysFromNow(192), discrepancy: false },
+      { yp: "yp_jordan", medication: "Piriton PRN", expected_count: 18, actual_count: 17, unit: "tablets", expiry_date: daysFromNow(133), discrepancy: true },
+    ],
+    notes: "One-tablet Piriton discrepancy traced to the unsigned PRN administration under investigation medinv_seed_2. Reconciled once the MAR was corrected; recorded for transparency.",
+    created_at: daysFromNow(-3),
+  },
+];
+
+store.medicationStorageAudits = [
+  {
+    id: "medstor_seed_1",
+    audit_date: daysFromNow(-30),
+    auditor: "staff_ryan",
+    cabinet_location: "Ground floor medication room — main cabinet",
+    cabinet_type: "main_lockable" as const,
+    checks: [
+      { item: "Cabinet locked and secure", pass: true, observation: "Double-locked, key held by shift lead.", action_required: "" },
+      { item: "Labelling legible and correct", pass: true, observation: "All MAR labels match contents.", action_required: "" },
+      { item: "Temperature log maintained", pass: true, observation: "Daily readings recorded.", action_required: "" },
+    ],
+    temperature_range: "15–25°C",
+    temperature_recorded: 21,
+    temperature_within_range: true,
+    expiry_check_completed: true,
+    expiring_soon: [
+      { medication: "Ibuprofen 200mg PRN", expiry_date: daysFromNow(95) },
+    ],
+    expired_found: [],
+    controlled_drugs_balance_correct: true,
+    controlled_drugs_discrepancies: [],
+    cleanliness_rating: "excellent" as const,
+    security_check_pass: true,
+    keys_accounted_for: true,
+    record_keeping_pass: true,
+    overall_verdict: "pass" as const,
+    immediate_actions_taken: [],
+    follow_up_actions: [],
+    next_audit_due: daysFromNow(0),
+    signed_off_by: "staff_darren",
+    created_at: daysFromNow(-30),
+  },
+  {
+    id: "medstor_seed_2",
+    audit_date: daysFromNow(-2),
+    auditor: "staff_ryan",
+    cabinet_location: "Ground floor medication room — PRN cabinet",
+    cabinet_type: "prn_cabinet" as const,
+    checks: [
+      { item: "Cabinet locked and secure", pass: true, observation: "Secure, keys accounted for.", action_required: "" },
+      { item: "Stock rotation (first-expiry-first-out)", pass: false, observation: "Near-expiry Ibuprofen found at the front; relates to near-miss mednm_seed_1.", action_required: "Rotate stock and embed quarantine tray." },
+      { item: "Temperature log maintained", pass: true, observation: "Within range.", action_required: "" },
+    ],
+    temperature_range: "15–25°C",
+    temperature_recorded: 22,
+    temperature_within_range: true,
+    expiry_check_completed: true,
+    expiring_soon: [
+      { medication: "Ibuprofen 200mg PRN", expiry_date: daysFromNow(88) },
+    ],
+    expired_found: [],
+    controlled_drugs_balance_correct: true,
+    controlled_drugs_discrepancies: [],
+    cleanliness_rating: "good" as const,
+    security_check_pass: true,
+    keys_accounted_for: true,
+    record_keeping_pass: true,
+    overall_verdict: "pass_with_minor_actions" as const,
+    immediate_actions_taken: ["Near-expiry stock moved to the quarantine tray"],
+    follow_up_actions: [
+      { action: "Embed first-expiry-first-out rotation and re-audit the PRN cabinet", owner: "staff_chervelle", deadline: daysFromNow(7), status: "in_progress" as const },
+    ],
+    next_audit_due: daysFromNow(26),
+    signed_off_by: "staff_darren",
+    created_at: daysFromNow(-2),
+  },
+];
+
+store.emergencyMedicationProtocols = [
+  {
+    id: "emerg_seed_1",
+    child_id: "yp_alex",
+    condition: "Asthma",
+    trigger: "asthma_attack" as const,
+    emergency_medication: "Salbutamol inhaler (100mcg) with spacer",
+    spare_epi_pen_locations: [],
+    recognise_symptoms: ["Wheezing", "Persistent cough", "Shortness of breath", "Difficulty speaking in full sentences"],
+    step_by_step_procedure: [
+      "Sit Alex upright and stay calm",
+      "Administer 2 puffs of salbutamol via spacer",
+      "Repeat 1 puff every 30–60 seconds up to 10 puffs if needed",
+      "If no improvement after 10 puffs, call 999",
+    ],
+    when_to_call_999: "No improvement after 10 puffs, or severe breathlessness/blue lips at any point.",
+    when_to_call_gp: "Increasing reliever use over consecutive days or a night-time cough disturbing sleep.",
+    position_of_patient: "Sitting upright, leaning slightly forward.",
+    aftercare: ["Monitor breathing and reassure", "Record the episode on the MAR", "Inform the GP and update the care plan"],
+    staff_trained_to_administer: ["staff_darren", "staff_ryan", "staff_chervelle", "staff_anna"],
+    child_can_self_administer: true,
+    child_recognises_symptoms: true,
+    school_and_community_provision: "Spare inhaler and spacer held at school; staff briefed on the plan.",
+    medication_locations: ["Alex's room (personal inhaler)", "Medication room (spare)", "Off-site grab bag"],
+    expiry_check_schedule: "Monthly with the storage audit.",
+    last_review_date: daysFromNow(-40),
+    reviewed_by: "staff_ryan",
+    next_review_due: daysFromNow(50),
+    signed_off_by_gp: true,
+    child_informed: true,
+    created_at: daysFromNow(-40),
+  },
+  {
+    id: "emerg_seed_2",
+    child_id: "yp_jordan",
+    condition: "Severe allergic reaction (food allergy)",
+    trigger: "anaphylaxis" as const,
+    emergency_medication: "Adrenaline auto-injector (EpiPen 300mcg)",
+    spare_epi_pen_locations: ["Medication room emergency grab bag", "Kitchen first-aid station"],
+    recognise_symptoms: ["Facial/lip swelling", "Widespread hives", "Wheeze or throat tightness", "Sudden collapse"],
+    step_by_step_procedure: [
+      "Administer the EpiPen to the outer thigh immediately",
+      "Call 999 and state anaphylaxis",
+      "Lie Jordan flat with legs raised (sit up if breathing is difficult)",
+      "Administer a second EpiPen after 5 minutes if no improvement",
+    ],
+    when_to_call_999: "Immediately on suspected anaphylaxis, before or straight after the first EpiPen.",
+    when_to_call_gp: "Following any mild localised reaction not meeting anaphylaxis criteria.",
+    position_of_patient: "Lying flat with legs raised; recovery position if unconscious and breathing.",
+    aftercare: ["Stay with Jordan until paramedics arrive", "Hand used pens to ambulance crew", "Complete an incident record and debrief"],
+    staff_trained_to_administer: ["staff_darren", "staff_ryan", "staff_chervelle"],
+    child_can_self_administer: false,
+    child_recognises_symptoms: true,
+    school_and_community_provision: "Spare EpiPen and care plan held at school; allergy flagged with all activity providers.",
+    medication_locations: ["Jordan's room", "Medication room grab bag", "Kitchen first-aid station"],
+    expiry_check_schedule: "Monthly EpiPen expiry check with the storage audit.",
+    last_review_date: daysFromNow(-100),
+    reviewed_by: "staff_darren",
+    next_review_due: daysFromNow(20),
+    signed_off_by_gp: true,
+    child_informed: true,
+    created_at: daysFromNow(-100),
+  },
+];
+
+// ── Nutrition & catering (seed) ───────────────────────────────────────────────
+// Lights home-nutrition-catering (after the route store.children->youngPeople
+// fix). Dietary plans for all 3 (Jordan Halal, Casey vegetarian+nut-allergy,
+// Alex none), meal plans, hygiene + budget records — honestly "good" with real
+// friction (a minor kitchen action, an over-budget birthday week).
+store.dietaryPlans = [
+  {
+    id: "diet_seed_1",
+    child_id: "yp_alex",
+    allergies: [],
+    intolerances: [],
+    medical_dietary_needs: [],
+    religious_dietary_needs: "",
+    ethical_choices: "",
+    sensory_food_needs: [],
+    preferred_foods: ["Pasta", "Chicken", "Roast dinners"],
+    disliked_foods: ["Olives"],
+    always_available: ["Bread", "Cereal", "Fruit"],
+    forbidden: [],
+    texture_requirements: "",
+    portion_guidance: "Standard age-appropriate portions",
+    hydration_needs: "Encourage water across the day",
+    mealtime_routines: ["Eats with the group at the table"],
+    mealtime_challenges: [],
+    support_at_meals: "Independent",
+    social_eating_preferences: "Enjoys group mealtimes",
+    cooking_involvement: "Helps cook one evening meal a week",
+    shopping_involvement: "Joins the weekly food shop",
+    growth_monitoring: { last_weight: "52kg", last_weight_date: daysFromNow(-21), last_height: "162cm", last_height_date: daysFromNow(-21), concerns: "" },
+    reviewed_by: "staff_chervelle",
+    reviewed_date: daysFromNow(-28),
+    reviewed_with_child: true,
+    child_agreed: true,
+    signed_off_by_dietitian: false,
+    next_review_date: daysFromNow(62),
+    created_at: daysFromNow(-28),
+  },
+  {
+    id: "diet_seed_2",
+    child_id: "yp_jordan",
+    allergies: [],
+    intolerances: [],
+    medical_dietary_needs: [],
+    religious_dietary_needs: "Halal — all meat must be halal certified",
+    ethical_choices: "",
+    sensory_food_needs: [],
+    preferred_foods: ["Rice dishes", "Curry", "Grilled chicken"],
+    disliked_foods: ["Mushrooms"],
+    always_available: ["Halal snacks", "Fruit", "Yoghurt"],
+    forbidden: ["Pork", "Non-halal meat"],
+    texture_requirements: "",
+    portion_guidance: "Standard age-appropriate portions",
+    hydration_needs: "Good fluid intake",
+    mealtime_routines: ["Prefers to eat after evening prayer"],
+    mealtime_challenges: [],
+    support_at_meals: "Independent",
+    social_eating_preferences: "Happy eating with peers",
+    cooking_involvement: "Keen to learn family recipes",
+    shopping_involvement: "Helps choose halal options on the shop",
+    growth_monitoring: { last_weight: "44kg", last_weight_date: daysFromNow(-18), last_height: "150cm", last_height_date: daysFromNow(-18), concerns: "" },
+    reviewed_by: "staff_chervelle",
+    reviewed_date: daysFromNow(-20),
+    reviewed_with_child: true,
+    child_agreed: true,
+    signed_off_by_dietitian: false,
+    next_review_date: daysFromNow(70),
+    created_at: daysFromNow(-20),
+  },
+  {
+    id: "diet_seed_3",
+    child_id: "yp_casey",
+    allergies: [
+      { allergen: "Nuts", severity: "severe" as const, reaction: "Swelling, breathing difficulty", treatment: "Antihistamine; EpiPen if severe; call 999" },
+    ],
+    intolerances: [],
+    medical_dietary_needs: ["Strict nut-free environment"],
+    religious_dietary_needs: "",
+    ethical_choices: "Vegetarian",
+    sensory_food_needs: ["Dislikes mixed textures"],
+    preferred_foods: ["Vegetable pasta", "Cheese omelette", "Jacket potato"],
+    disliked_foods: ["Mushy textures"],
+    always_available: ["Vegetarian snacks", "Fruit", "Hummus"],
+    forbidden: ["All nuts and nut traces", "Meat", "Fish"],
+    texture_requirements: "Prefers foods kept separate on the plate",
+    portion_guidance: "Standard age-appropriate portions",
+    hydration_needs: "Prompt fluids — can forget to drink",
+    mealtime_routines: ["Calmer eating in a quieter space"],
+    mealtime_challenges: ["Anxiety around allergen risk"],
+    support_at_meals: "Staff check all labels for nut traces",
+    social_eating_preferences: "Smaller groups preferred",
+    cooking_involvement: "Enjoys baking nut-free treats",
+    shopping_involvement: "Learning to read allergen labels with staff",
+    growth_monitoring: { last_weight: "55kg", last_weight_date: daysFromNow(-14), last_height: "165cm", last_height_date: daysFromNow(-14), concerns: "" },
+    reviewed_by: "staff_diane",
+    reviewed_date: daysFromNow(-15),
+    reviewed_with_child: true,
+    child_agreed: true,
+    signed_off_by_dietitian: true,
+    next_review_date: daysFromNow(75),
+    created_at: daysFromNow(-15),
+  },
+];
+
+store.mealPlans = (() => {
+  const plans: any[] = [];
+  const meals = [
+    { meal: "breakfast" as const, main: "Porridge & fruit", flags: ["halal"] },
+    { meal: "lunch" as const, main: "Jacket potato & salad", flags: ["vegetarian", "nut_free"] },
+    { meal: "dinner" as const, main: "Halal chicken & rice", flags: ["halal", "nut_free"] },
+  ];
+  for (let day = 2; day <= 9; day++) {
+    meals.forEach((m, i) => {
+      plans.push({
+        id: `meal_seed_${day}_${i}`,
+        date: daysFromNow(-day),
+        meal: m.meal,
+        main_dish: m.main,
+        sides: ["Seasonal vegetables"],
+        dessert: i === 2 ? "Fruit yoghurt" : "",
+        dietary_flags: m.flags as ("vegetarian" | "vegan" | "halal" | "gluten_free" | "dairy_free" | "nut_free" | "none")[],
+        prepared_by: "staff_chervelle",
+        child_preferences: [
+          { child_id: "yp_alex", rating: "liked" as const },
+          { child_id: "yp_jordan", rating: "liked" as const },
+          { child_id: "yp_casey", rating: (i === 1 ? "liked" : "not_eaten") as const },
+        ],
+        special_notes: "Casey portion prepared nut-free and separately.",
+        budget: 14,
+        leftover_action: "Stored & labelled for next-day lunch",
+        created_at: daysFromNow(-day),
+      });
+    });
+  }
+  return plans;
+})();
+
+store.foodHygieneRecords = [
+  { id: "fhr_seed_1", date: daysFromNow(-2), time: "08:10", checked_by: "staff_chervelle", check_type: "fridge_temp" as const, compliance: "pass" as const, temperature: 4, target_min: 1, target_max: 5, area: "Main kitchen fridge", details: "Within range", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(1), created_at: daysFromNow(-2) },
+  { id: "fhr_seed_2", date: daysFromNow(-4), time: "08:05", checked_by: "staff_diane", check_type: "freezer_temp" as const, compliance: "pass" as const, temperature: -19, target_min: -22, target_max: -18, area: "Chest freezer", details: "Within range", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(3), created_at: daysFromNow(-4) },
+  { id: "fhr_seed_3", date: daysFromNow(-6), time: "12:30", checked_by: "staff_chervelle", check_type: "cooking_temp" as const, compliance: "pass" as const, temperature: 78, target_min: 75, target_max: null, area: "Hob", details: "Chicken cooked to 78°C", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(0), created_at: daysFromNow(-6) },
+  { id: "fhr_seed_4", date: daysFromNow(-8), time: "20:00", checked_by: "staff_diane", check_type: "cleaning_record" as const, compliance: "pass" as const, temperature: null, target_min: null, target_max: null, area: "All food prep surfaces", details: "End-of-day clean completed", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-7), created_at: daysFromNow(-8) },
+  { id: "fhr_seed_5", date: daysFromNow(-10), time: "09:15", checked_by: "staff_chervelle", check_type: "allergen_check" as const, compliance: "pass" as const, temperature: null, target_min: null, target_max: null, area: "Pantry", details: "Nut-free zone verified for Casey", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-3), created_at: daysFromNow(-10) },
+  { id: "fhr_seed_6", date: daysFromNow(-12), time: "16:40", checked_by: "staff_diane", check_type: "delivery_check" as const, compliance: "pass" as const, temperature: 3, target_min: null, target_max: 5, area: "Goods-in", details: "Chilled delivery within temp", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-5), created_at: daysFromNow(-12) },
+  { id: "fhr_seed_7", date: daysFromNow(-14), time: "08:20", checked_by: "staff_chervelle", check_type: "date_label_check" as const, compliance: "action_required" as const, temperature: null, target_min: null, target_max: null, area: "Fridge — open items", details: "One opened sauce undated", action_required: "Label and date all opened items", action_completed: true, action_completed_date: daysFromNow(-14), next_due_date: daysFromNow(-7), created_at: daysFromNow(-14) },
+  { id: "fhr_seed_8", date: daysFromNow(-16), time: "08:00", checked_by: "staff_diane", check_type: "fridge_temp" as const, compliance: "pass" as const, temperature: 4, target_min: 1, target_max: 5, area: "Main kitchen fridge", details: "Within range", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-13), created_at: daysFromNow(-16) },
+  { id: "fhr_seed_9", date: daysFromNow(-18), time: "08:00", checked_by: "staff_chervelle", check_type: "freezer_temp" as const, compliance: "pass" as const, temperature: -20, target_min: -22, target_max: -18, area: "Chest freezer", details: "Within range", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-15), created_at: daysFromNow(-18) },
+  { id: "fhr_seed_10", date: daysFromNow(-22), time: "10:00", checked_by: "staff_diane", check_type: "hand_hygiene_audit" as const, compliance: "pass" as const, temperature: null, target_min: null, target_max: null, area: "Kitchen", details: "Staff handwashing observed and compliant", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(-1), created_at: daysFromNow(-22) },
+  { id: "fhr_seed_11", date: daysFromNow(-25), time: "11:00", checked_by: "staff_chervelle", check_type: "deep_clean" as const, compliance: "pass" as const, temperature: null, target_min: null, target_max: null, area: "Whole kitchen", details: "Monthly deep clean completed", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(5), created_at: daysFromNow(-25) },
+  { id: "fhr_seed_12", date: daysFromNow(-28), time: "09:30", checked_by: "staff_diane", check_type: "pest_check" as const, compliance: "pass" as const, temperature: null, target_min: null, target_max: null, area: "Kitchen & store", details: "No evidence of pests", action_required: "", action_completed: false, action_completed_date: null, next_due_date: daysFromNow(2), created_at: daysFromNow(-28) },
+];
+
+store.kitchenHygieneChecks = [
+  { id: "khc_seed_1", date: daysFromNow(-2), time: "08:30", staff_member: "staff_chervelle", shift_type: "early" as const, fridge_temperature: 4, fridge_within_range: true, freezer_temperature: -19, freezer_within_range: true, cooking_temps_recorded: [{ meal: "Breakfast eggs", temp_reading: 75, min_required: 63, pass: true }], fridge_organisation: "good" as const, fridge_rotation: true, expired_items_found: [], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "half_full" as const, bin_emptied_time: "21:00", dishwasher_cycle_notes: "Hot cycle run", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass" as const, immediate_actions: [], follow_up_actions: [], notes: "All compliant.", created_at: daysFromNow(-2) },
+  { id: "khc_seed_2", date: daysFromNow(-7), time: "08:30", staff_member: "staff_diane", shift_type: "early" as const, fridge_temperature: 5, fridge_within_range: true, freezer_temperature: -18, freezer_within_range: true, cooking_temps_recorded: [], fridge_organisation: "good" as const, fridge_rotation: true, expired_items_found: [], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "empty" as const, bin_emptied_time: "07:30", dishwasher_cycle_notes: "", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass" as const, immediate_actions: [], follow_up_actions: [], notes: "Good standards.", created_at: daysFromNow(-7) },
+  { id: "khc_seed_3", date: daysFromNow(-12), time: "08:30", staff_member: "staff_chervelle", shift_type: "early" as const, fridge_temperature: 4, fridge_within_range: true, freezer_temperature: -20, freezer_within_range: true, cooking_temps_recorded: [], fridge_organisation: "adequate" as const, fridge_rotation: true, expired_items_found: [{ item: "Opened yoghurt", expiry_date: daysFromNow(-13), disposed: true }], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "half_full" as const, bin_emptied_time: "21:00", dishwasher_cycle_notes: "", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass_with_minor_actions" as const, immediate_actions: ["Disposed of one expired yoghurt"], follow_up_actions: ["Reinforce daily date-check on opened items"], notes: "One expired item removed; minor action logged.", created_at: daysFromNow(-12) },
+  { id: "khc_seed_4", date: daysFromNow(-17), time: "08:30", staff_member: "staff_diane", shift_type: "early" as const, fridge_temperature: 3, fridge_within_range: true, freezer_temperature: -19, freezer_within_range: true, cooking_temps_recorded: [], fridge_organisation: "good" as const, fridge_rotation: true, expired_items_found: [], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "empty" as const, bin_emptied_time: "07:30", dishwasher_cycle_notes: "", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass" as const, immediate_actions: [], follow_up_actions: [], notes: "All compliant.", created_at: daysFromNow(-17) },
+  { id: "khc_seed_5", date: daysFromNow(-22), time: "08:30", staff_member: "staff_chervelle", shift_type: "early" as const, fridge_temperature: 4, fridge_within_range: true, freezer_temperature: -18, freezer_within_range: true, cooking_temps_recorded: [], fridge_organisation: "good" as const, fridge_rotation: true, expired_items_found: [], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "half_full" as const, bin_emptied_time: "21:00", dishwasher_cycle_notes: "", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass" as const, immediate_actions: [], follow_up_actions: [], notes: "Allergen labelling verified for Casey's nut-free needs.", created_at: daysFromNow(-22) },
+  { id: "khc_seed_6", date: daysFromNow(-27), time: "08:30", staff_member: "staff_diane", shift_type: "early" as const, fridge_temperature: 5, fridge_within_range: true, freezer_temperature: -20, freezer_within_range: true, cooking_temps_recorded: [], fridge_organisation: "good" as const, fridge_rotation: true, expired_items_found: [], surfaces_cleaned: true, cleaning_products_correct: true, handwashing_observed: true, aprons_and_hair_covers: true, children_preparing_food_supervision: "Supervised", cooking_activity_safety_briefing_done: true, pests_observed: false, pest_actions: "", bins: "empty" as const, bin_emptied_time: "07:30", dishwasher_cycle_notes: "", cutting_board_segregation: true, allergen_labelling: true, defrosting_practice: "Fridge defrost", hot_holding_temps: [], overall_verdict: "pass" as const, immediate_actions: [], follow_up_actions: [], notes: "All compliant.", created_at: daysFromNow(-27) },
+];
+
+store.foodBudgetWeekRecords = [
+  { id: "fbw_seed_1", week_starting: daysFromNow(-7), weekly_budget: 350, spend: [{ category: "Groceries", amount: 300, supplier: "Aldi", receipt_kept: true }, { category: "Halal butcher", amount: 38, supplier: "Local butcher", receipt_kept: true }], total_spent: 338, variance: 12, child_involvement_in_planning: "Jordan and Casey chose two meals each", child_involvement_in_shopping: "Jordan joined the shop", cultural_ingredients_included: true, sensory_friendly_options_included: true, takeaways_or_treats: [{ date: daysFromNow(-5), item: "Pizza night", cost: 24, reason: "Friday treat — nut-free verified" }], cook_from_scratch_proportion: 70, waste_noted: "Minimal", shopped_by: "staff_chervelle", cooked_by: "staff_chervelle", child_meal_requests_honoured: ["Jordan — halal curry", "Casey — veggie pasta bake"], notes: "Within budget.", created_at: daysFromNow(-7) },
+  { id: "fbw_seed_2", week_starting: daysFromNow(-14), weekly_budget: 350, spend: [{ category: "Groceries", amount: 330, supplier: "Aldi", receipt_kept: true }], total_spent: 330, variance: 20, child_involvement_in_planning: "Group menu meeting held", child_involvement_in_shopping: "Casey practised reading allergen labels", cultural_ingredients_included: true, sensory_friendly_options_included: true, takeaways_or_treats: [], cook_from_scratch_proportion: 72, waste_noted: "Low", shopped_by: "staff_diane", cooked_by: "staff_diane", child_meal_requests_honoured: ["Alex — roast dinner"], notes: "Within budget.", created_at: daysFromNow(-14) },
+  { id: "fbw_seed_3", week_starting: daysFromNow(-21), weekly_budget: 350, spend: [{ category: "Groceries", amount: 360, supplier: "Tesco", receipt_kept: true }], total_spent: 372, variance: -22, child_involvement_in_planning: "Birthday meal requested", child_involvement_in_shopping: "Group shop", cultural_ingredients_included: true, sensory_friendly_options_included: true, takeaways_or_treats: [{ date: daysFromNow(-18), item: "Birthday meal out", cost: 45, reason: "Casey's birthday" }], cook_from_scratch_proportion: 60, waste_noted: "Some", shopped_by: "staff_chervelle", cooked_by: "staff_chervelle", child_meal_requests_honoured: ["Casey — birthday choice"], notes: "Over budget due to birthday celebration.", created_at: daysFromNow(-21) },
+  { id: "fbw_seed_4", week_starting: daysFromNow(-28), weekly_budget: 350, spend: [{ category: "Groceries", amount: 320, supplier: "Aldi", receipt_kept: true }], total_spent: 320, variance: 30, child_involvement_in_planning: "Menu agreed with all three", child_involvement_in_shopping: "Jordan joined the shop", cultural_ingredients_included: true, sensory_friendly_options_included: true, takeaways_or_treats: [], cook_from_scratch_proportion: 75, waste_noted: "Minimal", shopped_by: "staff_diane", cooked_by: "staff_diane", child_meal_requests_honoured: ["Jordan — halal grill"], notes: "Within budget.", created_at: daysFromNow(-28) },
+  { id: "fbw_seed_5", week_starting: daysFromNow(-35), weekly_budget: 350, spend: [{ category: "Groceries", amount: 340, supplier: "Aldi", receipt_kept: true }], total_spent: 340, variance: 10, child_involvement_in_planning: "Group menu meeting", child_involvement_in_shopping: "Casey joined", cultural_ingredients_included: true, sensory_friendly_options_included: true, takeaways_or_treats: [{ date: daysFromNow(-33), item: "Fish & chips", cost: 22, reason: "Weekend treat" }], cook_from_scratch_proportion: 68, waste_noted: "Low", shopped_by: "staff_chervelle", cooked_by: "staff_chervelle", child_meal_requests_honoured: ["Alex — pasta bake"], notes: "Within budget.", created_at: daysFromNow(-35) },
+  { id: "fbw_seed_6", week_starting: daysFromNow(-42), weekly_budget: 350, spend: [{ category: "Groceries", amount: 345, supplier: "Tesco", receipt_kept: true }], total_spent: 345, variance: 5, child_involvement_in_planning: "Menu agreed", child_involvement_in_shopping: "Group shop", cultural_ingredients_included: false, sensory_friendly_options_included: true, takeaways_or_treats: [], cook_from_scratch_proportion: 62, waste_noted: "Low", shopped_by: "staff_diane", cooked_by: "staff_diane", child_meal_requests_honoured: ["Casey — veggie chilli"], notes: "Within budget.", created_at: daysFromNow(-42) },
+];
+
+store.eatingSupportPlans = [
+  { id: "esp_seed_1", child_id: "yp_casey", plan_date: daysFromNow(-15), presentation: "allergy_medical" as const, external_support: [{ agency: "Community Dietetics", clinician: "R. Okafor", frequency: "Quarterly review" }], safe_foods: ["Veggie pasta", "Jacket potato", "Cheese omelette"], challenge_foods: ["Anything with possible nut traces"], textures_preferred: ["Smooth", "Separate components"], textures_avoided: ["Mixed/mushy"], brands_that_work: ["Clearly-labelled nut-free ranges"], triggers_to_avoid: ["Unlabelled foods", "Buffet-style shared dishes"], meal_time_approach: ["Calm, quieter setting", "Reassure on allergen checks"], eating_environment_set_up: ["Wipe-down surfaces first", "Dedicated nut-free utensils"], staff_do_strategies: ["Always check labels", "Plate Casey's food first"], staff_do_not_strategies: ["Do not allow nut products in shared prep"], weight_monitoring_frequency: "Monthly", hydration_notes: "Prompt fluids at meals", growth_check_notes: "On track", child_voice: "I feel safer when staff check the labels with me.", staff_observation: "Engages well when reassured about allergen safety.", child_chose: true, flags_for_review: [], review_date: daysFromNow(75), key_worker: "staff_diane", created_at: daysFromNow(-15) },
+];
+
+// ── Safeguarding prevention (seed) ────────────────────────────────────────────
+// Lights home-safeguarding-prevention (after the bullying status-enum fix +
+// route store.children->youngPeople fix). 2 fully-resolved bullying incidents,
+// 1 reported racist community incident, Prevent screening (1 child not yet
+// screened — honest gap) + team training. Honestly "good", gaps surfaced.
+store.bullyingIncidents = [
+  {
+    id: "bul_seed_1",
+    child_id: "yp_jordan",
+    date: daysFromNow(-45),
+    time: "15:40",
+    context: "school" as const,
+    perpetrator_type: "peer_at_school" as const,
+    bullying_type: "verbal" as const,
+    description: "Jordan was subjected to repeated name-calling by two peers during break time at Highfields Academy.",
+    child_impact_observed: "Withdrawn on return to the home; declined evening meal. Settled after key-work session.",
+    child_words_used: "\"They keep going on at me, I just want it to stop.\"",
+    reported_by: "staff_anna",
+    child_wanted_reporting: true,
+    external_agencies_notified: ["School pastoral lead"],
+    school_notified: true,
+    police_notified: false,
+    parents_informed: true,
+    restorative_approach_attempted: "School-facilitated restorative conversation between Jordan and the two peers, supported by key worker.",
+    support_provided: ["Daily check-in with key worker", "Emotional literacy session", "Safe-space plan agreed"],
+    perpetrator_outcome: "School issued behaviour sanctions; peers apologised in restorative meeting.",
+    wellbeing_post_incident: "Improved — re-engaged with school and peers; no recurrence reported.",
+    follow_up_date: daysFromNow(-15),
+    status: "closed_resolved" as const,
+    pattern_indicator: "First recorded incident — no prior pattern.",
+    created_at: daysFromNow(-45),
+  },
+  {
+    id: "bul_seed_2",
+    child_id: "yp_alex",
+    date: daysFromNow(-20),
+    time: "19:10",
+    context: "online" as const,
+    perpetrator_type: "online_peer" as const,
+    bullying_type: "online_cyber" as const,
+    description: "Alex received hostile messages on a social platform from a peer following a fallout.",
+    child_impact_observed: "Agitated and tearful; disclosed messages to night staff voluntarily.",
+    child_words_used: "\"I didn't do anything, why are they coming for me online?\"",
+    reported_by: "staff_edward",
+    child_wanted_reporting: true,
+    external_agencies_notified: [],
+    school_notified: false,
+    police_notified: false,
+    parents_informed: false,
+    restorative_approach_attempted: "",
+    support_provided: ["Online safety session with key worker", "Account privacy review", "Reassurance and de-escalation"],
+    perpetrator_outcome: "Messages reported on-platform and removed; contact blocked.",
+    wellbeing_post_incident: "Stable — engaged with online-safety plan; no further messages received.",
+    follow_up_date: daysFromNow(-6),
+    status: "closed_resolved" as const,
+    pattern_indicator: "Isolated online incident; e-safety plan reinforced.",
+    created_at: daysFromNow(-20),
+  },
+];
+
+store.hateIncidents = [
+  {
+    id: "hate_seed_1",
+    date: daysFromNow(-30),
+    time: "16:25",
+    location: "Community — local shopping parade",
+    target_type: "young_person" as const,
+    target_identity: "Mixed Heritage",
+    perpetrator_type: "external_community" as const,
+    incident_type: "racist" as const,
+    description: "Casey was subjected to a racist comment by an unknown adult while out in the community with staff.",
+    affected_person_response: "Visibly upset; supported by staff to leave the area safely and debriefed at the home.",
+    support_provided: ["Immediate emotional support", "Key-work debrief", "Identity-affirming activity planned"],
+    reported_by: "staff_chervelle",
+    reported_to_police: true,
+    police_reference: "DC-2026-04417",
+    reported_to_ofsted: true,
+    reported_to_la: true,
+    school_notified: false,
+    restorative_approach: "Not applicable — perpetrator unknown to the home.",
+    perpetrator_addressed: "Reported to police as a hate incident; no identification possible.",
+    prevention_measures_added: ["Community outing risk-assessment updated", "Anti-racism reflection in next house meeting"],
+    follow_up_date: daysFromNow(-9),
+    status: "closed_resolved" as const,
+    learnings: "Reinforced staff confidence in immediate response and full statutory reporting pathway.",
+    created_at: daysFromNow(-30),
+  },
+];
+
+store.preventScreenings = [
+  {
+    id: "prevscr_seed_1",
+    child_id: "yp_alex",
+    recorded_date: daysFromNow(-40),
+    screening_outcome: "no_concerns" as const,
+    vulnerability_factors_considered: ["History of going missing", "Online exposure to unknown contacts"],
+    protective_factors_considered: ["Strong key-worker relationship", "Engaged in education", "Settled peer group in home"],
+    identity_ideology_exposure_notes: "No exposure to extremist material or ideology identified.",
+    online_activity_flags: [],
+    peer_group_notes: "Pro-social peer group; no concerning affiliations.",
+    child_voice_consulted: true,
+    child_voice: "Alex spoke openly about online friendships and understood the e-safety boundaries.",
+    staff_observation: "No indicators of radicalisation; proportionate watchful awareness maintained.",
+    external_consultation: [],
+    proportionality_reflection: "Screening proportionate to Alex's online-risk profile; no escalation warranted.",
+    review_date: daysFromNow(50),
+    flags_for_review: "Re-screen if online-contact concerns re-emerge.",
+    recorded_by: "staff_edward",
+    created_at: daysFromNow(-40),
+  },
+  {
+    id: "prevscr_seed_2",
+    child_id: "yp_casey",
+    recorded_date: daysFromNow(-35),
+    screening_outcome: "no_concerns" as const,
+    vulnerability_factors_considered: ["Recent placement transition"],
+    protective_factors_considered: ["Stable routine", "Trusting relationship with key worker", "Vegetarian/identity needs respected"],
+    identity_ideology_exposure_notes: "No ideological exposure or grievance narrative identified.",
+    online_activity_flags: [],
+    peer_group_notes: "Settling well; no concerning peer influences.",
+    child_voice_consulted: true,
+    child_voice: "Casey expressed feeling safe and supported in the home.",
+    staff_observation: "No Prevent indicators; routine screening only.",
+    external_consultation: [],
+    proportionality_reflection: "Baseline screening on placement settling-in; no concerns, no further action.",
+    review_date: daysFromNow(55),
+    flags_for_review: "Routine re-screen at next review.",
+    recorded_by: "staff_chervelle",
+    created_at: daysFromNow(-35),
+  },
+];
+
+store.preventRecords = [
+  {
+    id: "prevrec_seed_1",
+    date: daysFromNow(-60),
+    staff_id: "staff_darren",
+    child_id: null,
+    referral_type: "training_record" as const,
+    risk_level: "low" as const,
+    status: "nfa" as const,
+    indicators: [],
+    description: "Annual Prevent / WRAP awareness training completed by the staff team and logged by the DSL.",
+    actions_taken: "Team WRAP refresher delivered; certificates filed.",
+    multi_agency: [],
+    channel_outcome: "",
+    training_completed: true,
+    review_date: daysFromNow(300),
+  },
+  {
+    id: "prevrec_seed_2",
+    date: daysFromNow(-58),
+    staff_id: "staff_ryan",
+    child_id: null,
+    referral_type: "training_record" as const,
+    risk_level: "low" as const,
+    status: "nfa" as const,
+    indicators: [],
+    description: "Prevent duty training completed by deputy manager as part of annual safeguarding cycle.",
+    actions_taken: "Completion recorded against the staff training matrix.",
+    multi_agency: [],
+    channel_outcome: "",
+    training_completed: true,
+    review_date: daysFromNow(302),
+  },
+];
+
+// ── Medication audits (seed) ──────────────────────────────────────────────────
+// Completes home-medication-governance with the audit metric (route now
+// translates MedAuditResult -> engine pass/fail/action_required). Mostly
+// satisfactory; one expiry action-required (links to the PRN near-miss).
+store.medicationAuditRecords = [
+  {
+    id: "maudit_seed_1", date: daysFromNow(-21), time: "10:30", audited_by: "staff_chervelle", witnessed_by: "staff_ryan",
+    audit_type: "stock_check" as const, result: "satisfactory" as const, child_id: "yp_casey",
+    medication_name: "Melatonin", medication_type: "regular" as const, strength: "3mg",
+    expected_count: 24, actual_count: 24, discrepancy: 0, expiry_date: daysFromNow(180), batch_number: "MEL-2026-0114",
+    storage_correct: true, temperature_ok: true, labelling_correct: true, destruction_method: "", destruction_witness: "",
+    pharmacy_name: "Boots Derby", notes: "Stock balanced; MAR cross-checked.", action_taken: "",
+    follow_up_required: false, follow_up_date: null, signed_off_by: "staff_darren", created_at: daysFromNow(-21),
+  },
+  {
+    id: "maudit_seed_2", date: daysFromNow(-14), time: "11:00", audited_by: "staff_ryan", witnessed_by: "staff_chervelle",
+    audit_type: "reconciliation" as const, result: "satisfactory" as const, child_id: "yp_casey",
+    medication_name: "Fluoxetine", medication_type: "regular" as const, strength: "10mg",
+    expected_count: 21, actual_count: 21, discrepancy: 0, expiry_date: daysFromNow(200), batch_number: "FLX-2026-0098",
+    storage_correct: true, temperature_ok: true, labelling_correct: true, destruction_method: "", destruction_witness: "",
+    pharmacy_name: "Boots Derby", notes: "Monthly reconciliation complete; administration tallies with MAR.", action_taken: "",
+    follow_up_required: false, follow_up_date: null, signed_off_by: "staff_darren", created_at: daysFromNow(-14),
+  },
+  {
+    id: "maudit_seed_3", date: daysFromNow(-7), time: "09:45", audited_by: "staff_chervelle", witnessed_by: "staff_diane",
+    audit_type: "expiry_review" as const, result: "action_required" as const, child_id: "yp_alex",
+    medication_name: "Ibuprofen 200mg PRN", medication_type: "prn" as const, strength: "200mg",
+    expected_count: 30, actual_count: 30, discrepancy: 0, expiry_date: daysFromNow(20), batch_number: "IBU-2025-7741",
+    storage_correct: true, temperature_ok: true, labelling_correct: true, destruction_method: "", destruction_witness: "",
+    pharmacy_name: "Boots Derby", notes: "PRN Ibuprofen approaching expiry; quarantined pending replacement (links to near-miss mednm_seed_1).",
+    action_taken: "Moved to near-expiry tray; replacement ordered.", follow_up_required: true, follow_up_date: daysFromNow(7),
+    signed_off_by: "staff_darren", created_at: daysFromNow(-7),
+  },
+  {
+    id: "maudit_seed_4", date: daysFromNow(-3), time: "08:50", audited_by: "staff_ryan", witnessed_by: "staff_anna",
+    audit_type: "storage_check" as const, result: "satisfactory" as const, child_id: "yp_jordan",
+    medication_name: "Piriton PRN", medication_type: "prn" as const, strength: "4mg",
+    expected_count: 17, actual_count: 17, discrepancy: 0, expiry_date: daysFromNow(140), batch_number: "PIR-2026-0220",
+    storage_correct: true, temperature_ok: true, labelling_correct: true, destruction_method: "", destruction_witness: "",
+    pharmacy_name: "Boots Derby", notes: "Storage and temperature compliant; balance correct after MAR correction.", action_taken: "",
+    follow_up_required: false, follow_up_date: null, signed_off_by: "staff_darren", created_at: daysFromNow(-3),
   },
 ];
 
@@ -8878,13 +11224,147 @@ export const db = {
     findCurrent: () => store.youngPeople.filter((yp) => yp.status === "current"),
   },
 
-  // ── Cornerstone Events (canonical persisted spine — capture-once write path) ─
+  // ── Writing Assistant settings + audit ───────────────────────────────────
+  writingAssistant: {
+    getSettings: (userId: string): WritingAssistantSettings =>
+      store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS, updated_at: new Date().toISOString() },
+
+    updateSettings: (userId: string, patch: Partial<WritingAssistantSettings>): WritingAssistantSettings => {
+      const current = store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS };
+      const next: WritingAssistantSettings = {
+        ...current,
+        ...patch,
+        categories: { ...current.categories, ...(patch.categories ?? {}) },
+        updated_at: new Date().toISOString(),
+      };
+      store.writingAssistantSettings[userId] = next;
+      return next;
+    },
+
+    addToDictionary: (userId: string, word: string): void => {
+      const current = store.writingAssistantSettings[userId] ?? { ...DEFAULT_WA_SETTINGS };
+      const trimmed = word.trim().toLowerCase();
+      if (!trimmed || current.dictionary.includes(trimmed)) return;
+      store.writingAssistantSettings[userId] = {
+        ...current,
+        dictionary: [...current.dictionary, trimmed],
+        updated_at: new Date().toISOString(),
+      };
+    },
+
+    removeFromDictionary: (userId: string, word: string): void => {
+      const current = store.writingAssistantSettings[userId];
+      if (!current) return;
+      store.writingAssistantSettings[userId] = {
+        ...current,
+        dictionary: current.dictionary.filter((w) => w !== word.toLowerCase()),
+        updated_at: new Date().toISOString(),
+      };
+    },
+
+    logAudit: (event: Omit<WritingAuditEvent, "id" | "created_at">): WritingAuditEvent => {
+      const rec: WritingAuditEvent = { ...event, id: generateId("waud"), created_at: new Date().toISOString() };
+      store.writingAssistantAuditEvents.push(rec);
+      return rec;
+    },
+
+    getAuditEvents: (userId: string, limit = 100): WritingAuditEvent[] =>
+      store.writingAssistantAuditEvents
+        .filter((e) => e.user_id === userId)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at))
+        .slice(0, limit),
+
+    getAllAuditEvents: (
+      days = 7,
+      filterUserId?: string,
+      filterAction?: "accepted" | "ignored",
+    ): WritingAuditEvent[] => {
+      const cutoff = new Date(Date.now() - days * 86_400_000).toISOString();
+      return store.writingAssistantAuditEvents.filter(
+        (e) =>
+          e.created_at >= cutoff &&
+          (!filterUserId || e.user_id === filterUserId) &&
+          (!filterAction || e.action === filterAction),
+      );
+    },
+  },
+
+  // ── Cara Events (canonical persisted spine — capture-once write path) ─
   cornerstoneEvents: {
     findAll: (): CornerstoneEvent[] => store.cornerstoneEvents,
     findById: (id: string): CornerstoneEvent | undefined => store.cornerstoneEvents.find((e) => e.id === id),
     append: (event: CornerstoneEvent): CornerstoneEvent => {
       store.cornerstoneEvents.push(event);
       return event;
+    },
+  },
+
+  // ── Rights, Liberty & Restriction reviews ─────────────────────────────
+  restrictionReviews: {
+    findAll: (): RestrictionReview[] => store.restrictionReviews,
+    findById: (id: string): RestrictionReview | undefined => store.restrictionReviews.find((r) => r.id === id),
+    findByChild: (childId: string): RestrictionReview[] => store.restrictionReviews.filter((r) => r.child_id === childId),
+    append: (rr: RestrictionReview): RestrictionReview => {
+      store.restrictionReviews.push(rr);
+      return rr;
+    },
+    update: (id: string, patch: Partial<RestrictionReview>): RestrictionReview | undefined => {
+      const i = store.restrictionReviews.findIndex((r) => r.id === id);
+      if (i === -1) return undefined;
+      store.restrictionReviews[i] = { ...store.restrictionReviews[i], ...patch, updated_at: new Date().toISOString() };
+      return store.restrictionReviews[i];
+    },
+  },
+
+  // ── Post-incident reflection & learning ───────────────────────────────
+  postIncidentReflections: {
+    findAll: (): PostIncidentReflection[] => store.postIncidentReflections,
+    findById: (id: string): PostIncidentReflection | undefined => store.postIncidentReflections.find((r) => r.id === id),
+    findByChild: (childId: string): PostIncidentReflection[] => store.postIncidentReflections.filter((r) => r.child_id === childId),
+    findByIncident: (incidentId: string): PostIncidentReflection | undefined => store.postIncidentReflections.find((r) => r.incident_id === incidentId),
+    append: (r: PostIncidentReflection): PostIncidentReflection => {
+      store.postIncidentReflections.push(r);
+      return r;
+    },
+    update: (id: string, patch: Partial<PostIncidentReflection>): PostIncidentReflection | undefined => {
+      const i = store.postIncidentReflections.findIndex((r) => r.id === id);
+      if (i === -1) return undefined;
+      store.postIncidentReflections[i] = { ...store.postIncidentReflections[i], ...patch, updated_at: new Date().toISOString() };
+      return store.postIncidentReflections[i];
+    },
+  },
+
+  // ── Staying Safe Plans ────────────────────────────────────────────────
+  stayingSafePlans: {
+    findAll: (): StayingSafePlan[] => store.stayingSafePlans,
+    findById: (id: string): StayingSafePlan | undefined => store.stayingSafePlans.find((p) => p.id === id),
+    findByChild: (childId: string): StayingSafePlan | undefined => store.stayingSafePlans.find((p) => p.child_id === childId),
+    append: (p: StayingSafePlan): StayingSafePlan => {
+      store.stayingSafePlans.push(p);
+      return p;
+    },
+    update: (id: string, patch: Partial<StayingSafePlan>): StayingSafePlan | undefined => {
+      const i = store.stayingSafePlans.findIndex((p) => p.id === id);
+      if (i === -1) return undefined;
+      store.stayingSafePlans[i] = { ...store.stayingSafePlans[i], ...patch, updated_at: new Date().toISOString() };
+      return store.stayingSafePlans[i];
+    },
+  },
+
+  // ── Protective Relationships Map ──────────────────────────────────────
+  relationshipEntries: {
+    findAll: (): RelationshipEntry[] => store.relationshipEntries,
+    findById: (id: string): RelationshipEntry | undefined => store.relationshipEntries.find((e) => e.id === id),
+    findByChild: (childId: string): RelationshipEntry[] => store.relationshipEntries.filter((e) => e.child_id === childId),
+    append: (e: RelationshipEntry): RelationshipEntry => {
+      store.relationshipEntries.push(e);
+      return e;
+    },
+    update: (id: string, patch: Partial<RelationshipEntry>): RelationshipEntry | undefined => {
+      const i = store.relationshipEntries.findIndex((e) => e.id === id);
+      if (i === -1) return undefined;
+      store.relationshipEntries[i] = { ...store.relationshipEntries[i], ...patch, updated_at: new Date().toISOString() };
+      return store.relationshipEntries[i];
     },
   },
 
@@ -9135,6 +11615,54 @@ export const db = {
     },
   },
 
+  calendarEvents: {
+    findAll: (): CalendarEvent[] => store.calendarEvents,
+    findById: (id: string): CalendarEvent | undefined => store.calendarEvents.find((e) => e.id === id),
+    findByChild: (childId: string): CalendarEvent[] =>
+      store.calendarEvents.filter((e) => e.child_id === childId),
+    create: (data: Partial<CalendarEvent>): CalendarEvent => {
+      const nowIso = new Date().toISOString();
+      const event: CalendarEvent = {
+        id: generateId("cal"),
+        home_id: "home_oak",
+        title: "",
+        description: "",
+        event_type: "meeting",
+        start: nowIso,
+        end: null,
+        all_day: false,
+        location: null,
+        child_id: null,
+        organiser_id: "staff_darren",
+        attendees: [],
+        linked_task_ids: [],
+        reminder_minutes_before: null,
+        reminder_sent: false,
+        invite_sent: false,
+        recurrence: null,
+        last_reminded_occurrence: null,
+        status: "scheduled",
+        created_by: "staff_darren",
+        ...data,
+        created_at: nowIso,
+        updated_at: nowIso,
+      };
+      store.calendarEvents.push(event);
+      return event;
+    },
+    update: (id: string, updates: Partial<CalendarEvent>): CalendarEvent | null => {
+      const idx = store.calendarEvents.findIndex((e) => e.id === id);
+      if (idx === -1) return null;
+      store.calendarEvents[idx] = {
+        ...store.calendarEvents[idx],
+        ...updates,
+        id: store.calendarEvents[idx].id,
+        updated_at: new Date().toISOString(),
+      };
+      return store.calendarEvents[idx];
+    },
+  },
+
   // ── Comms Centre (Phase 1) ──────────────────────────────────────────────────
   commsChannels: {
     /** Lazily create the standard channel set for a home on first access (demo). */
@@ -9157,11 +11685,16 @@ export const db = {
       ];
       for (const d of defs) {
         store.commsChannels.push({
-          id: generateId("ch"), home_id: homeId, type: d.type, name: d.name, description: null,
+          // Deterministic, stable id (NOT timestamp-based) so a channel id is identical across
+          // serverless instances — otherwise a channel id from one instance 404s on another,
+          // breaking message send/view on multi-instance prod.
+          id: `ch_${homeId}_${d.type}`, home_id: homeId, type: d.type, name: d.name, description: null,
           access: d.access, allowed_roles: d.allowed_roles ?? [], linked_child_id: null, linked_incident_id: null,
           sensitivity: d.sensitivity, is_archived: false, created_by: "system", created_at: now, updated_at: now,
         });
       }
+      // Seed realistic message threads so channels aren't empty (deterministic ids + real staff).
+      db.commsMessages.seedDefaults(homeId);
     },
     findForHome: (homeId: string): CommsChannel[] => {
       db.commsChannels.seedDefaults(homeId);
@@ -9213,6 +11746,34 @@ export const db = {
       if (idx === -1) return null;
       store.commsMessages[idx] = { ...store.commsMessages[idx], ...updates, updated_at: new Date().toISOString() };
       return store.commsMessages[idx];
+    },
+    /** Seed realistic demo threads once per home (deterministic ids + real seeded staff). */
+    seedDefaults: (homeId: string): void => {
+      if (store.commsMessages.some((m) => m.home_id === homeId)) return;
+      const chan = (type: string) => `ch_${homeId}_${type}`;
+      const base = Date.now();
+      const at = (h: number) => new Date(base - h * 3600_000).toISOString();
+      const defs: Array<{ type: string; author: string; body: string; h: number; priority?: CommsMessage["priority"]; ack?: boolean }> = [
+        { type: "home_announcements", author: "staff_darren", body: "Welcome to the Comms Centre — this replaces WhatsApp and personal email for all home communication. Role-based, shift-aware and fully auditable.", h: 30 },
+        { type: "home_announcements", author: "staff_darren", body: "Reminder: please keep daily logs up to date before the end of each shift — our Reg 44 visit is coming up.", h: 6, ack: true },
+        { type: "shift_handover", author: "staff_ryan", body: "Early-shift handover: Alex settled and attended school; Casey needs a GP appointment booked; no overnight incidents.", h: 4 },
+        { type: "shift_handover", author: "staff_anna", body: "Late-shift handover: all young people in by curfew, Jordan completed a key-work session, medication given as scheduled.", h: 1 },
+        { type: "managers_seniors", author: "staff_darren", body: "Supervision slots for this month are on the rota — please confirm yours by Friday.", h: 28 },
+        { type: "medication_updates", author: "staff_ryan", body: "Casey's PRN guidance has been updated per the GP letter — read the MAR chart before administering.", h: 9, priority: "urgent", ack: true },
+        { type: "safeguarding_alerts", author: "staff_alicia", body: "Contextual safeguarding briefing: extra awareness around the town-centre location flagged this week. Raise any concerns with the DSL.", h: 12, priority: "urgent", ack: true },
+        { type: "rota_cover", author: "staff_anna", body: "Can anyone cover the waking night this Friday? Please reply here.", h: 7 },
+      ];
+      let i = 0;
+      for (const d of defs) {
+        const ts = at(d.h);
+        store.commsMessages.push({
+          id: `msg_${homeId}_${d.type}_${i++}`, channel_id: chan(d.type), home_id: homeId, author_id: d.author,
+          body: d.body, priority: d.priority ?? "normal", requires_acknowledgement: !!d.ack,
+          linked_child_id: null, linked_incident_id: null, linked_record_type: null, linked_record_id: null,
+          edited: false, edit_history: [], is_deleted: false, deleted_at: null, deleted_by: null,
+          retention_category: "routine_messages", investigation_hold: false, created_at: ts, updated_at: ts,
+        });
+      }
     },
   },
   commsMessageReceipts: {
@@ -9326,29 +11887,29 @@ export const db = {
     },
   },
 
-  // ── ARIA learned-answer cache (rules → cache → Claude) ──────────────────────
-  ariaResponseCache: {
-    findAll: (): AriaCachedResponse[] => store.ariaResponseCache,
-    findByBucket: (commandId: string, childId: string | null): AriaCachedResponse[] =>
-      store.ariaResponseCache.filter(
+  // ── Cara learned-answer cache (rules → cache → Claude) ──────────────────────
+  caraResponseCache: {
+    findAll: (): CaraCachedResponse[] => store.caraResponseCache,
+    findByBucket: (commandId: string, childId: string | null): CaraCachedResponse[] =>
+      store.caraResponseCache.filter(
         (r) => r.command_id === commandId && r.child_id === (childId ?? null),
       ),
     create: (
-      data: Omit<AriaCachedResponse, "id" | "created_at" | "last_used_at" | "hit_count">,
-    ): AriaCachedResponse => {
+      data: Omit<CaraCachedResponse, "id" | "created_at" | "last_used_at" | "hit_count">,
+    ): CaraCachedResponse => {
       const now = new Date().toISOString();
-      const rec: AriaCachedResponse = {
+      const rec: CaraCachedResponse = {
         ...data,
         id: generateId("arc"),
         hit_count: 0,
         created_at: now,
         last_used_at: now,
       };
-      store.ariaResponseCache.push(rec);
+      store.caraResponseCache.push(rec);
       return rec;
     },
     recordHit: (id: string): void => {
-      const rec = store.ariaResponseCache.find((r) => r.id === id);
+      const rec = store.caraResponseCache.find((r) => r.id === id);
       if (rec) {
         rec.hit_count += 1;
         rec.last_used_at = new Date().toISOString();
@@ -9533,6 +12094,68 @@ export const db = {
     },
   },
 
+  // ── Cara Studio (learning-design engine) ──────────────────────────────────
+  caraLearningProfiles: {
+    findAll: () => store.caraLearningProfiles,
+    findByChild: (childId: string) => store.caraLearningProfiles.find((p) => p.child_id === childId),
+    upsert: (data: CaraChildLearningProfile): CaraChildLearningProfile => {
+      const idx = store.caraLearningProfiles.findIndex((p) => p.child_id === data.child_id);
+      if (idx >= 0) {
+        store.caraLearningProfiles[idx] = { ...store.caraLearningProfiles[idx], ...data, updated_at: new Date().toISOString() };
+        return store.caraLearningProfiles[idx];
+      }
+      store.caraLearningProfiles.push(data);
+      return data;
+    },
+  },
+  caraStudioOutputs: {
+    findAll: () => store.caraStudioOutputs,
+    findById: (id: string) => store.caraStudioOutputs.find((o) => o.id === id),
+    findByChild: (childId: string) => store.caraStudioOutputs.filter((o) => o.child_id === childId),
+    findNeedingReview: () =>
+      store.caraStudioOutputs.filter((o) => o.manager_review_status === "review_required" && o.status !== "archived"),
+    create: (data: CaraSavedOutput): CaraSavedOutput => {
+      store.caraStudioOutputs.push(data);
+      return data;
+    },
+    update: (id: string, data: Partial<CaraSavedOutput>): CaraSavedOutput | null => {
+      const idx = store.caraStudioOutputs.findIndex((o) => o.id === id);
+      if (idx === -1) return null;
+      store.caraStudioOutputs[idx] = { ...store.caraStudioOutputs[idx], ...data, updated_at: new Date().toISOString() };
+      return store.caraStudioOutputs[idx];
+    },
+  },
+  caraLibraryResources: {
+    findAll: () => store.caraLibraryResources,
+    findApproved: () => store.caraLibraryResources.filter((r) => r.approved),
+    findById: (id: string) => store.caraLibraryResources.find((r) => r.id === id),
+    create: (data: CaraLibraryResource): CaraLibraryResource => {
+      store.caraLibraryResources.push(data);
+      return data;
+    },
+    update: (id: string, data: Partial<CaraLibraryResource>): CaraLibraryResource | null => {
+      const idx = store.caraLibraryResources.findIndex((r) => r.id === id);
+      if (idx === -1) return null;
+      store.caraLibraryResources[idx] = { ...store.caraLibraryResources[idx], ...data, updated_at: new Date().toISOString() };
+      return store.caraLibraryResources[idx];
+    },
+  },
+  caraAiRuns: {
+    findAll: () => store.caraAiRuns,
+    create: (data: CaraAiRun): CaraAiRun => {
+      store.caraAiRuns.push(data);
+      return data;
+    },
+  },
+  caraGuardrailEvents: {
+    findAll: () => store.caraGuardrailEvents,
+    findRecent: (limit = 50) => [...store.caraGuardrailEvents].sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, limit),
+    create: (data: CaraGuardrailEvent): CaraGuardrailEvent => {
+      store.caraGuardrailEvents.push(data);
+      return data;
+    },
+  },
+
   // ── Supervisions ──────────────────────────────────────────────────────────
   supervisions: {
     findAll: () => store.supervisions,
@@ -9668,6 +12291,18 @@ export const db = {
   },
 
   // ── Document Intelligence ─────────────────────────────────────────────────
+  childPaceProfiles: {
+    findAll: () => store.childPaceProfiles,
+    findByChild: (childId: string) => store.childPaceProfiles.find((p) => p.childId === childId),
+    upsert: (data: ChildPACEProfile): ChildPACEProfile => {
+      const idx = store.childPaceProfiles.findIndex((p) => p.childId === data.childId);
+      const next = { ...data, updatedAt: new Date().toISOString() };
+      if (idx === -1) store.childPaceProfiles.push(next);
+      else store.childPaceProfiles[idx] = { ...store.childPaceProfiles[idx], ...next };
+      return next;
+    },
+  },
+
   uploadedDocuments: {
     findAll: () => store.uploadedDocuments,
     findById: (id: string) => store.uploadedDocuments.find((d) => d.id === id),
@@ -16149,12 +18784,12 @@ export const db = {
         amended_by: null,
         amended_at: null,
         is_current_version: true,
-        aria_suggested_summary: null,
-        aria_suggested_category: null,
-        aria_suggested_routing: null,
-        aria_suggested_reg45: null,
-        aria_suggested_annex_a: null,
-        aria_suggestions_reviewed: false,
+        cara_suggested_summary: null,
+        cara_suggested_category: null,
+        cara_suggested_routing: null,
+        cara_suggested_reg45: null,
+        cara_suggested_annex_a: null,
+        cara_suggestions_reviewed: false,
         routing_summary: null,
         created_at: now,
         updated_at: now,
@@ -16629,40 +19264,40 @@ export const db = {
     },
   },
 
-  // ── ARIA Studio ───────────────────────────────────────────────────────────────
-  ariaArtifacts: {
+  // ── Cara Studio ───────────────────────────────────────────────────────────────
+  caraArtifacts: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaArtifacts.filter((a) => a.home_id === homeId) : store.ariaArtifacts,
-    findById: (id: string) => store.ariaArtifacts.find((a) => a.id === id) ?? null,
-    findByChild: (childId: string) => store.ariaArtifacts.filter((a) => a.child_id === childId),
+      homeId ? store.caraArtifacts.filter((a) => a.home_id === homeId) : store.caraArtifacts,
+    findById: (id: string) => store.caraArtifacts.find((a) => a.id === id) ?? null,
+    findByChild: (childId: string) => store.caraArtifacts.filter((a) => a.child_id === childId),
     findByStatus: (status: string, homeId?: string) => {
-      let items = store.ariaArtifacts.filter((a) => a.status === status);
+      let items = store.caraArtifacts.filter((a) => a.status === status);
       if (homeId) items = items.filter((a) => a.home_id === homeId);
       return items;
     },
     findByType: (type: string, homeId?: string) => {
-      let items = store.ariaArtifacts.filter((a) => a.artifact_type === type);
+      let items = store.caraArtifacts.filter((a) => a.artifact_type === type);
       if (homeId) items = items.filter((a) => a.home_id === homeId);
       return items;
     },
-    create: (data: Omit<AriaArtifact, "id" | "created_at">): AriaArtifact => {
+    create: (data: Omit<CaraArtifact, "id" | "created_at">): CaraArtifact => {
       const now = new Date().toISOString();
-      const artifact: AriaArtifact = {
+      const artifact: CaraArtifact = {
         ...data,
         id: generateId("art"),
         created_at: now,
       };
-      store.ariaArtifacts.push(artifact);
+      store.caraArtifacts.push(artifact);
       return artifact;
     },
-    patch: (id: string, data: Partial<AriaArtifact>): AriaArtifact | null => {
-      const idx = store.ariaArtifacts.findIndex((a) => a.id === id);
+    patch: (id: string, data: Partial<CaraArtifact>): CaraArtifact | null => {
+      const idx = store.caraArtifacts.findIndex((a) => a.id === id);
       if (idx === -1) return null;
-      store.ariaArtifacts[idx] = { ...store.ariaArtifacts[idx], ...data };
-      return store.ariaArtifacts[idx];
+      store.caraArtifacts[idx] = { ...store.caraArtifacts[idx], ...data };
+      return store.caraArtifacts[idx];
     },
     stats: (homeId: string) => {
-      const items = store.ariaArtifacts.filter((a) => a.home_id === homeId);
+      const items = store.caraArtifacts.filter((a) => a.home_id === homeId);
       return {
         total: items.length,
         draft: items.filter((a) => a.status === "draft").length,
@@ -16672,561 +19307,561 @@ export const db = {
       };
     },
   },
-  ariaSources: {
+  caraSources: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaSources.filter((s) => s.home_id === homeId) : store.ariaSources,
-    findById: (id: string) => store.ariaSources.find((s) => s.id === id) ?? null,
-    findByChild: (childId: string) => store.ariaSources.filter((s) => s.child_id === childId),
-    findByIds: (ids: string[]) => store.ariaSources.filter((s) => ids.includes(s.id)),
-    create: (data: Omit<AriaSource, "id" | "created_at" | "updated_at">): AriaSource => {
+      homeId ? store.caraSources.filter((s) => s.home_id === homeId) : store.caraSources,
+    findById: (id: string) => store.caraSources.find((s) => s.id === id) ?? null,
+    findByChild: (childId: string) => store.caraSources.filter((s) => s.child_id === childId),
+    findByIds: (ids: string[]) => store.caraSources.filter((s) => ids.includes(s.id)),
+    create: (data: Omit<CaraSource, "id" | "created_at" | "updated_at">): CaraSource => {
       const now = new Date().toISOString();
-      const source: AriaSource = { ...data, id: generateId("src"), created_at: now, updated_at: now };
-      store.ariaSources.push(source);
+      const source: CaraSource = { ...data, id: generateId("src"), created_at: now, updated_at: now };
+      store.caraSources.push(source);
       return source;
     },
-    patch: (id: string, data: Partial<AriaSource>): AriaSource | null => {
-      const idx = store.ariaSources.findIndex((s) => s.id === id);
+    patch: (id: string, data: Partial<CaraSource>): CaraSource | null => {
+      const idx = store.caraSources.findIndex((s) => s.id === id);
       if (idx === -1) return null;
-      store.ariaSources[idx] = { ...store.ariaSources[idx], ...data, updated_at: new Date().toISOString() };
-      return store.ariaSources[idx];
+      store.caraSources[idx] = { ...store.caraSources[idx], ...data, updated_at: new Date().toISOString() };
+      return store.caraSources[idx];
     },
   },
-  ariaArtifactVersions: {
+  caraArtifactVersions: {
     findByArtifact: (artifactId: string) =>
-      store.ariaArtifactVersions.filter((v) => v.artifact_id === artifactId)
+      store.caraArtifactVersions.filter((v) => v.artifact_id === artifactId)
         .sort((a, b) => b.version_number - a.version_number),
-    create: (data: Omit<AriaArtifactVersion, "id">): AriaArtifactVersion => {
-      const version: AriaArtifactVersion = { ...data, id: generateId("av") };
-      store.ariaArtifactVersions.push(version);
+    create: (data: Omit<CaraArtifactVersion, "id">): CaraArtifactVersion => {
+      const version: CaraArtifactVersion = { ...data, id: generateId("av") };
+      store.caraArtifactVersions.push(version);
       return version;
     },
   },
-  ariaArtifactReviews: {
+  caraArtifactReviews: {
     findByArtifact: (artifactId: string) =>
-      store.ariaArtifactReviews.filter((r) => r.artifact_id === artifactId),
-    create: (data: Omit<AriaArtifactReview, "id" | "created_at">): AriaArtifactReview => {
-      const review: AriaArtifactReview = { ...data, id: generateId("rev"), created_at: new Date().toISOString() };
-      store.ariaArtifactReviews.push(review);
+      store.caraArtifactReviews.filter((r) => r.artifact_id === artifactId),
+    create: (data: Omit<CaraArtifactReview, "id" | "created_at">): CaraArtifactReview => {
+      const review: CaraArtifactReview = { ...data, id: generateId("rev"), created_at: new Date().toISOString() };
+      store.caraArtifactReviews.push(review);
       return review;
     },
   },
-  ariaArtifactActions: {
+  caraArtifactActions: {
     findByArtifact: (artifactId: string) =>
-      store.ariaArtifactActions.filter((a) => a.artifact_id === artifactId),
-    create: (data: Omit<AriaArtifactAction, "id" | "created_at">): AriaArtifactAction => {
-      const action: AriaArtifactAction = { ...data, id: generateId("aac"), created_at: new Date().toISOString() };
-      store.ariaArtifactActions.push(action);
+      store.caraArtifactActions.filter((a) => a.artifact_id === artifactId),
+    create: (data: Omit<CaraArtifactAction, "id" | "created_at">): CaraArtifactAction => {
+      const action: CaraArtifactAction = { ...data, id: generateId("aac"), created_at: new Date().toISOString() };
+      store.caraArtifactActions.push(action);
       return action;
     },
-    patch: (id: string, data: Partial<AriaArtifactAction>): AriaArtifactAction | null => {
-      const idx = store.ariaArtifactActions.findIndex((a) => a.id === id);
+    patch: (id: string, data: Partial<CaraArtifactAction>): CaraArtifactAction | null => {
+      const idx = store.caraArtifactActions.findIndex((a) => a.id === id);
       if (idx === -1) return null;
-      store.ariaArtifactActions[idx] = { ...store.ariaArtifactActions[idx], ...data };
-      return store.ariaArtifactActions[idx];
+      store.caraArtifactActions[idx] = { ...store.caraArtifactActions[idx], ...data };
+      return store.caraArtifactActions[idx];
     },
   },
-  ariaQualityChecks: {
+  caraQualityChecks: {
     findByArtifact: (artifactId: string) =>
-      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId),
+      store.caraQualityChecks.filter((q) => q.artifact_id === artifactId),
     findLatestByArtifact: (artifactId: string) =>
-      store.ariaQualityChecks.filter((q) => q.artifact_id === artifactId)
+      store.caraQualityChecks.filter((q) => q.artifact_id === artifactId)
         .sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null,
-    create: (data: Omit<AriaQualityCheck, "id" | "created_at">): AriaQualityCheck => {
-      const check: AriaQualityCheck = { ...data, id: generateId("qc"), created_at: new Date().toISOString() };
-      store.ariaQualityChecks.push(check);
+    create: (data: Omit<CaraQualityCheck, "id" | "created_at">): CaraQualityCheck => {
+      const check: CaraQualityCheck = { ...data, id: generateId("qc"), created_at: new Date().toISOString() };
+      store.caraQualityChecks.push(check);
       return check;
     },
   },
-  ariaGaps: {
+  caraGaps: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaGaps.filter((g) => g.home_id === homeId) : store.ariaGaps,
-    findByChild: (childId: string) => store.ariaGaps.filter((g) => g.child_id === childId),
+      homeId ? store.caraGaps.filter((g) => g.home_id === homeId) : store.caraGaps,
+    findByChild: (childId: string) => store.caraGaps.filter((g) => g.child_id === childId),
     findOpen: (homeId: string) =>
-      store.ariaGaps.filter((g) => g.home_id === homeId && g.status === "open"),
-    create: (data: Omit<AriaGap, "id" | "created_at">): AriaGap => {
-      const gap: AriaGap = { ...data, id: generateId("gap"), created_at: new Date().toISOString() };
-      store.ariaGaps.push(gap);
+      store.caraGaps.filter((g) => g.home_id === homeId && g.status === "open"),
+    create: (data: Omit<CaraGap, "id" | "created_at">): CaraGap => {
+      const gap: CaraGap = { ...data, id: generateId("gap"), created_at: new Date().toISOString() };
+      store.caraGaps.push(gap);
       return gap;
     },
-    patch: (id: string, data: Partial<AriaGap>): AriaGap | null => {
-      const idx = store.ariaGaps.findIndex((g) => g.id === id);
+    patch: (id: string, data: Partial<CaraGap>): CaraGap | null => {
+      const idx = store.caraGaps.findIndex((g) => g.id === id);
       if (idx === -1) return null;
-      store.ariaGaps[idx] = { ...store.ariaGaps[idx], ...data };
-      return store.ariaGaps[idx];
+      store.caraGaps[idx] = { ...store.caraGaps[idx], ...data };
+      return store.caraGaps[idx];
     },
   },
-  ariaStudioAuditLog: {
+  caraStudioAuditLog: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaStudioAuditLog.filter((l) => l.home_id === homeId) : store.ariaStudioAuditLog,
+      homeId ? store.caraStudioAuditLog.filter((l) => l.home_id === homeId) : store.caraStudioAuditLog,
     findByArtifact: (artifactId: string) =>
-      store.ariaStudioAuditLog.filter((l) => l.artifact_id === artifactId),
-    create: (data: Omit<AriaStudioAuditLog, "id" | "created_at">): AriaStudioAuditLog => {
-      const entry: AriaStudioAuditLog = { ...data, id: generateId("aal"), created_at: new Date().toISOString() };
-      store.ariaStudioAuditLog.push(entry);
+      store.caraStudioAuditLog.filter((l) => l.artifact_id === artifactId),
+    create: (data: Omit<CaraStudioAuditLog, "id" | "created_at">): CaraStudioAuditLog => {
+      const entry: CaraStudioAuditLog = { ...data, id: generateId("aal"), created_at: new Date().toISOString() };
+      store.caraStudioAuditLog.push(entry);
       return entry;
     },
   },
-  ariaHomeDynamicsSnapshots: {
+  caraHomeDynamicsSnapshots: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaHomeDynamicsSnapshots.filter((s) => s.home_id === homeId)
-        : store.ariaHomeDynamicsSnapshots,
-    findById: (id: string) => store.ariaHomeDynamicsSnapshots.find((s) => s.id === id),
+        ? store.caraHomeDynamicsSnapshots.filter((s) => s.home_id === homeId)
+        : store.caraHomeDynamicsSnapshots,
+    findById: (id: string) => store.caraHomeDynamicsSnapshots.find((s) => s.id === id),
     latestForHome: (homeId: string) => {
-      const list = store.ariaHomeDynamicsSnapshots
+      const list = store.caraHomeDynamicsSnapshots
         .filter((s) => s.home_id === homeId)
         .sort((a, b) => b.generated_at.localeCompare(a.generated_at));
       return list[0] ?? null;
     },
-    create: (data: Omit<AriaHomeDynamicsSnapshot, "id">): AriaHomeDynamicsSnapshot => {
-      const snap: AriaHomeDynamicsSnapshot = { ...data, id: generateId("hds") };
-      store.ariaHomeDynamicsSnapshots.push(snap);
+    create: (data: Omit<CaraHomeDynamicsSnapshot, "id">): CaraHomeDynamicsSnapshot => {
+      const snap: CaraHomeDynamicsSnapshot = { ...data, id: generateId("hds") };
+      store.caraHomeDynamicsSnapshots.push(snap);
       return snap;
     },
   },
-  ariaSafeguardingPatterns: {
+  caraSafeguardingPatterns: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaSafeguardingPatterns.filter((p) => p.home_id === homeId)
-        : store.ariaSafeguardingPatterns,
-    findById: (id: string) => store.ariaSafeguardingPatterns.find((p) => p.id === id),
+        ? store.caraSafeguardingPatterns.filter((p) => p.home_id === homeId)
+        : store.caraSafeguardingPatterns,
+    findById: (id: string) => store.caraSafeguardingPatterns.find((p) => p.id === id),
     findOpen: (homeId: string) =>
-      store.ariaSafeguardingPatterns.filter(
+      store.caraSafeguardingPatterns.filter(
         (p) => p.home_id === homeId && p.status === "open",
       ),
-    create: (data: Omit<AriaSafeguardingPattern, "id">): AriaSafeguardingPattern => {
-      const rec: AriaSafeguardingPattern = { ...data, id: generateId("sgp") };
-      store.ariaSafeguardingPatterns.push(rec);
+    create: (data: Omit<CaraSafeguardingPattern, "id">): CaraSafeguardingPattern => {
+      const rec: CaraSafeguardingPattern = { ...data, id: generateId("sgp") };
+      store.caraSafeguardingPatterns.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaSafeguardingPattern>): AriaSafeguardingPattern | null => {
-      const idx = store.ariaSafeguardingPatterns.findIndex((p) => p.id === id);
+    patch: (id: string, data: Partial<CaraSafeguardingPattern>): CaraSafeguardingPattern | null => {
+      const idx = store.caraSafeguardingPatterns.findIndex((p) => p.id === id);
       if (idx === -1) return null;
-      store.ariaSafeguardingPatterns[idx] = { ...store.ariaSafeguardingPatterns[idx], ...data };
-      return store.ariaSafeguardingPatterns[idx];
+      store.caraSafeguardingPatterns[idx] = { ...store.caraSafeguardingPatterns[idx], ...data };
+      return store.caraSafeguardingPatterns[idx];
     },
   },
-  ariaEarlyWarnings: {
+  caraEarlyWarnings: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaEarlyWarnings.filter((w) => w.home_id === homeId)
-        : store.ariaEarlyWarnings,
-    findById: (id: string) => store.ariaEarlyWarnings.find((w) => w.id === id),
+        ? store.caraEarlyWarnings.filter((w) => w.home_id === homeId)
+        : store.caraEarlyWarnings,
+    findById: (id: string) => store.caraEarlyWarnings.find((w) => w.id === id),
     findActive: (homeId: string) =>
-      store.ariaEarlyWarnings.filter(
+      store.caraEarlyWarnings.filter(
         (w) => w.home_id === homeId && w.status === "active",
       ),
-    create: (data: Omit<AriaEarlyWarning, "id" | "created_at">): AriaEarlyWarning => {
-      const rec: AriaEarlyWarning = {
+    create: (data: Omit<CaraEarlyWarning, "id" | "created_at">): CaraEarlyWarning => {
+      const rec: CaraEarlyWarning = {
         ...data,
         id: generateId("ewn"),
         created_at: new Date().toISOString(),
       };
-      store.ariaEarlyWarnings.push(rec);
+      store.caraEarlyWarnings.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaEarlyWarning>): AriaEarlyWarning | null => {
-      const idx = store.ariaEarlyWarnings.findIndex((w) => w.id === id);
+    patch: (id: string, data: Partial<CaraEarlyWarning>): CaraEarlyWarning | null => {
+      const idx = store.caraEarlyWarnings.findIndex((w) => w.id === id);
       if (idx === -1) return null;
-      store.ariaEarlyWarnings[idx] = { ...store.ariaEarlyWarnings[idx], ...data };
-      return store.ariaEarlyWarnings[idx];
+      store.caraEarlyWarnings[idx] = { ...store.caraEarlyWarnings[idx], ...data };
+      return store.caraEarlyWarnings[idx];
     },
   },
-  // ── ARIA Practice Intelligence ─────────────────────────────────────────────
-  ariaPracticeAssessments: {
+  // ── Cara Practice Intelligence ─────────────────────────────────────────────
+  caraPracticeAssessments: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaPracticeAssessments.filter((r) => r.home_id === homeId) : store.ariaPracticeAssessments,
-    findById: (id: string) => store.ariaPracticeAssessments.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaPracticeAssessments.filter((r) => r.child_id === childId),
-    create: (data: Omit<AriaPracticeAssessment, "id" | "created_at" | "updated_at">): AriaPracticeAssessment => {
+      homeId ? store.caraPracticeAssessments.filter((r) => r.home_id === homeId) : store.caraPracticeAssessments,
+    findById: (id: string) => store.caraPracticeAssessments.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraPracticeAssessments.filter((r) => r.child_id === childId),
+    create: (data: Omit<CaraPracticeAssessment, "id" | "created_at" | "updated_at">): CaraPracticeAssessment => {
       const now = new Date().toISOString();
-      const rec: AriaPracticeAssessment = { ...data, id: generateId("apa"), created_at: now, updated_at: now };
-      store.ariaPracticeAssessments.push(rec);
+      const rec: CaraPracticeAssessment = { ...data, id: generateId("apa"), created_at: now, updated_at: now };
+      store.caraPracticeAssessments.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaPracticeAssessment>): AriaPracticeAssessment | null => {
-      const idx = store.ariaPracticeAssessments.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraPracticeAssessment>): CaraPracticeAssessment | null => {
+      const idx = store.caraPracticeAssessments.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaPracticeAssessments[idx] = { ...store.ariaPracticeAssessments[idx], ...data, updated_at: new Date().toISOString() };
-      return store.ariaPracticeAssessments[idx];
+      store.caraPracticeAssessments[idx] = { ...store.caraPracticeAssessments[idx], ...data, updated_at: new Date().toISOString() };
+      return store.caraPracticeAssessments[idx];
     },
   },
-  ariaDevelopmentalGaps: {
-    findAll: () => store.ariaDevelopmentalGaps,
-    findById: (id: string) => store.ariaDevelopmentalGaps.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaDevelopmentalGaps.filter((r) => r.child_id === childId),
-    create: (data: Omit<AriaDevelopmentalGapRecord, "id" | "created_at" | "updated_at">): AriaDevelopmentalGapRecord => {
+  caraDevelopmentalGaps: {
+    findAll: () => store.caraDevelopmentalGaps,
+    findById: (id: string) => store.caraDevelopmentalGaps.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraDevelopmentalGaps.filter((r) => r.child_id === childId),
+    create: (data: Omit<CaraDevelopmentalGapRecord, "id" | "created_at" | "updated_at">): CaraDevelopmentalGapRecord => {
       const now = new Date().toISOString();
-      const rec: AriaDevelopmentalGapRecord = { ...data, id: generateId("adg"), created_at: now, updated_at: now };
-      store.ariaDevelopmentalGaps.push(rec);
+      const rec: CaraDevelopmentalGapRecord = { ...data, id: generateId("adg"), created_at: now, updated_at: now };
+      store.caraDevelopmentalGaps.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaDevelopmentalGapRecord>): AriaDevelopmentalGapRecord | null => {
-      const idx = store.ariaDevelopmentalGaps.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraDevelopmentalGapRecord>): CaraDevelopmentalGapRecord | null => {
+      const idx = store.caraDevelopmentalGaps.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaDevelopmentalGaps[idx] = { ...store.ariaDevelopmentalGaps[idx], ...data, updated_at: new Date().toISOString() };
-      return store.ariaDevelopmentalGaps[idx];
+      store.caraDevelopmentalGaps[idx] = { ...store.caraDevelopmentalGaps[idx], ...data, updated_at: new Date().toISOString() };
+      return store.caraDevelopmentalGaps[idx];
     },
   },
-  ariaProtectiveFactorReviews: {
-    findAll: () => store.ariaProtectiveFactorReviews,
-    findById: (id: string) => store.ariaProtectiveFactorReviews.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaProtectiveFactorReviews.filter((r) => r.child_id === childId),
-    create: (data: Omit<AriaProtectiveFactorReview, "id" | "created_at">): AriaProtectiveFactorReview => {
-      const rec: AriaProtectiveFactorReview = { ...data, id: generateId("apf"), created_at: new Date().toISOString() };
-      store.ariaProtectiveFactorReviews.push(rec);
+  caraProtectiveFactorReviews: {
+    findAll: () => store.caraProtectiveFactorReviews,
+    findById: (id: string) => store.caraProtectiveFactorReviews.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraProtectiveFactorReviews.filter((r) => r.child_id === childId),
+    create: (data: Omit<CaraProtectiveFactorReview, "id" | "created_at">): CaraProtectiveFactorReview => {
+      const rec: CaraProtectiveFactorReview = { ...data, id: generateId("apf"), created_at: new Date().toISOString() };
+      store.caraProtectiveFactorReviews.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaProtectiveFactorReview>): AriaProtectiveFactorReview | null => {
-      const idx = store.ariaProtectiveFactorReviews.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraProtectiveFactorReview>): CaraProtectiveFactorReview | null => {
+      const idx = store.caraProtectiveFactorReviews.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaProtectiveFactorReviews[idx] = { ...store.ariaProtectiveFactorReviews[idx], ...data };
-      return store.ariaProtectiveFactorReviews[idx];
+      store.caraProtectiveFactorReviews[idx] = { ...store.caraProtectiveFactorReviews[idx], ...data };
+      return store.caraProtectiveFactorReviews[idx];
     },
   },
-  ariaRelationshipDepthReviews: {
-    findAll: () => store.ariaRelationshipDepthReviews,
-    findById: (id: string) => store.ariaRelationshipDepthReviews.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaRelationshipDepthReviews.filter((r) => r.child_id === childId),
-    create: (data: Omit<AriaRelationshipDepthReview, "id" | "created_at">): AriaRelationshipDepthReview => {
-      const rec: AriaRelationshipDepthReview = { ...data, id: generateId("ard"), created_at: new Date().toISOString() };
-      store.ariaRelationshipDepthReviews.push(rec);
+  caraRelationshipDepthReviews: {
+    findAll: () => store.caraRelationshipDepthReviews,
+    findById: (id: string) => store.caraRelationshipDepthReviews.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraRelationshipDepthReviews.filter((r) => r.child_id === childId),
+    create: (data: Omit<CaraRelationshipDepthReview, "id" | "created_at">): CaraRelationshipDepthReview => {
+      const rec: CaraRelationshipDepthReview = { ...data, id: generateId("ard"), created_at: new Date().toISOString() };
+      store.caraRelationshipDepthReviews.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaRelationshipDepthReview>): AriaRelationshipDepthReview | null => {
-      const idx = store.ariaRelationshipDepthReviews.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraRelationshipDepthReview>): CaraRelationshipDepthReview | null => {
+      const idx = store.caraRelationshipDepthReviews.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaRelationshipDepthReviews[idx] = { ...store.ariaRelationshipDepthReviews[idx], ...data };
-      return store.ariaRelationshipDepthReviews[idx];
+      store.caraRelationshipDepthReviews[idx] = { ...store.caraRelationshipDepthReviews[idx], ...data };
+      return store.caraRelationshipDepthReviews[idx];
     },
   },
-  ariaThresholdConsultations: {
-    findAll: () => store.ariaThresholdConsultations,
-    findById: (id: string) => store.ariaThresholdConsultations.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaThresholdConsultations.filter((r) => r.child_id === childId),
-    create: (data: Omit<AriaThresholdConsultation, "id" | "created_at">): AriaThresholdConsultation => {
-      const rec: AriaThresholdConsultation = { ...data, id: generateId("atc"), created_at: new Date().toISOString() };
-      store.ariaThresholdConsultations.push(rec);
+  caraThresholdConsultations: {
+    findAll: () => store.caraThresholdConsultations,
+    findById: (id: string) => store.caraThresholdConsultations.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraThresholdConsultations.filter((r) => r.child_id === childId),
+    create: (data: Omit<CaraThresholdConsultation, "id" | "created_at">): CaraThresholdConsultation => {
+      const rec: CaraThresholdConsultation = { ...data, id: generateId("atc"), created_at: new Date().toISOString() };
+      store.caraThresholdConsultations.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaThresholdConsultation>): AriaThresholdConsultation | null => {
-      const idx = store.ariaThresholdConsultations.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraThresholdConsultation>): CaraThresholdConsultation | null => {
+      const idx = store.caraThresholdConsultations.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaThresholdConsultations[idx] = { ...store.ariaThresholdConsultations[idx], ...data };
-      return store.ariaThresholdConsultations[idx];
+      store.caraThresholdConsultations[idx] = { ...store.caraThresholdConsultations[idx], ...data };
+      return store.caraThresholdConsultations[idx];
     },
   },
-  ariaStaffWellbeingSignals: {
+  caraStaffWellbeingSignals: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaStaffWellbeingSignals.filter((r) => r.home_id === homeId) : store.ariaStaffWellbeingSignals,
-    findById: (id: string) => store.ariaStaffWellbeingSignals.find((r) => r.id === id),
-    findByStaff: (staffId: string) => store.ariaStaffWellbeingSignals.filter((r) => r.staff_id === staffId),
-    create: (data: Omit<AriaStaffWellbeingSignal, "id" | "created_at">): AriaStaffWellbeingSignal => {
-      const rec: AriaStaffWellbeingSignal = { ...data, id: generateId("aws"), created_at: new Date().toISOString() };
-      store.ariaStaffWellbeingSignals.push(rec);
+      homeId ? store.caraStaffWellbeingSignals.filter((r) => r.home_id === homeId) : store.caraStaffWellbeingSignals,
+    findById: (id: string) => store.caraStaffWellbeingSignals.find((r) => r.id === id),
+    findByStaff: (staffId: string) => store.caraStaffWellbeingSignals.filter((r) => r.staff_id === staffId),
+    create: (data: Omit<CaraStaffWellbeingSignal, "id" | "created_at">): CaraStaffWellbeingSignal => {
+      const rec: CaraStaffWellbeingSignal = { ...data, id: generateId("aws"), created_at: new Date().toISOString() };
+      store.caraStaffWellbeingSignals.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaStaffWellbeingSignal>): AriaStaffWellbeingSignal | null => {
-      const idx = store.ariaStaffWellbeingSignals.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraStaffWellbeingSignal>): CaraStaffWellbeingSignal | null => {
+      const idx = store.caraStaffWellbeingSignals.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaStaffWellbeingSignals[idx] = { ...store.ariaStaffWellbeingSignals[idx], ...data };
-      return store.ariaStaffWellbeingSignals[idx];
+      store.caraStaffWellbeingSignals[idx] = { ...store.caraStaffWellbeingSignals[idx], ...data };
+      return store.caraStaffWellbeingSignals[idx];
     },
   },
-  ariaPracticeFlags: {
+  caraPracticeFlags: {
     findAll: (homeId?: string) =>
-      homeId ? store.ariaPracticeFlags.filter((r) => r.home_id === homeId) : store.ariaPracticeFlags,
-    findById: (id: string) => store.ariaPracticeFlags.find((r) => r.id === id),
-    findByChild: (childId: string) => store.ariaPracticeFlags.filter((r) => r.child_id === childId),
+      homeId ? store.caraPracticeFlags.filter((r) => r.home_id === homeId) : store.caraPracticeFlags,
+    findById: (id: string) => store.caraPracticeFlags.find((r) => r.id === id),
+    findByChild: (childId: string) => store.caraPracticeFlags.filter((r) => r.child_id === childId),
     findOpen: (homeId?: string) =>
-      store.ariaPracticeFlags.filter((r) => !r.resolved && (!homeId || r.home_id === homeId)),
-    create: (data: Omit<AriaPracticeFlag, "id" | "created_at">): AriaPracticeFlag => {
-      const rec: AriaPracticeFlag = { ...data, id: generateId("apf_flag"), created_at: new Date().toISOString() };
-      store.ariaPracticeFlags.push(rec);
+      store.caraPracticeFlags.filter((r) => !r.resolved && (!homeId || r.home_id === homeId)),
+    create: (data: Omit<CaraPracticeFlag, "id" | "created_at">): CaraPracticeFlag => {
+      const rec: CaraPracticeFlag = { ...data, id: generateId("apf_flag"), created_at: new Date().toISOString() };
+      store.caraPracticeFlags.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaPracticeFlag>): AriaPracticeFlag | null => {
-      const idx = store.ariaPracticeFlags.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraPracticeFlag>): CaraPracticeFlag | null => {
+      const idx = store.caraPracticeFlags.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaPracticeFlags[idx] = { ...store.ariaPracticeFlags[idx], ...data };
-      return store.ariaPracticeFlags[idx];
+      store.caraPracticeFlags[idx] = { ...store.caraPracticeFlags[idx], ...data };
+      return store.caraPracticeFlags[idx];
     },
   },
-  ariaGuidanceRules: {
-    findAll: () => store.ariaGuidanceRules,
-    findById: (id: string) => store.ariaGuidanceRules.find((r) => r.id === id),
-    findByKey: (key: string) => store.ariaGuidanceRules.find((r) => r.rule_key === key),
-    create: (data: Omit<AriaGuidanceRule, "id" | "created_at">): AriaGuidanceRule => {
-      const rec: AriaGuidanceRule = { ...data, id: generateId("agr"), created_at: new Date().toISOString() };
-      store.ariaGuidanceRules.push(rec);
+  caraGuidanceRules: {
+    findAll: () => store.caraGuidanceRules,
+    findById: (id: string) => store.caraGuidanceRules.find((r) => r.id === id),
+    findByKey: (key: string) => store.caraGuidanceRules.find((r) => r.rule_key === key),
+    create: (data: Omit<CaraGuidanceRule, "id" | "created_at">): CaraGuidanceRule => {
+      const rec: CaraGuidanceRule = { ...data, id: generateId("agr"), created_at: new Date().toISOString() };
+      store.caraGuidanceRules.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaGuidanceRule>): AriaGuidanceRule | null => {
-      const idx = store.ariaGuidanceRules.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraGuidanceRule>): CaraGuidanceRule | null => {
+      const idx = store.caraGuidanceRules.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaGuidanceRules[idx] = { ...store.ariaGuidanceRules[idx], ...data };
-      return store.ariaGuidanceRules[idx];
+      store.caraGuidanceRules[idx] = { ...store.caraGuidanceRules[idx], ...data };
+      return store.caraGuidanceRules[idx];
     },
   },
-  ariaCareGraphNodes: {
+  caraCareGraphNodes: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaCareGraphNodes.filter((n) => n.home_id === homeId)
-        : store.ariaCareGraphNodes,
-    findById: (id: string) => store.ariaCareGraphNodes.find((n) => n.id === id),
+        ? store.caraCareGraphNodes.filter((n) => n.home_id === homeId)
+        : store.caraCareGraphNodes,
+    findById: (id: string) => store.caraCareGraphNodes.find((n) => n.id === id),
     findByChild: (homeId: string, childId: string) =>
-      store.ariaCareGraphNodes.filter(
+      store.caraCareGraphNodes.filter(
         (n) => n.home_id === homeId && (n.child_id === childId || n.child_id === null),
       ),
-    create: (data: Omit<AriaCareGraphNode, "id" | "created_at">): AriaCareGraphNode => {
-      const rec: AriaCareGraphNode = {
+    create: (data: Omit<CaraCareGraphNode, "id" | "created_at">): CaraCareGraphNode => {
+      const rec: CaraCareGraphNode = {
         ...data,
         id: generateId("cgn"),
         created_at: new Date().toISOString(),
       };
-      store.ariaCareGraphNodes.push(rec);
+      store.caraCareGraphNodes.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaCareGraphNode>): AriaCareGraphNode | null => {
-      const idx = store.ariaCareGraphNodes.findIndex((n) => n.id === id);
+    patch: (id: string, data: Partial<CaraCareGraphNode>): CaraCareGraphNode | null => {
+      const idx = store.caraCareGraphNodes.findIndex((n) => n.id === id);
       if (idx === -1) return null;
-      store.ariaCareGraphNodes[idx] = { ...store.ariaCareGraphNodes[idx], ...data };
-      return store.ariaCareGraphNodes[idx];
+      store.caraCareGraphNodes[idx] = { ...store.caraCareGraphNodes[idx], ...data };
+      return store.caraCareGraphNodes[idx];
     },
     deleteByHome: (homeId: string, childId?: string | null) => {
-      store.ariaCareGraphNodes = store.ariaCareGraphNodes.filter((n) => {
+      store.caraCareGraphNodes = store.caraCareGraphNodes.filter((n) => {
         if (n.home_id !== homeId) return true;
         if (childId === undefined) return false;
         return n.child_id !== childId && n.child_id !== null;
       });
     },
   },
-  ariaCareGraphEdges: {
+  caraCareGraphEdges: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaCareGraphEdges.filter((e) => e.home_id === homeId)
-        : store.ariaCareGraphEdges,
-    findById: (id: string) => store.ariaCareGraphEdges.find((e) => e.id === id),
+        ? store.caraCareGraphEdges.filter((e) => e.home_id === homeId)
+        : store.caraCareGraphEdges,
+    findById: (id: string) => store.caraCareGraphEdges.find((e) => e.id === id),
     findByNode: (nodeId: string) =>
-      store.ariaCareGraphEdges.filter(
+      store.caraCareGraphEdges.filter(
         (e) => e.from_node_id === nodeId || e.to_node_id === nodeId,
       ),
-    create: (data: Omit<AriaCareGraphEdge, "id" | "created_at">): AriaCareGraphEdge => {
-      const rec: AriaCareGraphEdge = {
+    create: (data: Omit<CaraCareGraphEdge, "id" | "created_at">): CaraCareGraphEdge => {
+      const rec: CaraCareGraphEdge = {
         ...data,
         id: generateId("cge"),
         created_at: new Date().toISOString(),
       };
-      store.ariaCareGraphEdges.push(rec);
+      store.caraCareGraphEdges.push(rec);
       return rec;
     },
     deleteByHome: (homeId: string) => {
-      store.ariaCareGraphEdges = store.ariaCareGraphEdges.filter((e) => e.home_id !== homeId);
+      store.caraCareGraphEdges = store.caraCareGraphEdges.filter((e) => e.home_id !== homeId);
     },
     deleteByNodeIds: (nodeIds: Set<string>) => {
-      store.ariaCareGraphEdges = store.ariaCareGraphEdges.filter(
+      store.caraCareGraphEdges = store.caraCareGraphEdges.filter(
         (e) => !nodeIds.has(e.from_node_id) && !nodeIds.has(e.to_node_id),
       );
     },
   },
-  ariaFormulations: {
+  caraFormulations: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaFormulations.filter((f) => f.home_id === homeId)
-        : store.ariaFormulations,
-    findById: (id: string) => store.ariaFormulations.find((f) => f.id === id),
+        ? store.caraFormulations.filter((f) => f.home_id === homeId)
+        : store.caraFormulations,
+    findById: (id: string) => store.caraFormulations.find((f) => f.id === id),
     findByChild: (homeId: string, childId: string) =>
-      store.ariaFormulations.filter(
+      store.caraFormulations.filter(
         (f) => f.home_id === homeId && f.child_id === childId,
       ),
     findActiveForChild: (homeId: string, childId: string) =>
-      store.ariaFormulations.find(
+      store.caraFormulations.find(
         (f) =>
           f.home_id === homeId &&
           f.child_id === childId &&
           (f.status === "ai_draft" || f.status === "in_review" || f.status === "approved"),
       ),
-    create: (data: Omit<AriaFormulation, "id">): AriaFormulation => {
-      const rec: AriaFormulation = { ...data, id: generateId("frm") };
-      store.ariaFormulations.push(rec);
+    create: (data: Omit<CaraFormulation, "id">): CaraFormulation => {
+      const rec: CaraFormulation = { ...data, id: generateId("frm") };
+      store.caraFormulations.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaFormulation>): AriaFormulation | null => {
-      const idx = store.ariaFormulations.findIndex((f) => f.id === id);
+    patch: (id: string, data: Partial<CaraFormulation>): CaraFormulation | null => {
+      const idx = store.caraFormulations.findIndex((f) => f.id === id);
       if (idx === -1) return null;
-      store.ariaFormulations[idx] = { ...store.ariaFormulations[idx], ...data };
-      return store.ariaFormulations[idx];
+      store.caraFormulations[idx] = { ...store.caraFormulations[idx], ...data };
+      return store.caraFormulations[idx];
     },
   },
-  ariaDecisionRecommendations: {
+  caraDecisionRecommendations: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaDecisionRecommendations.filter((r) => r.home_id === homeId)
-        : store.ariaDecisionRecommendations,
-    findById: (id: string) => store.ariaDecisionRecommendations.find((r) => r.id === id),
+        ? store.caraDecisionRecommendations.filter((r) => r.home_id === homeId)
+        : store.caraDecisionRecommendations,
+    findById: (id: string) => store.caraDecisionRecommendations.find((r) => r.id === id),
     findOpen: (homeId: string) =>
-      store.ariaDecisionRecommendations.filter(
+      store.caraDecisionRecommendations.filter(
         (r) =>
           r.home_id === homeId &&
           (r.status === "ai_draft" || r.status === "modified" || r.status === "deferred"),
       ),
-    create: (data: Omit<AriaDecisionRecommendation, "id">): AriaDecisionRecommendation => {
-      const rec: AriaDecisionRecommendation = { ...data, id: generateId("rec") };
-      store.ariaDecisionRecommendations.push(rec);
+    create: (data: Omit<CaraDecisionRecommendation, "id">): CaraDecisionRecommendation => {
+      const rec: CaraDecisionRecommendation = { ...data, id: generateId("rec") };
+      store.caraDecisionRecommendations.push(rec);
       return rec;
     },
     patch: (
       id: string,
-      data: Partial<AriaDecisionRecommendation>,
-    ): AriaDecisionRecommendation | null => {
-      const idx = store.ariaDecisionRecommendations.findIndex((r) => r.id === id);
+      data: Partial<CaraDecisionRecommendation>,
+    ): CaraDecisionRecommendation | null => {
+      const idx = store.caraDecisionRecommendations.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaDecisionRecommendations[idx] = {
-        ...store.ariaDecisionRecommendations[idx],
+      store.caraDecisionRecommendations[idx] = {
+        ...store.caraDecisionRecommendations[idx],
         ...data,
       };
-      return store.ariaDecisionRecommendations[idx];
+      return store.caraDecisionRecommendations[idx];
     },
   },
-  ariaReg45EvidenceItems: {
+  caraReg45EvidenceItems: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaReg45EvidenceItems.filter((e) => e.home_id === homeId)
-        : store.ariaReg45EvidenceItems,
-    findById: (id: string) => store.ariaReg45EvidenceItems.find((e) => e.id === id),
+        ? store.caraReg45EvidenceItems.filter((e) => e.home_id === homeId)
+        : store.caraReg45EvidenceItems,
+    findById: (id: string) => store.caraReg45EvidenceItems.find((e) => e.id === id),
     findInPeriod: (homeId: string, periodStart: string, periodEnd: string) =>
-      store.ariaReg45EvidenceItems.filter(
+      store.caraReg45EvidenceItems.filter(
         (e) =>
           e.home_id === homeId &&
           e.period_start === periodStart &&
           e.period_end === periodEnd,
       ),
     findBySource: (homeId: string, sourceTable: string, sourceId: string) =>
-      store.ariaReg45EvidenceItems.find(
+      store.caraReg45EvidenceItems.find(
         (e) => e.home_id === homeId && e.source_table === sourceTable && e.source_id === sourceId,
       ),
-    create: (data: Omit<AriaReg45EvidenceItem, "id">): AriaReg45EvidenceItem => {
-      const rec: AriaReg45EvidenceItem = { ...data, id: generateId("r45") };
-      store.ariaReg45EvidenceItems.push(rec);
+    create: (data: Omit<CaraReg45EvidenceItem, "id">): CaraReg45EvidenceItem => {
+      const rec: CaraReg45EvidenceItem = { ...data, id: generateId("r45") };
+      store.caraReg45EvidenceItems.push(rec);
       return rec;
     },
     patch: (
       id: string,
-      data: Partial<AriaReg45EvidenceItem>,
-    ): AriaReg45EvidenceItem | null => {
-      const idx = store.ariaReg45EvidenceItems.findIndex((e) => e.id === id);
+      data: Partial<CaraReg45EvidenceItem>,
+    ): CaraReg45EvidenceItem | null => {
+      const idx = store.caraReg45EvidenceItems.findIndex((e) => e.id === id);
       if (idx === -1) return null;
-      store.ariaReg45EvidenceItems[idx] = {
-        ...store.ariaReg45EvidenceItems[idx],
+      store.caraReg45EvidenceItems[idx] = {
+        ...store.caraReg45EvidenceItems[idx],
         ...data,
       };
-      return store.ariaReg45EvidenceItems[idx];
+      return store.caraReg45EvidenceItems[idx];
     },
   },
-  ariaAnnexASnapshots: {
+  caraAnnexASnapshots: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaAnnexASnapshots.filter((s) => s.home_id === homeId)
-        : store.ariaAnnexASnapshots,
-    findById: (id: string) => store.ariaAnnexASnapshots.find((s) => s.id === id),
-    findLatestDraft: (homeId: string): AriaAnnexASnapshot | undefined =>
-      [...store.ariaAnnexASnapshots]
+        ? store.caraAnnexASnapshots.filter((s) => s.home_id === homeId)
+        : store.caraAnnexASnapshots,
+    findById: (id: string) => store.caraAnnexASnapshots.find((s) => s.id === id),
+    findLatestDraft: (homeId: string): CaraAnnexASnapshot | undefined =>
+      [...store.caraAnnexASnapshots]
         .filter((s) => s.home_id === homeId && s.status === "draft")
         .sort((a, b) => b.generated_at.localeCompare(a.generated_at))[0],
-    create: (data: Omit<AriaAnnexASnapshot, "id">): AriaAnnexASnapshot => {
-      const rec: AriaAnnexASnapshot = { ...data, id: generateId("axa") };
-      store.ariaAnnexASnapshots.push(rec);
+    create: (data: Omit<CaraAnnexASnapshot, "id">): CaraAnnexASnapshot => {
+      const rec: CaraAnnexASnapshot = { ...data, id: generateId("axa") };
+      store.caraAnnexASnapshots.push(rec);
       return rec;
     },
     patch: (
       id: string,
-      data: Partial<AriaAnnexASnapshot>,
-    ): AriaAnnexASnapshot | null => {
-      const idx = store.ariaAnnexASnapshots.findIndex((s) => s.id === id);
+      data: Partial<CaraAnnexASnapshot>,
+    ): CaraAnnexASnapshot | null => {
+      const idx = store.caraAnnexASnapshots.findIndex((s) => s.id === id);
       if (idx === -1) return null;
-      store.ariaAnnexASnapshots[idx] = {
-        ...store.ariaAnnexASnapshots[idx],
+      store.caraAnnexASnapshots[idx] = {
+        ...store.caraAnnexASnapshots[idx],
         ...data,
       };
-      return store.ariaAnnexASnapshots[idx];
+      return store.caraAnnexASnapshots[idx];
     },
   },
-  ariaReg45Reports: {
+  caraReg45Reports: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaReg45Reports.filter((r) => r.home_id === homeId)
-        : store.ariaReg45Reports,
-    findById: (id: string) => store.ariaReg45Reports.find((r) => r.id === id),
-    create: (data: Omit<AriaReg45Report, "id">): AriaReg45Report => {
-      const rec: AriaReg45Report = { ...data, id: generateId("r45rep") };
-      store.ariaReg45Reports.push(rec);
+        ? store.caraReg45Reports.filter((r) => r.home_id === homeId)
+        : store.caraReg45Reports,
+    findById: (id: string) => store.caraReg45Reports.find((r) => r.id === id),
+    create: (data: Omit<CaraReg45Report, "id">): CaraReg45Report => {
+      const rec: CaraReg45Report = { ...data, id: generateId("r45rep") };
+      store.caraReg45Reports.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaReg45Report>): AriaReg45Report | null => {
-      const idx = store.ariaReg45Reports.findIndex((r) => r.id === id);
+    patch: (id: string, data: Partial<CaraReg45Report>): CaraReg45Report | null => {
+      const idx = store.caraReg45Reports.findIndex((r) => r.id === id);
       if (idx === -1) return null;
-      store.ariaReg45Reports[idx] = { ...store.ariaReg45Reports[idx], ...data };
-      return store.ariaReg45Reports[idx];
+      store.caraReg45Reports[idx] = { ...store.caraReg45Reports[idx], ...data };
+      return store.caraReg45Reports[idx];
     },
   },
-  ariaSuggestedRecords: {
+  caraSuggestedRecords: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaSuggestedRecords.filter((s) => s.home_id === homeId)
-        : store.ariaSuggestedRecords,
-    findById: (id: string) => store.ariaSuggestedRecords.find((s) => s.id === id),
-    findByStatus: (homeId: string, status: AriaSuggestedRecord["status"]) =>
-      store.ariaSuggestedRecords.filter(
+        ? store.caraSuggestedRecords.filter((s) => s.home_id === homeId)
+        : store.caraSuggestedRecords,
+    findById: (id: string) => store.caraSuggestedRecords.find((s) => s.id === id),
+    findByStatus: (homeId: string, status: CaraSuggestedRecord["status"]) =>
+      store.caraSuggestedRecords.filter(
         (s) => s.home_id === homeId && s.status === status,
       ),
-    create: (data: Omit<AriaSuggestedRecord, "id">): AriaSuggestedRecord => {
-      const rec: AriaSuggestedRecord = { ...data, id: generateId("asug") };
-      store.ariaSuggestedRecords.push(rec);
+    create: (data: Omit<CaraSuggestedRecord, "id">): CaraSuggestedRecord => {
+      const rec: CaraSuggestedRecord = { ...data, id: generateId("asug") };
+      store.caraSuggestedRecords.push(rec);
       return rec;
     },
     patch: (
       id: string,
-      data: Partial<AriaSuggestedRecord>,
-    ): AriaSuggestedRecord | null => {
-      const idx = store.ariaSuggestedRecords.findIndex((s) => s.id === id);
+      data: Partial<CaraSuggestedRecord>,
+    ): CaraSuggestedRecord | null => {
+      const idx = store.caraSuggestedRecords.findIndex((s) => s.id === id);
       if (idx === -1) return null;
-      store.ariaSuggestedRecords[idx] = {
-        ...store.ariaSuggestedRecords[idx],
+      store.caraSuggestedRecords[idx] = {
+        ...store.caraSuggestedRecords[idx],
         ...data,
       };
-      return store.ariaSuggestedRecords[idx];
+      return store.caraSuggestedRecords[idx];
     },
   },
-  ariaCommittedRecords: {
+  caraCommittedRecords: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaCommittedRecords.filter((c) => c.home_id === homeId)
-        : store.ariaCommittedRecords,
-    findById: (id: string) => store.ariaCommittedRecords.find((c) => c.id === id),
-    create: (data: Omit<AriaCommittedRecord, "id">): AriaCommittedRecord => {
-      const rec: AriaCommittedRecord = { ...data, id: generateId("acom") };
-      store.ariaCommittedRecords.push(rec);
+        ? store.caraCommittedRecords.filter((c) => c.home_id === homeId)
+        : store.caraCommittedRecords,
+    findById: (id: string) => store.caraCommittedRecords.find((c) => c.id === id),
+    create: (data: Omit<CaraCommittedRecord, "id">): CaraCommittedRecord => {
+      const rec: CaraCommittedRecord = { ...data, id: generateId("acom") };
+      store.caraCommittedRecords.push(rec);
       return rec;
     },
   },
-  ariaReg40Triages: {
+  caraReg40Triages: {
     findAll: (homeId?: string) =>
       homeId
-        ? store.ariaReg40Triages.filter((t) => t.home_id === homeId)
-        : store.ariaReg40Triages,
-    findById: (id: string) => store.ariaReg40Triages.find((t) => t.id === id),
+        ? store.caraReg40Triages.filter((t) => t.home_id === homeId)
+        : store.caraReg40Triages,
+    findById: (id: string) => store.caraReg40Triages.find((t) => t.id === id),
     findBySourceEvent: (eventId: string) =>
-      store.ariaReg40Triages.find((t) => t.source_event_id === eventId),
-    create: (data: Omit<AriaReg40Triage, "id">): AriaReg40Triage => {
-      const rec: AriaReg40Triage = { ...data, id: generateId("reg40") };
-      store.ariaReg40Triages.push(rec);
+      store.caraReg40Triages.find((t) => t.source_event_id === eventId),
+    create: (data: Omit<CaraReg40Triage, "id">): CaraReg40Triage => {
+      const rec: CaraReg40Triage = { ...data, id: generateId("reg40") };
+      store.caraReg40Triages.push(rec);
       return rec;
     },
-    patch: (id: string, data: Partial<AriaReg40Triage>): AriaReg40Triage | null => {
-      const idx = store.ariaReg40Triages.findIndex((t) => t.id === id);
+    patch: (id: string, data: Partial<CaraReg40Triage>): CaraReg40Triage | null => {
+      const idx = store.caraReg40Triages.findIndex((t) => t.id === id);
       if (idx === -1) return null;
-      store.ariaReg40Triages[idx] = { ...store.ariaReg40Triages[idx], ...data };
-      return store.ariaReg40Triages[idx];
+      store.caraReg40Triages[idx] = { ...store.caraReg40Triages[idx], ...data };
+      return store.caraReg40Triages[idx];
     },
   },
   wakeUpRoutines: {

@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF BURNOUT INDICATOR SERVICE
-// Tracks staff burnout indicators as part of the ARIA Staff Development,
+// CARA — STAFF BURNOUT INDICATOR SERVICE
+// Tracks staff burnout indicators as part of the Cara Staff Development,
 // Support and Risk Intelligence layer. This is SUPPORTIVE and PROTECTIVE,
 // not punitive.
 // CHR 2015 Reg 33 (employment of staff — support and welfare),

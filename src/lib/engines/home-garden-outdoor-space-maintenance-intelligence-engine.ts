@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GARDEN & OUTDOOR SPACE MAINTENANCE INTELLIGENCE ENGINE
+// CARA — HOME GARDEN & OUTDOOR SPACE MAINTENANCE INTELLIGENCE ENGINE
 // Monitors garden and outdoor space quality — garden condition assessments,
 // outdoor play equipment safety checks, space utilisation rates, child
 // involvement in gardening, and environmental quality.

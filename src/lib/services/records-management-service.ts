@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDS MANAGEMENT SERVICE
+// CARA — RECORDS MANAGEMENT SERVICE
 // Manages children's case records, record retention, access requests,
 // data protection compliance, and archival processes.
 // CHR 2015 Reg 39 (records — maintenance and availability),

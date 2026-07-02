@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF–CHILD CONTINUITY OF CARE HOOK
+// CARA — STAFF–CHILD CONTINUITY OF CARE HOOK
 // React Query wrapper for /api/v1/staff-child-continuity
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAUMA-INFORMED CARE SERVICE
+// CARA — TRAUMA-INFORMED CARE SERVICE
 // Tracks trauma-informed care practices, ACEs profiles, therapeutic
 // environment assessments, and TIC competency across the home.
 // CHR 2015 Reg 6 (quality and purpose of care — therapeutic care),

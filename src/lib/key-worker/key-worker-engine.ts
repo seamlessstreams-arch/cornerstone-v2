@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Key Worker Relationship Quality Intelligence Engine
+// Cara Key Worker Relationship Quality Intelligence Engine
 //
 // Deterministic engine for evaluating key worker session consistency,
 // child voice representation, relationship quality indicators, goal

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE TESTS
+// CARA — ADVOCACY & CHILDREN'S RIGHTS INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for advocacy referral analysis.
 // Covers Reg 7 children's wishes, Reg 14 needs assessment, Reg 45 quality
 // of care review, and Children Act 1989 s26 advocacy for LAC.
@@ -62,7 +62,7 @@ function run(referrals: AdvocacyInput[], opts?: { children?: ChildRef[]; staff?:
   });
 }
 
-// ── Oak House Dataset ───────────────────────────────────────────────────────
+// ── Chamberlain House Dataset ───────────────────────────────────────────────────────
 
 function oakHouseReferrals(): AdvocacyInput[] {
   return [
@@ -312,7 +312,7 @@ describe("Advocacy Intelligence Engine", () => {
       expect(selfAdv!.type_label).toBe("Self Advocacy");
     });
 
-    it("includes all Oak House types", () => {
+    it("includes all Chamberlain House types", () => {
       const result = run(oakHouseReferrals());
       const types = result.referral_breakdown.map((b) => b.type);
       expect(types).toContain("independent");
@@ -627,8 +627,8 @@ describe("Advocacy Intelligence Engine", () => {
     });
   });
 
-  describe("Oak House integration", () => {
-    it("produces correct overview for full Oak House dataset", () => {
+  describe("Chamberlain House integration", () => {
+    it("produces correct overview for full Chamberlain House dataset", () => {
       const result = run(oakHouseReferrals());
       expect(result.overview.total_referrals).toBe(5);
       expect(result.overview.active_referrals).toBe(2);

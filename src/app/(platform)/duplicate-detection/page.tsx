@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DUPLICATE DETECTION (detail page)
+// CARA — DUPLICATE DETECTION (detail page)
 // Likely duplicate events surfaced so the same incident, log or medication record
 // is never captured twice. Capture once, link intelligently, never duplicate.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -49,7 +49,7 @@ export default function DuplicateDetectionPage() {
       subtitle="Likely duplicate events surfaced so the same record is never captured twice — link to the original instead"
       icon={<CopyCheck className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Duplicate Detection", sourceType: "general" }}
+      caraContext={{ pageTitle: "Duplicate Detection", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">

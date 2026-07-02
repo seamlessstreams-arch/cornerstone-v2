@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Outdoor Activity & Enrichment Intelligence — Public API
+// Cara Outdoor Activity & Enrichment Intelligence — Public API
 // ==============================================================================
 
 export {

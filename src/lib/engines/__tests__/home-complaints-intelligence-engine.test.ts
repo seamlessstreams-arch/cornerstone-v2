@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COMPLAINTS INTELLIGENCE ENGINE TESTS
+// CARA — HOME COMPLAINTS INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for complaint response timeliness,
 // resolution quality, learning culture, and child voice in complaints.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY SCORE CARD
+// CARA — RECORDING QUALITY SCORE CARD
 // Scores the WRITING of the home's records across six Ofsted-relevant dimensions
 // (completeness, clarity, professional language, factuality, child-centredness,
 // risk relevance), with per-record suggestions. Powered by the Recording Quality
@@ -22,9 +22,9 @@ const BAND_STYLES: Record<string, { bg: string; text: string }> = {
   poor: { bg: "bg-red-100", text: "text-red-700" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const DIM_LABELS: Record<string, string> = {
   completeness: "Completeness", clarity: "Clarity", professionalLanguage: "Professional",
@@ -65,7 +65,7 @@ export function RecordingQualityScoreCard() {
         {/* ── Summary strip ────────────────────────────────────────────── */}
         <div className="grid grid-cols-3 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", o.avg_overall >= 80 ? "bg-green-50" : o.avg_overall >= 65 ? "bg-blue-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.avg_overall >= 80 ? "text-green-600" : o.avg_overall >= 65 ? "text-blue-600" : "text-amber-600")}>{o.avg_overall}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.avg_overall >= 80 ? "text-[--cs-success]" : o.avg_overall >= 65 ? "text-blue-600" : "text-[--cs-warning]")}>{o.avg_overall}</p>
             <p className="text-[10px] text-muted-foreground">Avg /100</p>
           </div>
           <div className="text-center rounded-lg bg-gray-50 p-2.5">
@@ -73,7 +73,7 @@ export function RecordingQualityScoreCard() {
             <p className="text-[10px] text-muted-foreground">Records</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.below_threshold > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.below_threshold > 0 ? "text-amber-600" : "text-green-600")}>{o.below_threshold}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.below_threshold > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>{o.below_threshold}</p>
             <p className="text-[10px] text-muted-foreground">Below 70</p>
           </div>
         </div>
@@ -101,17 +101,17 @@ export function RecordingQualityScoreCard() {
                     <span className="truncate text-[var(--cs-text-secondary)]">{r.type.replace(/_/g, " ")}{r.child_name ? ` · ${r.child_name}` : ""}</span>
                     <Badge className={cn("text-[9px] shrink-0", band.bg, band.text)}>{r.overall}</Badge>
                   </div>
-                  {r.score.ariaSuggestions[0] && <p className="text-[10px] text-muted-foreground mt-0.5 truncate">→ {r.score.ariaSuggestions[0]}</p>}
+                  {r.score.caraSuggestions[0] && <p className="text-[10px] text-muted-foreground mt-0.5 truncate">→ {r.score.caraSuggestions[0]}</p>}
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* ── ARIA insights ────────────────────────────────────────────── */}
+        {/* ── Cara insights ────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Recording Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Recording Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES API
+// CARA — KEY DATES API
 //
 // Aggregates all upcoming deadlines, birthdays, reviews, and expiry dates
 // across the system. Returns a prioritised list sorted by urgency with

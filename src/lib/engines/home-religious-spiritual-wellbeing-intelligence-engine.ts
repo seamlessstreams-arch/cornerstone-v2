@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE ENGINE
+// CARA -- HOME RELIGIOUS & SPIRITUAL WELLBEING INTELLIGENCE ENGINE
 // Monitors how well the home supports children's faith observance, spiritual
 // development, religious dietary requirements, access to worship, and
 // participation in cultural-religious celebrations.

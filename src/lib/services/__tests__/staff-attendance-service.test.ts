@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ATTENDANCE & TIMEKEEPING SERVICE TESTS
+// CARA — STAFF ATTENDANCE & TIMEKEEPING SERVICE TESTS
 // Pure-function unit tests for attendance metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 33 (employment — staffing requirements),

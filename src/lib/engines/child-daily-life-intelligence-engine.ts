@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DAILY LIFE INTELLIGENCE ENGINE
+// CARA — CHILD DAILY LIFE INTELLIGENCE ENGINE
 // Per-child engine analysing daily log entries: mood patterns, recording
 // frequency, entry type coverage, significant events, and whether the
 // child's daily experience is being comprehensively documented.
@@ -408,7 +408,7 @@ export function computeChildDailyLife(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: DailyLifeInsight[] = [];
 
   if (daily_life_rating === "inadequate") {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD DIGITAL WELLBEING SERVICE
+// CARA — CHILD DIGITAL WELLBEING SERVICE
 // Monitors children's digital usage, online safety, screen time,
 // and digital literacy to safeguard and promote welfare.
 // CHR 2015 Reg 12 (health and wellbeing — holistic needs),

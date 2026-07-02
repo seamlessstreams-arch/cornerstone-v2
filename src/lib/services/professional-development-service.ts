@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PROFESSIONAL DEVELOPMENT SERVICE
+// CARA — PROFESSIONAL DEVELOPMENT SERVICE
 // Manages CPD tracking, qualification records, professional registration,
 // and workforce development across the home.
 // CHR 2015 Reg 33 (employment of staff — qualifications, skills, competence),

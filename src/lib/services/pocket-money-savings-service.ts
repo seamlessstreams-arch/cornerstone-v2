@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- POCKET MONEY & SAVINGS MANAGEMENT SERVICE
+// CARA -- POCKET MONEY & SAVINGS MANAGEMENT SERVICE
 // Tracks pocket money transactions, savings, Junior ISA contributions, and
 // financial literacy support for looked-after children. Records transaction
 // types including weekly/monthly pocket money, birthday/Christmas money,
@@ -567,7 +567,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: PocketMoneySavingsRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

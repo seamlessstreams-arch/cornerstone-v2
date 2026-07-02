@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING & WELFARE INTELLIGENCE ENGINE
+// CARA — NIGHT MONITORING & WELFARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses welfare check compliance, night-time disturbances, child sleep
@@ -97,7 +97,7 @@ export interface NightMonitoringAlert {
   message: string;
 }
 
-export interface AriaNightInsight {
+export interface CaraNightInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -108,7 +108,7 @@ export interface NightMonitoringResult {
   staffing: NightStaffingAnalysis;
   security: SecurityCompliance;
   alerts: NightMonitoringAlert[];
-  insights: AriaNightInsight[];
+  insights: CaraNightInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -299,8 +299,8 @@ export function computeNightMonitoring(input: NightMonitoringInput): NightMonito
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaNightInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraNightInsight[] = [];
 
   // Critical: child missing from room
   if (notInRoom7d.length > 0) {

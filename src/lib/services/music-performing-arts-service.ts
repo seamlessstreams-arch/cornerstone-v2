@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- MUSIC & PERFORMING ARTS SERVICE
+// CARA -- MUSIC & PERFORMING ARTS SERVICE
 // Tracks music lessons, performing arts sessions, music therapy, drama, dance,
 // songwriting, music production, choir, band/ensemble participation, spoken word,
 // and other creative performing activities for looked-after children.
@@ -557,7 +557,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: MusicPerformingArtsRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

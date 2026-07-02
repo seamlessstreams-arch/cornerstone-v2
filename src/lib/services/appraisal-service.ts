@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF APPRAISAL & PERFORMANCE SERVICE
+// CARA — STAFF APPRAISAL & PERFORMANCE SERVICE
 // Manages annual appraisals, probation reviews, performance goals, and
 // professional development objectives. Evidence base for Reg 32 (fitness
 // of workers), Reg 33 (employment of staff), and SCCIF leadership &

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Property Damage Assessment Intelligence Engine
+// Cara — Property Damage Assessment Intelligence Engine
 //
 // Pure deterministic engine — no AI, no external calls.
 // Analyses how the home manages, repairs, and prevents property damage,

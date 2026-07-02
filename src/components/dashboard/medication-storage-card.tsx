@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION STORAGE INTELLIGENCE CARD
+// CARA — MEDICATION STORAGE INTELLIGENCE CARD
 // Dashboard card for stock checks, controlled drugs, and storage compliance.
 // CHR 2015 Reg 23, Reg 12, Reg 40.
 // SCCIF: Safety — "Medication is stored securely and safely."
@@ -20,16 +20,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const TYPE_BADGES: Record<string, { label: string; color: string }> = {
@@ -88,7 +88,7 @@ export function MedicationStorageCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.stock_check_compliance >= 90 ? "text-green-600" : o.stock_check_compliance >= 75 ? "text-amber-600" : "text-red-600",
+              o.stock_check_compliance >= 90 ? "text-[--cs-success]" : o.stock_check_compliance >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.stock_check_compliance}%
             </p>
@@ -112,7 +112,7 @@ export function MedicationStorageCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.witnessing_rate >= 95 ? "text-green-600" : o.witnessing_rate >= 80 ? "text-amber-600" : "text-red-600",
+              o.witnessing_rate >= 95 ? "text-[--cs-success]" : o.witnessing_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.witnessing_rate}%
             </p>
@@ -171,13 +171,13 @@ export function MedicationStorageCard() {
           </div>
         )}
 
-        {/* ── ARIA Storage Intelligence ───────────────────────────────── */}
+        {/* ── Cara Storage Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Storage Intelligence
+              Cara Storage Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

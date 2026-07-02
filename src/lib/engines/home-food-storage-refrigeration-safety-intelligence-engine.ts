@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FOOD STORAGE & REFRIGERATION SAFETY INTELLIGENCE ENGINE
+// CARA — HOME FOOD STORAGE & REFRIGERATION SAFETY INTELLIGENCE ENGINE
 // Monitors fridge/freezer temperature logging, food storage compliance,
 // use-by date checking, food hygiene ratings, and cross-contamination
 // prevention across the home.

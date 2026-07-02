@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MANDATORY TRAINING MATRIX SERVICE
+// CARA — STAFF MANDATORY TRAINING MATRIX SERVICE
 // Tracks mandatory training requirements per role — completion dates, expiry
 // dates, compliance rates. Ensures all staff hold current, valid training in
 // safeguarding, first aid, fire safety, medication, restraint, food hygiene,

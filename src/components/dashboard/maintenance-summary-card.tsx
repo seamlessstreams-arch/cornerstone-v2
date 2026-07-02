@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MAINTENANCE SUMMARY CARD
+// CARA — MAINTENANCE SUMMARY CARD
 // Dashboard widget showing property maintenance status at a glance.
 // Reg 25 — premises must be designed, furnished and maintained to standard.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -58,7 +58,7 @@ export function MaintenanceSummaryCard() {
             Maintenance
           </CardTitle>
           <Link href="/maintenance">
-            <Badge className="text-[9px] bg-amber-100 text-amber-700 border-0 rounded-full hover:bg-amber-200 cursor-pointer">
+            <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning] border-0 rounded-full hover:bg-amber-200 cursor-pointer">
               View all
             </Badge>
           </Link>

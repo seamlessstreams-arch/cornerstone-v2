@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME WHISTLEBLOWING & SAFEGUARDING CULTURE INTELLIGENCE ENGINE TESTS
+// CARA -- HOME WHISTLEBLOWING & SAFEGUARDING CULTURE INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for whistleblowing policy awareness,
 // reporting confidence, safeguarding training currency, culture audit outcomes,
 // and child protection practice quality.

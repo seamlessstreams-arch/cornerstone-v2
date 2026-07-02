@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HEALTH SCREENING & IMMUNISATION CARD
+// CARA — HEALTH SCREENING & IMMUNISATION CARD
 // Dashboard card powered by the Health & Wellbeing Intelligence Engine.
 // CHR 2015 Reg 23/33. SCCIF: Health & Wellbeing.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { useHealthWellbeing } from "@/hooks/use-health-wellbeing";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -78,15 +78,15 @@ export function HealthScreeningImmunisationCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", immunPct >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", immunPct >= 100 ? "text-green-600" : "text-amber-600")}>{immunPct}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", immunPct >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{immunPct}%</p>
             <p className="text-[10px] text-muted-foreground">Immunisation</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", healthPct >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", healthPct >= 100 ? "text-green-600" : "text-amber-600")}>{healthPct}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", healthPct >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{healthPct}%</p>
             <p className="text-[10px] text-muted-foreground">RHA Current</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", c.overall_compliance_rate >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", c.overall_compliance_rate >= 90 ? "text-green-600" : "text-amber-600")}>{c.overall_compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", c.overall_compliance_rate >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{c.overall_compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">Overall</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -107,10 +107,10 @@ export function HealthScreeningImmunisationCard() {
               <div key={cp.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{cp.child_name}</span>
                 <div className="flex items-center gap-1">
-                  {!cp.dental_up_to_date && <Badge className="text-[9px] bg-amber-100 text-amber-700">dental</Badge>}
-                  {!cp.optician_up_to_date && <Badge className="text-[9px] bg-amber-100 text-amber-700">optical</Badge>}
+                  {!cp.dental_up_to_date && <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">dental</Badge>}
+                  {!cp.optician_up_to_date && <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">optical</Badge>}
                   {cp.dental_up_to_date && cp.optician_up_to_date && (
-                    <Badge className="text-[9px] bg-green-100 text-green-700">up to date</Badge>
+                    <Badge className="text-[9px] bg-[--cs-success-bg] text-[--cs-success]">up to date</Badge>
                   )}
                 </div>
               </div>
@@ -140,13 +140,13 @@ export function HealthScreeningImmunisationCard() {
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Screening Intelligence
+              Cara Screening Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

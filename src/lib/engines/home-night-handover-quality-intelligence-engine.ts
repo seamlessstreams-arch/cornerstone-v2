@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME NIGHT STAFF HANDOVER QUALITY INTELLIGENCE ENGINE
+// CARA — HOME NIGHT STAFF HANDOVER QUALITY INTELLIGENCE ENGINE
 // Pure deterministic engine: handover completeness, risk briefing quality,
 // medication recording, morning continuity, and night event documentation.
 // CHR 2015 Reg 34: "Night care." SCCIF: Safety and continuity.

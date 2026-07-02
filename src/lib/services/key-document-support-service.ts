@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- NATIONAL INSURANCE & KEY DOCUMENT SUPPORT SERVICE
+// CARA -- NATIONAL INSURANCE & KEY DOCUMENT SUPPORT SERVICE
 // Tracks support for care leavers and looked-after young people to obtain essential
 // documents: birth certificates, passports, National Insurance numbers, provisional
 // driving licences, proof of address, bank account setup, NHS/dental/GP registration,
@@ -690,7 +690,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: KeyDocumentSupportRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

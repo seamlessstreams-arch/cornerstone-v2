@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Missing From Care — Episode Tracking Engine
+// Cara Missing From Care — Episode Tracking Engine
 //
 // Deterministic engine for managing missing from care episodes, return
 // interviews, risk assessments, and pattern analysis.

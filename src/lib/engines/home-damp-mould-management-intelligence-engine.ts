@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME DAMP & MOULD MANAGEMENT INTELLIGENCE ENGINE
 // Monitors the home's damp survey completion, mould inspection frequency,
 // remediation tracking, ventilation assessment adequacy, and child health
 // impact monitoring.

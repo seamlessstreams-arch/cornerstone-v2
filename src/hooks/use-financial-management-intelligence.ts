@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FINANCIAL MANAGEMENT INTELLIGENCE HOOK
+// CARA — FINANCIAL MANAGEMENT INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/financial-management-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

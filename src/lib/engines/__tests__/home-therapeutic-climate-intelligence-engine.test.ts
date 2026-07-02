@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC CLIMATE INTELLIGENCE ENGINE — TESTS
+// CARA — HOME THERAPEUTIC CLIMATE INTELLIGENCE ENGINE — TESTS
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";

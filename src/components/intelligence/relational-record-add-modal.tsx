@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RELATIONAL RECORD ADD MODAL
+// CARA — RELATIONAL RECORD ADD MODAL
 // Log trust moments, regulation strategies, preferred adults, sensory needs,
 // rupture-repair, and more for a child.
 // ══════════════════════════════════════════════════════════════════════════════

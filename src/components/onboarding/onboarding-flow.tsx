@@ -9,9 +9,9 @@ interface OnboardingFlowProps { onComplete: () => void }
 const STEPS = [
   {
     icon: Heart,
-    iconColor: "text-[var(--cs-aria-gold)]",
-    iconBg: "bg-[var(--cs-aria-gold-bg)]",
-    title: "Welcome to Cornerstone",
+    iconColor: "text-[var(--cs-cara-gold)]",
+    iconBg: "bg-[var(--cs-cara-gold-bg)]",
+    title: "Welcome to Cara",
     subtitle: "The operating system for children's residential care.",
     body: "Let's show you around — this takes about 30 seconds.",
   },
@@ -29,15 +29,15 @@ const STEPS = [
     iconBg: "bg-emerald-50",
     title: "Record Once, Use Everywhere",
     subtitle: "Press Cmd+K or tap + Create to record anything.",
-    body: "Your entry automatically:\n• Creates follow-up tasks\n• Updates the timeline\n• Generates inspection evidence\n• Makes data available to ARIA intelligence\n\nNo duplicate recording. Ever.",
+    body: "Your entry automatically:\n• Creates follow-up tasks\n• Updates the timeline\n• Generates inspection evidence\n• Makes data available to Cara intelligence\n\nNo duplicate recording. Ever.",
   },
   {
     icon: Sparkles,
-    iconColor: "text-[var(--cs-aria-gold)]",
-    iconBg: "bg-[var(--cs-aria-gold-bg)]",
-    title: "Meet ARIA",
+    iconColor: "text-[var(--cs-cara-gold)]",
+    iconBg: "bg-[var(--cs-cara-gold-bg)]",
+    title: "Meet Cara",
     subtitle: "Your practice intelligence layer.",
-    body: "ARIA helps with:\n• Checking your writing tone\n• Identifying missing information\n• Spotting risk patterns\n• Preparing for inspections\n\nARIA suggests — you decide. Always.",
+    body: "Cara helps with:\n• Checking your writing tone\n• Identifying missing information\n• Spotting risk patterns\n• Preparing for inspections\n\nARIA suggests — you decide. Always.",
   },
 ];
 
@@ -79,7 +79,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           {/* Dots */}
           <div className="flex gap-1.5">
             {STEPS.map((_, i) => (
-              <div key={i} className={cn("h-2 rounded-full transition-all", i === step ? "w-6 bg-[var(--cs-aria-gold)]" : "w-2 bg-[var(--cs-border)]")} />
+              <div key={i} className={cn("h-2 rounded-full transition-all", i === step ? "w-6 bg-[var(--cs-cara-gold)]" : "w-2 bg-[var(--cs-border)]")} />
             ))}
           </div>
 
@@ -94,7 +94,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           ) : (
             <button
               onClick={() => setStep((s) => s + 1)}
-              className="rounded-xl bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] px-6 py-2.5 text-sm font-bold hover:opacity-90 transition-opacity flex items-center gap-2"
+              className="rounded-xl bg-[var(--cs-cara-gold)] text-[var(--cs-navy)] px-6 py-2.5 text-sm font-bold hover:opacity-90 transition-opacity flex items-center gap-2"
             >
               Continue <ArrowRight className="h-4 w-4" />
             </button>

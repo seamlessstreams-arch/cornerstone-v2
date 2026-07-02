@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE API ROUTE
+// CARA — RECORDING QUALITY INTELLIGENCE API ROUTE
 // GET /api/v1/recording-quality-intelligence
 // Returns daily log recording compliance analysis, quality scores,
 // staff recording profiles, and child mention coverage.

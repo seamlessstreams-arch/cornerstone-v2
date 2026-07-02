@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Care Planning Compliance — Public API
+// Cara Care Planning Compliance — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

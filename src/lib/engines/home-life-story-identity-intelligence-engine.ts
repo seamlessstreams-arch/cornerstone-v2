@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIFE STORY & IDENTITY INTELLIGENCE ENGINE
+// CARA — HOME LIFE STORY & IDENTITY INTELLIGENCE ENGINE
 // Life story work, personal passports, friendships, aspirations, LGBTQ+, style.
 // Pure deterministic engine. CHR 2015 Reg 7/9.
 // ══════════════════════════════════════════════════════════════════════════════

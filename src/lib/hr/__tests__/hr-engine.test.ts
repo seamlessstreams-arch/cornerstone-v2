@@ -481,9 +481,9 @@ describe("saferRecruitmentGate.ts", () => {
       expect(result.rows).toHaveLength(14);
     });
 
-    it("ariaLabel is always set", () => {
+    it("caraLabel is always set", () => {
       const result = evaluateSaferRecruitmentGate(completeRecruitmentRecord());
-      expect(result.ariaLabel).toBe("Aria suggested draft");
+      expect(result.caraLabel).toBe("Cara suggested draft");
     });
 
     it("regulatoryLinks are populated", () => {
@@ -778,7 +778,7 @@ describe("suspensionDecision.ts", () => {
     it("returns a complete analysis with all fields populated", () => {
       const result = analyseSuspensionDecision(baseSuspensionInput());
       expect(result.status).toBe("draft");
-      expect(result.ariaLabel).toBe("Aria suggested draft");
+      expect(result.caraLabel).toBe("Cara suggested draft");
       expect(result.engineVersion).toBe(ENGINE_VERSION);
       expect(result.generatedAt).toBeTruthy();
       expect(result.overallRiskGrade).toBeTruthy();
@@ -788,7 +788,7 @@ describe("suspensionDecision.ts", () => {
       expect(result.proportionalityRationale.length).toBeGreaterThan(0);
       expect(result.writtenReasonsDraft.length).toBeGreaterThan(0);
       expect(result.regulatoryLinks.length).toBeGreaterThan(0);
-      expect(typeof result.ariaConfidence).toBe("number");
+      expect(typeof result.caraConfidence).toBe("number");
     });
 
     it("throws when staffId is empty", () => {
@@ -1202,7 +1202,7 @@ describe("suspensionDecision.ts", () => {
     });
   });
 
-  describe("ariaConfidence", () => {
+  describe("caraConfidence", () => {
     it("higher when no blocks or warnings", () => {
       const cleanInput = baseSuspensionInput({
         proposedDecision: "do_not_suspend",
@@ -1224,20 +1224,20 @@ describe("suspensionDecision.ts", () => {
       });
       const dirtyResult = analyseSuspensionDecision(dirtyInput);
 
-      expect(cleanResult.ariaConfidence).toBeGreaterThan(dirtyResult.ariaConfidence);
+      expect(cleanResult.caraConfidence).toBeGreaterThan(dirtyResult.caraConfidence);
     });
 
-    it("ariaConfidence is between 0.2 and 0.9", () => {
+    it("caraConfidence is between 0.2 and 0.9", () => {
       const result = analyseSuspensionDecision(baseSuspensionInput());
-      expect(result.ariaConfidence).toBeGreaterThanOrEqual(0.2);
-      expect(result.ariaConfidence).toBeLessThanOrEqual(0.9);
+      expect(result.caraConfidence).toBeGreaterThanOrEqual(0.2);
+      expect(result.caraConfidence).toBeLessThanOrEqual(0.9);
     });
   });
 
   describe("written reasons draft", () => {
     it("suspension draft references the concern and effective date", () => {
       const result = analyseSuspensionDecision(baseSuspensionInput());
-      expect(result.writtenReasonsDraft).toContain("Aria suggested draft");
+      expect(result.writtenReasonsDraft).toContain("Cara suggested draft");
       expect(result.writtenReasonsDraft).toContain("staff-jw-001");
       expect(result.writtenReasonsDraft).toContain("2024-08-16");
     });
@@ -1266,11 +1266,11 @@ describe("suspensionDecision.ts", () => {
 describe("letterTemplates.ts", () => {
   const baseCtx: LetterContext = {
     recipientName: "James Walker",
-    homeName: "Oak House Children's Home",
+    homeName: "Chamberlain House Children's Home",
     caseRefDisplay: "HR-2024-0042",
     meetingDate: "22 August 2024",
     meetingTime: "10:00",
-    meetingLocation: "Meeting Room 2, Oak House",
+    meetingLocation: "Meeting Room 2, Chamberlain House",
     managerName: "Sarah Collins",
     managerRole: "Registered Manager",
     contactName: "Deputy Manager Lisa Brooks",
@@ -1364,7 +1364,7 @@ describe("letterTemplates.ts", () => {
     expect(output).toContain("[name]");
   });
 
-  it("applies Aria postprocessor (em dashes are replaced)", () => {
+  it("applies Cara postprocessor (em dashes are replaced)", () => {
     const ctxWithDash: LetterContext = {
       recipientName: "Test Worker",
       concernNarrative: "The concern — a serious one — relates to medication errors",
@@ -1377,6 +1377,6 @@ describe("letterTemplates.ts", () => {
     const output = renderLetterTemplate("no_further_action", baseCtx);
     expect(output).toContain("Sarah Collins");
     expect(output).toContain("Registered Manager");
-    expect(output).toContain("Oak House");
+    expect(output).toContain("Chamberlain House");
   });
 });

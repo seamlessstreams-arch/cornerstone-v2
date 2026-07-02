@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE TESTS
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for independence readiness analysis.
 // Reg 8, Reg 9, Reg 14, SCCIF.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -327,7 +327,7 @@ describe("Life Skills Intelligence Engine", () => {
     });
   });
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates warning for unassessed children", () => {
       const result = run([makePathway({ child_id: "yp_alex" })]);
       const warnings = result.insights.filter((i) => i.severity === "warning");
@@ -423,7 +423,7 @@ describe("Life Skills Intelligence Engine", () => {
     });
   });
 
-  describe("Oak House integration", () => {
+  describe("Chamberlain House integration", () => {
     function oakHousePathways(): IndependencePathwayInput[] {
       return [
         {
@@ -474,7 +474,7 @@ describe("Life Skills Intelligence Engine", () => {
       ];
     }
 
-    it("calculates correct overview for Oak House data", () => {
+    it("calculates correct overview for Chamberlain House data", () => {
       const result = run(oakHousePathways());
       expect(result.overview.total_children).toBe(3);
       expect(result.overview.children_assessed).toBe(3);

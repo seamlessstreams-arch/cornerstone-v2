@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INCIDENT ANALYTICS CARD
+// CARA — INCIDENT ANALYTICS CARD
 // Dashboard widget showing incident trends, severity breakdown, category
-// analysis, per-child profiles, oversight compliance, and ARIA intelligence.
+// analysis, per-child profiles, oversight compliance, and Cara intelligence.
 // Powered by the Incident Analytics Engine — live data.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -28,15 +28,15 @@ const SEVERITY_BAR: Record<string, string> = {
 };
 
 const TREND_COLOUR: Record<string, { text: string; bg: string; icon: typeof TrendingUp }> = {
-  increasing: { text: "text-red-600", bg: "bg-red-50", icon: TrendingUp },
+  increasing: { text: "text-[--cs-risk]", bg: "bg-red-50", icon: TrendingUp },
   stable: { text: "text-gray-600", bg: "bg-gray-50", icon: Minus },
-  decreasing: { text: "text-green-600", bg: "bg-green-50", icon: TrendingDown },
+  decreasing: { text: "text-[--cs-success]", bg: "bg-green-50", icon: TrendingDown },
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -160,9 +160,9 @@ export function IncidentAnalyticsCard() {
                     <span className="font-bold tabular-nums">{cp.count_90d}</span>
                     <Badge className={cn(
                       "text-[9px]",
-                      cp.highest_severity === "critical" ? "bg-red-100 text-red-700"
-                        : cp.highest_severity === "high" ? "bg-orange-100 text-orange-700"
-                        : "bg-gray-100 text-gray-600",
+                      cp.highest_severity === "critical" ? "bg-[--cs-risk-bg] text-[--cs-risk]"
+                        : cp.highest_severity === "high" ? "bg-[--cs-warning-soft] text-[--cs-warning]"
+                        : "bg-[--cs-bg] text-[--cs-text-secondary]",
                     )}>
                       {cp.highest_severity}
                     </Badge>
@@ -186,29 +186,29 @@ export function IncidentAnalyticsCard() {
             </div>
           </div>
           {intel.oversight.oversight_pending > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {intel.oversight.oversight_pending} pending
             </Badge>
           ) : intel.oversight.total_requiring_oversight > 0 ? (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All reviewed
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-gray-100 text-gray-600">
+            <Badge className="text-[10px] bg-[--cs-bg] text-[--cs-text-secondary]">
               None required
             </Badge>
           )}
         </div>
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Pattern Intelligence
+              Cara Pattern Intelligence
             </p>
             {intel.insights.map((insight, i) => (
               <div

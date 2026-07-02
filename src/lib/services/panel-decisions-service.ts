@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PANEL DECISIONS SERVICE
+// CARA — PANEL DECISIONS SERVICE
 // Tracks placement panel decisions, matching panel outcomes,
 // disruption meetings, and management oversight panels.
 // CHR 2015 Reg 13 (leadership and management),

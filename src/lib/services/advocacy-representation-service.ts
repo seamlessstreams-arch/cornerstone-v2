@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ADVOCACY REPRESENTATION SERVICE
+// CARA — ADVOCACY REPRESENTATION SERVICE
 // Tracks advocacy provision, independent representation,
 // children's voice in decisions, and rights awareness.
 // CHR 2015 Reg 7 (children's views — advocacy and representation),

@@ -1,3 +1,4 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 
@@ -14,14 +15,16 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const record = intelligenceDb.generatedResources.create({
     home_id: body.home_id ?? "home_oak",
     resource_type: body.resource_type ?? "guidance_note",
     title: body.title ?? "New Resource",
     content: body.content ?? {},
     status: "draft",
-    aria_generated: body.aria_generated ?? true,
+    cara_generated: body.cara_generated ?? true,
     created_by: body.created_by ?? "staff_darren",
     ...body,
   });

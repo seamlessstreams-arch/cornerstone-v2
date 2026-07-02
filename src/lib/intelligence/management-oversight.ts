@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ARIA MANAGEMENT OVERSIGHT ENGINE
+// CARA — Cara MANAGEMENT OVERSIGHT ENGINE
 // Generates management oversight drafts for children's home records.
 // Analyses record quality, detects risk levels, judges practice quality,
 // identifies missing evidence, and produces Ofsted-ready oversight text.
@@ -7,6 +7,8 @@
 // Regulatory basis: Children's Homes Regulations 2015 — Reg 13 (leadership
 // and management), Reg 14 (care planning), SCCIF quality standards.
 // ══════════════════════════════════════════════════════════════════════════════
+
+import { containsAnyKeyword } from "@/lib/keyword-match";
 
 export type RecordType =
   | "daily_log"
@@ -77,14 +79,13 @@ export interface ManagementOversightOutput {
   strengths: string[];
   suggestedActions: OversightAction[];
   regulatoryLinks: string[];
-  ariaConfidence: number;
+  caraConfidence: number;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function includesAny(text: string, words: string[]): boolean {
-  const lower = text.toLowerCase();
-  return words.some((word) => lower.includes(word.toLowerCase()));
+  return containsAnyKeyword(text, words);
 }
 
 // ── Quality Score ────────────────────────────────────────────────────────────
@@ -345,7 +346,7 @@ function buildOversightDraft(
   const missingSentence =
     missingEvidence.length > 0
       ? `The following recording gaps have been identified: ${missingEvidence.join(" ")}`
-      : `No significant recording gaps have been identified from Aria's review.`;
+      : `No significant recording gaps have been identified from Cara's review.`;
 
   const closing = `Management will ensure that any required actions are followed through, learning is shared with the team where needed, and this record is used to support ongoing monitoring of ${child}'s progress, safety and care experience.`;
 
@@ -357,7 +358,7 @@ function buildOversightDraft(
     planSentence,
     missingSentence,
     closing,
-    `Aria quality score: ${score}/100. This is an AI-supported draft and must be reviewed and approved by a manager before being saved as final oversight.`,
+    `Cara quality score: ${score}/100. This is an AI-supported draft and must be reviewed and approved by a manager before being saved as final oversight.`,
   ].join("\n\n");
 }
 
@@ -391,7 +392,7 @@ export function generateManagementOversight(
     missingEvidence
   );
 
-  const ofstedSummary = `${input.childName}'s record has been reviewed through management oversight. Aria identified a ${riskLevel} level of risk, a practice judgement of ${practiceJudgement}, and a recording quality score of ${qualityScore}/100. Key areas considered include child voice, plan links, staff response, risk, impact and follow-up actions.`;
+  const ofstedSummary = `${input.childName}'s record has been reviewed through management oversight. Cara identified a ${riskLevel} level of risk, a practice judgement of ${practiceJudgement}, and a recording quality score of ${qualityScore}/100. Key areas considered include child voice, plan links, staff response, risk, impact and follow-up actions.`;
 
   return {
     oversightDraft,
@@ -406,6 +407,6 @@ export function generateManagementOversight(
     strengths,
     suggestedActions: buildActions(input, missingEvidence, riskLevel),
     regulatoryLinks: getRegulatoryLinks(input),
-    ariaConfidence: 0.78,
+    caraConfidence: 0.78,
   };
 }

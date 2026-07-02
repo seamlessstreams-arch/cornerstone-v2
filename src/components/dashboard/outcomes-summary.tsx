@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES SUMMARY WIDGET
+// CARA — OUTCOMES SUMMARY WIDGET
 // Dashboard card showing young people's progress at a glance.
 // Highlights declining areas requiring attention.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -108,7 +108,7 @@ export function OutcomesSummary() {
                     <p className="text-[11px] font-medium text-[var(--cs-text-secondary)]">{getYPName(child.child_id)}</p>
                     <span className={cn(
                       "text-[10px] font-semibold",
-                      child.avg_rating >= 3.5 ? "text-emerald-600" : child.avg_rating >= 2.5 ? "text-amber-600" : "text-red-600",
+                      child.avg_rating >= 3.5 ? "text-emerald-600" : child.avg_rating >= 2.5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
                     )}>
                       {child.avg_rating}
                     </span>

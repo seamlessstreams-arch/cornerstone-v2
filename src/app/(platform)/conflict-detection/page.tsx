@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONFLICT DETECTION detail page
+// CARA — CONFLICT DETECTION detail page
 // Records that disagree about the same child, time or situation — surfaced for a
 // human to reconcile, never auto-resolved. The last automation safeguard.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -66,7 +66,7 @@ export default function ConflictDetectionPage() {
       subtitle="Records that disagree about the same child, time or situation — surfaced for human reconciliation, never auto-resolved"
       icon={<Scale className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Conflict Detection", sourceType: "general" }}
+      caraContext={{ pageTitle: "Conflict Detection", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24"><Loader2 className="h-6 w-6 animate-spin text-[var(--cs-text-muted)]" /></div>
@@ -81,7 +81,7 @@ export default function ConflictDetectionPage() {
               records that <strong>disagree</strong> — a care log written while a child is recorded missing, an injury documented in
               one record and denied in another, the same incident graded "critical" and "low", a staff member delivering care while
               also booked on leave. Each is a data-integrity and often a safeguarding risk. <strong>Every conflict here is surfaced for a
-              human to reconcile and is never auto-resolved</strong> — ARIA may suggest which record is more likely accurate, with its
+              human to reconcile and is never auto-resolved</strong> — Cara may suggest which record is more likely accurate, with its
               reasoning and confidence, but it never edits either record, hides the disagreement, or silently picks a winner.
             </p>
           </div>
@@ -106,10 +106,10 @@ export default function ConflictDetectionPage() {
             </CardContent></Card>
           </div>
 
-          {/* ── ARIA insights ──────────────────────────────────────────────── */}
+          {/* ── Cara insights ──────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
-              <p className="text-sm font-semibold flex items-center gap-1.5 text-purple-700"><Brain className="h-4 w-4" /> ARIA Conflict Intelligence</p>
+              <p className="text-sm font-semibold flex items-center gap-1.5 text-purple-700"><Brain className="h-4 w-4" /> Cara Conflict Intelligence</p>
               {(intel.insights ?? []).map((i, idx) => (
                 <div key={idx} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
               ))}
@@ -144,26 +144,26 @@ export default function ConflictDetectionPage() {
 
                     {/* The two contradicting records */}
                     <div className="flex flex-col sm:flex-row items-stretch gap-2">
-                      <RecordCard label="Record A" record={c.event_a} highlighted={c.aria_assessment.likely_accurate_event_id === c.event_a.event_id} />
+                      <RecordCard label="Record A" record={c.event_a} highlighted={c.cara_assessment.likely_accurate_event_id === c.event_a.event_id} />
                       <div className="flex items-center justify-center text-[var(--cs-text-muted)] sm:flex-col">
                         <span className="text-[10px] font-semibold rounded-full border px-2 py-0.5 bg-[var(--cs-bg)]">vs</span>
                       </div>
-                      <RecordCard label="Record B" record={c.event_b} highlighted={c.aria_assessment.likely_accurate_event_id === c.event_b.event_id} />
+                      <RecordCard label="Record B" record={c.event_b} highlighted={c.cara_assessment.likely_accurate_event_id === c.event_b.event_id} />
                     </div>
 
-                    {/* ARIA advisory assessment */}
+                    {/* Cara advisory assessment */}
                     <div className="rounded-lg border border-purple-200 bg-purple-50/60 p-3 space-y-1">
                       <p className="text-xs font-semibold flex items-center gap-1.5 text-purple-700">
-                        <Brain className="h-3.5 w-3.5" /> ARIA assessment
-                        <span className="ml-auto font-normal text-[10px] text-purple-500">confidence {Math.round(c.aria_assessment.confidence * 100)}%</span>
+                        <Brain className="h-3.5 w-3.5" /> Cara assessment
+                        <span className="ml-auto font-normal text-[10px] text-purple-500">confidence {Math.round(c.cara_assessment.confidence * 100)}%</span>
                       </p>
                       <p className="text-xs text-purple-900 leading-relaxed">
-                        {c.aria_assessment.likely_accurate_event_id
-                          ? <>Likely more accurate: <span className="font-mono">{c.aria_assessment.likely_accurate_event_id}</span>. </>
+                        {c.cara_assessment.likely_accurate_event_id
+                          ? <>Likely more accurate: <span className="font-mono">{c.cara_assessment.likely_accurate_event_id}</span>. </>
                           : <>No reliable signal as to which record is correct. </>}
-                        {c.aria_assessment.reasoning}
+                        {c.cara_assessment.reasoning}
                       </p>
-                      <p className="text-[10px] text-purple-500 italic">Advisory only — ARIA does not edit either record. The decision stays with you.</p>
+                      <p className="text-[10px] text-purple-500 italic">Advisory only — Cara does not edit either record. The decision stays with you.</p>
                     </div>
 
                     {/* Recommended action */}

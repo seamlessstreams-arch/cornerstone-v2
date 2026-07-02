@@ -3,14 +3,14 @@
 // ══════════════════════════════════════════════════════════════════════════════
 // useAudioRecorder
 //
-// Microphone capture for Aria voice dictation. Built on the standard Web
+// Microphone capture for Cara voice dictation. Built on the standard Web
 // MediaRecorder API. Handles the cases the spec calls out: insecure context,
 // missing mediaDevices, permission denied, no microphone found, browser
 // unsupported. Tracks are stopped on unmount, on cancel, and on error so
 // the microphone is never left active in the background.
 //
 // The recording is kept entirely in memory until the consumer calls submit().
-// The consumer is responsible for sending the audio Blob to /api/aria/transcribe.
+// The consumer is responsible for sending the audio Blob to /api/cara/transcribe.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { useCallback, useEffect, useRef, useState } from "react";

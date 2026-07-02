@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPracticePanel } from "@/components/aria-practice/aria-practice-panel";
+import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getStaffName, getYPName } from "@/lib/seed-data";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
 import { useRiskAssessments, useCreateRiskAssessment } from "@/hooks/use-risk-assessments";
 import { toast } from "sonner";
 import type { RiskAssessment, RiskDomain, RiskLevel, RiskTrend, RiskMitigation } from "@/types/extended";
@@ -25,8 +27,9 @@ import {
   Shield, ArrowUp, ArrowDown, Minus, Loader2, ArrowUpRight,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
 
 
 const DOMAIN_META: Record<RiskDomain, { label: string; color: string }> = {
@@ -85,6 +88,10 @@ export default function RiskAssessmentsPage() {
   const [sortBy, setSortBy] = useState("level");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [showNew, setShowNew] = useState(false);
+  const [selectedYp, setSelectedYp] = useState("");
+  const [raTriggers, setRaTriggers] = useState("");
+  const [raContingencyPlan, setRaContingencyPlan] = useState("");
+  const [raChildViews, setRaChildViews] = useState("");
 
   const toggle = (id: string) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
@@ -138,12 +145,12 @@ export default function RiskAssessmentsPage() {
     <PageShell
       title="Risk Assessments"
       subtitle="Individual risk assessments — triggers, mitigations, and contingency plans"
-      ariaContext={{ pageTitle: "Risk Assessments", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Risk Assessments", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Risk Assessments" />
           <ExportButton data={filtered} columns={EXPORT_COLS} filename="risk-assessments" />
-          <AriaStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "risk_assessment", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setShowNew(true)}><Plus className="h-4 w-4 mr-1" /> New Assessment</Button>
         </div>
       }
@@ -152,7 +159,7 @@ export default function RiskAssessmentsPage() {
         <div className="flex items-center justify-center py-20"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
       ) : (
       <div id="print-area" className="space-y-6">
-        <AriaPanel mode="assist" pageContext="Risk Assessments — individual risk assessment, triggers, mitigations, contingency planning, placement risk management" recordType="risk_assessment" userRole="registered_manager" className="mb-2" />
+        <CaraPanel mode="assist" pageContext="Risk Assessments — individual risk assessment, triggers, mitigations, contingency planning, placement risk management" recordType="risk_assessment" userRole="registered_manager" className="mb-2" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: "Total Assessments", value: stats.total,     icon: <ShieldAlert className="h-4 w-4" />,    color: "text-blue-600" },
@@ -341,16 +348,24 @@ export default function RiskAssessmentsPage() {
               child_views: fd.get("child_views") as string || "", history_notes: "",
               linked_incidents: [], home_id: "home_oak", created_at: new Date().toISOString(),
             }, {
-              onSuccess: () => { toast.success("Risk assessment created"); setShowNew(false); },
+              onSuccess: () => {
+                toast.success("Risk assessment created");
+                setShowNew(false);
+                setSelectedYp("");
+                setRaTriggers("");
+                setRaContingencyPlan("");
+                setRaChildViews("");
+              },
               onError: () => toast.error("Failed to create assessment"),
             });
           }} className="space-y-3">
             <div>
               <label className="text-sm font-medium">Young Person</label>
-              <Select name="child_id"><SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
+              <Select name="child_id" value={selectedYp} onValueChange={setSelectedYp}><SelectTrigger><SelectValue placeholder="Select child" /></SelectTrigger>
                 <SelectContent>{children.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+            {selectedYp && <InlinePracticeReasoning childId={selectedYp} childName={getYPName(selectedYp)} />}
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="text-sm font-medium">Risk Domain</label>
@@ -365,10 +380,28 @@ export default function RiskAssessmentsPage() {
                 </Select>
               </div>
             </div>
-            <div><label className="text-sm font-medium">Triggers</label><Textarea name="triggers" placeholder="Known triggers (one per line)" rows={2} /></div>
+            <div>
+              <label className="text-sm font-medium">Triggers</label>
+              <Textarea name="triggers" placeholder="Known triggers (one per line)" rows={2}
+                value={raTriggers} onChange={(e) => setRaTriggers(e.target.value)} />
+              <WritingAssistantInline value={raTriggers} onApplyText={setRaTriggers}
+                recordType="risk_assessment" fieldName="triggers" childId={selectedYp || undefined} mode="standard" />
+            </div>
             <div><label className="text-sm font-medium">Mitigation Strategies</label><Textarea placeholder="Key strategies (one per line)" rows={3} /></div>
-            <div><label className="text-sm font-medium">Contingency Plan</label><Textarea name="contingency_plan" placeholder="What to do if risk escalates…" rows={3} /></div>
-            <div><label className="text-sm font-medium">Child&apos;s Views</label><Textarea name="child_views" placeholder="Child's perspective on this risk…" rows={2} /></div>
+            <div>
+              <label className="text-sm font-medium">Contingency Plan</label>
+              <Textarea name="contingency_plan" placeholder="What to do if risk escalates…" rows={3}
+                value={raContingencyPlan} onChange={(e) => setRaContingencyPlan(e.target.value)} />
+              <WritingAssistantInline value={raContingencyPlan} onApplyText={setRaContingencyPlan}
+                recordType="risk_assessment" fieldName="contingency_plan" childId={selectedYp || undefined} mode="standard" />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Child&apos;s Views</label>
+              <Textarea name="child_views" placeholder="Child's perspective on this risk…" rows={2}
+                value={raChildViews} onChange={(e) => setRaChildViews(e.target.value)} />
+              <WritingAssistantInline value={raChildViews} onApplyText={setRaChildViews}
+                recordType="risk_assessment" fieldName="child_views" childId={selectedYp || undefined} mode="writing-to-child" />
+            </div>
             <div><label className="text-sm font-medium">Review Date</label><Input name="review_date" type="date" /></div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setShowNew(false)}>Cancel</Button>
@@ -383,7 +416,10 @@ export default function RiskAssessmentsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPracticePanel sourceType="risk_assessment" homeId="home_oak" title="Run ARIA on this assessment" />
+      <CaraPracticePanel sourceType="risk_assessment" homeId="home_oak" title="Run Cara on this assessment" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="risk_assessment" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this assessment" />
+      </div>
     </PageShell>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — POSITIVE HANDLING INTELLIGENCE CARD
+// CARA — POSITIVE HANDLING INTELLIGENCE CARD
 // Live data from safeguarding intelligence engine.
 // CHR 2015 Reg 12/34. SCCIF: Safety.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 import { useSafeguardingIntelligence } from "@/hooks/use-safeguarding-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function PositiveHandlingCard() {
@@ -37,6 +37,10 @@ export function PositiveHandlingCard() {
   const d = data?.data;
   const restraints = d?.restraints;
   const insights = d?.insights ?? [];
+
+  const injuryRate = restraints && restraints.total_restraints_90d > 0
+    ? Math.round((restraints.injuries_during_restraint / restraints.total_restraints_90d) * 100)
+    : 0;
 
   return (
     <Card className="overflow-hidden">
@@ -59,16 +63,16 @@ export function PositiveHandlingCard() {
             <p className="text-[10px] text-muted-foreground">Restraints 30d</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className="text-lg font-bold tabular-nums text-slate-600">{restraints?.avg_duration_mins ?? 0}m</p>
+            <p className="text-lg font-bold tabular-nums text-slate-600">{restraints?.average_duration_minutes ?? 0}m</p>
             <p className="text-[10px] text-muted-foreground">Avg Duration</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_rate ?? 0) >= 100 ? "text-green-600" : "text-amber-600")}>{restraints?.debrief_rate ?? 0}%</p>
+          <div className={cn("text-center rounded-lg p-2", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (restraints?.debrief_completion_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.debrief_completion_rate ?? 0}%</p>
             <p className="text-[10px] text-muted-foreground">Debrief</p>
           </div>
-          <div className={cn("text-center rounded-lg p-2", (restraints?.repeat_use_same_child ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (restraints?.repeat_use_same_child ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{restraints?.repeat_use_same_child ?? 0}</p>
-            <p className="text-[10px] text-muted-foreground">Repeat</p>
+          <div className={cn("text-center rounded-lg p-2", (restraints?.review_completion_rate ?? 0) >= 100 ? "bg-green-50" : "bg-amber-50")}>
+            <p className={cn("text-lg font-bold tabular-nums", (restraints?.review_completion_rate ?? 0) >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{restraints?.review_completion_rate ?? 0}%</p>
+            <p className="text-[10px] text-muted-foreground">Review</p>
           </div>
         </div>
 
@@ -86,21 +90,21 @@ export function PositiveHandlingCard() {
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Injury rate:</span>{" "}
-              <span className="font-semibold">{restraints?.injury_rate ?? 0}%</span>
+              <span className="font-semibold">{injuryRate}%</span>
             </div>
             <div className="rounded border p-2">
               <span className="text-muted-foreground">Debrief rate:</span>{" "}
-              <span className="font-semibold">{restraints?.debrief_rate ?? 0}%</span>
+              <span className="font-semibold">{restraints?.debrief_completion_rate ?? 0}%</span>
             </div>
           </div>
         </div>
 
-        {/* ARIA insights */}
+        {/* Cara insights */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Handling Intelligence
+              Cara Handling Intelligence
             </p>
             {insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

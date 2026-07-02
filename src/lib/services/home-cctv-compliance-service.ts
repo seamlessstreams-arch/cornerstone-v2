@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME CCTV COMPLIANCE SERVICE
+// CARA -- HOME CCTV COMPLIANCE SERVICE
 // Tracks CCTV camera compliance reviews including DPIA completion, signage,
 // data retention, encryption, access logging, SAR handling, and privacy
 // zone configuration for children's residential homes.
@@ -305,7 +305,7 @@ export function identifyCctvComplianceAlerts(
   return alerts;
 }
 
-export function generateCctvComplianceAriaInsights(
+export function generateCctvComplianceCaraInsights(
   rows: HomeCctvComplianceRow[],
 ): string[] {
   const metrics = computeCctvComplianceMetrics(rows);
@@ -482,5 +482,5 @@ export async function deleteHomeCctvCompliance(
 export const _testing = {
   computeCctvComplianceMetrics,
   identifyCctvComplianceAlerts,
-  generateCctvComplianceAriaInsights,
+  generateCctvComplianceCaraInsights,
 };

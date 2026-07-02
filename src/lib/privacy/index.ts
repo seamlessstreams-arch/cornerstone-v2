@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Children's Privacy Intelligence — Public API
+// Cara Children's Privacy Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

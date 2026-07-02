@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILDREN'S FEEDBACK SERVICE
+// CARA — CHILDREN'S FEEDBACK SERVICE
 // Tracks satisfaction surveys, feedback forms, suggestions, and outcomes
 // to ensure children's voices shape the home's development.
 // CHR 2015 Reg 7 (quality of care — responsive to views),

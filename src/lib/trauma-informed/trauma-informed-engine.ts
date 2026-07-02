@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Trauma-Informed Care Intelligence Engine
+// Cara Trauma-Informed Care Intelligence Engine
 //
 // Deterministic engine for evaluating trauma-informed care practice across
 // a children's residential home. Scores staff competency, practice quality,

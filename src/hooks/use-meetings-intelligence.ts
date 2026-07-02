@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEETINGS & CHILDREN'S VOICE INTELLIGENCE HOOK
+// CARA — MEETINGS & CHILDREN'S VOICE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/meetings-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

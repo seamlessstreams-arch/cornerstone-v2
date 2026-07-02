@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ANNEX A READINESS DASHBOARD
+// CARA — ANNEX A READINESS DASHBOARD
 // Continuously inspection-ready, evidence-backed, live-updating
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -62,8 +62,8 @@ import { useReg45Evidence } from "@/hooks/use-compliance-evidence";
 import { toast } from "sonner";
 import type { ManagerDecision } from "@/types/care-events";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Period activity stat tile ─────────────────────────────────────────────────
 
@@ -514,14 +514,14 @@ export default function AnnexAReadinessPage() {
     <PageShell
       title="Annex A Readiness Dashboard"
       subtitle="Continuously inspection-ready — evidence from verified Care Events builds Annex A automatically"
-      ariaContext={{ pageTitle: "Annex A Readiness Dashboard", sourceType: "reg45" }}
+      caraContext={{ pageTitle: "Annex A Readiness Dashboard", sourceType: "reg45" }}
       actions={
         <div className="flex items-center gap-2">
           <Button size="sm" variant="outline" onClick={() => setSnapshotOpen(true)}>
             <Camera className="h-3.5 w-3.5 mr-1.5" />
             Generate snapshot
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "annex_a", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -876,7 +876,7 @@ export default function AnnexAReadinessPage() {
             </div>
 
             <p className="text-[10px] text-slate-400 border-t pt-3">
-              Cornerstone · Annex A Snapshot · Generated {new Date(snapshotDate).toLocaleString("en-GB")} · Home: Oak House
+              Cara · Annex A Snapshot · Generated {new Date(snapshotDate).toLocaleString("en-GB")} · Home: Chamberlain House
             </p>
           </div>
 
@@ -895,7 +895,7 @@ export default function AnnexAReadinessPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Annex A Readiness Dashboard — inspection readiness, children and staff information, incidents, restraints, complaints, missing episodes, Ofsted evidence, SCCIF"
         recordType="annex_a"

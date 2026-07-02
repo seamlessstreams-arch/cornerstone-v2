@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIVE ACTIVITY FEED
+// CARA — LIVE ACTIVITY FEED
 // Real-time stream of events across the home. Shows on the dashboard as a
 // scrollable timeline of what's been happening — incidents, tasks, meds, logs.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -36,12 +36,12 @@ const TYPE_ICON: Record<FeedItem["type"], React.ElementType> = {
 
 const TYPE_COLOR: Record<FeedItem["type"], string> = {
   incident:     "bg-orange-100 text-orange-600",
-  task:         "bg-blue-100 text-blue-600",
+  task:         "bg-[--cs-info-bg] text-[--cs-info]",
   daily_log:    "bg-emerald-100 text-emerald-600",
   medication:   "bg-teal-100 text-teal-600",
-  handover:     "bg-amber-100 text-amber-600",
-  safeguarding: "bg-red-100 text-red-600",
-  training:     "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+  handover:     "bg-[--cs-warning-bg] text-[--cs-warning]",
+  safeguarding: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  training:     "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
   document:     "bg-[var(--cs-surface)] text-[var(--cs-text-secondary)]",
   shift:        "bg-indigo-100 text-indigo-600",
   form:         "bg-[var(--cs-surface)] text-[var(--cs-text-secondary)]",
@@ -111,7 +111,7 @@ function FeedItemRow({ item }: { item: FeedItem }) {
             </span>
           )}
           {item.child_id && (
-            <span className="text-[10px] text-[var(--cs-aria-gold)] flex items-center gap-0.5 font-medium">
+            <span className="text-[10px] text-[var(--cs-cara-gold)] flex items-center gap-0.5 font-medium">
               <Heart className="h-2.5 w-2.5" />
               {getYPName(item.child_id)}
             </span>

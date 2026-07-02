@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION COMPETENCY CARD
+// CARA — MEDICATION COMPETENCY CARD
 // Live data from useWorkforceIntelligence() — training compliance, DBS.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function StaffMedicationCompetencyCard() {
@@ -56,7 +56,7 @@ export function StaffMedicationCompetencyCard() {
         {/* ── Summary strip ──────────────────────────────────────────── */}
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", avgCompliance >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-green-600" : "text-amber-600")}>{avgCompliance}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{avgCompliance}%</p>
             <p className="text-[10px] text-muted-foreground">Avg Comp.</p>
           </div>
           <div className="text-center rounded-lg p-2 bg-teal-50">
@@ -64,11 +64,11 @@ export function StaffMedicationCompetencyCard() {
             <p className="text-[10px] text-muted-foreground">Categories</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", dbs.compliance_rate >= 95 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-green-600" : "text-amber-600")}>{dbs.compliance_rate}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.compliance_rate >= 95 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{dbs.compliance_rate}%</p>
             <p className="text-[10px] text-muted-foreground">DBS %</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", dbs.expired_or_missing > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", dbs.expired_or_missing > 0 ? "text-red-600" : "text-green-600")}>{dbs.expired_or_missing}</p>
+            <p className={cn("text-lg font-bold tabular-nums", dbs.expired_or_missing > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{dbs.expired_or_missing}</p>
             <p className="text-[10px] text-muted-foreground">DBS Issues</p>
           </div>
         </div>
@@ -93,11 +93,11 @@ export function StaffMedicationCompetencyCard() {
           </div>
         </div>
 
-        {/* ── ARIA insights ──────────────────────────────────────────── */}
+        {/* ── Cara insights ──────────────────────────────────────────── */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
-              <Brain className="h-3 w-3" />ARIA Insights
+              <Brain className="h-3 w-3" />Cara Insights
             </p>
             {d.insights.map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity])}>

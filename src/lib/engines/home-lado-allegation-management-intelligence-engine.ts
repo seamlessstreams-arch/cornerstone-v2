@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LADO & ALLEGATION MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME LADO & ALLEGATION MANAGEMENT INTELLIGENCE ENGINE
 // Home-level: analyses LADO referrals, allegation patterns, staff training,
 // and safeguarding compliance to surface intelligence for registered managers.
 // CHR 2015 Sch 2: fitness of workers. WSCB LADO procedures.

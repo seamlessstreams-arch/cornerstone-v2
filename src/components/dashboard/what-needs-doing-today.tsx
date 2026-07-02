@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WHAT NEEDS DOING TODAY PANEL
+// CARA — WHAT NEEDS DOING TODAY PANEL
 // Aggregates overdue tasks, missing logs, reviews, care plans, risk assessments,
 // and children needing follow-up into urgency-grouped action items.
 // Tap an item to open the relevant form with context pre-filled.
@@ -366,7 +366,7 @@ export function WhatNeedsDoingToday({
       <CardHeader className="pb-3 bg-[var(--cs-surface)]/50">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Star className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+            <Star className="h-4 w-4 text-[var(--cs-cara-gold)]" />
             <span className="text-[var(--cs-navy)]">What Needs Doing Today</span>
           </CardTitle>
           <Badge variant="secondary">
@@ -440,10 +440,10 @@ export function WhatNeedsDoingToday({
                         <span className={cn(
                           "inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-medium transition-colors",
                           urgency === "urgent"
-                            ? "bg-red-100 text-red-700 hover:bg-red-200"
+                            ? "bg-[--cs-risk-bg] text-[--cs-risk] hover:bg-red-200"
                             : urgency === "due_today"
-                              ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
-                              : "bg-blue-100 text-blue-700 hover:bg-blue-200",
+                              ? "bg-[--cs-warning-bg] text-[--cs-warning] hover:bg-amber-200"
+                              : "bg-[--cs-info-bg] text-[--cs-info] hover:bg-blue-200",
                         )}>
                           {item.actionLabel}
                           <ChevronRight className="h-3 w-3" />

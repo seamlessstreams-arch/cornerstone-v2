@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME ADVOCACY & INDEPENDENT VISITOR INTELLIGENCE ENGINE
+// CARA -- HOME ADVOCACY & INDEPENDENT VISITOR INTELLIGENCE ENGINE
 // Monitors independent visitor allocation, advocacy service access, child
 // representation quality, visit frequency compliance, and child satisfaction
 // with advocacy. Pure deterministic engine -- no imports, no LLM, no external

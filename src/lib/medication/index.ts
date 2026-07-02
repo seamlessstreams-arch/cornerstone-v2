@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Medication Intelligence — Public API
+// Cara Medication Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE ENGINE TESTS
+// CARA — HOME MENSTRUATION & PUBERTY SUPPORT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering all scoring paths, bonuses, penalties,
 // rates, strengths, concerns, recommendations, insights, and edge cases.
 // CHR 2015 Reg 5, Reg 7, Reg 14; SCCIF Health and wellbeing.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Whistleblowing & Professional Concerns — Public API
+// Cara Whistleblowing & Professional Concerns — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

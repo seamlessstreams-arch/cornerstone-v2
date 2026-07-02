@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP DISTURBANCE INTERVENTION CARD
+// CARA — SLEEP DISTURBANCE INTERVENTION CARD
 // Live data from useNightMonitoring() — overview, child profiles, security.
 // CHR 2015 Reg 12/24/25. SCCIF: Overall Experiences — Night care.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -16,16 +16,16 @@ import { cn } from "@/lib/utils";
 import { useNightMonitoring } from "@/hooks/use-night-monitoring";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function SleepDisturbanceInterventionCard() {
@@ -71,19 +71,19 @@ export function SleepDisturbanceInterventionCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", disrupted === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", disrupted === 0 ? "text-green-600" : "text-red-600")}>{disrupted}</p>
+            <p className={cn("text-lg font-bold tabular-nums", disrupted === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{disrupted}</p>
             <p className="text-[10px] text-muted-foreground">Disrupted</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", variable === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", variable === 0 ? "text-green-600" : "text-amber-600")}>{variable}</p>
+            <p className={cn("text-lg font-bold tabular-nums", variable === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{variable}</p>
             <p className="text-[10px] text-muted-foreground">Variable</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", overview.concern_count_7d === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overview.concern_count_7d === 0 ? "text-green-600" : "text-amber-600")}>{overview.concern_count_7d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", overview.concern_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{overview.concern_count_7d}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", overview.not_in_room_count_7d === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", overview.not_in_room_count_7d === 0 ? "text-green-600" : "text-red-600")}>{overview.not_in_room_count_7d}</p>
+            <p className={cn("text-lg font-bold tabular-nums", overview.not_in_room_count_7d === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{overview.not_in_room_count_7d}</p>
             <p className="text-[10px] text-muted-foreground">Not in Room</p>
           </div>
         </div>
@@ -97,11 +97,11 @@ export function SleepDisturbanceInterventionCard() {
               <div key={c.child_id} className="flex items-center justify-between rounded border p-2.5 text-xs">
                 <span className="font-medium">{c.child_name}</span>
                 <div className="flex items-center gap-1">
-                  <Badge className={cn("text-[9px]", c.sleep_pattern === "disrupted" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700")}>
+                  <Badge className={cn("text-[9px]", c.sleep_pattern === "disrupted" ? "bg-[--cs-risk-bg] text-[--cs-risk]" : "bg-[--cs-warning-bg] text-[--cs-warning]")}>
                     {c.sleep_pattern}
                   </Badge>
                   {c.concern_count_7d > 0 && (
-                    <Badge className="text-[9px] bg-amber-100 text-amber-700">{c.concern_count_7d} concerns</Badge>
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">{c.concern_count_7d} concerns</Badge>
                   )}
                 </div>
               </div>
@@ -125,13 +125,13 @@ export function SleepDisturbanceInterventionCard() {
           </div>
         )}
 
-        {/* ── ARIA insights ───────────────────────────────────────────── */}
+        {/* ── Cara insights ───────────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Sleep Intelligence
+              Cara Sleep Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

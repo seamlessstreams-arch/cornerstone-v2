@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Safer Recruitment — Compliance Engine
+// Cara Safer Recruitment — Compliance Engine
 //
 // Deterministic engine for tracking recruitment compliance against CHR 2015
 // Regulation 34 (Fitness of workers) and Schedule 2 requirements.

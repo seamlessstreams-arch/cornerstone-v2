@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ACTIVITY PLANNING SERVICE TESTS
+// CARA — ACTIVITY PLANNING SERVICE TESTS
 // Pure-function tests for activity metrics, alert identification,
 // constant validation, CRUD fallback, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

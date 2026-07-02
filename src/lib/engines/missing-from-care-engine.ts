@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MISSING FROM CARE INTELLIGENCE ENGINE
+// CARA — MISSING FROM CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates missing episodes and computes:
 // - Profile summary (total, active, avg duration, return interview rate)
 // - Recent episodes with risk levels and statuses
 // - Push/pull factor analysis from pattern notes
 // - Contextual safeguarding risk flags
-// - Auto-generated ARIA intelligence insights (deterministic, no LLM)
+// - Auto-generated Cara intelligence insights (deterministic, no LLM)
 //
 // Key regulatory requirement: Reg 34 (missing children), Children's Homes
 // Regulations 2015. Ofsted always examines missing patterns, return
@@ -14,6 +14,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Types ───────────────────────────────────────────────────────────────────
+
+import { mentionsAny } from "@/lib/text/keyword-match";
 
 export interface MissingEpisodeInput {
   id: string;
@@ -77,7 +79,7 @@ export interface PushPullAnalysis {
   risk: PushPullFactor[];
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -86,7 +88,7 @@ export interface MissingIntelligenceResult {
   profile: MissingProfile;
   recent_episodes: RecentEpisode[];
   push_pull: PushPullAnalysis;
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface MissingEngineInput {
@@ -137,7 +139,7 @@ export function extractFactors(episode: MissingEpisodeInput): {
   const notes = ((episode.pattern_notes ?? "") + " " + (episode.return_interview_notes ?? "")).toLowerCase();
 
   // Pull factors (external attractions drawing the child away)
-  if (notes.includes("peer") || notes.includes("mate") || notes.includes("friend")) {
+  if (mentionsAny(notes, ["peer", "mate", "friend"])) {
     pull.push("peer_influence");
   }
   if (notes.includes("online") || notes.includes("social media") || notes.includes("internet")) {
@@ -149,7 +151,7 @@ export function extractFactors(episode: MissingEpisodeInput): {
   if (notes.includes("drugs") || notes.includes("alcohol") || notes.includes("substance")) {
     pull.push("substance_use");
   }
-  if (notes.includes("community") || notes.includes("park") || notes.includes("town")) {
+  if (mentionsAny(notes, ["community", "park", "town"])) {
     pull.push("community_attraction");
   }
   if (notes.includes("family") || notes.includes("birth parent") || notes.includes("mum") || notes.includes("dad")) {
@@ -174,7 +176,7 @@ export function extractFactors(episode: MissingEpisodeInput): {
   }
 
   // Risk factors (exploitation indicators)
-  if (notes.includes("older") || notes.includes("unknown male") || notes.includes("unknown adult")) {
+  if (mentionsAny(notes, ["older", "unknown male", "unknown adult"])) {
     risk.push("unknown_adults");
   }
   if (notes.includes("exploit") || notes.includes("groom") || notes.includes("trafficking")) {
@@ -309,8 +311,8 @@ export function computeMissingIntelligence(input: MissingEngineInput): MissingIn
     risk: toSorted(riskCounts),
   };
 
-  // ── ARIA Intelligence Insights (deterministic) ──────────────────────────
-  const insights: AriaInsight[] = [];
+  // ── Cara Intelligence Insights (deterministic) ──────────────────────────
+  const insights: CaraInsight[] = [];
 
   // No episodes at all — clean record
   if (episodes.length === 0) {
@@ -326,7 +328,7 @@ export function computeMissingIntelligence(input: MissingEngineInput): MissingIn
     const activeNames = [...new Set(active.map((e) => childName(e.child_id)))].join(", ");
     insights.push({
       severity: "critical",
-      text: `${active.length} active missing episode(s): ${activeNames}. Ensure police notification, placing authority contact, and risk assessment are current. Check ARIA dashboard for live updates.`,
+      text: `${active.length} active missing episode(s): ${activeNames}. Ensure police notification, placing authority contact, and risk assessment are current. Check Cara dashboard for live updates.`,
     });
   }
 

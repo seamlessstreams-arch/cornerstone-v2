@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD LAC REVIEW INTELLIGENCE CARD
+// CARA — CHILD LAC REVIEW INTELLIGENCE CARD
 // Per-child: LAC review compliance, participation, action completion,
 // care plan updates, IRO consistency, timeliness.
 // CHR 2015 Reg 45, Reg 5. IRO Handbook. SCCIF: "Impact of leaders."
@@ -220,12 +220,12 @@ export function ChildLACReviewIntelligenceCard({ childId }: { childId: string })
           </div>
         )}
 
-        {/* ARIA LAC Review Intelligence */}
+        {/* Cara LAC Review Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA LAC Review Intelligence
+              Cara LAC Review Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

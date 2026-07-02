@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RECORDING QUALITY INTELLIGENCE CARD
+// CARA — RECORDING QUALITY INTELLIGENCE CARD
 // Dashboard card powered by the Recording Quality Intelligence Engine.
 // Reg 36 (records), SCCIF (evidence of day-to-day experiences).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,16 +19,16 @@ import { useRecordingQualityIntelligence } from "@/hooks/use-recording-quality-i
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const QUALITY_BAR_COLOURS: Record<string, string> = {
@@ -39,9 +39,9 @@ const QUALITY_BAR_COLOURS: Record<string, string> = {
 };
 
 const TREND_CONFIG: Record<string, { icon: typeof TrendingUp; colour: string }> = {
-  improving: { icon: TrendingUp, colour: "text-green-600" },
+  improving: { icon: TrendingUp, colour: "text-[--cs-success]" },
   stable: { icon: CheckCircle2, colour: "text-gray-500" },
-  declining: { icon: AlertTriangle, colour: "text-red-600" },
+  declining: { icon: AlertTriangle, colour: "text-[--cs-risk]" },
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -108,7 +108,7 @@ export function RecordingQualityCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.mood_capture_rate >= 80 ? "text-green-600" : o.mood_capture_rate >= 60 ? "text-amber-600" : "text-red-600",
+              o.mood_capture_rate >= 80 ? "text-[--cs-success]" : o.mood_capture_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.mood_capture_rate}%
             </p>
@@ -120,7 +120,7 @@ export function RecordingQualityCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.entry_type_coverage >= 80 ? "text-green-600" : o.entry_type_coverage >= 60 ? "text-amber-600" : "text-red-600",
+              o.entry_type_coverage >= 80 ? "text-[--cs-success]" : o.entry_type_coverage >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.entry_type_coverage}%
             </p>
@@ -167,10 +167,10 @@ export function RecordingQualityCard() {
                   </div>
                   <Badge className={cn(
                     "text-[10px] flex-shrink-0",
-                    sp.quality_label === "Excellent" ? "bg-green-100 text-green-700"
-                      : sp.quality_label === "Good" ? "bg-blue-100 text-blue-700"
-                      : sp.quality_label === "Adequate" ? "bg-amber-100 text-amber-700"
-                      : "bg-red-100 text-red-700",
+                    sp.quality_label === "Excellent" ? "bg-[--cs-success-bg] text-[--cs-success]"
+                      : sp.quality_label === "Good" ? "bg-[--cs-info-bg] text-[--cs-info]"
+                      : sp.quality_label === "Adequate" ? "bg-[--cs-warning-bg] text-[--cs-warning]"
+                      : "bg-[--cs-risk-bg] text-[--cs-risk]",
                   )}>
                     {sp.quality_label}
                   </Badge>
@@ -194,7 +194,7 @@ export function RecordingQualityCard() {
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{cc.entries_last_7_days} entries</Badge>
                   {cc.days_without_entry > 2 && (
-                    <Badge className="text-[10px] bg-red-100 text-red-700">{cc.days_without_entry}d gap</Badge>
+                    <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">{cc.days_without_entry}d gap</Badge>
                   )}
                   {cc.has_entry_today && (
                     <CheckCircle2 className="h-3 w-3 text-green-500" />
@@ -244,13 +244,13 @@ export function RecordingQualityCard() {
           </div>
         )}
 
-        {/* ── ARIA Recording Intelligence ─────────────────────────────── */}
+        {/* ── Cara Recording Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Recording Intelligence
+              Cara Recording Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

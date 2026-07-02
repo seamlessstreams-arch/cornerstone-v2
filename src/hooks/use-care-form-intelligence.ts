@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE HOOK
+// CARA — CARE FORM INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/care-form-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

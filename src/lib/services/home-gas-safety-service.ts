@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GAS SAFETY SERVICE
+// CARA — HOME GAS SAFETY SERVICE
 // Tracks gas safety inspections, CP12 certificates, boiler servicing,
 // and compliance with Gas Safety (Installation and Use) Regulations 1998.
 //
@@ -272,7 +272,7 @@ export function identifyGasSafetyAlerts(
   return alerts;
 }
 
-export function generateGasSafetyAriaInsights(
+export function generateGasSafetyCaraInsights(
   rows: HomeGasSafetyRow[],
 ): string[] {
   const metrics = computeGasSafetyMetrics(rows);
@@ -438,5 +438,5 @@ export async function deleteRecord(
 export const _testing = {
   computeGasSafetyMetrics,
   identifyGasSafetyAlerts,
-  generateGasSafetyAriaInsights,
+  generateGasSafetyCaraInsights,
 };

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE ENGINE
+// CARA — HOME FIRST AID KIT & MEDICAL SUPPLIES INTELLIGENCE ENGINE
 // Monitors first aid kit checks, medical supply stock adequacy, expiry date
 // monitoring, kit accessibility and location compliance, staff first aid
 // training currency, and children's awareness of first aid arrangements.

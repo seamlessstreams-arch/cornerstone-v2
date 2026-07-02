@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD VOICE & PARTICIPATION TRACKING SERVICE
+// CARA — CHILD VOICE & PARTICIPATION TRACKING SERVICE
 // Tracks how children's voices are heard and influence decisions.
 // Participation in reviews, care planning, house meetings, complaints,
 // feedback loops, advocacy meetings, and regulatory visits.
@@ -257,7 +257,7 @@ export function computeVoiceParticipationAlerts(
   return alerts;
 }
 
-export function generateVoiceParticipationAriaInsights(
+export function generateVoiceParticipationCaraInsights(
   rows: ChildVoiceParticipationTrackingRow[],
 ): string[] {
   const metrics = computeVoiceParticipationMetrics(rows);
@@ -380,5 +380,5 @@ export async function createChildVoiceParticipation(input: {
 export const _testing = {
   computeVoiceParticipationMetrics,
   computeVoiceParticipationAlerts,
-  generateVoiceParticipationAriaInsights,
+  generateVoiceParticipationCaraInsights,
 };

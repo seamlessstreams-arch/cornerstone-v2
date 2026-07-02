@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS SERVICE
+// CARA — NOTIFIABLE EVENTS SERVICE
 // Manages notifiable events and statutory notifications under CHR 2015
 // Regulation 40.  Tracks events, required notifications to Ofsted / placing
 // authorities / police, deadline compliance, and pattern analysis.

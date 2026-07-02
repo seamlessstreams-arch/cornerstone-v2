@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD MEDICATION INTELLIGENCE CARD
+// CARA — CHILD MEDICATION INTELLIGENCE CARD
 // Per-child: medication safety — adherence, witnessing, timeliness,
 // PRN patterns, stock, errors.
 // CHR 2015 Reg 23, 12. SCCIF: "Health."
@@ -245,12 +245,12 @@ export function ChildMedicationIntelligenceCard({ childId }: { childId: string }
           </div>
         )}
 
-        {/* ARIA Medication Intelligence */}
+        {/* Cara Medication Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Intelligence
+              Cara Medication Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

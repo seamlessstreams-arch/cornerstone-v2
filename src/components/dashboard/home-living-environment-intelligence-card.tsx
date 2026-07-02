@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LIVING ENVIRONMENT INTELLIGENCE CARD
+// CARA — HOME LIVING ENVIRONMENT INTELLIGENCE CARD
 // Bedrooms, pets, gardens, outdoor activities, environmental risks.
 // CHR 2015 Reg 15.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<LivingEnvironmentRating, { bg: string; text: string;
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomeLivingEnvironmentIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.living_environment_rating === "inadequate" && (d.living_environment_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      living_environment_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.living_environment_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.living_environment_rating === "inadequate" || d.environmental_risks.critical_count > 0;
@@ -65,7 +82,7 @@ export function HomeLivingEnvironmentIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Home className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-teal-600")} />
+            <Home className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-teal-600")} />
             <span className="text-slate-900">Living Environment</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -88,8 +105,8 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <BedDouble className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.bedrooms.child_coverage >= 90 ? "text-green-600" :
-                  d.bedrooms.child_coverage >= 70 ? "text-amber-600" : "text-red-600"
+                  d.bedrooms.child_coverage >= 90 ? "text-[--cs-success]" :
+                  d.bedrooms.child_coverage >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.bedrooms.total_profiles > 0 ? `${d.bedrooms.child_coverage}%` : "—"}
                 </p>
@@ -102,8 +119,8 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Home className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.bedrooms.avg_satisfaction >= 4.0 ? "text-green-600" :
-                  d.bedrooms.avg_satisfaction >= 3.0 ? "text-amber-600" : "text-red-600"
+                  d.bedrooms.avg_satisfaction >= 4.0 ? "text-[--cs-success]" :
+                  d.bedrooms.avg_satisfaction >= 3.0 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.bedrooms.total_profiles > 0 ? `${d.bedrooms.avg_satisfaction}` : "—"}
                 </p>
@@ -116,8 +133,8 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <PawPrint className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.pets.total_pets > 0 && d.pets.vaccination_rate >= 100 ? "text-green-600" :
-                  d.pets.total_pets > 0 ? "text-amber-600" : "text-slate-400"
+                  d.pets.total_pets > 0 && d.pets.vaccination_rate >= 100 ? "text-[--cs-success]" :
+                  d.pets.total_pets > 0 ? "text-[--cs-warning]" : "text-slate-400"
                 )}>
                   {d.pets.total_pets > 0 ? d.pets.total_pets : "—"}
                 </p>
@@ -130,7 +147,7 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <TreePine className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.gardens.total_plots > 0 ? "text-green-600" : "text-slate-400"
+                  d.gardens.total_plots > 0 ? "text-[--cs-success]" : "text-slate-400"
                 )}>
                   {d.gardens.total_plots > 0 ? d.gardens.total_plots : "—"}
                 </p>
@@ -148,7 +165,7 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -163,7 +180,7 @@ export function HomeLivingEnvironmentIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -190,12 +207,12 @@ export function HomeLivingEnvironmentIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Living Environment Intelligence
+              Cara Living Environment Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

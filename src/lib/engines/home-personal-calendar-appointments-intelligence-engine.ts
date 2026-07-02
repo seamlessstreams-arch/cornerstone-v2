@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME PERSONAL CALENDAR & APPOINTMENTS INTELLIGENCE ENGINE
+// CARA -- HOME PERSONAL CALENDAR & APPOINTMENTS INTELLIGENCE ENGINE
 // Monitors appointment management quality: appointment attendance rates,
 // calendar management effectiveness, medical/dental/educational appointment
 // compliance, transport arrangement timeliness, and child preparation for

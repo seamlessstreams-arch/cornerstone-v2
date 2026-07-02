@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PLACEMENT DISRUPTION PREVENTION INTELLIGENCE ENGINE
+// CARA — HOME PLACEMENT DISRUPTION PREVENTION INTELLIGENCE ENGINE
 // Home-level: analyses disruption plans, placement endings, stability factors,
 // child involvement, professional engagement, and review compliance to assess
 // overall placement disruption prevention effectiveness.

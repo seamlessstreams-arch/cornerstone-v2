@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME THERAPEUTIC PROGRESS INTELLIGENCE ENGINE
+// CARA — HOME THERAPEUTIC PROGRESS INTELLIGENCE ENGINE
 // Home-level: aggregates behaviour mapping, sensory profiles, sleep
 // assessments, emotional vocabulary, bereavement support, attachment
 // profiles, and self-soothing toolkits.
@@ -635,7 +635,7 @@ export function computeHomeTherapeuticProgress(
     recommendations.push({ rank: ++rank, recommendation: "Review and co-produce self-soothing toolkits with children — current strategies show low effectiveness.", urgency: "soon", regulatory_ref: null });
   }
 
-  // ── ARIA Insights ────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────
   if (bm90.length >= 10) {
     const selfHarm = bm90.filter(e => e.behaviour_type === "self_harm").length;
     const selfHarmPct = pct(selfHarm, bm90.length);

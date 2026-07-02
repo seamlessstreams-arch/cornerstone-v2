@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE ENGINE
+// CARA — HOME BATHROOM ACCESSIBILITY & ADAPTATIONS INTELLIGENCE ENGINE
 // Measures bathroom adaptation adequacy, grab rail provision, non-slip surface
 // compliance, wheelchair access, and child-specific modification tracking.
 // Evaluates adaptation_adequacy, grab_rail provision, non_slip surfaces,

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ACTIVITY & ENRICHMENT INTELLIGENCE CARD
+// CARA — HOME ACTIVITY & ENRICHMENT INTELLIGENCE CARD
 // Home-level: activity provision quality, participation rates, category
-// variety, new experiences, per-child profiles, ARIA insights.
+// variety, new experiences, per-child profiles, Cara insights.
 // CHR 2015 Reg 9 (enjoyment & achievement). SCCIF: "Experiences and progress."
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -29,15 +29,15 @@ const RATING_STYLES: Record<EnrichmentRating, { bg: string; text: string; border
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const CAT_COLORS: Record<string, string> = {
@@ -54,9 +54,9 @@ const CAT_COLORS: Record<string, string> = {
 };
 
 function scoreColor(score: number): string {
-  if (score >= 65) return "text-green-600";
-  if (score >= 45) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 65) return "text-[--cs-success]";
+  if (score >= 45) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 }
 
 function scoreBg(score: number): string {
@@ -80,8 +80,25 @@ export function HomeActivityEnrichmentIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.enrichment_rating === "inadequate" && (d.enrichment_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      enrichment_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.enrichment_rating] ?? RATING_STYLES.insufficient_data;
 
@@ -106,13 +123,13 @@ export function HomeActivityEnrichmentIntelligenceCard() {
         {/* Provision KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-purple-50 p-2">
-            <p className={cn("text-lg font-bold tabular-nums", d.provision.total_activities_30d >= 10 ? "text-green-600" : d.provision.total_activities_30d >= 4 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", d.provision.total_activities_30d >= 10 ? "text-[--cs-success]" : d.provision.total_activities_30d >= 4 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {d.provision.total_activities_30d}
             </p>
             <p className="text-[10px] text-muted-foreground">Activities (30d)</p>
           </div>
           <div className="text-center rounded-lg bg-slate-50 p-2">
-            <p className={cn("text-lg font-bold tabular-nums", d.provision.unique_categories_30d >= 5 ? "text-green-600" : d.provision.unique_categories_30d >= 3 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", d.provision.unique_categories_30d >= 5 ? "text-[--cs-success]" : d.provision.unique_categories_30d >= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {d.provision.unique_categories_30d}
             </p>
             <p className="text-[10px] text-muted-foreground">Categories</p>
@@ -120,7 +137,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
           <div className="text-center rounded-lg bg-slate-50 p-2">
             <div className="flex items-center justify-center gap-1">
               <Star className={cn("h-3.5 w-3.5", d.provision.new_experiences_30d >= 3 ? "text-amber-500" : "text-slate-400")} />
-              <p className={cn("text-lg font-bold tabular-nums", d.provision.new_experiences_30d >= 3 ? "text-amber-600" : d.provision.new_experiences_30d >= 1 ? "text-amber-500" : "text-slate-400")}>
+              <p className={cn("text-lg font-bold tabular-nums", d.provision.new_experiences_30d >= 3 ? "text-[--cs-warning]" : d.provision.new_experiences_30d >= 1 ? "text-amber-500" : "text-slate-400")}>
                 {d.provision.new_experiences_30d}
               </p>
             </div>
@@ -139,14 +156,14 @@ export function HomeActivityEnrichmentIntelligenceCard() {
 
         {/* Category Breakdown */}
         {d.category_breakdown.length > 0 && (
-          <div className="rounded border border-purple-200 bg-purple-50 p-2 text-xs">
+          <div className="rounded border border-[--cs-oversight-soft] bg-[--cs-oversight-bg] p-2 text-xs">
             <p className="font-medium text-purple-700 flex items-center gap-1 mb-1.5">
               <BarChart3 className="h-3 w-3" />
               Category Mix
             </p>
             <div className="flex flex-wrap gap-1">
               {d.category_breakdown.map((cat, i) => (
-                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-purple-800 border border-purple-200 capitalize">
+                <span key={i} className="inline-flex items-center gap-1 bg-white/60 rounded px-1.5 py-0.5 text-[10px] text-[--cs-oversight] border border-purple-200 capitalize">
                   <span className={cn("w-1.5 h-1.5 rounded-full", CAT_COLORS[cat.category] ?? "bg-slate-400")} />
                   {cat.category.replace("_", " ")} <span className="font-bold">{cat.count}</span>
                   <span className="opacity-50">({cat.percentage}%)</span>
@@ -174,7 +191,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
                     <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
                       <span>{cp.activities_30d} act.</span>
                       {cp.new_experiences_30d > 0 && (
-                        <span className="text-amber-600">{cp.new_experiences_30d} new</span>
+                        <span className="text-[--cs-warning]">{cp.new_experiences_30d} new</span>
                       )}
                       <span>{cp.categories_accessed.length} cat.</span>
                     </div>
@@ -185,7 +202,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
                   {(cp.flags?.length ?? 0) > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(cp.flags ?? []).map((f, i) => (
-                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-red-100 text-red-700 border border-red-200">
+                        <span key={i} className="inline-flex text-[9px] px-1.5 py-0.5 rounded bg-[--cs-risk-bg] text-[--cs-risk] border border-red-200">
                           {f}
                         </span>
                       ))}
@@ -205,7 +222,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -220,7 +237,7 @@ export function HomeActivityEnrichmentIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -247,12 +264,12 @@ export function HomeActivityEnrichmentIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Enrichment Insights */}
+        {/* Cara Enrichment Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Enrichment Intelligence
+              Cara Enrichment Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION TRACKER WIDGET
+// CARA — SUPERVISION TRACKER WIDGET
 // Dashboard card showing the supervision status for all staff.
 // Highlights overdue and upcoming supervisions for management oversight.
 // Reg 33 visits require evidence of regular supervision — this makes it visible.
@@ -32,12 +32,12 @@ function SupervisionRow({ staff }: { staff: StaffEnriched }) {
   let StatusIcon = CheckCircle2;
 
   if (isOverdue) {
-    statusColor = "text-red-600";
+    statusColor = "text-[--cs-risk]";
     statusBg = "bg-red-50";
     statusLabel = "Overdue";
     StatusIcon = AlertTriangle;
   } else if (isUpcoming) {
-    statusColor = "text-amber-600";
+    statusColor = "text-[--cs-warning]";
     statusBg = "bg-amber-50";
     statusLabel = `Due in ${daysUntil}d`;
     StatusIcon = Clock;
@@ -129,12 +129,12 @@ export function SupervisionTracker() {
           </CardTitle>
           <div className="flex items-center gap-2">
             {overdueCount > 0 && (
-              <Badge className="bg-red-100 text-red-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-risk-bg] text-[--cs-risk] border-0 text-[10px] rounded-full">
                 {overdueCount} overdue
               </Badge>
             )}
             {upcomingCount > 0 && (
-              <Badge className="bg-amber-100 text-amber-700 border-0 text-[10px] rounded-full">
+              <Badge className="bg-[--cs-warning-bg] text-[--cs-warning] border-0 text-[10px] rounded-full">
                 {upcomingCount} this week
               </Badge>
             )}

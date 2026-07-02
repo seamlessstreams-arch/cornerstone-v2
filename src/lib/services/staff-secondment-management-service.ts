@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SECONDMENT MANAGEMENT SERVICE
+// CARA — STAFF SECONDMENT MANAGEMENT SERVICE
 // Tracks staff secondment arrangements, terms, and compliance for children's
 // residential homes.
 //
@@ -171,9 +171,9 @@ export function computeAlerts(
   return alerts;
 }
 
-// ── ARIA Insights ─────────────────────────────────────────────────────────
+// ── Cara Insights ─────────────────────────────────────────────────────────
 
-export function computeAriaInsights(rows: StaffSecondmentManagementRow[]): string[] {
+export function computeCaraInsights(rows: StaffSecondmentManagementRow[]): string[] {
   const metrics = computeMetrics(rows);
   const alerts = computeAlerts(rows);
   const insights: string[] = [];
@@ -303,4 +303,4 @@ export async function updateStaffSecondmentManagement(
 
 // ── Testing export ────────────────────────────────────────────────────────
 
-export const _testing = { computeMetrics, computeAlerts, computeAriaInsights };
+export const _testing = { computeMetrics, computeAlerts, computeCaraInsights };

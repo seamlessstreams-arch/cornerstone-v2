@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LIFE SKILLS & INDEPENDENCE INTELLIGENCE HOOK
+// CARA — LIFE SKILLS & INDEPENDENCE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/life-skills-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

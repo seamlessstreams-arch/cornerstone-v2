@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PERMISSION SYSTEM
+// CARA — PERMISSION SYSTEM
 // Central source of truth for all role-based access control.
 // Never scattered if-statements. Never client-only checks.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -67,6 +67,8 @@ export const PERMISSIONS = {
   // Supervision
   VIEW_SUPERVISION: "view_supervision",
   MANAGE_SUPERVISION: "manage_supervision",
+  // Complaints (Reg 39) — manager-handled
+  MANAGE_COMPLAINTS: "manage_complaints",
   // Training
   VIEW_TRAINING: "view_training",
   MANAGE_TRAINING: "manage_training",
@@ -103,12 +105,12 @@ export const PERMISSIONS = {
   MANAGE_SETTINGS: "manage_settings",
   MANAGE_ROLES: "manage_roles",
   MANAGE_USERS: "manage_users",
-  // ARIA Intelligence
-  VIEW_ARIA_INTELLIGENCE: "view_aria_intelligence",
-  USE_ARIA_INTELLIGENCE: "use_aria_intelligence",
-  APPROVE_ARIA_CONTENT: "approve_aria_content",
-  MANAGE_ARIA_INTELLIGENCE: "manage_aria_intelligence",
-  VIEW_ARIA_AUDIT_TRAIL: "view_aria_audit_trail",
+  // Cara Intelligence
+  VIEW_CARA_INTELLIGENCE: "view_cara_intelligence",
+  USE_CARA_INTELLIGENCE: "use_cara_intelligence",
+  APPROVE_CARA_CONTENT: "approve_cara_content",
+  MANAGE_CARA_INTELLIGENCE: "manage_cara_intelligence",
+  VIEW_CARA_AUDIT_TRAIL: "view_cara_audit_trail",
   CREATE_KEY_WORK_SESSIONS: "create_key_work_sessions",
   COMPLETE_KEY_WORK_SESSIONS: "complete_key_work_sessions",
   CREATE_CHILD_RESOURCES: "create_child_resources",
@@ -128,28 +130,30 @@ export const PERMISSIONS = {
   MANAGE_LEARNING_STUDIO: "manage_learning_studio",
   VIEW_TRAINING_NEEDS: "view_training_needs",
   MANAGE_TRAINING_NEEDS: "manage_training_needs",
-  // ARIA Studio
-  ARIA_STUDIO_VIEW: "aria_studio_view",
-  ARIA_STUDIO_CREATE: "aria_studio_create",
-  ARIA_STUDIO_EDIT: "aria_studio_edit",
-  ARIA_STUDIO_REVIEW: "aria_studio_review",
-  ARIA_STUDIO_APPROVE: "aria_studio_approve",
-  ARIA_STUDIO_COMMIT: "aria_studio_commit",
-  ARIA_STUDIO_ADMIN: "aria_studio_admin",
-  // ARIA Reports & Review Intelligence
-  ARIA_REPORTS_VIEW: "aria:view",
-  ARIA_REPORTS_GENERATE: "aria:generate",
-  ARIA_REPORTS_REVIEW: "aria:review",
-  ARIA_REPORTS_APPROVE: "aria:approve",
-  ARIA_REPORTS_LOCK: "aria:lock",
-  ARIA_REPORTS_CONFIGURE: "aria:configure",
-  ARIA_REPORTS_HIGH_RISK: "aria:highRiskAnalysis",
+  // Cara Studio
+  CARA_STUDIO_VIEW: "cara_studio_view",
+  CARA_STUDIO_CREATE: "cara_studio_create",
+  CARA_STUDIO_EDIT: "cara_studio_edit",
+  CARA_STUDIO_REVIEW: "cara_studio_review",
+  CARA_STUDIO_APPROVE: "cara_studio_approve",
+  CARA_STUDIO_COMMIT: "cara_studio_commit",
+  CARA_STUDIO_ADMIN: "cara_studio_admin",
+  // Cara Reports & Review Intelligence
+  CARA_REPORTS_VIEW: "cara:view",
+  CARA_REPORTS_GENERATE: "cara:generate",
+  CARA_REPORTS_REVIEW: "cara:review",
+  CARA_REPORTS_APPROVE: "cara:approve",
+  CARA_REPORTS_LOCK: "cara:lock",
+  CARA_REPORTS_CONFIGURE: "cara:configure",
+  CARA_REPORTS_HIGH_RISK: "cara:highRiskAnalysis",
   REPORTS_VIEW: "reports:view",
   REPORTS_CREATE: "reports:create",
   REPORTS_REVIEW: "reports:review",
   REPORTS_APPROVE: "reports:approve",
   REPORTS_LOCK: "reports:lock",
   REG45_EVIDENCE_CREATE: "reg45:evidence:create",
+  // Candidate self-service
+  VIEW_CANDIDATE_PORTAL: "view_candidate_portal",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
@@ -160,6 +164,7 @@ export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
 export const APP_ROLES = [
   "super_admin",
+  "organisation_director",
   "responsible_individual",
   "registered_manager",
   "deputy_manager",
@@ -172,12 +177,14 @@ export const APP_ROLES = [
   "external_partner",
   "auditor",
   "admin", // legacy alias → treated as registered_manager
+  "candidate", // job applicant — self-service portal only
 ] as const;
 
 export type AppRole = (typeof APP_ROLES)[number];
 
 export const APP_ROLE_LABELS: Record<AppRole, string> = {
   super_admin: "Super Admin",
+  organisation_director: "Organisation Director",
   responsible_individual: "Responsible Individual",
   registered_manager: "Registered Manager",
   deputy_manager: "Deputy Manager",
@@ -190,6 +197,7 @@ export const APP_ROLE_LABELS: Record<AppRole, string> = {
   external_partner: "External Professional (Read-only)",
   auditor: "Auditor / Inspector (Read-only)",
   admin: "Administrator",
+  candidate: "Job Applicant",
 };
 
 // ── Full permissions for quick re-use ────────────────────────────────────────
@@ -242,9 +250,14 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Super Admin ──────────────────────────────────────────────────────────────
   super_admin: ALL_PERMISSIONS,
 
+  // ── Organisation Director ────────────────────────────────────────────────────
+  // Multi-home oversight: full operational visibility, no system configuration
+  organisation_director: ALL_PERMISSIONS,
+
   // ── Responsible Individual ───────────────────────────────────────────────────
   responsible_individual: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
@@ -273,11 +286,11 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_AUDITS,
     PERMISSIONS.MANAGE_INSPECTION,
     PERMISSIONS.EXPORT_REPORTS,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
-    PERMISSIONS.USE_ARIA_INTELLIGENCE,
-    PERMISSIONS.APPROVE_ARIA_CONTENT,
-    PERMISSIONS.MANAGE_ARIA_INTELLIGENCE,
-    PERMISSIONS.VIEW_ARIA_AUDIT_TRAIL,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
+    PERMISSIONS.USE_CARA_INTELLIGENCE,
+    PERMISSIONS.APPROVE_CARA_CONTENT,
+    PERMISSIONS.MANAGE_CARA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_AUDIT_TRAIL,
     PERMISSIONS.CREATE_KEY_WORK_SESSIONS,
     PERMISSIONS.COMPLETE_KEY_WORK_SESSIONS,
     PERMISSIONS.CREATE_CHILD_RESOURCES,
@@ -297,14 +310,14 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Reports & Review Intelligence (full access for RI)
-    PERMISSIONS.ARIA_REPORTS_VIEW,
-    PERMISSIONS.ARIA_REPORTS_GENERATE,
-    PERMISSIONS.ARIA_REPORTS_REVIEW,
-    PERMISSIONS.ARIA_REPORTS_APPROVE,
-    PERMISSIONS.ARIA_REPORTS_LOCK,
-    PERMISSIONS.ARIA_REPORTS_CONFIGURE,
-    PERMISSIONS.ARIA_REPORTS_HIGH_RISK,
+    // Cara Reports & Review Intelligence (full access for RI)
+    PERMISSIONS.CARA_REPORTS_VIEW,
+    PERMISSIONS.CARA_REPORTS_GENERATE,
+    PERMISSIONS.CARA_REPORTS_REVIEW,
+    PERMISSIONS.CARA_REPORTS_APPROVE,
+    PERMISSIONS.CARA_REPORTS_LOCK,
+    PERMISSIONS.CARA_REPORTS_CONFIGURE,
+    PERMISSIONS.CARA_REPORTS_HIGH_RISK,
     PERMISSIONS.REPORTS_VIEW,
     PERMISSIONS.REPORTS_CREATE,
     PERMISSIONS.REPORTS_REVIEW,
@@ -316,6 +329,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Registered Manager ───────────────────────────────────────────────────────
   registered_manager: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
@@ -350,11 +364,11 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_INSPECTION,
     PERMISSIONS.EXPORT_REPORTS,
     PERMISSIONS.MANAGE_SETTINGS,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
-    PERMISSIONS.USE_ARIA_INTELLIGENCE,
-    PERMISSIONS.APPROVE_ARIA_CONTENT,
-    PERMISSIONS.MANAGE_ARIA_INTELLIGENCE,
-    PERMISSIONS.VIEW_ARIA_AUDIT_TRAIL,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
+    PERMISSIONS.USE_CARA_INTELLIGENCE,
+    PERMISSIONS.APPROVE_CARA_CONTENT,
+    PERMISSIONS.MANAGE_CARA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_AUDIT_TRAIL,
     PERMISSIONS.CREATE_KEY_WORK_SESSIONS,
     PERMISSIONS.COMPLETE_KEY_WORK_SESSIONS,
     PERMISSIONS.CREATE_CHILD_RESOURCES,
@@ -373,22 +387,22 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio (full)
-    PERMISSIONS.ARIA_STUDIO_VIEW,
-    PERMISSIONS.ARIA_STUDIO_CREATE,
-    PERMISSIONS.ARIA_STUDIO_EDIT,
-    PERMISSIONS.ARIA_STUDIO_REVIEW,
-    PERMISSIONS.ARIA_STUDIO_APPROVE,
-    PERMISSIONS.ARIA_STUDIO_COMMIT,
-    PERMISSIONS.ARIA_STUDIO_ADMIN,
-    // ARIA Reports & Review Intelligence (full access for RM)
-    PERMISSIONS.ARIA_REPORTS_VIEW,
-    PERMISSIONS.ARIA_REPORTS_GENERATE,
-    PERMISSIONS.ARIA_REPORTS_REVIEW,
-    PERMISSIONS.ARIA_REPORTS_APPROVE,
-    PERMISSIONS.ARIA_REPORTS_LOCK,
-    PERMISSIONS.ARIA_REPORTS_CONFIGURE,
-    PERMISSIONS.ARIA_REPORTS_HIGH_RISK,
+    // Cara Studio (full)
+    PERMISSIONS.CARA_STUDIO_VIEW,
+    PERMISSIONS.CARA_STUDIO_CREATE,
+    PERMISSIONS.CARA_STUDIO_EDIT,
+    PERMISSIONS.CARA_STUDIO_REVIEW,
+    PERMISSIONS.CARA_STUDIO_APPROVE,
+    PERMISSIONS.CARA_STUDIO_COMMIT,
+    PERMISSIONS.CARA_STUDIO_ADMIN,
+    // Cara Reports & Review Intelligence (full access for RM)
+    PERMISSIONS.CARA_REPORTS_VIEW,
+    PERMISSIONS.CARA_REPORTS_GENERATE,
+    PERMISSIONS.CARA_REPORTS_REVIEW,
+    PERMISSIONS.CARA_REPORTS_APPROVE,
+    PERMISSIONS.CARA_REPORTS_LOCK,
+    PERMISSIONS.CARA_REPORTS_CONFIGURE,
+    PERMISSIONS.CARA_REPORTS_HIGH_RISK,
     PERMISSIONS.REPORTS_VIEW,
     PERMISSIONS.REPORTS_CREATE,
     PERMISSIONS.REPORTS_REVIEW,
@@ -400,6 +414,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Deputy Manager ───────────────────────────────────────────────────────────
   deputy_manager: [
     ...CARE_OPS_PERMISSIONS,
+    PERMISSIONS.MANAGE_COMPLAINTS,
     PERMISSIONS.EDIT_TEAM_TASKS,
     PERMISSIONS.ASSIGN_TASKS,
     PERMISSIONS.SIGN_OFF_TASKS,
@@ -428,8 +443,8 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_AUDITS,
     PERMISSIONS.MANAGE_INSPECTION,
     PERMISSIONS.EXPORT_REPORTS,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
-    PERMISSIONS.USE_ARIA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
+    PERMISSIONS.USE_CARA_INTELLIGENCE,
     PERMISSIONS.CREATE_KEY_WORK_SESSIONS,
     PERMISSIONS.COMPLETE_KEY_WORK_SESSIONS,
     PERMISSIONS.CREATE_CHILD_RESOURCES,
@@ -446,16 +461,16 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.MANAGE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio
-    PERMISSIONS.ARIA_STUDIO_VIEW,
-    PERMISSIONS.ARIA_STUDIO_CREATE,
-    PERMISSIONS.ARIA_STUDIO_EDIT,
-    PERMISSIONS.ARIA_STUDIO_REVIEW,
-    PERMISSIONS.ARIA_STUDIO_APPROVE,
-    // ARIA Reports (review + generate, no lock/configure)
-    PERMISSIONS.ARIA_REPORTS_VIEW,
-    PERMISSIONS.ARIA_REPORTS_GENERATE,
-    PERMISSIONS.ARIA_REPORTS_REVIEW,
+    // Cara Studio
+    PERMISSIONS.CARA_STUDIO_VIEW,
+    PERMISSIONS.CARA_STUDIO_CREATE,
+    PERMISSIONS.CARA_STUDIO_EDIT,
+    PERMISSIONS.CARA_STUDIO_REVIEW,
+    PERMISSIONS.CARA_STUDIO_APPROVE,
+    // Cara Reports (review + generate, no lock/configure)
+    PERMISSIONS.CARA_REPORTS_VIEW,
+    PERMISSIONS.CARA_REPORTS_GENERATE,
+    PERMISSIONS.CARA_REPORTS_REVIEW,
     PERMISSIONS.REPORTS_VIEW,
     PERMISSIONS.REPORTS_CREATE,
     PERMISSIONS.REPORTS_REVIEW,
@@ -486,8 +501,8 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.VIEW_AUDITS,
     PERMISSIONS.VIEW_INSPECTION,
     PERMISSIONS.EXPORT_REPORTS,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
-    PERMISSIONS.USE_ARIA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
+    PERMISSIONS.USE_CARA_INTELLIGENCE,
     PERMISSIONS.CREATE_KEY_WORK_SESSIONS,
     PERMISSIONS.COMPLETE_KEY_WORK_SESSIONS,
     PERMISSIONS.CREATE_CHILD_RESOURCES,
@@ -499,14 +514,14 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.USE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
     PERMISSIONS.MANAGE_TRAINING_NEEDS,
-    // ARIA Studio
-    PERMISSIONS.ARIA_STUDIO_VIEW,
-    PERMISSIONS.ARIA_STUDIO_CREATE,
-    PERMISSIONS.ARIA_STUDIO_EDIT,
-    PERMISSIONS.ARIA_STUDIO_REVIEW,
-    // ARIA Reports (view + generate)
-    PERMISSIONS.ARIA_REPORTS_VIEW,
-    PERMISSIONS.ARIA_REPORTS_GENERATE,
+    // Cara Studio
+    PERMISSIONS.CARA_STUDIO_VIEW,
+    PERMISSIONS.CARA_STUDIO_CREATE,
+    PERMISSIONS.CARA_STUDIO_EDIT,
+    PERMISSIONS.CARA_STUDIO_REVIEW,
+    // Cara Reports (view + generate)
+    PERMISSIONS.CARA_REPORTS_VIEW,
+    PERMISSIONS.CARA_REPORTS_GENERATE,
     PERMISSIONS.REPORTS_VIEW,
     PERMISSIONS.REPORTS_CREATE,
     PERMISSIONS.REG45_EVIDENCE_CREATE,
@@ -515,8 +530,8 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
   // ── Residential Care Worker ───────────────────────────────────────────────────
   residential_care_worker: [
     ...CARE_OPS_PERMISSIONS,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
-    PERMISSIONS.USE_ARIA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
+    PERMISSIONS.USE_CARA_INTELLIGENCE,
     PERMISSIONS.COMPLETE_KEY_WORK_SESSIONS,
     PERMISSIONS.USE_INTERACTIVE_SESSIONS,
     PERMISSIONS.VIEW_SAFEGUARDING_FLAGS,
@@ -524,12 +539,12 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.VIEW_LEARNING_STUDIO,
     PERMISSIONS.USE_LEARNING_STUDIO,
     PERMISSIONS.VIEW_TRAINING_NEEDS,
-    // ARIA Studio
-    PERMISSIONS.ARIA_STUDIO_VIEW,
-    PERMISSIONS.ARIA_STUDIO_CREATE,
-    PERMISSIONS.ARIA_STUDIO_EDIT,
-    // ARIA Reports (view only)
-    PERMISSIONS.ARIA_REPORTS_VIEW,
+    // Cara Studio
+    PERMISSIONS.CARA_STUDIO_VIEW,
+    PERMISSIONS.CARA_STUDIO_CREATE,
+    PERMISSIONS.CARA_STUDIO_EDIT,
+    // Cara Reports (view only)
+    PERMISSIONS.CARA_REPORTS_VIEW,
     PERMISSIONS.REPORTS_VIEW,
   ],
 
@@ -562,7 +577,7 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.VIEW_VEHICLES,
     PERMISSIONS.VIEW_EXPENSES,
     PERMISSIONS.SUBMIT_EXPENSES,
-    PERMISSIONS.VIEW_ARIA_INTELLIGENCE,
+    PERMISSIONS.VIEW_CARA_INTELLIGENCE,
     PERMISSIONS.USE_INTERACTIVE_SESSIONS,
   ],
 
@@ -692,6 +707,14 @@ export const ROLE_PERMISSIONS: Record<AppRole, Permission[]> = {
     PERMISSIONS.EXPORT_REPORTS,
   ],
 
+  // ── Job Applicant / Candidate ────────────────────────────────────────────────
+  // Minimal: can only see their own application via the candidate portal
+  candidate: [
+    PERMISSIONS.VIEW_CANDIDATE_PORTAL,
+    PERMISSIONS.VIEW_DOCUMENTS,
+    PERMISSIONS.UPLOAD_DOCUMENTS,
+  ],
+
   // ── Admin (legacy alias — same as registered_manager) ────────────────────────
   admin: [
     ...CARE_OPS_PERMISSIONS,
@@ -789,9 +812,9 @@ export function canAccessModule(role: AppRole, module: string): boolean {
     ri: PERMISSIONS.VIEW_RI_COMMAND_CENTRE,
     // Learning Studio
     learning: PERMISSIONS.VIEW_LEARNING_STUDIO,
-    // ARIA Reports
-    "aria-reports": PERMISSIONS.ARIA_REPORTS_VIEW,
-    "aria-dashboard": PERMISSIONS.ARIA_REPORTS_VIEW,
+    // Cara Reports
+    "cara-reports": PERMISSIONS.CARA_REPORTS_VIEW,
+    "cara-dashboard": PERMISSIONS.CARA_REPORTS_VIEW,
   };
   const required = map[module];
   if (!required) return true; // unknown module defaults to accessible

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFLOW ORCHESTRATION CARD
+// CARA — WORKFLOW ORCHESTRATION CARD
 // Actions auto-generated from events by configurable workflow rules — tasks,
-// approvals, debriefs, evidence, ARIA summaries, gated notification drafts — with
+// approvals, debriefs, evidence, Cara summaries, gated notification drafts — with
 // escalation. Powered by the Workflow Orchestration engine (Reg 13).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -15,11 +15,11 @@ import { cn } from "@/lib/utils";
 import { useWorkflowOrchestration } from "@/hooks/use-workflow-orchestration";
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800", warning: "border-amber-200 bg-amber-50 text-amber-800", positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]", warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]", positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 const TYPE_LABEL: Record<string, string> = {
   create_approval_task: "Approval", create_task: "Task", create_debrief_task: "Debrief", suggest_keywork: "Key-work",
-  add_evidence: "Evidence", generate_aria_summary: "ARIA summary", update_trend: "Trend", create_notification_draft: "Notification draft",
+  add_evidence: "Evidence", generate_cara_summary: "Cara summary", update_trend: "Trend", create_notification_draft: "Notification draft",
 };
 
 export function WorkflowOrchestrationCard() {
@@ -52,8 +52,8 @@ export function WorkflowOrchestrationCard() {
         <div className="grid grid-cols-4 gap-2">
           <div className="text-center rounded-lg bg-gray-50 p-2.5"><p className="text-lg font-bold tabular-nums">{o.rules_fired}</p><p className="text-[10px] text-muted-foreground">Fired</p></div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5"><p className="text-lg font-bold tabular-nums text-blue-600">{o.actions_generated}</p><p className="text-[10px] text-muted-foreground">Actions</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.notifications_drafted > 0 ? "bg-red-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.notifications_drafted > 0 ? "text-red-600" : "text-gray-500")}>{o.notifications_drafted}</p><p className="text-[10px] text-muted-foreground">Notif drafts</p></div>
-          <div className={cn("text-center rounded-lg p-2.5", o.escalations_pending > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.escalations_pending > 0 ? "text-red-600" : "text-green-600")}>{o.escalations_pending}</p><p className="text-[10px] text-muted-foreground">Escalating</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.notifications_drafted > 0 ? "bg-red-50" : "bg-gray-50")}><p className={cn("text-lg font-bold tabular-nums", o.notifications_drafted > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.notifications_drafted}</p><p className="text-[10px] text-muted-foreground">Notif drafts</p></div>
+          <div className={cn("text-center rounded-lg p-2.5", o.escalations_pending > 0 ? "bg-red-50" : "bg-green-50")}><p className={cn("text-lg font-bold tabular-nums", o.escalations_pending > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.escalations_pending}</p><p className="text-[10px] text-muted-foreground">Escalating</p></div>
         </div>
 
         {types.length > 0 && (
@@ -70,7 +70,7 @@ export function WorkflowOrchestrationCard() {
 
         {insights.length > 0 && (
           <div className="space-y-1.5">
-            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> ARIA Workflow Intelligence</p>
+            <p className="text-xs font-semibold flex items-center gap-1 text-purple-700"><Brain className="h-3 w-3" /> Cara Workflow Intelligence</p>
             {insights.slice(0, 2).map((i, idx) => (
               <div key={idx} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[i.severity] ?? INSIGHT_STYLES.positive)}>{i.text}</div>
             ))}

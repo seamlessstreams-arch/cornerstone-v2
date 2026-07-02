@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DATA GOVERNANCE INTELLIGENCE CARD
+// CARA — HOME DATA GOVERNANCE INTELLIGENCE CARD
 // Data breaches, data protection records, CCTV access logs, SARs.
 // GDPR, Data Protection Act 2018, CHR 2015 Reg 13 (Confidentiality).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<DataGovernanceRating, { bg: string; text: string; bo
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomeDataGovernanceIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.data_governance_rating === "inadequate" && (d.data_governance_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      data_governance_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.data_governance_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.data_governance_rating === "inadequate" || d.breaches.open_breaches >= 3;
@@ -65,7 +82,7 @@ export function HomeDataGovernanceIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <Database className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-teal-500")} />
+            <Database className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-teal-500")} />
             <span className="text-slate-900">Data Governance</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -88,8 +105,8 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <AlertCircle className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.breaches.open_breaches === 0 ? "text-green-600" :
-                  d.breaches.open_breaches <= 1 ? "text-amber-600" : "text-red-600"
+                  d.breaches.open_breaches === 0 ? "text-[--cs-success]" :
+                  d.breaches.open_breaches <= 1 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.breaches.open_breaches}
                 </p>
@@ -102,8 +119,8 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.data_protection.overdue_records === 0 ? "text-green-600" :
-                  d.data_protection.overdue_records <= 2 ? "text-amber-600" : "text-red-600"
+                  d.data_protection.overdue_records === 0 ? "text-[--cs-success]" :
+                  d.data_protection.overdue_records <= 2 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.data_protection.overdue_records}
                 </p>
@@ -116,8 +133,8 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Eye className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.cctv.justified_access_rate >= 90 ? "text-green-600" :
-                  d.cctv.justified_access_rate >= 70 ? "text-amber-600" : "text-red-600"
+                  d.cctv.justified_access_rate >= 90 ? "text-[--cs-success]" :
+                  d.cctv.justified_access_rate >= 70 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.cctv.total_accesses > 0 ? `${d.cctv.justified_access_rate}%` : "N/A"}
                 </p>
@@ -130,8 +147,8 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <FileSearch className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.sars.overdue_requests === 0 ? "text-green-600" :
-                  d.sars.overdue_requests <= 1 ? "text-amber-600" : "text-red-600"
+                  d.sars.overdue_requests === 0 ? "text-[--cs-success]" :
+                  d.sars.overdue_requests <= 1 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>
                   {d.sars.overdue_requests}
                 </p>
@@ -149,10 +166,10 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Total: <span className="font-medium text-slate-600">{d.breaches.total_breaches}</span></p>
                 <p>High/Crit: <span className={cn("font-medium",
-                  d.breaches.high_critical_breaches === 0 ? "text-green-600" : "text-red-600"
+                  d.breaches.high_critical_breaches === 0 ? "text-[--cs-success]" : "text-[--cs-risk]"
                 )}>{d.breaches.high_critical_breaches}</span></p>
                 <p>Lessons: <span className={cn("font-medium",
-                  d.breaches.lessons_documented_rate >= 100 ? "text-green-600" : "text-amber-600"
+                  d.breaches.lessons_documented_rate >= 100 ? "text-[--cs-success]" : "text-[--cs-warning]"
                 )}>{d.breaches.lessons_documented_rate}%</span></p>
                 <p>Near misses: <span className="font-medium text-slate-600">{d.breaches.near_miss_count}</span></p>
               </div>
@@ -162,8 +179,8 @@ export function HomeDataGovernanceIntelligenceCard() {
               <div className="space-y-0.5 text-[10px] text-muted-foreground">
                 <p>Total: <span className="font-medium text-slate-600">{d.sars.total_requests}</span></p>
                 <p>On time: <span className={cn("font-medium",
-                  d.sars.on_time_rate >= 100 ? "text-green-600" :
-                  d.sars.on_time_rate >= 75 ? "text-amber-600" : "text-red-600"
+                  d.sars.on_time_rate >= 100 ? "text-[--cs-success]" :
+                  d.sars.on_time_rate >= 75 ? "text-[--cs-warning]" : "text-[--cs-risk]"
                 )}>{d.sars.on_time_rate}%</span></p>
                 <p>ID verified: <span className="font-medium text-slate-600">{d.sars.identity_verified_rate}%</span></p>
                 <p>DPO consulted: <span className="font-medium text-slate-600">{d.sars.dpo_consulted_rate}%</span></p>
@@ -180,7 +197,7 @@ export function HomeDataGovernanceIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -195,7 +212,7 @@ export function HomeDataGovernanceIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -222,12 +239,12 @@ export function HomeDataGovernanceIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Data Governance Intelligence */}
+        {/* Cara Data Governance Intelligence */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Data Governance Intelligence
+              Cara Data Governance Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

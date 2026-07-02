@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OUTCOMES PROGRESS INTELLIGENCE ENGINE
+// CARA — OUTCOMES PROGRESS INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses outcome targets, reviews, domain progress, and review compliance.
-// Generates alerts and ARIA insights for stagnant/declining outcomes.
+// Generates alerts and Cara insights for stagnant/declining outcomes.
 //
 // Regulatory: Reg 7–14 (Individual care plans and outcomes for each child),
 // SCCIF Overall Experiences & Progress of children & young people.
@@ -130,7 +130,7 @@ export interface OutcomeAlert {
   message: string;
 }
 
-export interface AriaOutcomeInsight {
+export interface CaraOutcomeInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -142,7 +142,7 @@ export interface OutcomesProgressResult {
   review_compliance: ReviewCompliance;
   progress_velocity: ProgressVelocity;
   alerts: OutcomeAlert[];
-  insights: AriaOutcomeInsight[];
+  insights: CaraOutcomeInsight[];
 }
 
 // ── Domain Label Map ────────────────────────────────────────────────────────
@@ -440,8 +440,8 @@ export function computeOutcomesProgress(input: OutcomesProgressInput): OutcomesP
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaOutcomeInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraOutcomeInsight[] = [];
 
   // Critical: any child with declining outcomes and no recent review
   for (const profile of child_profiles) {

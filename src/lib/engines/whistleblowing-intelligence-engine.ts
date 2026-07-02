@@ -1,8 +1,8 @@
 // ==============================================================================
-// CORNERSTONE -- WHISTLEBLOWING INTELLIGENCE ENGINE
+// CARA -- WHISTLEBLOWING INTELLIGENCE ENGINE
 // Pure deterministic engine for whistleblowing disclosure analysis.
 // Analyses disclosure handling, investigation progress, protection compliance,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // Reg 41: whistleblowing -- Public Interest Disclosure Act 1998 (PIDA)
 // ==============================================================================
 
@@ -61,7 +61,7 @@ export interface WhistleblowingAlert {
   message: string;
 }
 
-export interface AriaWhistleblowingInsight {
+export interface CaraWhistleblowingInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -71,7 +71,7 @@ export interface WhistleblowingIntelligenceResult {
   category_breakdown: CategoryBreakdown[];
   open_cases: OpenCase[];
   alerts: WhistleblowingAlert[];
-  insights: AriaWhistleblowingInsight[];
+  insights: CaraWhistleblowingInsight[];
 }
 
 // -- Helpers ------------------------------------------------------------------
@@ -272,7 +272,7 @@ export function computeWhistleblowingIntelligence(input: {
 
   // -- Insights ---------------------------------------------------------------
 
-  const insights: AriaWhistleblowingInsight[] = [];
+  const insights: CaraWhistleblowingInsight[] = [];
 
   // critical: critical severity open
   for (const oc of open_cases) {

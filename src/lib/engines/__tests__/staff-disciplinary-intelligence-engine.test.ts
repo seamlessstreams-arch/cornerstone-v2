@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY INTELLIGENCE ENGINE TESTS
+// CARA — STAFF DISCIPLINARY INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for staff disciplinary case analysis.
 // Covers Reg 33 fitness of staff, Reg 34 employment of staff,
 // Reg 21 supervision (Schedule 4), SCCIF Leadership & Management.
@@ -55,7 +55,7 @@ function run(cases: DisciplinaryInput[], opts?: { staff?: StaffRef[] }) {
   });
 }
 
-// ── Oak House Dataset ───────────────────────────────────────────────────────
+// ── Chamberlain House Dataset ───────────────────────────────────────────────────────
 
 function oakHouseCases(): DisciplinaryInput[] {
   return [
@@ -787,9 +787,9 @@ describe("Staff Disciplinary Intelligence Engine", () => {
     });
   });
 
-  // ── Oak House Full Dataset ──────────────────────────────────────────────
+  // ── Chamberlain House Full Dataset ──────────────────────────────────────────────
 
-  describe("Oak House full dataset", () => {
+  describe("Chamberlain House full dataset", () => {
     it("produces correct overview totals", () => {
       const result = run(oakHouseCases());
       expect(result.overview.total_cases).toBe(5);

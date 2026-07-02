@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE HOOK
+// CARA — WORKFORCE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/workforce-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE INTELLIGENCE ENGINE
+// CARA — LEAVING CARE INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses pathway plan completeness, independence skills readiness,
@@ -67,6 +67,12 @@ export interface LeavingCareOverview {
   support_network_complete: number;
   total_eligible_children: number;
   avg_skills_competency_rate: number;
+  // Derived rates/aliases consumed by the dashboard cards (computed from the counts above).
+  total_eligible: number;
+  pathway_plan_rate: number;
+  independent_living_score: number;
+  education_employment_rate: number;
+  accommodation_secured_rate: number;
 }
 
 export interface ChildReadinessProfile {
@@ -97,7 +103,7 @@ export interface LeavingCareAlert {
   message: string;
 }
 
-export interface AriaLeavingCareInsight {
+export interface CaraLeavingCareInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -107,7 +113,7 @@ export interface LeavingCareIntelligenceResult {
   child_readiness: ChildReadinessProfile[];
   skills_summary: SkillAreaSummary[];
   alerts: LeavingCareAlert[];
-  insights: AriaLeavingCareInsight[];
+  insights: CaraLeavingCareInsight[];
 }
 
 // ── Constants ───────────────────────────────────────────────────────────────
@@ -258,6 +264,11 @@ export function computeLeavingCareIntelligence(
     support_network_complete: supportNetworkComplete,
     total_eligible_children: totalEligible,
     avg_skills_competency_rate: avgSkillsCompetencyRate,
+    total_eligible: totalEligible,
+    pathway_plan_rate: totalEligible ? Math.round((childrenWithPlan.length / totalEligible) * 100) : 0,
+    independent_living_score: avgIndependenceScore,
+    education_employment_rate: totalEligible ? Math.round((eetConfirmed / totalEligible) * 100) : 0,
+    accommodation_secured_rate: totalEligible ? Math.round((accommodationSecured / totalEligible) * 100) : 0,
   };
 
   // ── Child readiness profiles ────────────────────────────────────────────
@@ -407,7 +418,7 @@ export function computeLeavingCareIntelligence(
   }
 
   // ── Insights ────────────────────────────────────────────────────────────
-  const insights: AriaLeavingCareInsight[] = [];
+  const insights: CaraLeavingCareInsight[] = [];
 
   // Critical: Child(ren) approaching 18 (within 6 months) without secured accommodation
   const approachingEighteen = children.filter((c) => {

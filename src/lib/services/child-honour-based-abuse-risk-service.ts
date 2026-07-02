@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD HONOUR-BASED ABUSE RISK SERVICE
+// CARA — CHILD HONOUR-BASED ABUSE RISK SERVICE
 // Honour-based abuse risk assessments, safety planning, multi-agency referrals,
 // specialist service engagement, and the one chance rule.
 // CHR 2015 Reg 12 (protection of children — safeguarding from honour-based abuse),
@@ -214,7 +214,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: ChildHonourBasedAbuseRiskRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -407,5 +407,5 @@ export async function deleteChildHonourBasedAbuseRisk(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
 };

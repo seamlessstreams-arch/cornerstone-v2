@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — HOME SAFEGUARDING INTELLIGENCE ENGINE
 // Home-level: synthesises contextual safeguarding risks, exploitation
 // screenings, and online safety incidents to assess safeguarding quality,
 // multi-agency engagement, and risk management effectiveness.

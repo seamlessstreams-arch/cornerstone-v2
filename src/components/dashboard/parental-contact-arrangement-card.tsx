@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PARENTAL CONTACT ARRANGEMENT INTELLIGENCE CARD
+// CARA — PARENTAL CONTACT ARRANGEMENT INTELLIGENCE CARD
 // Dashboard card for parental contact compliance, supervision, and outcomes.
 // Powered by the Contact Engagement Intelligence Engine — live data.
 // CHR 2015 Reg 6/7. SCCIF: Overall Experiences — Contact & relationships.
@@ -20,16 +20,16 @@ import { useContactEngagement } from "@/hooks/use-contact-engagement";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -86,11 +86,11 @@ export function ParentalContactArrangementCard() {
             <p className="text-[10px] text-muted-foreground">Family</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", ft.concern_sessions === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-green-600" : "text-amber-600")}>{ft.concern_sessions}</p>
+            <p className={cn("text-lg font-bold tabular-nums", ft.concern_sessions === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ft.concern_sessions}</p>
             <p className="text-[10px] text-muted-foreground">Concerns</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", ft.safe_sessions_pct === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", ft.safe_sessions_pct === 100 ? "text-green-600" : "text-amber-600")}>{ft.safe_sessions_pct}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", ft.safe_sessions_pct === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{ft.safe_sessions_pct}%</p>
             <p className="text-[10px] text-muted-foreground">Safe</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export function ParentalContactArrangementCard() {
                   <span className="font-bold tabular-nums">{cp.sessions_30d}</span>
                   <span className="text-muted-foreground text-[10px]">/ 30d</span>
                   {cp.concern_sessions_90d > 0 && (
-                    <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
                       {cp.concern_sessions_90d} concerns
                     </Badge>
                   )}
@@ -163,13 +163,13 @@ export function ParentalContactArrangementCard() {
           </div>
         )}
 
-        {/* ── ARIA Contact Intelligence ───────────────────────────────── */}
+        {/* ── Cara Contact Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Contact Intelligence
+              Cara Contact Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

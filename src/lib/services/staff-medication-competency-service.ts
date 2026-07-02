@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MEDICATION COMPETENCY SERVICE
+// CARA — STAFF MEDICATION COMPETENCY SERVICE
 // Tracks staff competency assessments for medication administration
 // including training, observed practice, knowledge checks, and
 // ongoing competency reviews.

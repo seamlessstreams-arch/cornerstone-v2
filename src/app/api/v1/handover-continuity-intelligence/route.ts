@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HANDOVER CONTINUITY INTELLIGENCE API ROUTE
+// CARA — HANDOVER CONTINUITY INTELLIGENCE API ROUTE
 // GET /api/v1/handover-continuity-intelligence
 // Returns handover completion analysis, sign-off compliance, child mood
-// trends, escalation tracking, and ARIA shift continuity insights.
+// trends, escalation tracking, and Cara shift continuity insights.
 // Reg 34(1)(b), SCCIF shift communication, Quality Standards continuity.
 // ══════════════════════════════════════════════════════════════════════════════
 

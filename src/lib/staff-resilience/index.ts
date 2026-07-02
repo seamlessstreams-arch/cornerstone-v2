@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Staff Resilience Intelligence — Public API
+// Cara Staff Resilience Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

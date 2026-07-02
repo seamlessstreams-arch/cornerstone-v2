@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE ENGINE TESTS
+// CARA — HOME BIRTHDAY & SPECIAL OCCASION CELEBRATION INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering birthday planning, celebration execution,
 // gift provision, memory-making, child satisfaction, scoring, bonuses,
 // penalties, strengths, concerns, recommendations, insights, and edge cases.

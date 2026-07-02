@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MANDATORY TRAINING CARD
+// CARA — STAFF MANDATORY TRAINING CARD
 // Dashboard card powered by the Workforce Intelligence Engine.
 // Tracks training compliance by category. CHR 2015 Reg 33.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -18,9 +18,9 @@ import { useWorkforceIntelligence } from "@/hooks/use-workforce-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -72,7 +72,7 @@ export function StaffMandatoryTrainingCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2.5", avgCompliance >= 95 ? "bg-green-50" : avgCompliance >= 80 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 95 ? "text-green-600" : avgCompliance >= 80 ? "text-amber-600" : "text-red-600")}>{avgCompliance}%</p>
+            <p className={cn("text-lg font-bold tabular-nums", avgCompliance >= 95 ? "text-[--cs-success]" : avgCompliance >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>{avgCompliance}%</p>
             <p className="text-[10px] text-muted-foreground">Compliance</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2.5">
@@ -80,11 +80,11 @@ export function StaffMandatoryTrainingCard() {
             <p className="text-[10px] text-muted-foreground">Categories</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", totalExpiring === 0 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpiring === 0 ? "text-green-600" : "text-amber-600")}>{totalExpiring}</p>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpiring === 0 ? "text-[--cs-success]" : "text-[--cs-warning]")}>{totalExpiring}</p>
             <p className="text-[10px] text-muted-foreground">Expiring</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", totalExpired === 0 ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", totalExpired === 0 ? "text-green-600" : "text-red-600")}>{totalExpired}</p>
+            <p className={cn("text-lg font-bold tabular-nums", totalExpired === 0 ? "text-[--cs-success]" : "text-[--cs-risk]")}>{totalExpired}</p>
             <p className="text-[10px] text-muted-foreground">Expired</p>
           </div>
         </div>
@@ -102,22 +102,22 @@ export function StaffMandatoryTrainingCard() {
                     style={{ width: `${t.compliance_rate}%` }}
                   />
                 </div>
-                <span className={cn("w-8 text-right tabular-nums font-medium", t.compliance_rate >= 95 ? "text-green-600" : t.compliance_rate >= 80 ? "text-amber-600" : "text-red-600")}>
+                <span className={cn("w-8 text-right tabular-nums font-medium", t.compliance_rate >= 95 ? "text-[--cs-success]" : t.compliance_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
                   {t.compliance_rate}%
                 </span>
-                {t.expired > 0 && <Badge className="text-[9px] bg-red-100 text-red-700">{t.expired}</Badge>}
+                {t.expired > 0 && <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">{t.expired}</Badge>}
               </div>
             ))}
           </div>
         )}
 
-        {/* ── ARIA Intelligence ───────────────────────────────────────── */}
+        {/* ── Cara Intelligence ───────────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Training Intelligence
+              Cara Training Intelligence
             </p>
             {intel.insights.slice(0, 2).map((insight, i) => (
               <div

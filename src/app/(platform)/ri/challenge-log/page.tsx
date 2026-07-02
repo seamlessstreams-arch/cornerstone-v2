@@ -1,13 +1,13 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RI CHALLENGE LOG
+// CARA — RI CHALLENGE LOG
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +40,7 @@ const CHALLENGE_EXPORT_COLS: ExportColumn<RiChallengeLog>[] = [
   { header: "Manager Response", accessor: (c) => c.manager_response ?? "" },
   { header: "Action Required", accessor: (c) => c.action_required ?? "" },
   { header: "Action Due", accessor: (c) => c.action_due_date ?? "" },
-  { header: "ARIA Generated", accessor: (c) => c.aria_generated ? "Yes" : "No" },
+  { header: "Cara Generated", accessor: (c) => c.cara_generated ? "Yes" : "No" },
   { header: "Created", accessor: (c) => c.created_at },
 ];
 import {
@@ -112,7 +112,7 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
         description: `Identified from RI challenge log. ${log.evidence_summary ?? ""} ${log.action_required ? `Action required: ${log.action_required}` : ""}`.trim(),
         priority,
         status: "identified",
-        aria_evidence: `Escalated from RI Challenge Log entry dated ${formatDate(log.created_at)}. Level: ${log.escalation_level}. Area: ${log.challenge_area}.`,
+        cara_evidence: `Escalated from RI Challenge Log entry dated ${formatDate(log.created_at)}. Level: ${log.escalation_level}. Area: ${log.challenge_area}.`,
         created_by: currentUser?.id ?? "staff_darren",
       },
       { onSuccess: () => setNeedCreated(true) }
@@ -201,7 +201,7 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
                 <Button
                   size="sm"
                   variant="outline"
-                  className="text-xs h-7 gap-1 text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]"
+                  className="text-xs h-7 gap-1 text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]"
                   onClick={createTrainingNeed}
                   disabled={createNeed.isPending}
                 >
@@ -210,7 +210,7 @@ function ChallengeCard({ log, onRespond }: { log: RiChallengeLog; onRespond: (lo
                 </Button>
               ) : (
                 <Link href="/learning/training-needs">
-                  <Button size="sm" variant="ghost" className="text-xs h-7 gap-1 text-[var(--cs-aria-gold)]">
+                  <Button size="sm" variant="ghost" className="text-xs h-7 gap-1 text-[var(--cs-cara-gold)]">
                     <CheckCircle2 className="h-3 w-3" />
                     Training need created →
                   </Button>
@@ -234,15 +234,15 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
   const [evidence, setEvidence] = useState("");
   const [challenge, setChallenge] = useState("");
   const [actionRequired, setActionRequired] = useState("");
-  const [ariaDrafting, setAriaDrafting] = useState(false);
+  const [caraDrafting, setCaraDrafting] = useState(false);
   const createMutation = useCreateRiChallengeLog();
 
-  const draftWithAria = async () => {
+  const draftWithCara = async () => {
     if (!evidence.trim()) return;
-    setAriaDrafting(true);
+    setCaraDrafting(true);
     try {
       const res = await api.post<{ data: { text?: string; parsed?: { challenge_text?: string; action_required?: string } } }>(
-        "/aria",
+        "/cara",
         {
           mode: "ri_challenge_question",
           style: "professional_formal",
@@ -258,7 +258,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
     } catch {
       // ignore — user can type manually
     } finally {
-      setAriaDrafting(false);
+      setCaraDrafting(false);
     }
   };
 
@@ -274,7 +274,7 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
         escalation_level: escalation,
         action_required: actionRequired || undefined,
         status: "open",
-        aria_generated: false,
+        cara_generated: false,
         created_by: currentUser?.id ?? "staff_darren",
       },
       { onSuccess: () => { onClose(); setTitle(""); setEvidence(""); setChallenge(""); setActionRequired(""); } }
@@ -327,9 +327,9 @@ function NewChallengeDialog({ open, onClose }: { open: boolean; onClose: () => v
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-semibold text-[var(--cs-text-secondary)] uppercase tracking-wide">Challenge to Manager</label>
-              <Button size="sm" variant="ghost" className="h-6 text-xs text-[var(--cs-aria-gold)] gap-1 px-2" onClick={draftWithAria} disabled={ariaDrafting || !evidence.trim()}>
+              <Button size="sm" variant="ghost" className="h-6 text-xs text-[var(--cs-cara-gold)] gap-1 px-2" onClick={draftWithCara} disabled={caraDrafting || !evidence.trim()}>
                 <Sparkles className="h-3 w-3" />
-                {ariaDrafting ? "Drafting…" : "ARIA Draft"}
+                {caraDrafting ? "Drafting…" : "Cara Draft"}
               </Button>
             </div>
             <Textarea className="mt-0 text-sm" rows={5} placeholder="Write the formal challenge question or statement for the manager…" value={challenge} onChange={(e) => setChallenge(e.target.value)} />
@@ -466,14 +466,14 @@ export default function ChallengeLogPage() {
     <PageShell
       title="Challenge Log"
       subtitle="RI governance challenges to the management team"
-      ariaContext={{ pageTitle: "Challenge Log", sourceType: "general" }}
+      caraContext={{ pageTitle: "Challenge Log", sourceType: "general" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
           <ExportButton data={filtered} columns={CHALLENGE_EXPORT_COLS} filename="challenge-log" />
           <PrintButton
             title="Challenge Log"
-            subtitle="Oak House — RI Challenge & Oversight Log"
+            subtitle="Chamberlain House — RI Challenge & Oversight Log"
             targetId="challenge-log-content"
           />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="RI Challenge Log — supporting evidence upload" />
@@ -481,7 +481,7 @@ export default function ChallengeLogPage() {
             <Plus className="h-3.5 w-3.5" />
             New Challenge
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "management_oversight", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -560,7 +560,7 @@ export default function ChallengeLogPage() {
 
       {showNew && <NewChallengeDialog open onClose={() => setShowNew(false)} />}
       {responding && <ResponseDialog log={responding} onClose={() => setResponding(null)} />}
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="RI Challenge Log — responsible individual challenge records, management responses, governance oversight, escalation evidence, scrutiny of practice, Reg 45 governance evidence, Ofsted readiness"
         recordType="management_oversight"

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME COOKING & KITCHEN SKILLS INTELLIGENCE ENGINE
+// CARA — HOME COOKING & KITCHEN SKILLS INTELLIGENCE ENGINE
 // Pure deterministic engine: cooking session participation, kitchen safety
 // compliance, meal preparation skill progression, nutritional understanding,
 // and child independence in cooking.

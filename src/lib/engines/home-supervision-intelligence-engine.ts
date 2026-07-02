@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUPERVISION INTELLIGENCE ENGINE
+// CARA — HOME SUPERVISION INTELLIGENCE ENGINE
 // Home-level: synthesises supervision, practice observation, and appraisal
 // data to assess workforce development quality, frequency, and compliance.
 // CHR 2015 Reg 33. SCCIF: "Well-led and managed."

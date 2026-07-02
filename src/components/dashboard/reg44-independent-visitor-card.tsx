@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR INTELLIGENCE CARD
+// CARA — REG 44 INDEPENDENT VISITOR INTELLIGENCE CARD
 // Dashboard widget for visit compliance, recommendation follow-through,
-// Ofsted reporting, and ARIA independent scrutiny intelligence.
+// Ofsted reporting, and Cara independent scrutiny intelligence.
 // Powered by the Reg 44 Intelligence Engine — live data (Reg 44).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,16 +20,16 @@ import { useReg44Intelligence } from "@/hooks/use-reg44-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -81,19 +81,19 @@ export function Reg44IndependentVisitorCard() {
             <p className="text-[10px] text-muted-foreground">Visits (12m)</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.visits_on_schedule ? "bg-green-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.visits_on_schedule ? "text-green-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.visits_on_schedule ? "text-[--cs-success]" : "text-[--cs-risk]")}>
               {o.visits_on_schedule ? "Yes" : "No"}
             </p>
             <p className="text-[10px] text-muted-foreground">On Schedule</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.completion_rate >= 80 ? "bg-green-50" : o.completion_rate >= 60 ? "bg-amber-50" : "bg-red-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.completion_rate >= 80 ? "text-green-600" : o.completion_rate >= 60 ? "text-amber-600" : "text-red-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.completion_rate >= 80 ? "text-[--cs-success]" : o.completion_rate >= 60 ? "text-[--cs-warning]" : "text-[--cs-risk]")}>
               {o.completion_rate}%
             </p>
             <p className="text-[10px] text-muted-foreground">Recs Done</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.ofsted_reporting_compliance === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.ofsted_reporting_compliance === 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.ofsted_reporting_compliance === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.ofsted_reporting_compliance}%
             </p>
             <p className="text-[10px] text-muted-foreground">Reported</p>
@@ -186,12 +186,12 @@ export function Reg44IndependentVisitorCard() {
                   <span className="font-medium">{visit.visit_date}</span>
                   <div className="flex items-center gap-1.5">
                     {visit.on_schedule ? (
-                      <Badge className="text-[9px] bg-green-100 text-green-700">on time</Badge>
+                      <Badge className="text-[9px] bg-[--cs-success-bg] text-[--cs-success]">on time</Badge>
                     ) : (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">late</Badge>
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">late</Badge>
                     )}
                     {visit.report_sent_timely && (
-                      <Badge className="text-[9px] bg-blue-100 text-blue-700">reported</Badge>
+                      <Badge className="text-[9px] bg-[--cs-info-bg] text-[--cs-info]">reported</Badge>
                     )}
                   </div>
                 </div>
@@ -227,13 +227,13 @@ export function Reg44IndependentVisitorCard() {
           </div>
         )}
 
-        {/* ── ARIA Reg 44 Intelligence ─────────────────────────────────── */}
+        {/* ── Cara Reg 44 Intelligence ─────────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Governance Intelligence
+              Cara Governance Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

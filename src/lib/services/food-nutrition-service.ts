@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FOOD & NUTRITION SERVICE
+// CARA — FOOD & NUTRITION SERVICE
 // Manages meal planning, dietary requirements, nutritional assessments,
 // food safety, and children's involvement in menu choices.
 // CHR 2015 Reg 9 (promoting good health — including nutritional needs),

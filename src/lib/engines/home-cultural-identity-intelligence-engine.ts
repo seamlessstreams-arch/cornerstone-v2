@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CULTURAL IDENTITY & HERITAGE INTELLIGENCE ENGINE
+// CARA — HOME CULTURAL IDENTITY & HERITAGE INTELLIGENCE ENGINE
 // Home-level: aggregates cultural identity plans, cultural visits,
 // religious observance records, heritage language records, and
 // diversity calendar events.
@@ -489,7 +489,7 @@ export function computeHomeCulturalIdentity(
     strengths.push(`Strong diversity calendar engagement — ${dcCompletedRate}% of events completed.`);
   }
 
-  // ── ARIA Insights ────────────────────────────────────────────────────
+  // ── Cara Insights ────────────────────────────────────────────────────
   if (cultural_identity_plans.length > 0 && ipCoverage < 50 && total_children >= 3) {
     insights.push({ text: `Only ${ipCoverage}% of children have cultural identity plans — significant identity needs may be unmet.`, severity: "warning" });
   }

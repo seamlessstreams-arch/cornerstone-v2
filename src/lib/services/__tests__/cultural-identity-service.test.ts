@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CULTURAL IDENTITY & DIVERSITY SERVICE TESTS
+// CARA — CULTURAL IDENTITY & DIVERSITY SERVICE TESTS
 // Pure-function unit tests for identity metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 7 (quality of care — promoting identity),

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION SERVICE TESTS
+// CARA — MEDICATION SERVICE TESTS
 // Pure-function tests for medication compliance, controlled drug audit,
 // medication error rate, and medication alerts. CHR 2015 Reg 23 / Reg 12.
 // ══════════════════════════════════════════════════════════════════════════════

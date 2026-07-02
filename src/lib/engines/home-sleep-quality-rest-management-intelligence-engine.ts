@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SLEEP QUALITY & REST MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME SLEEP QUALITY & REST MANAGEMENT INTELLIGENCE ENGINE
 // Monitors how well the home supports children's sleep routines, environment
 // quality, disturbance management, bedtime support, and sleep improvement.
 // Measures sleep routine adherence, sleep environment quality, sleep

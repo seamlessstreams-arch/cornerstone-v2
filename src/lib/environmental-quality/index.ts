@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Environmental Quality Intelligence — Public API
+// Cara Environmental Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

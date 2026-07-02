@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR LOG
+// CARA — BEHAVIOUR LOG
 // Records observed behaviours using the ABC model (Antecedent, Behaviour,
 // Consequence). Captures both positive and concerning behaviour to build
 // patterns and inform care planning. Supports Reg 11 (Positive Relationships)
@@ -28,6 +28,11 @@ import { ExportButton, type ExportColumn } from "@/components/common/export-butt
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { toast } from "sonner";
 import { useBehaviourLog, useCreateBehaviourEntry } from "@/hooks/use-behaviour-log";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
+import { InlinePracticeModules } from "@/components/intelligence/practice-module-panels";
+import { InlineCaraHeartPanel } from "@/components/cara-heart/inline-cara-heart-panel";
+import type { CaraPracticeRecord } from "@/lib/cara-heart/types";
 import { SmartLinkPanel } from "@/components/intelligence/smart-link-panel";
 import type { BehaviourEntry, BehaviourDirection, BehaviourIntensity } from "@/types/extended";
 import {
@@ -37,16 +42,16 @@ import {
   TrendingUp, Zap, Heart, Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const INTENSITY_CONFIG: Record<BehaviourIntensity, { label: string; colour: string }> = {
-  low:      { label: "Low",      colour: "bg-green-100 text-green-700" },
-  moderate: { label: "Moderate", colour: "bg-amber-100 text-amber-700" },
+  low:      { label: "Low",      colour: "bg-[--cs-success-bg] text-[--cs-success]" },
+  moderate: { label: "Moderate", colour: "bg-[--cs-warning-bg] text-[--cs-warning]" },
   high:     { label: "High",     colour: "bg-orange-100 text-orange-700" },
-  critical: { label: "Critical", colour: "bg-red-100 text-red-700" },
+  critical: { label: "Critical", colour: "bg-[--cs-risk-bg] text-[--cs-risk]" },
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -77,6 +82,20 @@ export default function BehaviourLogPage() {
   const [nTrigger, setNTrigger] = useState("");
   const [nStrategy, setNStrategy] = useState("");
   const [nOutcome, setNOutcome] = useState("");
+
+  const nHeartRecord = useMemo<CaraPracticeRecord | null>(() => {
+    const desc = [nAntecedent, nBehaviour].filter(Boolean).join(". ");
+    if (!nChild || desc.length < 30) return null;
+    return {
+      id: "draft",
+      childId: nChild,
+      type: "behaviour_record",
+      dateTime: new Date().toISOString(),
+      severity: nDir === "concern" ? 3 : 1,
+      description: desc,
+      staffResponse: nStrategy || undefined,
+    };
+  }, [nChild, nAntecedent, nBehaviour, nStrategy, nDir]);
 
   const childIds = useMemo(() => [...new Set(entries.map(e => e.child_id))], [entries]);
 
@@ -192,25 +211,25 @@ export default function BehaviourLogPage() {
     <PageShell
       title="Behaviour Log"
       subtitle="ABC observations — antecedent, behaviour, consequence"
-      ariaContext={{ pageTitle: "Behaviour Log", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Behaviour Log", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Behaviour Log" subtitle="Oak House — Behaviour Management" />
+          <PrintButton title="Behaviour Log" subtitle="Chamberlain House — Behaviour Management" />
           <ExportButton data={filtered} columns={exportCols} filename="behaviour-log" />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> Log Behaviour
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "care_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
-    >      <AriaPanel mode="assist" pageContext="Behaviour Log — ABC observations, antecedent-behaviour-consequence, intensity tracking, positive behaviour support" recordType="behaviour_log" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
+    >      <CaraPanel mode="assist" pageContext="Behaviour Log — ABC observations, antecedent-behaviour-consequence, intensity tracking, positive behaviour support" recordType="behaviour_log" userRole="registered_manager" className="mb-2" />      {/* ── Stats ────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {[
-          { label: "Total Entries", value: stats.total, icon: Activity, c: "text-blue-600" },
-          { label: "Positive",      value: stats.positive, icon: Smile, c: "text-green-600" },
-          { label: "Concerns",      value: stats.concerns, icon: Frown, c: "text-amber-600" },
-          { label: "Pos:Con Ratio", value: `${stats.ratio}:1`, icon: TrendingUp, c: "text-purple-600" },
-          { label: "High/Critical", value: stats.highCritical, icon: Zap, c: "text-red-600" },
+          { label: "Total Entries", value: stats.total, icon: Activity, c: "text-[--cs-info]" },
+          { label: "Positive",      value: stats.positive, icon: Smile, c: "text-[--cs-success]" },
+          { label: "Concerns",      value: stats.concerns, icon: Frown, c: "text-[--cs-warning]" },
+          { label: "Pos:Con Ratio", value: `${stats.ratio}:1`, icon: TrendingUp, c: "text-[--cs-oversight]" },
+          { label: "High/Critical", value: stats.highCritical, icon: Zap, c: "text-[--cs-risk]" },
         ].map(s => (
           <div key={s.label} className="rounded-lg border bg-card p-3 flex items-center gap-3">
             <s.icon className={cn("h-5 w-5", s.c)} />
@@ -234,8 +253,8 @@ export default function BehaviourLogPage() {
                 <Badge variant="outline" className="text-xs">{ratio}:1</Badge>
               </div>
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><Smile className="h-3 w-3 text-green-600" />{r.positive} positive</span>
-                <span className="flex items-center gap-1"><Frown className="h-3 w-3 text-amber-600" />{r.concerns} concern{r.concerns !== 1 ? "s" : ""}</span>
+                <span className="flex items-center gap-1"><Smile className="h-3 w-3 text-[--cs-success]" />{r.positive} positive</span>
+                <span className="flex items-center gap-1"><Frown className="h-3 w-3 text-[--cs-warning]" />{r.concerns} concern{r.concerns !== 1 ? "s" : ""}</span>
               </div>
             </div>
           );
@@ -320,14 +339,14 @@ export default function BehaviourLogPage() {
 
           return (
             <div key={entry.id} className={cn("rounded-lg border bg-card overflow-hidden",
-              isPositive ? "border-l-4 border-l-green-400" : "border-l-4 border-l-amber-400"
+              isPositive ? "border-l-4 border-l-[--cs-success]" : "border-l-4 border-l-[--cs-warning]"
             )}>
               <button
                 onClick={() => setExpandedId(isOpen ? null : entry.id)}
                 className="w-full flex items-center gap-3 p-3 text-left hover:bg-muted/50 transition-colors"
               >
                 <div className={cn("rounded-full p-1.5 shrink-0",
-                  isPositive ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"
+                  isPositive ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]"
                 )}>
                   {isPositive ? <Smile className="h-4 w-4" /> : <Frown className="h-4 w-4" />}
                 </div>
@@ -335,7 +354,7 @@ export default function BehaviourLogPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-sm">{entry.title}</span>
                     <Badge variant="outline" className={cn("text-xs",
-                      isPositive ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"
+                      isPositive ? "bg-[--cs-success-bg] text-[--cs-success]" : "bg-[--cs-warning-bg] text-[--cs-warning]"
                     )}>
                       {isPositive ? "Positive" : "Concern"}
                     </Badge>
@@ -354,7 +373,7 @@ export default function BehaviourLogPage() {
                     <Link
                       href={`/care-events/${(entry as never as { care_event_id: string }).care_event_id}`}
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-1 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                      className="inline-flex items-center gap-1 rounded-full bg-[--cs-info-bg] border border-[--cs-info-soft] px-2.5 py-1 text-[10px] font-medium text-[--cs-info] hover:bg-[--cs-info-soft] transition-colors"
                     >
                       <Zap className="h-3 w-3" />
                       Logged from Care Event
@@ -446,6 +465,8 @@ export default function BehaviourLogPage() {
                 </Select>
               </div>
             </div>
+            {nChild && <InlinePracticeReasoning childId={nChild} childName={getYPName(nChild)} />}
+            {nChild && <InlinePracticeModules childId={nChild} modules={["relationships"]} />}
             <div>
               <label className="text-sm font-medium mb-1 block">Intensity</label>
               <Select value={nIntensity} onValueChange={v => setNIntensity(v as BehaviourIntensity)}>
@@ -468,7 +489,10 @@ export default function BehaviourLogPage() {
             <div>
               <label className="text-sm font-medium mb-1 block">B — Behaviour *</label>
               <Textarea placeholder="What the child did..." value={nBehaviour} onChange={e => setNBehaviour(e.target.value)} rows={2} />
+              <WritingAssistantInline value={nBehaviour} onApplyText={setNBehaviour} recordType="behaviour_log" fieldName="behaviour" childId={nChild || undefined} mode="standard" />
             </div>
+            {/* Cara Heart — ABC practice reflection */}
+            <InlineCaraHeartPanel record={nHeartRecord} />
             <div>
               <label className="text-sm font-medium mb-1 block">C — Consequence</label>
               <Textarea placeholder="What happened after..." value={nConsequence} onChange={e => setNConsequence(e.target.value)} rows={2} />

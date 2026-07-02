@@ -1,12 +1,12 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE RULES API ROUTE
+// CARA — COMPLIANCE RULES API ROUTE
 // GET /api/v1/compliance-rules
 //
 // Runs the FIXED compliance-rules engine. Incidents, safeguarding, missing,
 // restraint and medication events are read from the canonical event stream
 // (capture once → surface everywhere); supervisions and training records are
 // mapped straight from the store. These are HARD regulatory rules — pass/fail —
-// and are deliberately separate from ARIA's suggestions. ARIA is not the
+// and are deliberately separate from Cara's suggestions. Cara is not the
 // authority here.
 //
 // CHR 2015 Reg 33 (supervision), Reg 34/35 (medicines & behaviour management),

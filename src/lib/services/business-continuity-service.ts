@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BUSINESS CONTINUITY SERVICE
+// CARA — BUSINESS CONTINUITY SERVICE
 // Manages business continuity planning, emergency preparedness, disaster
 // recovery, plan testing, and resilience metrics.
 // CHR 2015 Reg 29 (business continuity), Reg 12 (protection from harm

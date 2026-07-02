@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF DISCIPLINARY & GRIEVANCES SERVICE
+// CARA — STAFF DISCIPLINARY & GRIEVANCES SERVICE
 // Manages disciplinary proceedings and staff grievance handling under
 // CHR 2015 Reg 33 (employment of staff), Reg 34 (fitness of workers),
 // Reg 40 (notifications to Ofsted), and SCCIF Leadership & Management.

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SIBLING & FAMILY CONTACT ARRANGEMENTS SERVICE
+// CARA -- SIBLING & FAMILY CONTACT ARRANGEMENTS SERVICE
 // Tracks scheduled and completed contact between children in residential care
 // and their family members, including siblings, parents, grandparents and
 // extended family, monitoring contact quality, child emotional wellbeing,
@@ -711,7 +711,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: FamilyContactArrangementsRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -1003,6 +1003,6 @@ export async function deleteFamilyContactArrangement(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateFamilyContactArrangement,
 };

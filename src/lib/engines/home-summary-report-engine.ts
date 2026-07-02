@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUMMARY REPORT ENGINE
+// CARA — HOME SUMMARY REPORT ENGINE
 //
 // Pure deterministic meta-engine — no DB calls, no side effects, no LLM calls.
 //
@@ -80,6 +80,8 @@ export interface HomeSummaryReportResult {
   sections: ReportSection[];
   engines_queried: number;
   engines_responded: number;
+  // Optional AI-written narrative (route-attached); null when no LLM configured.
+  ai_narrative?: string | null;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

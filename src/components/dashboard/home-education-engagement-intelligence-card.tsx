@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME EDUCATION ENGAGEMENT INTELLIGENCE CARD
+// CARA — HOME EDUCATION ENGAGEMENT INTELLIGENCE CARD
 // Attendance, PEP compliance, EHCP reviews, school engagement, tutoring, homework.
 // CHR 2015 Reg 8.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -28,15 +28,15 @@ const RATING_STYLES: Record<EducationRating, { bg: string; text: string; border:
 };
 
 const REC_STYLES: Record<string, string> = {
-  immediate: "border-red-200 bg-red-50 text-red-800",
-  soon: "border-amber-200 bg-amber-50 text-amber-800",
-  planned: "border-blue-200 bg-blue-50 text-blue-800",
+  immediate: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  soon: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  planned: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -54,8 +54,25 @@ export function HomeEducationEngagementIntelligenceCard() {
     );
   }
 
-  const d = data?.data;
+  let d = data?.data;
   if (!d) return null;
+  // Calm reframe: an empty-with-children engine result (inadequate + score<=15) is
+  // 'not yet recorded', not a failing home — render it as honest, neutral insufficient_data.
+  const __emptyState = d.education_rating === "inadequate" && (d.education_score ?? 0) <= 15;
+  if (__emptyState) {
+    d = {
+      ...d,
+      education_rating: "insufficient_data",
+      concerns: [],
+      recommendations: [],
+      insights: [],
+      headline:
+        String(d.headline || "")
+          .split(/ despite | — | -- /)[0]
+          .replace(/[\u2014,\-]\s*$/, "")
+          .trim() + " — not yet recorded; capturing entries will enable this analysis.",
+    };
+  }
 
   const ratingStyle = RATING_STYLES[d.education_rating] ?? RATING_STYLES.insufficient_data;
   const isAlert = d.education_rating === "inadequate" || d.pep_compliance.overdue_count >= 2;
@@ -65,7 +82,7 @@ export function HomeEducationEngagementIntelligenceCard() {
       <CardHeader className={cn("pb-3", isAlert ? "bg-red-50" : "bg-slate-50/50")}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
-            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-red-600" : "text-indigo-500")} />
+            <GraduationCap className={cn("h-4 w-4", isAlert ? "text-[--cs-risk]" : "text-indigo-500")} />
             <span className="text-slate-900">Education Engagement</span>
             <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-full border", ratingStyle.bg, ratingStyle.text, ratingStyle.border)}>
               {ratingStyle.label}
@@ -88,8 +105,8 @@ export function HomeEducationEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <ClipboardCheck className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.attendance.attendance_rate >= 95 ? "text-green-600" :
-                  d.attendance.attendance_rate >= 80 ? "text-blue-600" : "text-red-600"
+                  d.attendance.attendance_rate >= 95 ? "text-[--cs-success]" :
+                  d.attendance.attendance_rate >= 80 ? "text-blue-600" : "text-[--cs-risk]"
                 )}>
                   {d.attendance.total_sessions_30d > 0 ? `${d.attendance.attendance_rate}%` : "—"}
                 </p>
@@ -102,8 +119,8 @@ export function HomeEducationEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.pep_compliance.current_count > 0 && d.pep_compliance.overdue_count === 0 ? "text-green-600" :
-                  d.pep_compliance.overdue_count > 0 ? "text-red-600" : "text-amber-600"
+                  d.pep_compliance.current_count > 0 && d.pep_compliance.overdue_count === 0 ? "text-[--cs-success]" :
+                  d.pep_compliance.overdue_count > 0 ? "text-[--cs-risk]" : "text-[--cs-warning]"
                 )}>
                   {d.pep_compliance.total_peps > 0 ? `${d.pep_compliance.current_count}/${d.pep_compliance.total_peps}` : "—"}
                 </p>
@@ -116,8 +133,8 @@ export function HomeEducationEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.homework.completion_rate >= 90 ? "text-green-600" :
-                  d.homework.completion_rate >= 75 ? "text-blue-600" : "text-amber-600"
+                  d.homework.completion_rate >= 90 ? "text-[--cs-success]" :
+                  d.homework.completion_rate >= 75 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.homework.total_sessions_30d > 0 ? `${d.homework.completion_rate}%` : "—"}
                 </p>
@@ -130,8 +147,8 @@ export function HomeEducationEngagementIntelligenceCard() {
               <div className="flex items-center justify-center gap-1">
                 <Users className="h-3.5 w-3.5 text-slate-400" />
                 <p className={cn("text-lg font-bold tabular-nums",
-                  d.school_engagement.total_events_90d >= 3 ? "text-green-600" :
-                  d.school_engagement.total_events_90d >= 1 ? "text-blue-600" : "text-amber-600"
+                  d.school_engagement.total_events_90d >= 3 ? "text-[--cs-success]" :
+                  d.school_engagement.total_events_90d >= 1 ? "text-blue-600" : "text-[--cs-warning]"
                 )}>
                   {d.school_engagement.total_events_90d}
                 </p>
@@ -149,7 +166,7 @@ export function HomeEducationEngagementIntelligenceCard() {
               Strengths ({d.strengths.length})
             </p>
             {d.strengths.slice(0, 3).map((s, i) => (
-              <div key={i} className="rounded border border-green-200 bg-green-50 p-2.5 text-xs text-green-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-success-soft] bg-[--cs-success-bg] p-2.5 text-xs text-[--cs-success] leading-relaxed">
                 {s}
               </div>
             ))}
@@ -164,7 +181,7 @@ export function HomeEducationEngagementIntelligenceCard() {
               Concerns ({d.concerns.length})
             </p>
             {d.concerns.slice(0, 3).map((c, i) => (
-              <div key={i} className="rounded border border-red-200 bg-red-50 p-2.5 text-xs text-red-800 leading-relaxed">
+              <div key={i} className="rounded border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-2.5 text-xs text-[--cs-risk] leading-relaxed">
                 {c}
               </div>
             ))}
@@ -191,12 +208,12 @@ export function HomeEducationEngagementIntelligenceCard() {
           </div>
         )}
 
-        {/* ARIA Insights */}
+        {/* Cara Insights */}
         {d.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Education Intelligence
+              Cara Education Intelligence
             </p>
             {d.insights.slice(0, 3).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.warning)}>

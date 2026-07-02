@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION INCIDENT REPORTING SERVICE
+// CARA — MEDICATION INCIDENT REPORTING SERVICE
 // Manages Medication Incident Reporting — tracking medication errors,
 // near-misses, adverse reactions, and the investigation and learning
 // outcomes from each incident.
@@ -236,7 +236,7 @@ export function computeMedicationIncidentAlerts(
   return alerts;
 }
 
-export function generateMedicationIncidentAriaInsights(
+export function generateMedicationIncidentCaraInsights(
   metrics: ReturnType<typeof computeMedicationIncidentMetrics>,
   alerts: ReturnType<typeof computeMedicationIncidentAlerts>,
 ): string[] {
@@ -358,5 +358,5 @@ export function createMedicationIncidentReport(payload: {
 export const _testing = {
   computeMedicationIncidentMetrics,
   computeMedicationIncidentAlerts,
-  generateMedicationIncidentAriaInsights,
+  generateMedicationIncidentCaraInsights,
 };

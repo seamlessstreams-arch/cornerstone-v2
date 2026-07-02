@@ -1,13 +1,13 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — GUIDANCE NOTES GENERATOR
+// CARA — GUIDANCE NOTES GENERATOR
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -159,11 +159,11 @@ export default function GuidanceNotesPage() {
     setResult(null);
     try {
       const res = await api.post<{ data: { parsed?: GuidanceResult } }>(
-        "/aria",
+        "/cara",
         {
           mode: "learning_guidance_note",
           style: "professional_formal",
-          source_content: `Topic: ${topic}. Pathway: ${pathway}. Additional context: ${context || "Standard residential children's home context. Oak House."}`,
+          source_content: `Topic: ${topic}. Pathway: ${pathway}. Additional context: ${context || "Standard residential children's home context. Chamberlain House."}`,
           page_context: "Guidance Notes Generator",
           record_type: "guidance_note",
           user_role: "registered_manager",
@@ -190,7 +190,7 @@ export default function GuidanceNotesPage() {
         content: result as unknown as Record<string, unknown>,
         raw_text: result.main_content,
         status: "draft",
-        aria_generated: true,
+        cara_generated: true,
         created_by: currentUser?.id ?? "staff_darren",
       },
       { onSuccess: () => setResult(null) }
@@ -201,13 +201,13 @@ export default function GuidanceNotesPage() {
     <PageShell
       title="Guidance Notes"
       subtitle="Generate professional practice guidance for staff or children"
-      ariaContext={{ pageTitle: "Practice Guidance", sourceType: "document" }}
+      caraContext={{ pageTitle: "Practice Guidance", sourceType: "document" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Guidance Notes" subtitle="Oak House — Practice Guidance" targetId="guidance-content" />
+          <PrintButton title="Guidance Notes" subtitle="Chamberlain House — Practice Guidance" targetId="guidance-content" />
           <SmartUploadButton variant="inline" label="Upload Guidance" uploadContext="Learning — Guidance Notes upload" />
-          <AriaStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "policy", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -217,7 +217,7 @@ export default function GuidanceNotesPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-blue-600" />
-              Generate Guidance Note with ARIA
+              Generate Guidance Note with Cara
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -390,7 +390,7 @@ export default function GuidanceNotesPage() {
           </div>
         )}
       </div>
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Practice Guidance — care practice notes, procedure guidance, regulatory guidance, safeguarding guidance, therapeutic approaches, PACE, DDP, legislation summaries, Reg 45 practice"
         recordType="policy"

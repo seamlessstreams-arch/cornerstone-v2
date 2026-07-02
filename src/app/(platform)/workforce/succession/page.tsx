@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUCCESSION PLANNING BOARD
+// CARA — SUCCESSION PLANNING BOARD
 // Role coverage analysis, internal readiness scoring, candidate comparison,
-// risk assessment, and ARIA-powered gap analysis. Critical for demonstrating
+// risk assessment, and Cara-powered gap analysis. Critical for demonstrating
 // organisational resilience to Ofsted.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { PrintButton } from "@/components/common/print-button";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { ExportButton, type ExportColumn } from "@/components/common/export-button";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { cn } from "@/lib/utils";
 import {
   GitBranch, Sparkles, CheckCircle2, Clock, AlertTriangle,
@@ -141,7 +141,7 @@ function CoverageRisk({
 // ══════════════════════════════════════════════════════════════════════════════
 
 export default function SuccessionBoardPage() {
-  const [showAria, setShowAria] = useState(false);
+  const [showCara, setShowCara] = useState(false);
   const [expandedPlan, setExpandedPlan] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
@@ -190,7 +190,7 @@ export default function SuccessionBoardPage() {
     const q = search.toLowerCase();
     return plans.filter((p) => {
       const candidateNames = p.candidates.map((c) => getStaffName(c.staff_id)).join(" ");
-      const hay = [p.role_title, p.urgency, candidateNames, p.aria_narrative || ""].join(" ").toLowerCase();
+      const hay = [p.role_title, p.urgency, candidateNames, p.cara_narrative || ""].join(" ").toLowerCase();
       return hay.includes(q);
     });
   }, [plans, search, staff]);
@@ -206,8 +206,8 @@ export default function SuccessionBoardPage() {
   return (
     <PageShell
       title="Succession Planning Board"
-      subtitle="Role coverage, internal readiness & ARIA gap analysis"
-      ariaContext={{ pageTitle: "Succession Planning Board", sourceType: "staff" }}
+      subtitle="Role coverage, internal readiness & Cara gap analysis"
+      caraContext={{ pageTitle: "Succession Planning Board", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
@@ -217,30 +217,30 @@ export default function SuccessionBoardPage() {
             data={succExportData}
             label="Export"
           />
-          <PrintButton title="Succession Planning Report" subtitle="Oak House Workforce" targetId="succession-content" />
+          <PrintButton title="Succession Planning Report" subtitle="Chamberlain House Workforce" targetId="succession-content" />
           <SmartUploadButton variant="inline" label="Upload Evidence" uploadContext="Workforce Intelligence — succession plan or leadership evidence document upload" />
           <Button
             size="sm"
             className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
-            onClick={() => setShowAria((p) => !p)}
+            onClick={() => setShowCara((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Analysis
+            Cara Analysis
           </Button>
           <Link href="/workforce">
             <Button variant="outline" size="sm">Workforce Hub</Button>
           </Link>
-          <AriaStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "staff_training", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       <div id="succession-content" className="space-y-4 animate-fade-in">
 
-        {/* ── ARIA Panel ──────────────────────────────────────────────────── */}
-        {showAria && (
+        {/* ── Cara Panel ──────────────────────────────────────────────────── */}
+        {showCara && (
           <div className="relative">
-            <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
-            <AriaPanel
+            <button onClick={() => setShowCara(false)} className="absolute top-3 right-3 z-10 text-slate-400 hover:text-slate-600 text-xs">✕ Close</button>
+            <CaraPanel
               mode="staff_development_summary"
               pageContext={`Succession board: ${plans.length} active succession plans. ${plans.map((p) => `${p.role_title}: ${p.candidates.length} candidates, urgency ${p.urgency}`).join(". ")}`}
             />
@@ -309,7 +309,7 @@ export default function SuccessionBoardPage() {
           <div className="text-center py-16 text-slate-500">
             <GitBranch className="h-10 w-10 mx-auto mb-3 text-slate-300" />
             <p className="font-medium">No succession plans configured</p>
-            <p className="text-xs mt-1">Use ARIA to generate initial succession recommendations</p>
+            <p className="text-xs mt-1">Use Cara to generate initial succession recommendations</p>
           </div>
         ) : filteredPlans.length === 0 ? (
           <div className="text-center py-16 text-slate-500">
@@ -409,7 +409,7 @@ export default function SuccessionBoardPage() {
                                   </span>
                                 )}
                                 {candidate.development_plan_id && (
-                                  <Link href="/workforce/aria-planner" className="text-indigo-600 hover:underline flex items-center gap-0.5">
+                                  <Link href="/workforce/cara-planner" className="text-indigo-600 hover:underline flex items-center gap-0.5">
                                     <TrendingUp className="h-2.5 w-2.5" />
                                     Dev plan →
                                   </Link>
@@ -429,14 +429,14 @@ export default function SuccessionBoardPage() {
                     })}
                   </div>
 
-                  {/* ARIA Narrative — in expanded mode */}
-                  {isExpanded && plan.aria_narrative && (
+                  {/* Cara Narrative — in expanded mode */}
+                  {isExpanded && plan.cara_narrative && (
                     <div className="mx-4 mb-4 rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
                       <p className="text-[10px] font-semibold text-indigo-600 mb-1 flex items-center gap-1">
                         <Sparkles className="h-3 w-3" />
-                        ARIA Succession Intelligence
+                        Cara Succession Intelligence
                       </p>
-                      <p className="text-xs text-indigo-800 leading-relaxed">{plan.aria_narrative}</p>
+                      <p className="text-xs text-indigo-800 leading-relaxed">{plan.cara_narrative}</p>
                     </div>
                   )}
                 </div>

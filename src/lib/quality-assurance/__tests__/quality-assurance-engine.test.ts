@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Quality Assurance & Continuous Improvement Engine Tests
+// Cara — Quality Assurance & Continuous Improvement Engine Tests
 // 100+ tests covering all 6 functions + scoring + labels + edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

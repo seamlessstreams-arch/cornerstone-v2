@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE API — Catch-all handler for /api/v1/[...slug]
+// CARA API — Catch-all handler for /api/v1/[...slug]
 //
 // Consolidates 434 standardised v1 collection routes into a single
 // serverless function to stay within Vercel's function limit.
@@ -13,6 +13,7 @@ import { db } from "@/lib/db/store";
 import { dal } from "@/lib/db/dal";
 import { createServerClient } from "@/lib/supabase/server";
 import * as sq from "@/lib/supabase/queries";
+import { dispatchHomeHandler } from "@/lib/intelligence-api/home-dispatcher";
 
 // ---------------------------------------------------------------------------
 // Slug -> db collection mapping (434 entries)
@@ -586,27 +587,39 @@ function resolveAccessor(slug: string): AsyncCollection | null {
   }
 
   // Supabase-enabled extended record type → the generic_records catch-all table.
+  // All Supabase calls fall back to the in-memory store if the table doesn't
+  // exist yet (e.g. migrations not run against this Supabase project).
+  const memFindAll = () => asList(typeof mem.findAll === "function" ? mem.findAll() : typeof mem.getAll === "function" ? mem.getAll() : []);
+  const memFindByChild = (childId: string) => asList(typeof mem.findByChild === "function" ? mem.findByChild(childId) : []);
+  const memCreate = (data: Record<string, unknown>) => typeof mem.create === "function" ? mem.create(data) as unknown : null;
   return {
-    findAll: async () => (await sq.getGenericRecords(c, homeId(), collectionName)).map(mapRow),
-    findByChild: async (childId: string) =>
-      (await sq.getGenericRecords(c, homeId(), collectionName, { child_id: childId })).map(mapRow),
+    findAll: async () => {
+      try { return (await sq.getGenericRecords(c, homeId(), collectionName)).map(mapRow); }
+      catch { return memFindAll(); }
+    },
+    findByChild: async (childId: string) => {
+      try { return (await sq.getGenericRecords(c, homeId(), collectionName, { child_id: childId })).map(mapRow); }
+      catch { return memFindByChild(childId); }
+    },
     findById: async (id: string) => {
       try { return mapRow(await sq.getGenericRecordById(c, id)); } catch { return null; }
     },
     create: async (data: Record<string, unknown>) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { id: _id, child_id, staff_id, created_by, ...rest } = data as any;
-      void _id;
-      const row = await sq.createGenericRecord(c, {
-        home_id: homeId(),
-        record_type: collectionName,
-        data: rest,
-        child_id: child_id ?? null,
-        staff_id: staff_id ?? null,
-        created_by: created_by ?? null,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return { id: (row as any).id, ...rest, created_at: (row as any).created_at };
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { id: _id, child_id, staff_id, created_by, ...rest } = data as any;
+        void _id;
+        const row = await sq.createGenericRecord(c, {
+          home_id: homeId(),
+          record_type: collectionName,
+          data: rest,
+          child_id: child_id ?? null,
+          staff_id: staff_id ?? null,
+          created_by: created_by ?? null,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return { id: (row as any).id, ...rest, created_at: (row as any).created_at };
+      } catch { return memCreate(data); }
     },
     update: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
     patch: (id: string, data: Record<string, unknown>) => updateGeneric(c, id, data),
@@ -638,13 +651,37 @@ function serverError(err: unknown) {
   return json({ error: message }, 500);
 }
 
+// HQ API-call meter — records request volume across the main API surface for the
+// platform-owner cockpit. Metadata only (route family + method); best-effort,
+// never blocks or fails the request. `intelligence` flags decision endpoints.
+function meterApiCall(slugKey: string, method: string): void {
+  const intelligence = /intelligence|briefing|readiness|analysis|oversight|composite|score|360/.test(slugKey);
+  void import("@/lib/hq/usage-meter")
+    .then((m) => m.recordApiCall({ feature: slugKey, method, intelligence }))
+    .catch(() => {});
+}
+
 // ---------------------------------------------------------------------------
 // GET /api/v1/[slug]
 // ---------------------------------------------------------------------------
 export async function GET(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
-    const slugKey = slug[0];
+    let slugKey = slug[0];
+
+    // Proxy /api/v1/home/[engine] to the home intelligence dispatcher.
+    // This handles Vercel routing when the dedicated home/[engine] route
+    // is bypassed in favour of this catch-all.
+    if (slugKey === "home" && slug.length >= 2) {
+      const handler = dispatchHomeHandler(slug[1]);
+      if (handler) return handler();
+      // Not an intelligence engine: the `/api/v1/home-:engine` rewrite also catches
+      // home-* DATA collections (e.g. home-emergency-contacts, home-policies).
+      // Resolve those via the normal accessor below instead of 404ing.
+      slugKey = `home-${slug[1]}`;
+    }
+
+    meterApiCall(slugKey, req.method);
     const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
@@ -664,10 +701,23 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
 // ---------------------------------------------------------------------------
 // POST /api/v1/[slug]
 // ---------------------------------------------------------------------------
+
+// HQ usage metering — which catch-all creates count as platform activity.
+// Metadata only (kind + actor label); record content never leaves the route.
+const HQ_USAGE_KINDS: Record<string, string> = {
+  "incidents": "incident",
+  "missing-episodes": "missing",
+  "daily-log": "daily_log",
+};
+
 export async function POST(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
-    const slugKey = slug[0];
+    // The `/api/v1/home-:engine` rewrite maps bare home-* data routes to
+    // /api/v1/home/<x>; reconstruct the collection slug so writes resolve
+    // (home-emergency-contacts, home-policies).
+    const slugKey = slug[0] === "home" && slug.length >= 2 ? `home-${slug[1]}` : slug[0];
+    meterApiCall(slugKey, req.method);
     const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
@@ -687,6 +737,12 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
     }
 
     const record = await collection.create(body);
+    const usageKind = HQ_USAGE_KINDS[slugKey];
+    if (usageKind) {
+      void import("@/lib/hq/hq-service")
+        .then((m) => m.logUsageEvent(usageKind, { userLabel: req.headers.get("x-user-id") }))
+        .catch(() => {});
+    }
     return json({ data: record }, 201);
   } catch (err) {
     return serverError(err);
@@ -700,6 +756,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
+    meterApiCall(slugKey, req.method);
     const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 
@@ -732,6 +789,7 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
   try {
     const { slug } = await ctx.params;
     const slugKey = slug[0];
+    meterApiCall(slugKey, req.method);
     const collection = resolveAccessor(slugKey);
     if (!collection) return notFound(slugKey);
 

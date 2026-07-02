@@ -3,9 +3,10 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPracticePanel } from "@/components/aria-practice/aria-practice-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPracticePanel } from "@/components/cara-practice/cara-practice-panel";
+import { WritingToChildPanel } from "@/components/writing-to-child/writing-to-child-panel";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,12 +20,17 @@ import {
 import { getStaffName, getYPName } from "@/lib/seed-data";
 import { cn, formatDate } from "@/lib/utils";
 import { useDailyLog, useCreateDailyLog } from "@/hooks/use-daily-log";
+import { InlinePracticeReasoning } from "@/components/cara-reasoning/inline-practice-reasoning";
+import { InlineRelationalPanel } from "@/components/relational-timeline/inline-relational-panel";
+import { WritingAssistantInline } from "@/components/writing-assistant/writing-assistant-inline";
+import { InlineCaraHeartPanel } from "@/components/cara-heart/inline-cara-heart-panel";
+import type { CaraPracticeRecord } from "@/lib/cara-heart/types";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useYoungPeople } from "@/hooks/use-young-people";
 import { useCreateTrainingNeed } from "@/hooks/use-ri-learning";
-import { AriaQuickActions } from "@/components/intelligence/aria-quick-actions";
-import { AriaCompose } from "@/components/aria/aria-compose";
-import { appRoleToAriaRole } from "@/lib/aria/aria-permissions";
+import { CaraQuickActions } from "@/components/intelligence/cara-quick-actions";
+import { CaraCompose } from "@/components/cara/cara-compose";
+import { appRoleToCaraRole } from "@/lib/cara/cara-permissions";
 import { api } from "@/hooks/use-api";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
@@ -86,10 +92,10 @@ const DATE_FILTER_LABELS: Record<DateFilter, string> = {
 };
 
 function moodColor(score: number): string {
-  if (score >= 8) return "bg-emerald-100 text-emerald-700";
-  if (score >= 6) return "bg-amber-100 text-amber-700";
+  if (score >= 8) return "bg-[--cs-success-bg] text-[--cs-success]";
+  if (score >= 6) return "bg-[--cs-warning-bg] text-[--cs-warning]";
   if (score >= 4) return "bg-orange-100 text-orange-700";
-  return "bg-red-100 text-red-700";
+  return "bg-[--cs-risk-bg] text-[--cs-risk]";
 }
 
 function MoodIcon({ score }: { score: number }) {
@@ -116,6 +122,18 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
   const [content, setContent] = useState("");
   const [moodScore, setMoodScore] = useState<number | null>(null);
   const [isSignificant, setIsSignificant] = useState(false);
+
+  const heartRecord = useMemo<CaraPracticeRecord | null>(() => {
+    if (!childId || content.length < 30) return null;
+    return {
+      id: "draft",
+      childId,
+      type: "daily_log",
+      dateTime: new Date().toISOString(),
+      severity: isSignificant ? 3 : 1,
+      description: content,
+    };
+  }, [childId, content, isSignificant]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -169,12 +187,16 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
             </div>
           </div>
 
+          {/* Practice reasoning for the selected child — the engine heart at the point of recording */}
+          {childId && <InlinePracticeReasoning childId={childId} childName={getYPName(childId)} />}
+          {childId && <InlineRelationalPanel childId={childId} />}
+
           {/* Content */}
-          <AriaCompose
+          <CaraCompose
             value={content}
             onChange={setContent}
             actorUserId={currentUser?.id ?? "staff_darren"}
-            actorRole={appRoleToAriaRole(currentRole)}
+            actorRole={appRoleToCaraRole(currentRole)}
             homeId={currentUser?.home_id ?? "home_oak"}
             childId={childId || undefined}
             sourceModule="daily_log"
@@ -184,6 +206,17 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
             placeholder="Record what happened, how the young person was, any significant events or observations..."
             rows={5}
           />
+          <WritingAssistantInline
+            value={content}
+            onApplyText={setContent}
+            recordType="daily_log"
+            fieldName="content"
+            childId={childId || undefined}
+            mode="standard"
+          />
+
+          {/* Cara Heart — life space and practice reflection as the entry is written */}
+          <InlineCaraHeartPanel record={heartRecord} />
 
           <div className="flex items-center gap-6">
             {/* Mood score */}
@@ -218,7 +251,7 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
                 onClick={() => setIsSignificant(!isSignificant)}
                 className={cn(
                   "h-5 w-9 rounded-full transition-colors",
-                  isSignificant ? "bg-amber-500" : "bg-slate-200"
+                  isSignificant ? "bg-[--cs-warning]" : "bg-slate-200"
                 )}
               >
                 <span
@@ -249,7 +282,7 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
           </div>
 
           {createMutation.isError && (
-            <p className="text-xs text-red-600 flex items-center gap-1">
+            <p className="text-xs text-[--cs-risk] flex items-center gap-1">
               <AlertCircle className="h-3.5 w-3.5" />
               {createMutation.error?.message || "Failed to save"}
             </p>
@@ -263,7 +296,7 @@ function NewEntryForm({ onClose, onSuccess }: NewEntryFormProps) {
 // ── Log Entry Card ────────────────────────────────────────────────────────────
 
 function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
-  const [showAria, setShowAria] = useState(false);
+  const [showCara, setShowCara] = useState(false);
   const Icon = ENTRY_TYPE_ICONS[entry.entry_type] || BookOpen;
   const ypName = getYPName(entry.child_id);
   const staffFirst = getStaffName(entry.staff_id).split(" ")[0];
@@ -288,7 +321,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
               </span>
               <span className="text-xs text-slate-400">{entry.time} · {staffFirst}</span>
               {entry.is_significant && (
-                <Badge className="text-[9px] rounded-full bg-amber-100 text-amber-700">
+                <Badge className="text-[9px] rounded-full bg-[--cs-warning-bg] text-[--cs-warning]">
                   <Star className="h-2.5 w-2.5 mr-0.5" />Significant
                 </Badge>
               )}
@@ -298,17 +331,17 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
                   {entry.mood_score}/10
                 </span>
               )}
-              {/* ARIA quick-action toggle */}
+              {/* Cara quick-action toggle */}
               <button
-                onClick={() => setShowAria((v) => !v)}
+                onClick={() => setShowCara((v) => !v)}
                 className={cn(
                   "ml-auto flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border transition-colors",
-                  showAria
+                  showCara
                     ? "bg-violet-100 text-violet-700 border-violet-200"
                     : "bg-white text-slate-500 border-slate-200 hover:bg-violet-50 hover:text-violet-600 hover:border-violet-200"
                 )}
               >
-                <Sparkles className="h-2.5 w-2.5" />Ask ARIA
+                <Sparkles className="h-2.5 w-2.5" />Ask Cara
               </button>
             </div>
             <p className="text-sm text-slate-700 mt-2 leading-relaxed">{entry.content}</p>
@@ -317,17 +350,17 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
             {(entry as never as { care_event_id?: string }).care_event_id && (
               <Link
                 href={`/care-events/${(entry as never as { care_event_id: string }).care_event_id}`}
-                className="mt-2 inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-1 text-[10px] font-medium text-indigo-700 hover:bg-indigo-100 transition-colors"
+                className="mt-2 inline-flex items-center gap-1 rounded-full bg-[--cs-info-bg] border border-[--cs-info-soft] px-2.5 py-1 text-[10px] font-medium text-[--cs-info] hover:bg-[--cs-info-soft] transition-colors"
               >
                 <Sparkles className="h-3 w-3" />
                 Logged from Care Event
               </Link>
             )}
 
-            {/* Inline ARIA actions */}
-            {showAria && (
+            {/* Inline Cara actions */}
+            {showCara && (
               <div className="mt-3">
-                <AriaQuickActions
+                <CaraQuickActions
                   childId={entry.child_id}
                   sourceType={entry.entry_type === "behaviour" ? "behaviour" : "daily_log"}
                   sourceId={entry.id}
@@ -342,7 +375,7 @@ function LogEntryCard({ entry }: { entry: DailyLogEntry }) {
   );
 }
 
-// ── ARIA Pattern Scanner ──────────────────────────────────────────────────────
+// ── Cara Pattern Scanner ──────────────────────────────────────────────────────
 type DetectedPattern = {
   need_type: string;
   title: string;
@@ -350,7 +383,7 @@ type DetectedPattern = {
   priority: TrainingNeedPriority;
 };
 
-function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
+function CaraPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
   const { currentUser } = useAuthContext();
   const homeId = currentUser?.home_id ?? "home_oak";
   const [open, setOpen] = useState(false);
@@ -371,7 +404,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
         .slice(0, 20)
         .map((e) => `[${e.entry_type}] ${getYPName(e.child_id)}: ${e.content.slice(0, 120)}`)
         .join("\n");
-      const res = await api.post<{ data: { parsed?: { needs?: DetectedPattern[] } } }>("/aria", {
+      const res = await api.post<{ data: { parsed?: { needs?: DetectedPattern[] } } }>("/cara", {
         mode: "training_needs_analysis",
         source_content: summary,
         page_context: "daily_log",
@@ -380,7 +413,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
       });
       setPatterns(res.data?.parsed?.needs ?? []);
     } catch {
-      setScanError("ARIA could not analyse the entries. Please try again.");
+      setScanError("Cara could not analyse the entries. Please try again.");
     } finally {
       setScanning(false);
     }
@@ -396,7 +429,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
       priority: p.priority,
       affected_roles: ["residential_care_worker", "senior_residential_care_worker"],
       status: "identified",
-      aria_evidence: `Detected by ARIA from ${entries.length} daily log entries`,
+      cara_evidence: `Detected by Cara from ${entries.length} daily log entries`,
       created_by: currentUser?.id ?? "staff_darren",
     });
     setCreated((prev) => new Set(prev).add(idx));
@@ -409,7 +442,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
           <Brain className="h-4 w-4 text-violet-600" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-slate-900">ARIA Pattern Analysis</p>
+          <p className="text-sm font-semibold text-slate-900">Cara Pattern Analysis</p>
           <p className="text-xs text-slate-500">Scan current entries for staff training patterns</p>
         </div>
         <Button
@@ -437,7 +470,7 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
               Analysing {entries.length} entries for training patterns…
             </div>
           )}
-          {scanError && <p className="text-xs text-red-600">{scanError}</p>}
+          {scanError && <p className="text-xs text-[--cs-risk]">{scanError}</p>}
           {!scanning && patterns.length === 0 && !scanError && (
             <p className="text-xs text-slate-500 py-1">No training patterns detected in these entries.</p>
           )}
@@ -447,16 +480,16 @@ function AriaPatternScanner({ entries }: { entries: DailyLogEntry[] }) {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-semibold text-slate-900">{p.title}</p>
                   <Badge className={cn("text-[10px] h-4 px-1.5 border",
-                    p.priority === "urgent" ? "bg-red-100 text-red-700 border-red-200" :
+                    p.priority === "urgent" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]" :
                     p.priority === "high" ? "bg-orange-100 text-orange-700 border-orange-200" :
-                    "bg-amber-100 text-amber-700 border-amber-200"
+                    "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]"
                   )}>{p.priority}</Badge>
                   <Badge variant="outline" className="text-[10px] h-4 px-1.5">{p.need_type.replace(/_/g, " ")}</Badge>
                 </div>
                 <p className="text-xs text-slate-600 mt-1">{p.description}</p>
               </div>
               {created.has(i) ? (
-                <span className="flex items-center gap-1 text-[10px] text-emerald-600 font-medium shrink-0 pt-0.5">
+                <span className="flex items-center gap-1 text-[10px] text-[--cs-success] font-medium shrink-0 pt-0.5">
                   <CheckCircle2 className="h-3.5 w-3.5" /> Created
                 </span>
               ) : (
@@ -573,18 +606,18 @@ export default function DailyLogPage() {
       }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Daily Log" subtitle="Oak House — Daily Observations" targetId="daily-log-content" />
+          <PrintButton title="Daily Log" subtitle="Chamberlain House — Daily Observations" targetId="daily-log-content" />
           <SmartUploadButton variant="inline" label="Upload" uploadContext="Daily Log — supporting document upload" />
           <Button size="sm" onClick={() => setShowForm((v) => !v)}>
             <Plus className="h-3.5 w-3.5 mr-1" />
             {showForm ? "Cancel" : "New Entry"}
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "daily_log", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
-      ariaContext={{ pageTitle: "Daily Log", sourceType: "general" }}
+      caraContext={{ pageTitle: "Daily Log", sourceType: "general" }}
     >
-      <AriaPanel
+      <CaraPanel
         mode="write"
         pageContext="Daily Log — shift observations, significant events, behaviour, welfare, activities, mood, sleep, food, child voice, continuity of care recording"
         recordType="daily_log"
@@ -597,9 +630,9 @@ export default function DailyLogPage() {
           <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
             {[
               { label: "Total Entries", value: stats.total, colour: "text-slate-700", bg: "bg-slate-50", icon: BookOpen },
-              { label: "Significant", value: stats.significant, colour: stats.significant > 0 ? "text-amber-700" : "text-slate-400", bg: stats.significant > 0 ? "bg-amber-50" : "bg-slate-50", icon: Star },
-              { label: "Avg Mood", value: stats.avgMood !== null ? `${stats.avgMood}/10` : "—", colour: stats.avgMood !== null && stats.avgMood >= 6 ? "text-emerald-700" : stats.avgMood !== null ? "text-amber-700" : "text-slate-400", bg: stats.avgMood !== null && stats.avgMood >= 6 ? "bg-emerald-50" : "bg-amber-50", icon: Smile },
-              { label: "Low Mood", value: stats.lowMoodCount, colour: stats.lowMoodCount > 0 ? "text-red-700" : "text-emerald-700", bg: stats.lowMoodCount > 0 ? "bg-red-50" : "bg-emerald-50", icon: AlertTriangle },
+              { label: "Significant", value: stats.significant, colour: stats.significant > 0 ? "text-[--cs-warning]" : "text-slate-400", bg: stats.significant > 0 ? "bg-[--cs-warning-bg]" : "bg-slate-50", icon: Star },
+              { label: "Avg Mood", value: stats.avgMood !== null ? `${stats.avgMood}/10` : "—", colour: stats.avgMood !== null && stats.avgMood >= 6 ? "text-[--cs-success]" : stats.avgMood !== null ? "text-[--cs-warning]" : "text-slate-400", bg: stats.avgMood !== null && stats.avgMood >= 6 ? "bg-[--cs-success-bg]" : "bg-[--cs-warning-bg]", icon: Smile },
+              { label: "Low Mood", value: stats.lowMoodCount, colour: stats.lowMoodCount > 0 ? "text-[--cs-risk]" : "text-[--cs-success]", bg: stats.lowMoodCount > 0 ? "bg-[--cs-risk-bg]" : "bg-[--cs-success-bg]", icon: AlertTriangle },
               { label: "Young People", value: stats.uniqueYP, colour: "text-violet-700", bg: "bg-violet-50", icon: Heart },
               { label: "Staff Recording", value: stats.uniqueStaff, colour: "text-blue-700", bg: "bg-blue-50", icon: Users },
             ].map(({ label, value, colour, bg, icon: Icon }) => (
@@ -614,8 +647,8 @@ export default function DailyLogPage() {
           </div>
         )}
 
-        {/* ARIA Pattern Scanner */}
-        <AriaPatternScanner entries={entries} />
+        {/* Cara Pattern Scanner */}
+        <CaraPatternScanner entries={entries} />
 
         {/* New entry form */}
         {showForm && (
@@ -755,7 +788,7 @@ export default function DailyLogPage() {
             <span className="text-sm">Loading entries...</span>
           </div>
         ) : isError ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-6 flex items-center gap-3 text-red-600">
+          <div className="rounded-2xl border border-[--cs-risk-soft] bg-[--cs-risk-bg] p-6 flex items-center gap-3 text-[--cs-risk]">
             <AlertCircle className="h-5 w-5 shrink-0" />
             <div>
               <p className="text-sm font-medium">Failed to load log entries</p>
@@ -801,7 +834,10 @@ export default function DailyLogPage() {
           className="mt-2"
         />
       </div>
-      <AriaPracticePanel sourceType="daily_record" homeId="home_oak" title="Run ARIA on this log" />
+      <CaraPracticePanel sourceType="daily_record" homeId="home_oak" title="Run Cara on this log" />
+      <div className="mt-4">
+        <WritingToChildPanel defaultRecordType="daily_log" showRecordTypeSelect={false} showAdvanced={false} title="Writing to the Child — check this log entry" />
+      </div>
     </PageShell>
   );
 }

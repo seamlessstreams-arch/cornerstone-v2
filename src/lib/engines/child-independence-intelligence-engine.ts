@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD INDEPENDENCE & LIFE SKILLS INTELLIGENCE ENGINE
+// CARA — CHILD INDEPENDENCE & LIFE SKILLS INTELLIGENCE ENGINE
 //
 // Per-child independence analysis: life skills proficiency, pathway plan
 // compliance, transition readiness, support network, aspiration tracking,
@@ -441,7 +441,7 @@ export function computeChildIndependenceIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
   const insights: IndependenceInsight[] = [];
 
   if (readiness_status === "at_risk") {

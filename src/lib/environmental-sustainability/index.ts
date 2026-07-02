@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Environmental Sustainability Intelligence — Public API
+// Cara Environmental Sustainability Intelligence — Public API
 // ==============================================================================
 
 export {

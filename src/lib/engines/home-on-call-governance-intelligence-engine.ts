@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ON-CALL GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME ON-CALL GOVERNANCE INTELLIGENCE ENGINE
 // Pure deterministic engine: on-call coverage, response, escalation governance.
 // CHR 2015 Reg 33(4)(b): "Systems for out-of-hours management support."
 // SCCIF: "The home has robust on-call and emergency arrangements."

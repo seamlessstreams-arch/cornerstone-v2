@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE ENGINE — TEST SUITE
+// CARA — CHRONOLOGY INTELLIGENCE ENGINE — TEST SUITE
 // Reg 36 — case records, event patterns, recording gaps, category coverage,
-// timeline analysis, and ARIA chronology insights.
+// timeline analysis, and Cara chronology insights.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { describe, it, expect } from "vitest";
@@ -423,10 +423,10 @@ describe("Chronology Engine — Alerts", () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA INSIGHTS
+// Cara INSIGHTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Chronology Engine — ARIA Insights", () => {
+describe("Chronology Engine — Cara Insights", () => {
   it("generates critical insight for missing chronologies", () => {
     const result = computeChronologyIntelligence({
       children: [makeChild({ id: "c1" })],
@@ -511,8 +511,8 @@ describe("Chronology Engine — ARIA Insights", () => {
 // FULL OAK HOUSE INTEGRATION
 // ══════════════════════════════════════════════════════════════════════════════
 
-describe("Chronology Engine — Oak House Integration", () => {
-  it("produces comprehensive output for realistic Oak House data", () => {
+describe("Chronology Engine — Chamberlain House Integration", () => {
+  it("produces comprehensive output for realistic Chamberlain House data", () => {
     const children: ChildInput[] = [
       { id: "yp_alex", name: "Alex W", placement_start_date: "2025-09-01" },
       { id: "yp_jordan", name: "Jordan K", placement_start_date: "2025-11-15" },
@@ -521,7 +521,7 @@ describe("Chronology Engine — Oak House Integration", () => {
 
     const events: ChronologyEventInput[] = [
       // Alex (7 events across multiple categories)
-      { id: "chr_001", child_id: "yp_alex", date: "2025-09-01", category: "placement", title: "Placement commenced at Oak House", significance: "critical", has_linked_incident: false },
+      { id: "chr_001", child_id: "yp_alex", date: "2025-09-01", category: "placement", title: "Placement commenced at Chamberlain House", significance: "critical", has_linked_incident: false },
       { id: "chr_002", child_id: "yp_alex", date: "2025-10-01", category: "education", title: "School placement arranged", significance: "significant", has_linked_incident: false },
       { id: "chr_003", child_id: "yp_alex", date: "2026-01-15", category: "missing", title: "First missing from care episode", significance: "significant", has_linked_incident: false },
       { id: "chr_004", child_id: "yp_alex", date: "2026-02-05", category: "review", title: "LAC Review", significance: "significant", has_linked_incident: false },

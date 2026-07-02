@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — YOUNG PERSON STORY VIEW
+// CARA — YOUNG PERSON STORY VIEW
 // THE key component. A child's profile that reads like a STORY, not a
 // database. Every section answers a human question: "How is this child?"
 // "What's happening?" "What are we doing about it?" "What's improving?"

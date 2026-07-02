@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Therapeutic Care Intelligence — Public API
+// Cara Therapeutic Care Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

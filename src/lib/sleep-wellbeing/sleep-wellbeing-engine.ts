@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Sleep & Wellbeing Monitoring Intelligence Engine
+// Cara — Sleep & Wellbeing Monitoring Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

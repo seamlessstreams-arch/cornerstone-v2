@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEY DATES INTELLIGENCE ENGINE
+// CARA — KEY DATES INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates all upcoming dates across the
 // system: birthdays, training expiry, supervision deadlines, probation

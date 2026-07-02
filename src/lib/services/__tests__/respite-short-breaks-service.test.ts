@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RESPITE & SHORT BREAKS SERVICE TESTS
+// CARA — RESPITE & SHORT BREAKS SERVICE TESTS
 // Pure-function tests for respite metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

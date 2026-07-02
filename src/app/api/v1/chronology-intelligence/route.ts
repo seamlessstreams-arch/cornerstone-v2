@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE API ROUTE
+// CARA — CHRONOLOGY INTELLIGENCE API ROUTE
 // GET /api/v1/chronology-intelligence
 // Returns event patterns, recording gaps, category coverage, timeline analysis,
-// and ARIA chronology insights for all children.
+// and Cara chronology insights for all children.
 // Reg 36 — case records; SCCIF — comprehensive factual chronology.
 // ══════════════════════════════════════════════════════════════════════════════
 

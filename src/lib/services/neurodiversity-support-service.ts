@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- NEURODIVERSITY & SEND SUPPORT SERVICE
+// CARA -- NEURODIVERSITY & SEND SUPPORT SERVICE
 // Tracks neurodiversity and SEND (Special Educational Needs and Disabilities)
 // support for looked-after children including autism spectrum conditions,
 // ADHD, dyslexia, dyspraxia/DCD, dyscalculia, sensory processing disorder,
@@ -572,7 +572,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: NeurodiversitySupportRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

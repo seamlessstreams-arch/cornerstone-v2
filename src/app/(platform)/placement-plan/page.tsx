@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PLACEMENT PLANS
+// CARA — PLACEMENT PLANS
 // Tracks each child's placement plan with objectives, targets, responsible
 // persons, and progress. Supports Reg 14 (Placement Plan) and Schedule 2
 // (Information in Respect of Children in Children's Homes).
@@ -34,8 +34,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -190,15 +190,15 @@ export default function PlacementPlanPage() {
     <PageShell
       title="Placement Plans"
       subtitle="Objectives, targets, and progress tracking"
-      ariaContext={{ pageTitle: "Placement Plans", sourceType: "care_plan" }}
+      caraContext={{ pageTitle: "Placement Plans", sourceType: "care_plan" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Placement Plans" subtitle="Oak House — Care Planning" />
+          <PrintButton title="Placement Plans" subtitle="Chamberlain House — Care Planning" />
           <ExportButton data={filtered} columns={exportCols} filename="placement-plans" />
           <Button size="sm" onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-1" /> Add Objective
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "placement_plan", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -465,7 +465,7 @@ export default function PlacementPlanPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Placement Plans — placement objectives, care plan goals, placement purpose, anticipated length, stability targets, education plan, health plan, family contact plan, Reg 45 outcomes evidence"
         recordType="placement_plan"

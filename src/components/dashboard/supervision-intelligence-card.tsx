@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION INTELLIGENCE CARD
+// CARA — SUPERVISION INTELLIGENCE CARD
 // Dashboard widget for supervision compliance, staff wellbeing, training
-// status, and ARIA staff development intelligence.
+// status, and Cara staff development intelligence.
 // Powered by the Supervision Intelligence Engine — live data (Reg 33/32/29).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -21,16 +21,16 @@ import { useSupervisionIntelligence } from "@/hooks/use-supervision-intelligence
 // ── Styling ────────────────────────────────────────────────────────────────��
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const COMPLIANCE_STYLES: Record<string, { bg: string; text: string }> = {
@@ -103,11 +103,11 @@ export function SupervisionIntelligenceCard() {
             <p className="text-[10px] text-muted-foreground">Staff</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", onTrack > 0 ? "bg-green-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", onTrack > 0 ? "text-green-600" : "text-gray-500")}>{onTrack}</p>
+            <p className={cn("text-lg font-bold tabular-nums", onTrack > 0 ? "text-[--cs-success]" : "text-gray-500")}>{onTrack}</p>
             <p className="text-[10px] text-muted-foreground">On Track</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.supervisions_overdue > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.supervisions_overdue > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.supervisions_overdue > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {o.supervisions_overdue}
             </p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
@@ -183,7 +183,7 @@ export function SupervisionIntelligenceCard() {
                       {profile.training_status === "non_compliant" ? "training gap" : profile.training_status}
                     </Badge>
                     {profile.actions_overdue > 0 && (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         {profile.actions_overdue} action{profile.actions_overdue > 1 ? "s" : ""} overdue
                       </Badge>
                     )}
@@ -219,13 +219,13 @@ export function SupervisionIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Supervision Intelligence ────────────────────────────── */}
+        {/* ── Cara Supervision Intelligence ────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Supervision Intelligence
+              Cara Supervision Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME HEALTH APPOINTMENT CONTINUITY INTELLIGENCE ENGINE
+// CARA — HOME HEALTH APPOINTMENT CONTINUITY INTELLIGENCE ENGINE
 // Pure deterministic engine: appointment attendance, health domain coverage,
 // outcome documentation, transport arrangements, and follow-up completion.
 // CHR 2015 Reg 10: "The health and well-being standard." SCCIF: Health.

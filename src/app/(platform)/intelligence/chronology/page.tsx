@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE PAGE
-// ARIA-powered chronology summaries and gap analysis
+// CARA — CHRONOLOGY INTELLIGENCE PAGE
+// Cara-powered chronology summaries and gap analysis
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState } from "react";
@@ -59,9 +59,9 @@ const SEV_CLASSES: Record<string, string> = {
   low:      "bg-slate-100 text-[var(--cs-text-secondary)]",
 };
 
-// ── Parse raw ARIA text into chronology rows ──────────────────────────────────
+// ── Parse raw Cara text into chronology rows ──────────────────────────────────
 //
-// Expected format (from the ARIA chronology_summary mode):
+// Expected format (from the Cara chronology_summary mode):
 //   "1. Date | Event | Significance"  or
 //   "Date | Event | Significance"
 //
@@ -142,7 +142,7 @@ export default function ChronologyIntelligencePage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -160,7 +160,7 @@ export default function ChronologyIntelligencePage() {
       });
 
       if (!res.ok || !res.body) {
-        throw new Error(`ARIA returned ${res.status}`);
+        throw new Error(`Cara returned ${res.status}`);
       }
 
       const reader  = res.body.getReader();
@@ -225,11 +225,11 @@ export default function ChronologyIntelligencePage() {
   return (
     <PageShell
       title="Chronology Intelligence"
-      subtitle="ARIA-generated chronology summaries and gap analysis"
+      subtitle="Cara-generated chronology summaries and gap analysis"
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Chronology Intelligence" subtitle="Oak House — ARIA Chronology Analysis" targetId="chronology-content" />
+          <PrintButton title="Chronology Intelligence" subtitle="Chamberlain House — Cara Chronology Analysis" targetId="chronology-content" />
           <SmartUploadButton variant="inline" label="Upload Chronology Document" uploadContext="Intelligence — chronology or historical record document upload" />
         </div>
       }
@@ -241,7 +241,7 @@ export default function ChronologyIntelligencePage() {
           <Card>
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-                <Brain className="h-4 w-4 text-[var(--cs-aria-gold)]" />
+                <Brain className="h-4 w-4 text-[var(--cs-cara-gold)]" />
                 Generate Chronology Summary
               </CardTitle>
             </CardHeader>
@@ -258,7 +258,7 @@ export default function ChronologyIntelligencePage() {
                   <select
                     value={selectedChildId}
                     onChange={(e) => setSelectedChildId(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)]"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-white px-3 py-2 text-sm text-[var(--cs-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)]"
                   >
                     <option value="">Select a young person…</option>
                     {youngPeople.map((yp) => {
@@ -287,7 +287,7 @@ export default function ChronologyIntelligencePage() {
                         "rounded-full px-3 py-1.5 text-xs font-medium transition-colors border",
                         selectedPeriod === opt.value
                           ? "bg-[var(--cs-navy)] text-white border-[var(--cs-navy)]"
-                          : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-[var(--cs-aria-gold-soft)] hover:text-[var(--cs-aria-gold)]"
+                          : "bg-white text-[var(--cs-text-secondary)] border-[var(--cs-border)] hover:border-[var(--cs-cara-gold-soft)] hover:text-[var(--cs-cara-gold)]"
                       )}
                     >
                       {opt.label}
@@ -315,7 +315,7 @@ export default function ChronologyIntelligencePage() {
                   onChange={(e) => setPastedNotes(e.target.value)}
                   placeholder="Paste any relevant records, log entries, or notes here…"
                   rows={4}
-                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)] placeholder:text-[var(--cs-text-muted)]"
+                  className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)] placeholder:text-[var(--cs-text-muted)]"
                 />
               </div>
 
@@ -332,13 +332,13 @@ export default function ChronologyIntelligencePage() {
                       className={cn(
                         "rounded-xl border p-3 text-left transition-all",
                         selectedStyle === opt.value
-                          ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)] ring-1 ring-[var(--cs-aria-gold-soft)]"
-                          : "border-[var(--cs-border)] bg-white hover:border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]/40"
+                          ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)] ring-1 ring-[var(--cs-cara-gold-soft)]"
+                          : "border-[var(--cs-border)] bg-white hover:border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]/40"
                       )}
                     >
                       <div className={cn(
                         "text-xs font-semibold mb-0.5",
-                        selectedStyle === opt.value ? "text-[var(--cs-aria-gold)]" : "text-[var(--cs-text-secondary)]"
+                        selectedStyle === opt.value ? "text-[var(--cs-cara-gold)]" : "text-[var(--cs-text-secondary)]"
                       )}>
                         {opt.label}
                       </div>
@@ -372,7 +372,7 @@ export default function ChronologyIntelligencePage() {
                 ) : (
                   <>
                     <Sparkles className="h-4 w-4 mr-2" />
-                    Generate with ARIA
+                    Generate with Cara
                   </>
                 )}
               </Button>
@@ -458,7 +458,7 @@ export default function ChronologyIntelligencePage() {
                 {isGenerating && (
                   <div className="mt-2 flex items-center gap-1.5 text-xs text-[var(--cs-text-muted)]">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    ARIA is writing…
+                    Cara is writing…
                   </div>
                 )}
 
@@ -548,12 +548,12 @@ export default function ChronologyIntelligencePage() {
             </CardContent>
           </Card>
 
-          {/* What ARIA can do */}
+          {/* What Cara can do */}
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                 <Sparkles className="h-4 w-4 text-[var(--cs-text-muted)]" />
-                What ARIA can do
+                What Cara can do
               </CardTitle>
             </CardHeader>
             <CardContent>

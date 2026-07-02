@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ARIA — CHILD INTELLIGENCE OVERVIEW
+// Cara — CHILD INTELLIGENCE OVERVIEW
 //
-// Summary dashboard for ARIA intelligence related to a specific child.
+// Summary dashboard for Cara intelligence related to a specific child.
 // Shows report stats, risk profile, recent activity, and quick actions.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -72,18 +72,18 @@ export default function ChildIntelligencePage({
   const activity = getDemoActivity();
 
   return (
-    <PageShell title={`ARIA Intelligence — ${childName}`}>
+    <PageShell title={`Cara Intelligence — ${childName}`}>
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-lg"
-          style={{ backgroundColor: "var(--cs-aria-gold-bg)" }}
+          style={{ backgroundColor: "var(--cs-cara-gold-bg)" }}
         >
-          <Sparkles className="h-5 w-5" style={{ color: "var(--cs-aria-gold)" }} />
+          <Sparkles className="h-5 w-5" style={{ color: "var(--cs-cara-gold)" }} />
         </div>
         <div>
           <h1 className="text-xl font-semibold" style={{ color: "var(--cs-navy)" }}>
-            ARIA Intelligence — {childName}
+            Cara Intelligence — {childName}
           </h1>
           <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
             AI-assisted report generation, evidence analysis, and insights
@@ -95,8 +95,8 @@ export default function ChildIntelligencePage({
       <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Card>
           <CardContent className="flex items-center gap-3 py-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: "var(--cs-aria-gold-bg)" }}>
-              <FileText className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: "var(--cs-cara-gold-bg)" }}>
+              <FileText className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
             </div>
             <div>
               <p className="text-xs" style={{ color: "var(--cs-text-muted)" }}>Total Reports</p>
@@ -150,25 +150,25 @@ export default function ChildIntelligencePage({
           <CardContent className="space-y-2">
             <Link href={`/children/${childId}/reports/new`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
-                <Plus className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+                <Plus className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
                 Generate Weekly Report
               </Button>
             </Link>
             <Link href={`/children/${childId}/reports`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
-                <List className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+                <List className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
                 View All Reports
               </Button>
             </Link>
-            <Link href={`/aria-studio/therapeutic-profile?childId=${childId}`} className="block">
+            <Link href={`/cara-studio/therapeutic-profile?childId=${childId}`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
-                <Heart className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+                <Heart className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
                 Therapeutic Profile
               </Button>
             </Link>
-            <Link href={`/aria/reg45`} className="block">
+            <Link href={`/cara/reg45`} className="block">
               <Button variant="outline" className="w-full justify-start gap-2 text-sm">
-                <TrendingUp className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+                <TrendingUp className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
                 Reg 45 Evidence
               </Button>
             </Link>
@@ -178,7 +178,7 @@ export default function ChildIntelligencePage({
         {/* Recent Activity */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base">Recent ARIA Activity</CardTitle>
+            <CardTitle className="text-base">Recent Cara Activity</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -190,9 +190,9 @@ export default function ChildIntelligencePage({
                 >
                   <div
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                    style={{ backgroundColor: "var(--cs-aria-gold-bg)" }}
+                    style={{ backgroundColor: "var(--cs-cara-gold-bg)" }}
                   >
-                    <item.icon className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+                    <item.icon className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium" style={{ color: "var(--cs-navy)" }}>

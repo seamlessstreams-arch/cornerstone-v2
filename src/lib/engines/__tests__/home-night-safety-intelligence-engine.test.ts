@@ -437,7 +437,7 @@ describe("Home Night Safety Intelligence Engine", () => {
     }
   });
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
+  // ── Cara Insights ──────────────────────────────────────────────────────
 
   it("generates critical insight for no data", () => {
     const r = computeHomeNightSafety(baseInput());

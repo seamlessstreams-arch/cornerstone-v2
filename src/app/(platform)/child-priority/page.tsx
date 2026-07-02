@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PRIORITY (UNIFIED RISK) detail page
+// CARA — CHILD PRIORITY (UNIFIED RISK) detail page
 // One ranked, joined-up view of which children need attention most — and why.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -47,7 +47,7 @@ export default function ChildPriorityPage() {
       subtitle="Every intelligence stream, fused into one ranked list — who needs attention most today, and why"
       icon={<ListOrdered className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Child Priority — Unified Risk", sourceType: "general" }}
+      caraContext={{ pageTitle: "Child Priority — Unified Risk", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">
@@ -78,11 +78,11 @@ export default function ChildPriorityPage() {
             <OverviewStat label="Top priority" value={intel.overview.top_priority_child ?? "—"} hint={intel.overview.top_priority_child ? `score ${intel.overview.top_priority_score}` : undefined} />
           </div>
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Unified Risk Intelligence
+                <Brain className="h-4 w-4" /> Cara Unified Risk Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

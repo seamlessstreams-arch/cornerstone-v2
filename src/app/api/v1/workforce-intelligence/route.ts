@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE INTELLIGENCE API ROUTE
+// CARA — WORKFORCE INTELLIGENCE API ROUTE
 // GET /api/v1/workforce-intelligence
 // Returns aggregated workforce intelligence from the engine.
 // ══════════════════════════════════════════════════════════════════════════════

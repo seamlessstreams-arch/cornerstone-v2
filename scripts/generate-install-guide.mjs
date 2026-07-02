@@ -1,11 +1,11 @@
-// Generates a branded, printable one-page "Install Cornerstone" guide (PDF) with a
+// Generates a branded, printable one-page "Install Cara" guide (PDF) with a
 // scannable QR code. Run: node scripts/generate-install-guide.mjs
 import QRCode from "qrcode";
 import { chromium } from "playwright";
 import { writeFileSync } from "node:fs";
 
-const URL = "https://cornerstone-v2-fresh.vercel.app";
-const OUT = process.argv[2] || "/Users/darrenlaville/cornerstone-v2/Cornerstone-Install-Guide.pdf";
+const URL = "https://cara-os-fresh.vercel.app";
+const OUT = process.argv[2] || "/Users/darrenlaville/cornerstone-v2/Cara-Install-Guide.pdf";
 
 const qr = await QRCode.toDataURL(URL, { margin: 1, width: 360, color: { dark: "#0f1e36", light: "#ffffff" } });
 
@@ -49,13 +49,13 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .foot { margin-top: 16px; text-align: center; font-size: 10.5px; color: #8a93a6; }
   .warn { color: #d9685c; }
 </style></head><body><div class="page">
-  <div class="head">${ICON}<div><h1>Install Cornerstone</h1><p>Care OS for Children's Homes — add it to your phone, tablet or computer in under a minute.</p></div></div>
+  <div class="head">${ICON}<div><h1>Install Cara</h1><p>Care OS for Children's Homes — add it to your phone, tablet or computer in under a minute.</p></div></div>
 
   <div class="hero">
     <div class="l">
       <div class="label">Open this address in your browser</div>
-      <div class="url">cornerstone-v2-fresh.vercel.app</div>
-      <div class="sub">There's no App Store download — Cornerstone installs straight from the web, then gets its own icon and opens full-screen like a normal app.</div>
+      <div class="url">cara-os-fresh.vercel.app</div>
+      <div class="sub">There's no App Store download — Cara installs straight from the web, then gets its own icon and opens full-screen like a normal app.</div>
     </div>
     <div class="qr"><img src="${qr}"/><div>Scan to open</div></div>
   </div>
@@ -65,7 +65,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
       "Open <b>Safari</b> and go to the address above",
       "Tap the <b>Share</b> button (square with an up-arrow)",
       "Tap <b>Add to Home Screen</b>",
-      "Tap <b>Add</b> — the Cornerstone icon appears",
+      "Tap <b>Add</b> — the Cara icon appears",
     ])}</ol></div>
     <div class="card"><h2>🤖 Android</h2><div class="tag">Use <b>Chrome</b></div><ol>${steps([
       "Open <b>Chrome</b> and go to the address above",
@@ -76,7 +76,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     <div class="card"><h2>💻 Computer</h2><div class="tag">Chrome or Edge</div><ol>${steps([
       "Open <b>Chrome/Edge</b> and go to the address above",
       "Click the <b>install icon</b> in the address bar",
-      "Or <b>⋮ menu → Install Cornerstone…</b>",
+      "Or <b>⋮ menu → Install Cara…</b>",
       "It opens in its own window",
     ])}</ol></div>
   </div>
@@ -88,7 +88,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     <li><span class="warn">🔒 Safety:</span> live care data won't show offline by design</li>
   </ul></div>
 
-  <div class="foot">Cornerstone — Oak House. If a step looks different, your browser may have moved a menu; the option is always called <b>Install</b> or <b>Add to Home Screen</b>.</div>
+  <div class="foot">Cara — Oak House. If a step looks different, your browser may have moved a menu; the option is always called <b>Install</b> or <b>Add to Home Screen</b>.</div>
 </div></body></html>`;
 
 const browser = await chromium.launch();

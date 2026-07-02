@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LOCALITY SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — HOME LOCALITY SAFEGUARDING INTELLIGENCE ENGINE
 // Home-level: measures the home's awareness and response to local community
 // risks — locality risk mapping, exploitation screening coverage, mitigation
 // effectiveness, review currency, safety planning, and contextual safeguarding

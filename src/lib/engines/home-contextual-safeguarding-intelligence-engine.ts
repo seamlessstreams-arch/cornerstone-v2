@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — HOME CONTEXTUAL SAFEGUARDING INTELLIGENCE ENGINE
 // Pure deterministic engine: contextual risk identification, multi-agency
 // response, protective actions, review timeliness, and resolution tracking.
 // CHR 2015 Reg 12: "The protection of children standard." SCCIF: Safeguarding.

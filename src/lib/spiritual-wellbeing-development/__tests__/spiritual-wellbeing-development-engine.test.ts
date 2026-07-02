@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Spiritual Wellbeing Development Intelligence — Engine Tests
+// Cara Spiritual Wellbeing Development Intelligence — Engine Tests
 //
 // Covers all evaluators, helpers, label getters, child profiles, and the
 // main orchestrator. 80+ tests covering empty, perfect, partial, and edge cases.
 //
-// Demo data: Oak House — Alex, Jordan, Morgan
+// Demo data: Chamberlain House — Alex, Jordan, Morgan
 // Staff: Sarah Johnson, Tom Richards, Lisa Williams, Darren Laville
 // ══════════════════════════════════════════════════════════════════════════════
 

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EDUCATION & ACTIVITIES INTELLIGENCE CARD
+// CARA — EDUCATION & ACTIVITIES INTELLIGENCE CARD
 // Dashboard widget for education status, attendance, enrichment activities,
-// PEP compliance, and ARIA education intelligence.
+// PEP compliance, and Cara education intelligence.
 // Powered by the Education Intelligence Engine — live data (Reg 8/10).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,16 +20,16 @@ import { useEducationIntelligence } from "@/hooks/use-education-intelligence";
 // ── Styling maps ────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -77,19 +77,19 @@ export function EducationIntelligenceCard() {
 
         <div className="grid grid-cols-4 gap-2">
           <div className={cn("text-center rounded-lg p-2", o.avg_attendance_pct >= 90 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.avg_attendance_pct >= 90 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.avg_attendance_pct >= 90 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {o.avg_attendance_pct}%
             </p>
             <p className="text-[10px] text-muted-foreground">Avg Attendance</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", o.neet_count > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.neet_count > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.neet_count > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {o.neet_count}
             </p>
             <p className="text-[10px] text-muted-foreground">NEET</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", o.exclusion_events_90d > 0 ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.exclusion_events_90d > 0 ? "text-amber-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.exclusion_events_90d > 0 ? "text-[--cs-warning]" : "text-[--cs-success]")}>
               {o.exclusion_events_90d}
             </p>
             <p className="text-[10px] text-muted-foreground">Exclusions</p>
@@ -114,17 +114,17 @@ export function EducationIntelligenceCard() {
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{child.child_name}</span>
                     {child.has_sen && (
-                      <Badge className="text-[10px] bg-blue-100 text-blue-700">SEN</Badge>
+                      <Badge className="text-[10px] bg-[--cs-info-bg] text-[--cs-info]">SEN</Badge>
                     )}
                     {child.exclusion_count_90d > 0 && (
-                      <Badge className="text-[10px] bg-red-100 text-red-700">
+                      <Badge className="text-[10px] bg-[--cs-risk-bg] text-[--cs-risk]">
                         {child.exclusion_count_90d} excl.
                       </Badge>
                     )}
                   </div>
                   <span className={cn(
                     "font-medium tabular-nums",
-                    child.attendance_pct >= 90 ? "text-green-600" : child.attendance_pct >= 85 ? "text-amber-600" : "text-red-600",
+                    child.attendance_pct >= 90 ? "text-[--cs-success]" : child.attendance_pct >= 85 ? "text-[--cs-warning]" : "text-[--cs-risk]",
                   )}>
                     {child.attendance_pct}%
                   </span>
@@ -173,12 +173,12 @@ export function EducationIntelligenceCard() {
             </div>
           </div>
           {o.pep_overdue_count > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {o.pep_overdue_count} overdue
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All current
             </Badge>
@@ -207,13 +207,13 @@ export function EducationIntelligenceCard() {
           </div>
         )}
 
-        {/* ── ARIA Education Intelligence ──────────────────────────────── */}
+        {/* ── Cara Education Intelligence ──────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Education Intelligence
+              Cara Education Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

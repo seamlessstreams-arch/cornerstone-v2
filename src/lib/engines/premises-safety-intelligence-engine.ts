@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — PREMISES & SAFETY INTELLIGENCE ENGINE
+// CARA — PREMISES & SAFETY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses buildings, building checks, maintenance items, vehicles and vehicle
@@ -175,7 +175,7 @@ export interface PremisesAlert {
   message: string;
 }
 
-export interface AriaPremisesInsight {
+export interface CaraPremisesInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -187,7 +187,7 @@ export interface PremisesSafetyIntelligenceResult {
   maintenance_analysis: MaintenanceAnalysis[];
   vehicle_profiles: VehicleProfile[];
   alerts: PremisesAlert[];
-  insights: AriaPremisesInsight[];
+  insights: CaraPremisesInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -555,10 +555,10 @@ export function computePremisesSafetyIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaPremisesInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraPremisesInsight[] = [];
 
-  // Critical: any critical alert triggers ARIA critical
+  // Critical: any critical alert triggers Cara critical
   if (certificationsExpired > 0) {
     insights.push({
       severity: "critical",

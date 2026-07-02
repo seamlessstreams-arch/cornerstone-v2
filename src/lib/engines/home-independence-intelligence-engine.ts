@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INDEPENDENCE & TRANSITION INTELLIGENCE ENGINE
+// CARA — HOME INDEPENDENCE & TRANSITION INTELLIGENCE ENGINE
 // Home-level: synthesises independence pathway assessments across all children
 // to assess readiness, life skills development, pathway plan linkage, domain
 // gaps, and transition preparation quality.

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite for consent management quality analysis.
 // Covers CHR 2015 Reg 5 (Quality of care), Reg 7 (Children's views),
 // Reg 14 (Health care), SCCIF voice of the child.

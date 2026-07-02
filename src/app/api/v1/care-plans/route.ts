@@ -1,9 +1,16 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestIdentity, assertChildHomeAccess } from "@/lib/auth-guard";
 import { intelligenceDb } from "@/lib/intelligence/store";
 
 export async function GET(req: NextRequest) {
   const homeId  = req.nextUrl.searchParams.get("home_id") ?? "home_oak";
   const childId = req.nextUrl.searchParams.get("child_id");
+
+  const identity = await getRequestIdentity(req);
+  if (identity instanceof NextResponse) return identity;
+  const denied = assertChildHomeAccess(identity, childId);
+  if (denied) return denied;
 
   if (childId) {
     const plan = intelligenceDb.carePlans.findByChild(childId);
@@ -36,7 +43,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body   = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const record = intelligenceDb.carePlans.create({
     home_id:                   body.home_id ?? "home_oak",
     child_id:                  body.child_id ?? "",
@@ -55,7 +64,7 @@ export async function POST(req: NextRequest) {
     rm_sign_off_by:            null,
     strengths_summary:         null,
     concerns_summary:          null,
-    aria_overview:             null,
+    cara_overview:             null,
     created_by:                body.created_by ?? "staff_darren",
   });
   return NextResponse.json({ data: record }, { status: 201 });

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HIGHER EDUCATION & FURTHER EDUCATION SUPPORT SERVICE
+// CARA -- HIGHER EDUCATION & FURTHER EDUCATION SUPPORT SERVICE
 // Tracks HE/FE support for looked-after children and care leavers including
 // UCAS applications, personal statement help, university visits, open days,
 // taster sessions, student finance applications, bursary applications,
@@ -570,7 +570,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: HigherEducationSupportRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

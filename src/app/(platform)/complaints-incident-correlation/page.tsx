@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLAINTS ↔ INCIDENT CORRELATION (detail page)
+// CARA — COMPLAINTS ↔ INCIDENT CORRELATION (detail page)
 // Cross-dataset early-warning view linking children's complaints to incidents.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -50,7 +50,7 @@ export default function ComplaintsIncidentCorrelationPage() {
       subtitle="A cross-dataset early-warning lens — were a child's complaints a signal we should have acted on before things escalated?"
       icon={<Link2 className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Complaints ↔ Incident Correlation", sourceType: "general" }}
+      caraContext={{ pageTitle: "Complaints ↔ Incident Correlation", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">
@@ -81,11 +81,11 @@ export default function ComplaintsIncidentCorrelationPage() {
             <OverviewStat label="Complaints / Incidents (90d)" value={`${intel.overview.total_complaints_90}/${intel.overview.total_incidents_90}`} />
           </div>
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Voice &amp; Protection Intelligence
+                <Brain className="h-4 w-4" /> Cara Voice &amp; Protection Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

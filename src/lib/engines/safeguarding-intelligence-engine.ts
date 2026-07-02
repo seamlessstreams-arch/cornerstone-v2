@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING INTELLIGENCE ENGINE
+// CARA — SAFEGUARDING INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates incidents, missing episodes,
 // restraints, risk assessments, and notifiable events to produce:
@@ -8,7 +8,7 @@
 // - Risk assessment overview (per-child, per-domain, review status)
 // - Missing episode analysis (patterns, contextual safeguarding)
 // - Notifiable event compliance (Reg 40 timeliness)
-// - Auto-generated ARIA safeguarding insights (deterministic)
+// - Auto-generated Cara safeguarding insights (deterministic)
 //
 // Key regulatory requirements:
 //   Reg 12 — Protection of children
@@ -132,7 +132,7 @@ export interface NotifiableEventProfile {
   by_type: { type: string; count: number }[];
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -143,7 +143,7 @@ export interface SafeguardingIntelligenceResult {
   risk_assessments: RiskAssessmentProfile;
   missing: MissingProfile;
   notifiable_events: NotifiableEventProfile;
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface SafeguardingIntelligenceInput {
@@ -219,13 +219,13 @@ export function computeSafeguardingIntelligence(
 
   // ── Safeguarding Profile ──────────────────────────────────────────────
 
-  const incidents90d = incidents.filter((i) => i.date >= ninetyDaysAgo);
+  const incidents90d = incidents.filter((i) => i.date >= ninetyDaysAgo && i.date.slice(0, 10) <= today);
   const openIncidents = incidents.filter((i) => i.status === "open" || i.status === "under_review");
   const needingOversight = incidents.filter((i) => i.requires_oversight && !i.oversight_by);
   const safeguardingIncidents90d = incidents90d.filter((i) => isSafeguardingIncident(i.type));
 
   // Trend: compare last 45 days vs prior 45 days
-  const recentIncidents = incidents.filter((i) => i.date >= fortyFiveDaysAgo).length;
+  const recentIncidents = incidents.filter((i) => i.date >= fortyFiveDaysAgo && i.date.slice(0, 10) <= today).length;
   const olderIncidents = incidents.filter((i) => i.date >= ninetyDaysAgo && i.date < fortyFiveDaysAgo).length;
   const incidentTrend = computeTrend(recentIncidents, olderIncidents);
 
@@ -239,8 +239,8 @@ export function computeSafeguardingIntelligence(
 
   // ── Restraint Profile ─────────────────────────────────────────────────
 
-  const restraints90d = restraints.filter((r) => r.date >= ninetyDaysAgo);
-  const restraints30d = restraints.filter((r) => r.date >= thirtyDaysAgo);
+  const restraints90d = restraints.filter((r) => r.date >= ninetyDaysAgo && r.date.slice(0, 10) <= today);
+  const restraints30d = restraints.filter((r) => r.date >= thirtyDaysAgo && r.date.slice(0, 10) <= today);
   const restrainedChildren = new Set(restraints90d.map((r) => r.child_id));
 
   const avgDuration = restraints90d.length > 0
@@ -323,8 +323,8 @@ export function computeSafeguardingIntelligence(
 
   // ── Missing Profile ───────────────────────────────────────────────────
 
-  const missing90d = missingEpisodes.filter((m) => m.date_missing >= ninetyDaysAgo);
-  const missing30d = missingEpisodes.filter((m) => m.date_missing >= thirtyDaysAgo);
+  const missing90d = missingEpisodes.filter((m) => m.date_missing >= ninetyDaysAgo && m.date_missing.slice(0, 10) <= today);
+  const missing30d = missingEpisodes.filter((m) => m.date_missing >= thirtyDaysAgo && m.date_missing.slice(0, 10) <= today);
   const childrenWithEpisodes = new Set(missing90d.map((m) => m.child_id));
 
   // Count per-child episodes for repeat detection
@@ -397,8 +397,8 @@ export function computeSafeguardingIntelligence(
   }
   const childName = (id: string) => childNameMap.get(id) ?? "Unknown child";
 
-  // ── ARIA Safeguarding Intelligence Insights ───────────────────────────
-  const insights: AriaInsight[] = [];
+  // ── Cara Safeguarding Intelligence Insights ───────────────────────────
+  const insights: CaraInsight[] = [];
 
   // 1. Pending Ofsted notifications (critical)
   if (pending > 0) {

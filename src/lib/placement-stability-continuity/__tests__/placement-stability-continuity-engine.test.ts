@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Placement Stability & Continuity Intelligence — Engine Tests
+// Cara Placement Stability & Continuity Intelligence — Engine Tests
 //
 // Covers pct, getRating, label getters, all 4 evaluators, buildChildPlacementProfiles,
 // orchestrator — empty/perfect/partial/cap scenarios.
-// Demo data: Oak House — Alex, Jordan, Morgan
+// Demo data: Chamberlain House — Alex, Jordan, Morgan
 // Staff: Sarah Johnson, Tom Richards, Lisa Williams, Darren Laville
 // ══════════════════════════════════════════════════════════════════════════════
 

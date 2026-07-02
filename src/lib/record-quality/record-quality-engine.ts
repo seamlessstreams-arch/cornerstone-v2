@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Record Quality & Timeliness Intelligence Engine
+// Cara — Record Quality & Timeliness Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

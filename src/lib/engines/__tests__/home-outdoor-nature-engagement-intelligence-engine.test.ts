@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA -- HOME OUTDOOR & NATURE ENGAGEMENT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite covering scoring, bonuses, penalties, rates,
 // strengths, concerns, recommendations, insights, and edge cases.
 // ==============================================================================

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME CONSENT & CAPACITY MANAGEMENT INTELLIGENCE ENGINE
 // Tracks consent management quality — consent form completion, Gillick
 // competence assessments, informed consent documentation, capacity reviews,
 // and consent withdrawal handling. Critical for Ofsted under Children's Homes

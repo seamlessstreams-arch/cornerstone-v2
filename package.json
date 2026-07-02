@@ -2,6 +2,9 @@
   "name": "cornerstone-v2",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "sh -c 'set -a && . .env.local && set +a && next dev --port 3001'",
     "build": "next build",
@@ -10,7 +13,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "check:rebrand": "node scripts/check-rebrand.js",
+    "check:ai-gateway": "node scripts/check-ai-gateway.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.89.0",
@@ -38,6 +43,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "jszip": "^3.10.1",
     "lucide-react": "^1.14.0",
     "next": "16.2.3",
     "radix-ui": "^1.4.3",

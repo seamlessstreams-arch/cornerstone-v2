@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERRORS INTELLIGENCE CARD
+// CARA — MEDICATION ERRORS INTELLIGENCE CARD
 // Dashboard card for medication error tracking and investigation.
 // CHR 2015 Reg 23, Reg 40. Duty of Candour.
 // SCCIF: Helped & Protected — "Medication is managed safely."
@@ -20,16 +20,16 @@ import { useMedicationIntelligence } from "@/hooks/use-medication-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -91,7 +91,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.missed_rate === 0 ? "text-green-600" : o.missed_rate <= 3 ? "text-amber-600" : "text-red-600",
+              o.missed_rate === 0 ? "text-[--cs-success]" : o.missed_rate <= 3 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.missed_rate}%
             </p>
@@ -103,7 +103,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.refusal_rate === 0 ? "text-green-600" : o.refusal_rate <= 5 ? "text-amber-600" : "text-red-600",
+              o.refusal_rate === 0 ? "text-[--cs-success]" : o.refusal_rate <= 5 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.refusal_rate}%
             </p>
@@ -115,7 +115,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              totalMissed === 0 ? "text-green-600" : "text-amber-600",
+              totalMissed === 0 ? "text-[--cs-success]" : "text-[--cs-warning]",
             )}>
               {totalMissed}
             </p>
@@ -127,7 +127,7 @@ export function MedicationErrorsCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              totalRefusals === 0 ? "text-green-600" : "text-red-600",
+              totalRefusals === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {totalRefusals}
             </p>
@@ -190,13 +190,13 @@ export function MedicationErrorsCard() {
           </div>
         )}
 
-        {/* ── ARIA Medication Safety Intelligence ─────────────────────── */}
+        {/* ── Cara Medication Safety Intelligence ─────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Medication Safety Intelligence
+              Cara Medication Safety Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- ROOM PERSONALISATION & LIVING SPACE SERVICE
+// CARA -- ROOM PERSONALISATION & LIVING SPACE SERVICE
 // Tracks children's bedroom personalisation, decoration choices, furniture
 // requests, safety checks, budget tracking, cultural/sensory needs, and child
 // satisfaction with their living space. Ensures rooms feel homely, not institutional.
@@ -493,7 +493,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: RoomPersonalisationRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

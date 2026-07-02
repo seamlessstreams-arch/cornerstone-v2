@@ -21,8 +21,8 @@ import type { IncidentTrendRecord, TrendActionStatus } from "@/types/extended";
 import { TREND_ACTION_STATUS_LABEL } from "@/types/extended";
 import { useIncidentTrends } from "@/hooks/use-incident-trends";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -149,12 +149,12 @@ export default function IncidentTrendAnalysisPage() {
     <PageShell
       title="Incident Trend Analysis"
       subtitle="Quarterly Pattern Reports · Triggers · Hotspots · Learning"
-      ariaContext={{ pageTitle: "Incident Trend Analysis", sourceType: "incident" }}
+      caraContext={{ pageTitle: "Incident Trend Analysis", sourceType: "incident" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Incident Trend Analysis" />
           <ExportButton data={allData} columns={exportCols} filename="incident-trend-analysis" />
-          <AriaStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "incident", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
@@ -406,7 +406,7 @@ export default function IncidentTrendAnalysisPage() {
             Regulations 2015. It demonstrates the home&apos;s use of intelligence to identify
             triggers, hotspots, and learning, and to drive measurable preventative action —
             evidence required for Quality Standard 5 (the protection of children) and
-            triangulated with Reg 44 visitor reports, ARIA pattern alerts, and individual
+            triangulated with Reg 44 visitor reports, Cara pattern alerts, and individual
             behaviour-support plans. Period-over-period comparison evidences whether
             interventions are reducing incident frequency and severity, supporting Ofsted&apos;s
             Social Care Common Inspection Framework (SCCIF) judgements on leadership and
@@ -420,7 +420,7 @@ export default function IncidentTrendAnalysisPage() {
         days={90}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Incident Trend Analysis — incident patterns, frequency, types, triggers, serious incidents, Reg 40, Reg 45 themes, management oversight, quality improvement, Ofsted evidence"
         recordType="incident"

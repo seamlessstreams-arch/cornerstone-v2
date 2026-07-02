@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OPERATIONS LAYER TYPES
+// CARA — OPERATIONS LAYER TYPES
 // Granular permissions, form governance, task explorer, workflows, evidence,
-// management oversight, ARIA intelligence, regulatory mapping, audit trail.
+// management oversight, Cara intelligence, regulatory mapping, audit trail.
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Permissions ─────────────────────────────────────────────────────────────
@@ -172,7 +172,7 @@ export type CsTaskCategory =
   | "compliance" | "safeguarding" | "medication" | "maintenance"
   | "staffing" | "training" | "supervision" | "young_person_plans"
   | "professional_communication" | "finance" | "inspection"
-  | "health_and_safety" | "admin" | "aria_generated";
+  | "health_and_safety" | "admin" | "cara_generated";
 
 export type CsTaskPriority = "low" | "medium" | "high" | "urgent" | "critical";
 
@@ -213,10 +213,10 @@ export interface CsTask {
   escalated_at: string | null;
   escalation_reason: string | null;
   escalation_level: number;
-  aria_risk_score: number | null;
-  aria_risk_factors: Record<string, unknown> | null;
-  aria_generated: boolean;
-  aria_source: string | null;
+  cara_risk_score: number | null;
+  cara_risk_factors: Record<string, unknown> | null;
+  cara_generated: boolean;
+  cara_source: string | null;
   linked_child_id: string | null;
   linked_incident_id: string | null;
   linked_document_id: string | null;
@@ -414,9 +414,9 @@ export interface CsManagementOversightNote {
     decisionClarity: number;
     actionSpecificity: number;
   } | null;
-  aria_prompted: boolean;
-  aria_prompt_used: string | null;
-  aria_suggestions: Record<string, unknown> | null;
+  cara_prompted: boolean;
+  cara_prompt_used: string | null;
+  cara_suggestions: Record<string, unknown> | null;
   actions_identified: string[];
   tasks_created: string[];
   oversight_by: string | null;
@@ -427,9 +427,9 @@ export interface CsManagementOversightNote {
   created_at: string;
 }
 
-// ── ARIA Intelligence ───────────────────────────────────────────────────────
+// ── Cara Intelligence ───────────────────────────────────────────────────────
 
-export type AriaRecommendationType =
+export type CaraRecommendationType =
   | "overdue_form" | "missing_oversight" | "weak_recording"
   | "staffing_concern" | "pattern_detected" | "compliance_gap"
   | "training_due" | "supervision_due" | "risk_escalation"
@@ -438,16 +438,16 @@ export type AriaRecommendationType =
   | "medication_pattern" | "incident_trend" | "placement_risk"
   | "safeguarding_pattern" | "contact_disruption";
 
-export type AriaRecommendationSeverity = "info" | "low" | "medium" | "high" | "critical";
-export type AriaRecommendationStatus = "active" | "acknowledged" | "actioned" | "dismissed" | "expired";
+export type CaraRecommendationSeverity = "info" | "low" | "medium" | "high" | "critical";
+export type CaraRecommendationStatus = "active" | "acknowledged" | "actioned" | "dismissed" | "expired";
 
-export interface CsAriaRecommendation {
+export interface CsCaraRecommendation {
   id: string;
   home_id: string;
-  recommendation_type: AriaRecommendationType;
+  recommendation_type: CaraRecommendationType;
   title: string;
   description: string;
-  severity: AriaRecommendationSeverity;
+  severity: CaraRecommendationSeverity;
   linked_child_id: string | null;
   linked_staff_id: string | null;
   linked_entity_type: string | null;
@@ -456,7 +456,7 @@ export interface CsAriaRecommendation {
   action_taken: string | null;
   action_by: string | null;
   action_at: string | null;
-  status: AriaRecommendationStatus;
+  status: CaraRecommendationStatus;
   acknowledged_by: string | null;
   acknowledged_at: string | null;
   dismissed_reason: string | null;
@@ -468,7 +468,7 @@ export interface CsAriaRecommendation {
   updated_at: string;
 }
 
-export interface CsAriaRiskSignal {
+export interface CsCaraRiskSignal {
   id: string;
   home_id: string;
   signal_type: string;

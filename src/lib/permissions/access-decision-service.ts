@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Permission System — Access Decision Service
+// Cara Permission System — Access Decision Service
 //
 // Pure deterministic permission engine. Given a user context and a resource
 // request, returns an AccessDecision with allowed/denied, reason, and

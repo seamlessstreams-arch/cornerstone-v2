@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SLEEP QUALITY ASSESSMENT SERVICE
+// CARA — SLEEP QUALITY ASSESSMENT SERVICE
 // Tracks sleep quality, bedtime routines, sleep environment, and
 // health concerns relating to children's sleep in residential care.
 // CHR 2015 Reg 12 (health and wellbeing — restful sleep),

@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR TRIGGER & ESCALATION PATTERNS HOOK
+// CARA — BEHAVIOUR TRIGGER & ESCALATION PATTERNS HOOK
 // React Query wrapper for /api/v1/behaviour-trigger-patterns
 // ══════════════════════════════════════════════════════════════════════════════
 

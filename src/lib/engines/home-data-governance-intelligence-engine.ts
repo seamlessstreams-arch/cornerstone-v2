@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME DATA GOVERNANCE INTELLIGENCE ENGINE
+// CARA — HOME DATA GOVERNANCE INTELLIGENCE ENGINE
 // Home-level: aggregates data breaches, data protection records, CCTV access
 // logs, and subject access requests across the whole home.
 // GDPR, Data Protection Act 2018, CHR 2015 Reg 13 (Confidentiality).
@@ -482,7 +482,7 @@ export function computeHomeDataGovernance(
     recommendations.push({ rank: ++rank, recommendation: "Ensure identity verification for all subject access requests before disclosure.", urgency: "soon", regulatory_ref: "GDPR Art 12" });
   }
 
-  // ARIA Insights
+  // Cara Insights
   if (data_breaches.length === 0 && overdueRecords === 0 && overdueSARs === 0 && data_protection_records.length >= 3) {
     insights.push({ text: "Data governance is exemplary. No breaches, all records current, and SARs handled on time. This demonstrates a mature data protection culture that regulators will view positively.", severity: "positive" });
   }

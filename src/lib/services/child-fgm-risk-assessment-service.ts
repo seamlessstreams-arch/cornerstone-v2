@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD FGM RISK ASSESSMENT SERVICE
+// CARA — CHILD FGM RISK ASSESSMENT SERVICE
 // Female genital mutilation risk assessments, mandatory reporting,
 // FGM Protection Orders, multi-agency safeguarding, and specialist referrals
 // for children in residential care.
@@ -186,7 +186,7 @@ export function computeFgmRiskAlerts(
   return alerts;
 }
 
-export function generateFgmRiskAriaInsights(
+export function generateFgmRiskCaraInsights(
   rows: ChildFgmRiskAssessmentRow[],
 ): string[] {
   const metrics = computeFgmRiskMetrics(rows);
@@ -305,5 +305,5 @@ export async function createChildFgmRiskAssessment(input: {
 export const _testing = {
   computeFgmRiskMetrics,
   computeFgmRiskAlerts,
-  generateFgmRiskAriaInsights,
+  generateFgmRiskCaraInsights,
 };

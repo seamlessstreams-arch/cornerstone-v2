@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEAVING CARE INTELLIGENCE HOOK
+// CARA — LEAVING CARE INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/leaving-care-intelligence
 // ══════════════════════════════════════════════════════════════════════════════
 

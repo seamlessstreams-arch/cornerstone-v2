@@ -6,8 +6,8 @@ import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaUsageBadge } from "@/components/aria/aria-usage-badge";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraUsageBadge } from "@/components/cara/cara-usage-badge";
 import { SmartUploadButton } from "@/components/documents/smart-upload-button";
 import { PrintButton } from "@/components/common/print-button";
 import {
@@ -50,7 +50,7 @@ const STAGE_COLOURS: Record<PathwayStage, string> = {
   inductee:           "bg-slate-100 text-[var(--cs-text-secondary)] border-[var(--cs-border)]",
   rsw:                "bg-blue-50 text-blue-700 border-blue-200",
   senior_rsw:         "bg-sky-50 text-sky-700 border-sky-200",
-  team_leader:        "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)]",
+  team_leader:        "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)]",
   deputy_manager:     "bg-amber-50 text-amber-700 border-amber-200",
   registered_manager: "bg-emerald-50 text-emerald-700 border-emerald-200",
   ri:                 "bg-rose-50 text-rose-700 border-rose-200",
@@ -80,7 +80,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
   const { id } = use(params);
   const router  = useRouter();
   const [tab, setTab]       = useState<ProfileTab>("overview");
-  const [showAria, setShowAria] = useState(false);
+  const [showCara, setShowCara] = useState(false);
 
   const staffQuery     = useStaff();
   const profileQuery   = useStaffCompetencyProfile(id);
@@ -137,7 +137,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title={member.full_name} subtitle={`Oak House — ${member.job_title} Staff Profile`} targetId="staff-profile-content" />
+          <PrintButton title={member.full_name} subtitle={`Chamberlain House — ${member.job_title} Staff Profile`} targetId="staff-profile-content" />
           <SmartUploadButton
             variant="icon"
             linkedStaffId={id}
@@ -146,10 +146,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           <Button
             size="sm"
             className="gap-1.5 bg-[var(--cs-navy)] hover:bg-[var(--cs-navy)]/90 text-white"
-            onClick={() => setShowAria((p) => !p)}
+            onClick={() => setShowCara((p) => !p)}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            ARIA Profile Analysis
+            Cara Profile Analysis
           </Button>
           <Button variant="outline" size="sm" onClick={() => router.push("/workforce/staff")}>
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />
@@ -159,10 +159,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       }
     >
       <div id="staff-profile-content" className="space-y-0">
-      {showAria && profile && (
+      {showCara && profile && (
         <div className="relative">
-          <button onClick={() => setShowAria(false)} className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs">✕ Close</button>
-          <AriaPanel
+          <button onClick={() => setShowCara(false)} className="absolute top-3 right-3 z-10 text-[var(--cs-text-muted)] hover:text-[var(--cs-text-secondary)] text-xs">✕ Close</button>
+          <CaraPanel
             mode="staff_development_summary"
             pageContext={`Staff: ${member.full_name} (${member.job_title}). Current stage: ${PATHWAY_STAGE_LABELS[profile.current_stage]}. Readiness: ${profile.overall_readiness_score}%. Target: ${profile.target_stage ? PATHWAY_STAGE_LABELS[profile.target_stage] : "none"}. Strengths: ${(profile.strengths ?? []).join("; ")}. Development areas: ${profile.development_areas.join("; ")}. Active plan: ${activePlan ? activePlan.title : "none"}. Observations: ${obs.length}.`}
           />
@@ -186,7 +186,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                   {PATHWAY_STAGE_LABELS[profile.current_stage]}
                 </Badge>
               )}
-              <AriaUsageBadge ariaAssisted={(profile as any)?.aria_assist_used} sourceTable="workforce_profiles" recordId={profile?.staff_id} />
+              <CaraUsageBadge caraAssisted={(profile as any)?.cara_assist_used} sourceTable="workforce_profiles" recordId={profile?.staff_id} />
               {profile?.target_stage && (
                 <div className="flex items-center gap-1 text-xs text-[var(--cs-text-muted)]">
                   <ArrowUpRight className="h-3.5 w-3.5" />
@@ -248,7 +248,7 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
               className={cn(
                 "flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium border-b-2 transition-all whitespace-nowrap",
                 tab === t.id
-                  ? "border-[var(--cs-aria-gold)] text-[var(--cs-navy)]"
+                  ? "border-[var(--cs-cara-gold)] text-[var(--cs-navy)]"
                   : "border-transparent text-[var(--cs-text-muted)] hover:text-[var(--cs-navy)] hover:border-slate-300",
               )}
             >
@@ -267,11 +267,11 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
       {/* ── Overview tab ─────────────────────────────────────────────── */}
       {tab === "overview" && profile && (
         <div className="space-y-4">
-          {/* ARIA narrative */}
-          {profile.aria_narrative && (
+          {/* Cara narrative */}
+          {profile.cara_narrative && (
             <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
-              <p className="text-[10px] font-semibold text-indigo-600 mb-2 uppercase tracking-widest">ARIA Profile Intelligence</p>
-              <p className="text-sm text-indigo-900 leading-relaxed">{profile.aria_narrative}</p>
+              <p className="text-[10px] font-semibold text-indigo-600 mb-2 uppercase tracking-widest">Cara Profile Intelligence</p>
+              <p className="text-sm text-indigo-900 leading-relaxed">{profile.cara_narrative}</p>
               {profile.last_assessed_at && (
                 <p className="text-[10px] text-indigo-400 mt-2">
                   Assessed {profile.last_assessed_at.slice(0, 10)}
@@ -383,8 +383,8 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
           })}
           <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 px-4 py-3 text-xs text-indigo-700">
             Scores are derived from competency profile assessment, practice observations, and appraisal records.
-            <Link href="/workforce/aria-planner" className="ml-1 underline hover:text-indigo-900">
-              Generate ARIA development plan →
+            <Link href="/workforce/cara-planner" className="ml-1 underline hover:text-indigo-900">
+              Generate Cara development plan →
             </Link>
           </div>
         </div>
@@ -397,9 +397,9 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
             <div className="text-center py-12 text-[var(--cs-text-muted)]">
               <GitMerge className="h-8 w-8 mx-auto mb-2 text-[var(--cs-text-gentle)]" />
               <p className="text-sm">No development plans yet</p>
-              <Link href="/workforce/aria-planner">
+              <Link href="/workforce/cara-planner">
                 <Button size="sm" className="mt-3 gap-1.5 bg-[var(--cs-navy)] text-white">
-                  <Sparkles className="h-3.5 w-3.5" /> Generate with ARIA
+                  <Sparkles className="h-3.5 w-3.5" /> Generate with Cara
                 </Button>
               </Link>
             </div>
@@ -447,10 +447,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                       </div>
                     ))}
                   </div>
-                  {plan.aria_rationale && (
+                  {plan.cara_rationale && (
                     <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA Rationale</p>
-                      <p className="text-xs text-indigo-800 leading-relaxed">{plan.aria_rationale}</p>
+                      <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara Rationale</p>
+                      <p className="text-xs text-indigo-800 leading-relaxed">{plan.cara_rationale}</p>
                     </div>
                   )}
                 </div>
@@ -494,10 +494,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                     </ul>
                   </div>
                 )}
-                {o.aria_summary && (
+                {o.cara_summary && (
                   <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2">
-                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA</p>
-                    <p className="text-xs text-indigo-800">{o.aria_summary}</p>
+                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara</p>
+                    <p className="text-xs text-indigo-800">{o.cara_summary}</p>
                   </div>
                 )}
               </div>
@@ -546,10 +546,10 @@ export default function StaffCompetencyProfilePage({ params }: { params: Promise
                     <p className="text-xs text-[var(--cs-text-secondary)]">{appraisal.key_achievements}</p>
                   </div>
                 )}
-                {appraisal.aria_insights && (
+                {appraisal.cara_insights && (
                   <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 px-3 py-2">
-                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">ARIA Insights</p>
-                    <p className="text-xs text-indigo-800">{appraisal.aria_insights}</p>
+                    <p className="text-[10px] font-semibold text-indigo-600 mb-0.5">Cara Insights</p>
+                    <p className="text-xs text-indigo-800">{appraisal.cara_insights}</p>
                   </div>
                 )}
                 <div className="flex items-center gap-3 text-[10px] text-[var(--cs-text-muted)] pt-1">

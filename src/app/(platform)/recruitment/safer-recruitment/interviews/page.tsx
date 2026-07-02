@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -238,11 +238,11 @@ export default function InterviewsPage() {
     <PageShell
       title="Interviews"
       subtitle="Panel interviews with safer recruitment compliance"
-      ariaContext={{ pageTitle: "Safer Recruitment Interviews", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Safer Recruitment Interviews", sourceType: "staff" }}
       showQuickCreate={false}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Interviews" subtitle="Oak House — Safer Recruitment Interviews" targetId="interviews-content" />
+          <PrintButton title="Interviews" subtitle="Chamberlain House — Safer Recruitment Interviews" targetId="interviews-content" />
           <SmartUploadButton variant="inline" label="Upload Interview Notes" uploadContext="Safer Recruitment — interview notes or scoring template upload" />
         </div>
       }
@@ -322,7 +322,7 @@ export default function InterviewsPage() {
         </div>
       )}
       </div>{/* close #interviews-content */}
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Safer Recruitment Interviews — interview panels, safer recruitment questions, scoring, gaps in employment, references discussed, candidate suitability, interview records, Ofsted evidence"
         recordType="staff_training"

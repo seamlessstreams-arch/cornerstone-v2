@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Sensitive Screen Protection (Phase 6)
+// CARA — Sensitive Screen Protection (Phase 6)
 //
 // Pure helpers deciding WHICH content is sensitive enough to obscure on screen, and
 // how to label it. This is a DEFENCE-IN-DEPTH UI layer over the server-side

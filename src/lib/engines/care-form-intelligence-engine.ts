@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE FORM INTELLIGENCE ENGINE
+// CARA — CARE FORM INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses care form completion pipelines, review turnaround, overdue forms,
@@ -102,7 +102,7 @@ export interface CareFormAlert {
   message: string;
 }
 
-export interface AriaCareFormInsight {
+export interface CaraCareFormInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -112,7 +112,7 @@ export interface CareFormIntelligenceResult {
   form_type_analysis: FormTypeAnalysis[];
   form_profiles: FormProfile[];
   alerts: CareFormAlert[];
-  insights: AriaCareFormInsight[];
+  insights: CaraCareFormInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -299,8 +299,8 @@ export function computeCareFormIntelligence(
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaCareFormInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraCareFormInsight[] = [];
 
   // Critical: overdue forms
   if (overdueForms.length > 0) {

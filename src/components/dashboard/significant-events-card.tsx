@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHRONOLOGY INTELLIGENCE CARD
+// CARA — CHRONOLOGY INTELLIGENCE CARD
 // Dashboard card showing children's chronology patterns, event timelines,
-// category coverage, recording gaps, and ARIA chronology insights.
+// category coverage, recording gaps, and Cara chronology insights.
 // Powered by the Chronology Intelligence Engine — live data (Reg 36).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,36 +20,36 @@ import { useChronologyIntelligence } from "@/hooks/use-chronology-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const SIGNIFICANCE_BADGES: Record<string, string> = {
-  critical: "bg-red-100 text-red-700",
-  significant: "bg-amber-100 text-amber-700",
-  routine: "bg-gray-100 text-gray-600",
+  critical: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  significant: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  routine: "bg-[--cs-bg] text-[--cs-text-secondary]",
 };
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const CATEGORY_COLOURS: Record<string, string> = {
-  placement: "bg-blue-100 text-blue-700",
-  education: "bg-green-100 text-green-700",
-  health: "bg-purple-100 text-purple-700",
-  safeguarding: "bg-red-100 text-red-700",
-  missing: "bg-orange-100 text-orange-700",
-  behaviour: "bg-amber-100 text-amber-700",
+  placement: "bg-[--cs-info-bg] text-[--cs-info]",
+  education: "bg-[--cs-success-bg] text-[--cs-success]",
+  health: "bg-[--cs-oversight-bg] text-[--cs-oversight]",
+  safeguarding: "bg-[--cs-risk-bg] text-[--cs-risk]",
+  missing: "bg-[--cs-warning-soft] text-[--cs-warning]",
+  behaviour: "bg-[--cs-warning-bg] text-[--cs-warning]",
   review: "bg-indigo-100 text-indigo-700",
   contact: "bg-cyan-100 text-cyan-700",
   achievement: "bg-emerald-100 text-emerald-700",
   legal: "bg-gray-100 text-gray-700",
-  other: "bg-gray-100 text-gray-600",
+  other: "bg-[--cs-bg] text-[--cs-text-secondary]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -101,7 +101,7 @@ export function SignificantEventsCard() {
             <p className="text-[10px] text-muted-foreground">Total</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.critical_events_total > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.critical_events_total > 0 ? "text-red-600" : "text-green-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", o.critical_events_total > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>
               {o.critical_events_total}
             </p>
             <p className="text-[10px] text-muted-foreground">Critical</p>
@@ -145,10 +145,10 @@ export function SignificantEventsCard() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-[10px] tabular-nums font-medium">{profile.total_events} events</span>
                     {profile.critical_count > 0 && (
-                      <Badge className="text-[9px] bg-red-100 text-red-700">{profile.critical_count} critical</Badge>
+                      <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">{profile.critical_count} critical</Badge>
                     )}
                     {profile.has_gap && (
-                      <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                      <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
                         <Clock className="h-2.5 w-2.5 mr-0.5" />{profile.days_since_last_entry}d gap
                       </Badge>
                     )}
@@ -210,13 +210,13 @@ export function SignificantEventsCard() {
           </div>
         )}
 
-        {/* ── ARIA Chronology Intelligence ─────────────────────────────── */}
+        {/* ── Cara Chronology Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Chronology Intelligence
+              Cara Chronology Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

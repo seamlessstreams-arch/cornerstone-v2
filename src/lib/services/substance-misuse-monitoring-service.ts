@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SUBSTANCE MISUSE MONITORING SERVICE
+// CARA -- SUBSTANCE MISUSE MONITORING SERVICE
 // Tracks substance misuse assessments, risk levels, specialist referrals,
 // harm reduction plans, engagement status, and outcome tracking for children
 // in residential care.
@@ -458,7 +458,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: SubstanceMisuseMonitoringRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -731,6 +731,6 @@ export async function deleteSubstanceMisuseMonitoring(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateSubstanceMisuseMonitoring,
 };

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone -- Financial Stewardship Intelligence Engine
+// Cara -- Financial Stewardship Intelligence Engine
 //
 // Pure deterministic engine -- no AI, no external calls.
 // Evaluates financial management for looked after children:

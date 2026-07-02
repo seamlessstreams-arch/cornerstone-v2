@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — ONLINE SAFETY SERVICE
+// CARA — ONLINE SAFETY SERVICE
 // Manages online safety assessments, incidents, education, and monitoring
 // for children and young people in residential care.
 // CHR 2015 Reg 12 (safeguarding — online risks),

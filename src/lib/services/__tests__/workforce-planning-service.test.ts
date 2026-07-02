@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WORKFORCE PLANNING SERVICE TESTS
+// CARA — WORKFORCE PLANNING SERVICE TESTS
 // Pure-function unit tests for workforce metrics computation, alert
 // identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 33 (employment of staff — sufficient

@@ -44,25 +44,25 @@ import {
   PEER_GROUP_ATMOSPHERE_LABEL,
 } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── colour maps ──────────────────────────────────────────────────────── */
 
 const QUALITY_CLR: Record<PeerRelationshipQuality, string> = {
-  positive: "bg-green-100 text-green-800", developing: "bg-blue-100 text-blue-800",
-  strained: "bg-amber-100 text-amber-800", conflicted: "bg-red-100 text-red-800",
+  positive: "bg-[--cs-success-bg] text-[--cs-success]", developing: "bg-[--cs-info-bg] text-[--cs-info]",
+  strained: "bg-[--cs-warning-bg] text-[--cs-warning]", conflicted: "bg-[--cs-risk-bg] text-[--cs-risk]",
   neutral: "bg-gray-100 text-gray-700",
 };
 
 const RISK_CLR: Record<PeerRiskLevel, string> = {
-  none: "bg-green-100 text-green-800", low: "bg-blue-100 text-blue-800",
-  medium: "bg-amber-100 text-amber-800", high: "bg-red-100 text-red-800",
+  none: "bg-[--cs-success-bg] text-[--cs-success]", low: "bg-[--cs-info-bg] text-[--cs-info]",
+  medium: "bg-[--cs-warning-bg] text-[--cs-warning]", high: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const ATMOS_CLR: Record<PeerGroupAtmosphere, string> = {
-  calm: "bg-green-100 text-green-800", mixed: "bg-amber-100 text-amber-800",
-  tense: "bg-orange-100 text-orange-800", volatile: "bg-red-100 text-red-800",
+  calm: "bg-[--cs-success-bg] text-[--cs-success]", mixed: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  tense: "bg-orange-100 text-orange-800", volatile: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 /* ── flat row for export ─────────────────────────────────────────────── */
@@ -194,7 +194,7 @@ export default function PeerRelationshipsPage() {
     <PageShell
       title="Peer Relationships"
       subtitle="Peer dynamic mapping, group living assessments and relationship tracking"
-      ariaContext={{ pageTitle: "Peer Relationships", sourceType: "child_record" }}
+      caraContext={{ pageTitle: "Peer Relationships", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Peer Relationships" />
@@ -202,17 +202,17 @@ export default function PeerRelationshipsPage() {
           <button onClick={() => setDialogOpen(true)} className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
             <Plus className="h-4 w-4" /> Log Entry
           </button>
-          <AriaStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "direct_work", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >
       {/* ── stat strip ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Positive Dynamics", value: stats.positive, icon: Heart, colour: "text-green-600" },
-          { label: "Strained/Conflicted", value: stats.concerns, icon: AlertTriangle, colour: stats.concerns > 0 ? "text-amber-600" : "text-gray-400" },
-          { label: "Medium/High Risk", value: stats.highRisk, icon: ShieldAlert, colour: stats.highRisk > 0 ? "text-red-600" : "text-gray-400" },
-          { label: "Total Observations", value: stats.totalEntries, icon: TrendingUp, colour: "text-blue-600" },
+          { label: "Positive Dynamics", value: stats.positive, icon: Heart, colour: "text-[--cs-success]" },
+          { label: "Strained/Conflicted", value: stats.concerns, icon: AlertTriangle, colour: stats.concerns > 0 ? "text-[--cs-warning]" : "text-gray-400" },
+          { label: "Medium/High Risk", value: stats.highRisk, icon: ShieldAlert, colour: stats.highRisk > 0 ? "text-[--cs-risk]" : "text-gray-400" },
+          { label: "Total Observations", value: stats.totalEntries, icon: TrendingUp, colour: "text-[--cs-info]" },
         ].map((s) => (
           <div key={s.label} className="rounded-lg border bg-white p-4 flex items-center gap-3">
             <s.icon className={cn("h-6 w-6", s.colour)} />
@@ -241,23 +241,23 @@ export default function PeerRelationshipsPage() {
           </div>
           <p className="text-sm mb-3">{groupDynamic.current_dynamics}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="rounded-md bg-green-50 p-3">
-              <h4 className="text-xs font-semibold text-green-700 mb-1">Group Strengths</h4>
-              <ul className="list-disc list-inside text-sm text-green-800 space-y-0.5">
+            <div className="rounded-md bg-[--cs-success-bg] p-3">
+              <h4 className="text-xs font-semibold text-[--cs-success] mb-1">Group Strengths</h4>
+              <ul className="list-disc list-inside text-sm text-[--cs-success] space-y-0.5">
                 {groupDynamic.group_strengths.map((s, i) => <li key={i}>{s}</li>)}
               </ul>
             </div>
-            <div className="rounded-md bg-amber-50 p-3">
-              <h4 className="text-xs font-semibold text-amber-700 mb-1">Group Concerns</h4>
-              <ul className="list-disc list-inside text-sm text-amber-800 space-y-0.5">
+            <div className="rounded-md bg-[--cs-warning-bg] p-3">
+              <h4 className="text-xs font-semibold text-[--cs-warning] mb-1">Group Concerns</h4>
+              <ul className="list-disc list-inside text-sm text-[--cs-warning] space-y-0.5">
                 {groupDynamic.group_concerns.map((c, i) => <li key={i}>{c}</li>)}
               </ul>
             </div>
           </div>
           {groupDynamic.recommendations.length > 0 && (
-            <div className="mt-3 rounded-md bg-blue-50 p-3">
-              <h4 className="text-xs font-semibold text-blue-700 mb-1">Recommendations</h4>
-              <ul className="list-disc list-inside text-sm text-blue-800 space-y-0.5">
+            <div className="mt-3 rounded-md bg-[--cs-info-bg] p-3">
+              <h4 className="text-xs font-semibold text-[--cs-info] mb-1">Recommendations</h4>
+              <ul className="list-disc list-inside text-sm text-[--cs-info] space-y-0.5">
                 {groupDynamic.recommendations.map((r, i) => <li key={i}>{r}</li>)}
               </ul>
             </div>
@@ -313,24 +313,24 @@ export default function PeerRelationshipsPage() {
                 <div className="border-t px-4 pb-4 space-y-4">
                   {/* strengths / concerns */}
                   <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="rounded-md bg-green-50 p-3">
-                      <h4 className="text-xs font-semibold text-green-700 mb-1">Strengths</h4>
-                      <ul className="list-disc list-inside text-sm text-green-800 space-y-0.5">
+                    <div className="rounded-md bg-[--cs-success-bg] p-3">
+                      <h4 className="text-xs font-semibold text-[--cs-success] mb-1">Strengths</h4>
+                      <ul className="list-disc list-inside text-sm text-[--cs-success] space-y-0.5">
                         {(pd.strengths ?? []).map((s, i) => <li key={i}>{s}</li>)}
                       </ul>
                     </div>
-                    <div className="rounded-md bg-amber-50 p-3">
-                      <h4 className="text-xs font-semibold text-amber-700 mb-1">Concerns</h4>
-                      <ul className="list-disc list-inside text-sm text-amber-800 space-y-0.5">
+                    <div className="rounded-md bg-[--cs-warning-bg] p-3">
+                      <h4 className="text-xs font-semibold text-[--cs-warning] mb-1">Concerns</h4>
+                      <ul className="list-disc list-inside text-sm text-[--cs-warning] space-y-0.5">
                         {(pd.concerns ?? []).map((c, i) => <li key={i}>{c}</li>)}
                       </ul>
                     </div>
                   </div>
 
                   {/* strategies */}
-                  <div className="rounded-md bg-blue-50 border border-blue-200 p-3">
-                    <h4 className="text-xs font-semibold text-blue-700 mb-1">Management Strategies</h4>
-                    <ul className="list-disc list-inside text-sm text-blue-800 space-y-0.5">
+                  <div className="rounded-md bg-[--cs-info-bg] border border-[--cs-info-soft] p-3">
+                    <h4 className="text-xs font-semibold text-[--cs-info] mb-1">Management Strategies</h4>
+                    <ul className="list-disc list-inside text-sm text-[--cs-info] space-y-0.5">
                       {(pd.strategies ?? []).map((s, i) => <li key={i}>{s}</li>)}
                     </ul>
                   </div>
@@ -360,7 +360,7 @@ export default function PeerRelationshipsPage() {
 
                   {/* review info */}
                   <div className="rounded-md bg-gray-50 p-3 text-sm">
-                    <span className="text-gray-500">Last reviewed:</span> {pd.last_review_date} by {getStaffName(pd.reviewed_by)} · <span className="text-gray-500">Next review:</span> <span className={cn(pd.next_review_due <= today ? "text-red-600 font-medium" : "")}>{pd.next_review_due}</span>
+                    <span className="text-gray-500">Last reviewed:</span> {pd.last_review_date} by {getStaffName(pd.reviewed_by)} · <span className="text-gray-500">Next review:</span> <span className={cn(pd.next_review_due <= today ? "text-[--cs-risk] font-medium" : "")}>{pd.next_review_due}</span>
                   </div>
 
                   {/* notes */}
@@ -428,7 +428,7 @@ export default function PeerRelationshipsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Peer Relationships — friendships, peer dynamics, conflict, bullying, positive relationships, peer group concerns, peer support, social development, care plan evidence, Reg 45"
         recordType="direct_work"

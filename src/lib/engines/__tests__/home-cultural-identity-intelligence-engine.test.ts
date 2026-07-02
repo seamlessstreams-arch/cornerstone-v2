@@ -413,8 +413,8 @@ describe("computeHomeCulturalIdentity", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────
-  describe("ARIA insights", () => {
+  // ── Cara Insights ─────────────────────────────────────────────────
+  describe("Cara insights", () => {
     it("warns when low identity plan coverage", () => {
       const r = computeHomeCulturalIdentity(baseInput({
         cultural_identity_plans: [makeCIP({ child_id: "c1" })],

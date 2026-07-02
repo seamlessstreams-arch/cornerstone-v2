@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE
+// CARA — SAFEGUARDING PARTNERSHIP INTELLIGENCE SERVICE
 // Manages multi-agency safeguarding partnerships, MASH referrals, strategy
 // discussions, Section 47 enquiry outcomes, MARAC conferences, and child
 // protection plan tracking.
@@ -276,7 +276,7 @@ export function computeSafeguardingPartnershipAlerts(
   return alerts;
 }
 
-export function generateSafeguardingPartnershipAriaInsights(
+export function generateSafeguardingPartnershipCaraInsights(
   metrics: ReturnType<typeof computeSafeguardingPartnershipMetrics>,
   alerts: ReturnType<typeof computeSafeguardingPartnershipAlerts>,
 ): string[] {
@@ -336,5 +336,5 @@ export function generateSafeguardingPartnershipAriaInsights(
 export const _testing = {
   computeSafeguardingPartnershipMetrics,
   computeSafeguardingPartnershipAlerts,
-  generateSafeguardingPartnershipAriaInsights,
+  generateSafeguardingPartnershipCaraInsights,
 };

@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DOCUMENT INTELLIGENCE WIZARD
-// Upload · Classify · Review · Place — powered by ARIA
+// CARA — DOCUMENT INTELLIGENCE WIZARD
+// Upload · Classify · Review · Place — powered by Cara
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useRef, useState } from "react";
@@ -44,7 +44,7 @@ interface FormResult {
   title?: string;
   fields?: Record<string, string>;
   missing_fields?: string[];
-  aria_notes?: string;
+  cara_notes?: string;
 }
 
 // ── Step indicator ────────────────────────────────────────────────────────────
@@ -79,7 +79,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
                 className={cn(
                   "h-9 w-9 rounded-full flex items-center justify-center border-2 transition-all",
                   done   && "bg-[var(--cs-navy)] border-[var(--cs-navy)] text-white",
-                  active && "bg-white border-[var(--cs-navy)] text-[var(--cs-aria-gold)]",
+                  active && "bg-white border-[var(--cs-navy)] text-[var(--cs-cara-gold)]",
                   !done && !active && "bg-white border-[var(--cs-border)] text-[var(--cs-text-muted)]"
                 )}
               >
@@ -92,7 +92,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
               <span
                 className={cn(
                   "text-[11px] font-semibold",
-                  active ? "text-[var(--cs-aria-gold)]" : done ? "text-[var(--cs-aria-gold)]" : "text-[var(--cs-text-muted)]"
+                  active ? "text-[var(--cs-cara-gold)]" : done ? "text-[var(--cs-cara-gold)]" : "text-[var(--cs-text-muted)]"
                 )}
               >
                 {idx + 1}. {label}
@@ -102,7 +102,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
               <div
                 className={cn(
                   "flex-1 h-0.5 mx-2 mb-5 transition-all",
-                  idx < current ? "bg-[var(--cs-aria-gold-bg)]0" : "bg-slate-200"
+                  idx < current ? "bg-[var(--cs-cara-gold-bg)]0" : "bg-slate-200"
                 )}
               />
             )}
@@ -118,7 +118,7 @@ function WizardStepBar({ stage }: { stage: WizardStage }) {
 function TagPill({ label, color = "slate" }: { label: string; color?: string }) {
   const colors: Record<string, string> = {
     slate:  "bg-slate-100 text-[var(--cs-text-secondary)]",
-    violet: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+    violet: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
     red:    "bg-red-100 text-red-700",
     amber:  "bg-amber-100 text-amber-700",
     emerald:"bg-emerald-100 text-emerald-700",
@@ -202,22 +202,22 @@ export default function DocumentWizardPage() {
     setStage("classifying");
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "document_classify", document_text: text, stream: false }),
       });
 
-      if (!res.ok) throw new Error(`ARIA returned ${res.status}`);
+      if (!res.ok) throw new Error(`Cara returned ${res.status}`);
 
       const json = await res.json();
-      // ARIA route pre-parses JSON for document_classify — use parsed directly
+      // Cara route pre-parses JSON for document_classify — use parsed directly
       const parsed: ClassificationResult = json?.data?.parsed ?? { summary: json?.data?.response ?? "" };
 
       setClassification(parsed);
       setStage("classified");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "ARIA could not classify the document.");
+      setError(err instanceof Error ? err.message : "Cara could not classify the document.");
       setStage("upload");
     }
   };
@@ -229,22 +229,22 @@ export default function DocumentWizardPage() {
     const text = pasteMode ? pastedText : documentText;
 
     try {
-      const res = await fetch("/api/v1/aria", {
+      const res = await fetch("/api/v1/cara", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "document_to_form", document_text: text, stream: false }),
       });
 
-      if (!res.ok) throw new Error(`ARIA returned ${res.status}`);
+      if (!res.ok) throw new Error(`Cara returned ${res.status}`);
 
       const json = await res.json();
-      // ARIA route pre-parses JSON for document_to_form — use parsed directly
-      const parsed: FormResult = json?.data?.parsed ?? { aria_notes: json?.data?.response ?? "" };
+      // Cara route pre-parses JSON for document_to_form — use parsed directly
+      const parsed: FormResult = json?.data?.parsed ?? { cara_notes: json?.data?.response ?? "" };
 
       setFormResult(parsed);
       setStage("form_created");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "ARIA could not create a form from this document.");
+      setError(err instanceof Error ? err.message : "Cara could not create a form from this document.");
     }
   };
 
@@ -317,7 +317,7 @@ export default function DocumentWizardPage() {
             <div>
               <h2 className="text-base font-bold text-[var(--cs-navy)]">Upload a document</h2>
               <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">
-                ARIA will read, classify, and extract key information automatically.
+                Cara will read, classify, and extract key information automatically.
               </p>
             </div>
 
@@ -332,12 +332,12 @@ export default function DocumentWizardPage() {
                   className={cn(
                     "flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 cursor-pointer transition-all",
                     isDragOver
-                      ? "border-[var(--cs-aria-gold)] bg-[var(--cs-aria-gold-bg)]"
-                      : "border-[var(--cs-border)] bg-slate-50 hover:border-[var(--cs-aria-gold-soft)] hover:bg-[var(--cs-aria-gold-bg)]"
+                      ? "border-[var(--cs-cara-gold)] bg-[var(--cs-cara-gold-bg)]"
+                      : "border-[var(--cs-border)] bg-slate-50 hover:border-[var(--cs-cara-gold-soft)] hover:bg-[var(--cs-cara-gold-bg)]"
                   )}
                 >
-                  <div className="h-12 w-12 rounded-2xl bg-[var(--cs-aria-gold-bg)] flex items-center justify-center">
-                    <FileUp className="h-6 w-6 text-[var(--cs-aria-gold)]" />
+                  <div className="h-12 w-12 rounded-2xl bg-[var(--cs-cara-gold-bg)] flex items-center justify-center">
+                    <FileUp className="h-6 w-6 text-[var(--cs-cara-gold)]" />
                   </div>
                   <div className="text-center">
                     <p className="text-sm font-semibold text-[var(--cs-text-secondary)]">
@@ -360,7 +360,7 @@ export default function DocumentWizardPage() {
                 {file && (
                   <div className="flex items-center justify-between rounded-xl border border-[var(--cs-border)] bg-slate-50 px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-[var(--cs-aria-gold)] shrink-0" />
+                      <FileText className="h-5 w-5 text-[var(--cs-cara-gold)] shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-[var(--cs-navy)]">{file.name}</p>
                         <p className="text-xs text-[var(--cs-text-muted)]">
@@ -397,7 +397,7 @@ export default function DocumentWizardPage() {
 
                 <button
                   onClick={() => setPasteMode(true)}
-                  className="text-xs font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-navy)] underline underline-offset-2 transition-colors"
+                  className="text-xs font-medium text-[var(--cs-cara-gold)] hover:text-[var(--cs-navy)] underline underline-offset-2 transition-colors"
                 >
                   Paste text instead
                 </button>
@@ -410,7 +410,7 @@ export default function DocumentWizardPage() {
                     Paste document text
                   </label>
                   <textarea
-                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-aria-gold)] placeholder:text-[var(--cs-text-muted)] min-h-[180px]"
+                    className="w-full rounded-xl border border-[var(--cs-border)] bg-slate-50 px-3 py-2.5 text-sm text-[var(--cs-text-secondary)] resize-none focus:outline-none focus:ring-2 focus:ring-[var(--cs-cara-gold)] placeholder:text-[var(--cs-text-muted)] min-h-[180px]"
                     placeholder="Paste the text from your document here..."
                     value={pastedText}
                     onChange={(e) => setPastedText(e.target.value)}
@@ -418,7 +418,7 @@ export default function DocumentWizardPage() {
                 </div>
                 <button
                   onClick={() => { setPasteMode(false); setPastedText(""); }}
-                  className="text-xs font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-navy)] underline underline-offset-2 transition-colors"
+                  className="text-xs font-medium text-[var(--cs-cara-gold)] hover:text-[var(--cs-navy)] underline underline-offset-2 transition-colors"
                 >
                   Upload a file instead
                 </button>
@@ -441,19 +441,19 @@ export default function DocumentWizardPage() {
               }
             >
               <Sparkles className="h-4 w-4 mr-2" />
-              Analyse with ARIA
+              Analyse with Cara
             </Button>
           </div>
         )}
 
         {/* ── Stage 2: Classifying ─────────────────────────────────────────── */}
         {stage === "classifying" && (
-          <div className="rounded-2xl border border-[var(--cs-aria-gold-soft)] bg-white p-12 flex flex-col items-center justify-center gap-5 shadow-sm">
-            <div className="h-16 w-16 rounded-2xl bg-[var(--cs-aria-gold-bg)] flex items-center justify-center">
-              <Loader2 className="h-8 w-8 text-[var(--cs-aria-gold)] animate-spin" />
+          <div className="rounded-2xl border border-[var(--cs-cara-gold-soft)] bg-white p-12 flex flex-col items-center justify-center gap-5 shadow-sm">
+            <div className="h-16 w-16 rounded-2xl bg-[var(--cs-cara-gold-bg)] flex items-center justify-center">
+              <Loader2 className="h-8 w-8 text-[var(--cs-cara-gold)] animate-spin" />
             </div>
             <div className="text-center">
-              <p className="text-base font-bold text-[var(--cs-navy)]">ARIA is reading your document...</p>
+              <p className="text-base font-bold text-[var(--cs-navy)]">Cara is reading your document...</p>
               <p className="text-sm text-[var(--cs-text-muted)] mt-1">
                 Classifying type · Extracting facts · Identifying risks
               </p>
@@ -464,7 +464,7 @@ export default function DocumentWizardPage() {
                   key={step}
                   className={cn(
                     "text-[10px] rounded-full border-0 animate-pulse",
-                    i === 0 && "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)]",
+                    i === 0 && "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)]",
                     i === 1 && "bg-blue-100 text-blue-700",
                     i === 2 && "bg-emerald-100 text-emerald-700",
                   )}
@@ -484,11 +484,11 @@ export default function DocumentWizardPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h2 className="text-base font-bold text-[var(--cs-navy)]">Classification result</h2>
-                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">ARIA has read your document</p>
+                  <p className="text-sm text-[var(--cs-text-muted)] mt-0.5">Cara has read your document</p>
                 </div>
-                <Badge className="bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-0 text-xs rounded-full">
+                <Badge className="bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-0 text-xs rounded-full">
                   <Sparkles className="h-3 w-3 mr-1" />
-                  ARIA
+                  Cara
                 </Badge>
               </div>
 
@@ -634,7 +634,7 @@ export default function DocumentWizardPage() {
 
               {/* Recommended placement */}
               {classification.recommended_placement && (
-                <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-4 py-3">
+                <div className="rounded-xl bg-[var(--cs-cara-gold-bg)] border border-[var(--cs-cara-gold-soft)] px-4 py-3">
                   <SectionLabel>Recommended placement</SectionLabel>
                   <p className="text-sm text-[var(--cs-text-secondary)]">{classification.recommended_placement}</p>
                 </div>
@@ -643,7 +643,7 @@ export default function DocumentWizardPage() {
               {/* Summary fallback */}
               {classification.summary && !classification.document_type && (
                 <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
-                  <SectionLabel>ARIA analysis</SectionLabel>
+                  <SectionLabel>Cara analysis</SectionLabel>
                   <p className="text-sm text-[var(--cs-text-secondary)] whitespace-pre-wrap">{classification.summary}</p>
                 </div>
               )}
@@ -694,7 +694,7 @@ export default function DocumentWizardPage() {
 
               {/* Form type + title */}
               {(formResult.form_type || formResult.title) && (
-                <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] border border-[var(--cs-aria-gold-soft)] px-4 py-3">
+                <div className="rounded-xl bg-[var(--cs-cara-gold-bg)] border border-[var(--cs-cara-gold-soft)] px-4 py-3">
                   <SectionLabel>Form type</SectionLabel>
                   <p className="text-sm font-bold text-[var(--cs-navy)]">{formResult.form_type ?? "—"}</p>
                   {formResult.title && (
@@ -732,11 +732,11 @@ export default function DocumentWizardPage() {
                 </div>
               )}
 
-              {/* ARIA notes */}
-              {formResult.aria_notes && (
+              {/* Cara notes */}
+              {formResult.cara_notes && (
                 <div className="rounded-xl bg-slate-50 border border-[var(--cs-border)] px-4 py-3">
-                  <SectionLabel>ARIA notes</SectionLabel>
-                  <p className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap">{formResult.aria_notes}</p>
+                  <SectionLabel>Cara notes</SectionLabel>
+                  <p className="text-xs text-[var(--cs-text-secondary)] whitespace-pre-wrap">{formResult.cara_notes}</p>
                 </div>
               )}
 
@@ -773,7 +773,7 @@ export default function DocumentWizardPage() {
               {stage === "saved" && (
                 <button
                   onClick={resetWizard}
-                  className="flex items-center gap-1.5 text-sm font-medium text-[var(--cs-aria-gold)] hover:text-[var(--cs-navy)] transition-colors"
+                  className="flex items-center gap-1.5 text-sm font-medium text-[var(--cs-cara-gold)] hover:text-[var(--cs-navy)] transition-colors"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Process another document

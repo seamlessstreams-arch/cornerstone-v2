@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
+// CARA — DEPRIVATION OF LIBERTY INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses active DoL orders, restriction tracking, proportionality reviews,
@@ -103,7 +103,7 @@ export interface DoLAlert {
   message: string;
 }
 
-export interface AriaDoLInsight {
+export interface CaraDoLInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -114,7 +114,7 @@ export interface DoLIntelligenceResult {
   child_restrictions: ChildRestrictionProfile[];
   active_orders: ActiveOrderSummary[];
   alerts: DoLAlert[];
-  insights: AriaDoLInsight[];
+  insights: CaraDoLInsight[];
 }
 
 // ── Type Label Maps ─────────────────────────────────────────────────────────
@@ -319,8 +319,8 @@ export function computeDoLIntelligence(input: DoLIntelligenceInput): DoLIntellig
     }
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────────
-  const insights: AriaDoLInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────────
+  const insights: CaraDoLInsight[] = [];
 
   // Critical: DoL orders expiring imminently without renewal
   const imminentOrders = active_orders.filter(

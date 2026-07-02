@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE ENGINE
+// CARA — HOME SUBSTANCE MISUSE PREVENTION INTELLIGENCE ENGINE
 // Tracks substance misuse prevention quality — substance awareness education,
 // risk assessment completion, early intervention programmes, referral tracking,
 // and harm reduction strategies.

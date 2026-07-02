@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD PRIORITY (UNIFIED RISK) INTELLIGENCE ENGINE
+// CARA — CHILD PRIORITY (UNIFIED RISK) INTELLIGENCE ENGINE
 //
 // Pure deterministic META-engine — no DB calls, no side effects, no LLM calls.
 //
@@ -125,7 +125,7 @@ export interface PriorityOverview {
   top_priority_score: number;
 }
 
-export interface AriaPriorityInsight {
+export interface CaraPriorityInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -133,7 +133,7 @@ export interface AriaPriorityInsight {
 export interface ChildPriorityResult {
   overview: PriorityOverview;
   children: ChildPriority[];
-  insights: AriaPriorityInsight[];
+  insights: CaraPriorityInsight[];
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -287,8 +287,14 @@ export function computeChildPriority(input: ChildPriorityInput): ChildPriorityRe
       });
     }
 
-    // Continuity domain — low continuity of care is a relational risk.
-    const continuityRisk = cont ? clamp(100 - cont.continuity_index, 0, 100) : 0;
+    // Continuity domain — low continuity of care is a relational risk. But a child
+    // with NO key worker assigned AND no key-working sessions at all has
+    // continuity_index 0 for want of data — a recording/operational gap surfaced by
+    // the dedicated continuity engine, not a measured maximum relational risk. Don't
+    // fold absence-of-data into the ACUTE priority ranking (it was inverting to 100
+    // and burying children with real incidents/safeguarding concerns).
+    const noContinuityData = cont != null && cont.key_worker_id == null && cont.sessions_90d === 0;
+    const continuityRisk = cont && !noContinuityData ? clamp(100 - cont.continuity_index, 0, 100) : 0;
     if (cont && continuityRisk >= DOMAIN_FLOOR) {
       domains.push({
         domain: "continuity",
@@ -387,8 +393,8 @@ function buildOverview(children: ChildPriority[]): PriorityOverview {
   };
 }
 
-function buildInsights(children: ChildPriority[]): AriaPriorityInsight[] {
-  const insights: AriaPriorityInsight[] = [];
+function buildInsights(children: ChildPriority[]): CaraPriorityInsight[] {
+  const insights: CaraPriorityInsight[] = [];
 
   const multi = children.filter((c) => c.multi_domain);
   if (multi.length > 0) {

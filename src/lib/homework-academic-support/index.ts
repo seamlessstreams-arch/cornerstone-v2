@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Homework & Academic Support Intelligence -- Public API
+// Cara Homework & Academic Support Intelligence -- Public API
 // ==============================================================================
 
 export {

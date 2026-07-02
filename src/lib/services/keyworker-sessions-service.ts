@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — KEYWORKER SESSIONS SERVICE
+// CARA — KEYWORKER SESSIONS SERVICE
 // Tracks 1:1 keyworker sessions between allocated keyworkers and
 // children, covering emotional support, care planning, life skills,
 // advocacy, and relationship building.

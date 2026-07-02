@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SOCIAL MEDIA & DIGITAL WELLBEING MANAGEMENT SERVICE
+// CARA -- SOCIAL MEDIA & DIGITAL WELLBEING MANAGEMENT SERVICE
 // Tracks social media risk assessments, screen time reviews, privacy settings
 // checks, age verification reviews, content filtering reviews, online friendship
 // audits, gaming risk assessments, social media account setup and deactivation,
@@ -636,7 +636,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: DigitalWellbeingRow[],
 ): string[] {
   const metrics = computeMetrics(rows);

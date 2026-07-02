@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — Returned Records Queue  (Milestone 23)
+// CARA — Returned Records Queue  (Milestone 23)
 //
 // Live queue of care events the manager has returned. Most overdue first;
 // safeguarding-sensitive records float up. Re-submission happens via the

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE ENGINE — TESTS
+// CARA — HOME BATHROOM & SHOWER FACILITIES INTELLIGENCE ENGINE — TESTS
 // CHR 2015 Reg 25 (Premises), Reg 5 (Engaging and effective leadership).
 // SCCIF: "Safety", "Living in the home".
 // ══════════════════════════════════════════════════════════════════════════════

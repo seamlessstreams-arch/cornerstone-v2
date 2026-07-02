@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Culture, Identity & Diversity Intelligence Engine
+// Cara — Culture, Identity & Diversity Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

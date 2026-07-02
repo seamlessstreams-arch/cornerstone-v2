@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT INTELLIGENCE ENGINE
+// CARA — BEHAVIOUR SUPPORT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine that aggregates behaviour entries, incidents,
 // physical interventions, sanctions/rewards, and restraint records to produce:
@@ -9,7 +9,7 @@
 // - Rewards vs sanctions balance (proportionality indicator)
 // - Time-of-day pattern analysis (when behaviours cluster)
 // - Per-child behaviour trajectories
-// - Auto-generated ARIA intelligence insights (deterministic, no LLM)
+// - Auto-generated Cara intelligence insights (deterministic, no LLM)
 //
 // Key regulatory requirements:
 //   Reg 19 — Behaviour management (positive strategies)
@@ -160,7 +160,7 @@ export interface BehaviourAlert {
   message: string;
 }
 
-export interface AriaInsight {
+export interface CaraInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -173,7 +173,7 @@ export interface BehaviourIntelligenceResult {
   time_patterns: TimePattern[];
   child_trajectories: ChildTrajectory[];
   alerts: BehaviourAlert[];
-  insights: AriaInsight[];
+  insights: CaraInsight[];
 }
 
 export interface BehaviourEngineInput {
@@ -203,13 +203,13 @@ export function classifyBehaviourCategory(entry: BehaviourEntryInput): Behaviour
 
   const text = (entry.behaviour + " " + entry.title + " " + entry.antecedent).toLowerCase();
 
-  if (text.includes("self-harm") || text.includes("self harm") || text.includes("cut") || text.includes("scratch")) {
+  if (text.includes("self-harm") || text.includes("self harm") || /\b(cut|cuts|cutting)\b/i.test(text) || text.includes("scratch")) {
     return "self_harm";
   }
   if (text.includes("abscond") || text.includes("ran away") || text.includes("left without")) {
     return "absconding";
   }
-  if (text.includes("hit") || text.includes("kick") || text.includes("punch") || text.includes("assault") || text.includes("attack") || text.includes("violent")) {
+  if (/\b(hit|hits|hitting)\b/i.test(text) || text.includes("kick") || text.includes("punch") || text.includes("assault") || text.includes("attack") || text.includes("violent")) {
     return "aggression";
   }
   if (text.includes("property") || text.includes("smash") || text.includes("broke") || text.includes("damage") || text.includes("threw") || text.includes("throw")) {
@@ -643,14 +643,14 @@ export function computeBehaviourIntelligence(input: BehaviourEngineInput): Behav
     });
   }
 
-  // ── ARIA Intelligence Insights (deterministic) ─────────────────────────
-  const insights: AriaInsight[] = [];
+  // ── Cara Intelligence Insights (deterministic) ─────────────────────────
+  const insights: CaraInsight[] = [];
 
   // No data at all
   if (totalWithIncidents === 0 && piCount === 0 && sanctionRewards.length === 0) {
     insights.push({
       severity: "positive",
-      text: "No behaviour entries recorded this period. Once behaviour logging is active, ARIA will generate pattern intelligence automatically.",
+      text: "No behaviour entries recorded this period. Once behaviour logging is active, Cara will generate pattern intelligence automatically.",
     });
     return {
       profile,

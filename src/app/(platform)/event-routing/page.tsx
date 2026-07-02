@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EVENT ROUTING (detail page)
+// CARA — EVENT ROUTING (detail page)
 // Where each event flows, and the human-gated queue of external notifications.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -48,7 +48,7 @@ export default function EventRoutingPage() {
       subtitle="How each event is linked and surfaced across the platform — with every external notification gated behind human approval"
       icon={<Route className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Event Routing", sourceType: "general" }}
+      caraContext={{ pageTitle: "Event Routing", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">

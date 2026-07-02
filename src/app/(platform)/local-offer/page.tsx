@@ -15,8 +15,8 @@ import { useLocalOfferSections } from "@/hooks/use-local-offer-sections";
 import type { LocalOfferSection, LocalOfferCategory } from "@/types/extended";
 import { LOCAL_OFFER_CATEGORY_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 
@@ -41,7 +41,7 @@ export default function LocalOfferPage() {
 
   if (isLoading) {
     return (
-      <PageShell title="Local Offer" subtitle="What Oak House Offers · Our Strengths · Our Commitments">
+      <PageShell title="Local Offer" subtitle="What Chamberlain House Offers · Our Strengths · Our Commitments">
         <div className="flex items-center justify-center py-24">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
@@ -52,12 +52,12 @@ export default function LocalOfferPage() {
   return (
     <PageShell
       title="Local Offer"
-      subtitle="What Oak House Offers · Our Strengths · Our Commitments"
-      ariaContext={{ pageTitle: "Local Offer", sourceType: "child_record" }}
+      subtitle="What Chamberlain House Offers · Our Strengths · Our Commitments"
+      caraContext={{ pageTitle: "Local Offer", sourceType: "child_record" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Oak House — Local Offer" />
-          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
+          <PrintButton title="Chamberlain House — Local Offer" />
+          <CaraStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }>
       <div id="print-area">
@@ -66,8 +66,8 @@ export default function LocalOfferPage() {
           <div className="flex items-start gap-2">
             <Home className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />
             <div className="text-sm">
-              <p className="font-semibold text-blue-800">Oak House — Our Local Offer</p>
-              <p className="text-blue-700">This document sets out what Oak House offers to the children in our care, their families, and our local community. It is designed to help placing authorities, social workers, and families understand what we provide and how we deliver it. This document is shared with prospective placing authorities as part of the referral process and is reviewed annually alongside the Statement of Purpose.</p>
+              <p className="font-semibold text-blue-800">Chamberlain House — Our Local Offer</p>
+              <p className="text-blue-700">This document sets out what Chamberlain House offers to the children in our care, their families, and our local community. It is designed to help placing authorities, social workers, and families understand what we provide and how we deliver it. This document is shared with prospective placing authorities as part of the referral process and is reviewed annually alongside the Statement of Purpose.</p>
             </div>
           </div>
         </div>
@@ -187,9 +187,9 @@ export default function LocalOfferPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
-        pageContext="Local Offer — what Oak House provides to children and families, care commitments, education, health, therapeutic services, activities, community links, independence, workforce"
+        pageContext="Local Offer — what Chamberlain House provides to children and families, care commitments, education, health, therapeutic services, activities, community links, independence, workforce"
         recordType="ofsted_evidence"
         className="mt-6"
       />

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION & STAFF DEVELOPMENT INTELLIGENCE ENGINE
+// CARA — SUPERVISION & STAFF DEVELOPMENT INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses supervision frequency, timeliness, action completion, staff
@@ -114,7 +114,7 @@ export interface SupervisionAlert {
   message: string;
 }
 
-export interface AriaSupervisionInsight {
+export interface CaraSupervisionInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -125,7 +125,7 @@ export interface SupervisionIntelligenceResult {
   wellbeing: WellbeingAnalysis;
   training_compliance: TrainingComplianceSummary;
   alerts: SupervisionAlert[];
-  insights: AriaSupervisionInsight[];
+  insights: CaraSupervisionInsight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -383,8 +383,8 @@ export function computeSupervisionIntelligence(input: SupervisionIntelligenceInp
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaSupervisionInsight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraSupervisionInsight[] = [];
 
   // Critical: overdue supervision
   if (overdueStaff.length > 0) {

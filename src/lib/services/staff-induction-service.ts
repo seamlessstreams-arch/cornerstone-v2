@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF INDUCTION SERVICE
+// CARA — STAFF INDUCTION SERVICE
 // Manages staff induction checklists, probation tracking, competency
 // sign-off, and new starter onboarding.
 // CHR 2015 Reg 33 (employment of staff — recruitment, fitness),

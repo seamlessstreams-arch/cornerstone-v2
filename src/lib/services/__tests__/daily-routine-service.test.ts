@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DAILY ROUTINE SERVICE TESTS
+// CARA — DAILY ROUTINE SERVICE TESTS
 // Pure-function tests for routine metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

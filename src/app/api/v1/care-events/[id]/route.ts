@@ -3,8 +3,8 @@ import { db } from "@/lib/db/store";
 import { careEventsDb } from "@/lib/db";
 import { processCareEvent, retryFailedRoutes } from "@/lib/care-events/processor";
 import { buildRoutingPreview } from "@/lib/care-events/routing-engine";
-import { proposeRecordsFromCareEvent } from "@/lib/aria/aria-care-event-bridge";
-import { appendAriaAudit } from "@/lib/aria/aria-audit-trail";
+import { proposeRecordsFromCareEvent } from "@/lib/cara/cara-care-event-bridge";
+import { appendCaraAudit } from "@/lib/cara/cara-audit-trail";
 import { generateId, todayStr } from "@/lib/utils";
 import { getUserIdFromRequest, requirePermission, requirePermissionAsync } from "@/lib/auth-guard";
 import { PERMISSIONS } from "@/lib/permissions";
@@ -295,20 +295,20 @@ export async function PATCH(
         );
       }
 
-      // ── ARIA bridge: draft suggested records into the M10 commit queue ──
+      // ── Cara bridge: draft suggested records into the M10 commit queue ──
       try {
         const verifiedEvent = await careEventsDb.careEvents.findById(id);
         if (verifiedEvent) {
           const bridge = proposeRecordsFromCareEvent(verifiedEvent, actorId);
           if (bridge.proposed.length > 0) {
             for (const rec of bridge.proposed) {
-              appendAriaAudit({
+              appendCaraAudit({
                 homeId: verifiedEvent.home_id,
                 actorId,
                 actionType: "artifact_generated",
                 artifactId: rec.id,
                 sourceIds: [verifiedEvent.id],
-                summary: `ARIA drafted ${rec.record_type} from verified care event "${verifiedEvent.title}"`,
+                summary: `Cara drafted ${rec.record_type} from verified care event "${verifiedEvent.title}"`,
                 after: { record_type: rec.record_type, status: rec.status },
               });
             }

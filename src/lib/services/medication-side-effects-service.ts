@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION SIDE EFFECTS SERVICE
+// CARA — MEDICATION SIDE EFFECTS SERVICE
 // Tracks medication side effects, severity, GP responses, and
 // impact on child wellbeing and daily functioning.
 // CHR 2015 Reg 23 (health — medication management),

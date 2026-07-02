@@ -1,8 +1,8 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TOP BAR (redesigned)
-// Global search · Create · Aria button · Notifications · User profile
+// CARA — TOP BAR (redesigned)
+// Global search · Create · Cara button · Notifications · User profile
 // ══════════════════════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from "react";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { GlobalCreateMenu } from "@/components/common/global-create-menu";
-import { AriaDrawer, type AriaDrawerContext } from "@/components/aria/aria-drawer";
+import { CaraDrawer, type CaraDrawerContext } from "@/components/cara/cara-drawer";
 import { NotificationCentre } from "@/components/layout/notification-centre";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { Input } from "@/components/ui/input";
@@ -48,13 +48,13 @@ interface HeaderProps {
   title:    string;
   subtitle?: string;
   actions?:  React.ReactNode;
-  ariaContext?: AriaDrawerContext;
+  caraContext?: CaraDrawerContext;
 }
 
-export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
+export function Header({ title, subtitle, actions, caraContext }: HeaderProps) {
   const breadcrumb = useBreadcrumb();
 
-  const [ariaOpen, setAriaOpen]       = useState(false);
+  const [caraOpen, setCaraOpen]       = useState(false);
   const [todayStr, setTodayStr]       = useState("");
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-[var(--cs-surface-elevated)] border-b border-[var(--cs-border)]">
+      <header className="sticky top-0 z-30 border-b border-[var(--cs-border)] bg-[var(--cs-surface-elevated)]/85 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--cs-surface-elevated)]/75">
         <div className="flex items-center gap-2 sm:gap-3 px-4 md:px-6 h-[56px] sm:h-[60px]">
 
           {/* ── Left: breadcrumb + title ── */}
@@ -92,7 +92,11 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
                 ))}
               </div>
             )}
-            <h1 className="text-[15px] font-semibold text-[var(--cs-navy)] leading-tight truncate tracking-[-0.01em]">
+            {/* suppressHydrationWarning: several pages derive the title/subtitle
+                from the current time (greeting, live date). Statically prerendered
+                HTML can straddle a time boundary, so the client text legitimately
+                differs — accept the client value instead of a hydration error. */}
+            <h1 suppressHydrationWarning className="text-[17px] font-extrabold text-[var(--cs-navy)] leading-tight truncate tracking-tight">
               {title}
             </h1>
           </div>
@@ -102,7 +106,7 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
             {/* Search (opens Command Palette) */}
             <button
               onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
-              className="hidden sm:flex items-center gap-2 rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold-soft)] hover:text-[var(--cs-text-secondary)] transition-colors"
+              className="hidden sm:flex items-center gap-2 rounded-xl border border-[var(--cs-border)] bg-[var(--cs-surface)] px-3 py-1.5 text-[var(--cs-text-muted)] hover:bg-[var(--cs-cara-gold-bg)] hover:border-[var(--cs-cara-gold-soft)] hover:text-[var(--cs-text-secondary)] transition-colors"
               title="Search (⌘K)"
             >
               <Search className="h-3.5 w-3.5" />
@@ -125,19 +129,19 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
             {/* Global Create */}
             <GlobalCreateMenu />
 
-            {/* Aria button */}
+            {/* Cara button */}
             <button
-              onClick={() => setAriaOpen((v) => !v)}
+              onClick={() => setCaraOpen((v) => !v)}
               className={cn(
                 "flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all border",
-                ariaOpen
-                  ? "bg-[var(--cs-aria-gold)] text-[var(--cs-navy)] border-[var(--cs-aria-gold)] shadow-[var(--cs-shadow-glow-gold)]"
-                  : "border-[var(--cs-aria-gold-soft)] text-[var(--cs-aria-gold)] hover:bg-[var(--cs-aria-gold-bg)] hover:border-[var(--cs-aria-gold)]",
+                caraOpen
+                  ? "bg-[var(--cs-cara-gold)] text-[var(--cs-navy)] border-[var(--cs-cara-gold)] shadow-[var(--cs-shadow-glow-gold)]"
+                  : "border-[var(--cs-cara-gold-soft)] text-[var(--cs-cara-gold)] hover:bg-[var(--cs-cara-gold-bg)] hover:border-[var(--cs-cara-gold)]",
               )}
-              title="Open ARIA"
+              title="Open Cara"
             >
-              <Sparkles className={cn("h-3.5 w-3.5", ariaOpen && "aria-pulse")} />
-              <span className="hidden sm:inline">ARIA</span>
+              <Sparkles className={cn("h-3.5 w-3.5", caraOpen && "cara-pulse")} />
+              <span className="hidden sm:inline">Cara</span>
             </button>
 
             {/* Notification Centre */}
@@ -151,18 +155,18 @@ export function Header({ title, subtitle, actions, ariaContext }: HeaderProps) {
         {/* ── Optional subtitle bar ── */}
         {subtitle && (
           <div className="hidden sm:block border-t border-[var(--cs-border-subtle)] px-4 md:px-6 py-1.5">
-            <p className="text-[11px] text-[var(--cs-text-muted)]">{subtitle}</p>
+            <p suppressHydrationWarning className="text-[11px] text-[var(--cs-text-muted)]">{subtitle}</p>
           </div>
         )}
       </header>
 
-      {/* ── Aria Drawer ── */}
-      <AriaDrawer
-        open={ariaOpen}
-        onClose={() => setAriaOpen(false)}
+      {/* ── Cara Drawer ── */}
+      <CaraDrawer
+        open={caraOpen}
+        onClose={() => setCaraOpen(false)}
         context={{
           pageTitle: title,
-          ...(ariaContext ?? {}),
+          ...(caraContext ?? {}),
         }}
       />
     </>

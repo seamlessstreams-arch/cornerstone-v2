@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ASBESTOS MANAGEMENT SERVICE
+// CARA — HOME ASBESTOS MANAGEMENT SERVICE
 // Tracks asbestos surveys, management plans, and compliance with the
 // Control of Asbestos Regulations 2012 for the residential home.
 //
@@ -326,7 +326,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function computeAriaInsights(
+export function computeCaraInsights(
   metrics: ReturnType<typeof computeMetrics>,
 ): string[] {
   const insights: string[] = [];
@@ -382,5 +382,5 @@ export function computeAriaInsights(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  computeAriaInsights,
+  computeCaraInsights,
 };

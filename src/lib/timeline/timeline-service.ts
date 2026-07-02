@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — UNIVERSAL TIMELINE SERVICE
+// CARA — UNIVERSAL TIMELINE SERVICE
 //
 // Aggregates events from every store collection into a unified TimelineEvent
 // stream. Uses the in-memory store pattern (reads from getStore()).
@@ -113,7 +113,7 @@ function aggregateCareEvents(): TimelineEvent[] {
   return (store.careEvents ?? []).map((ce) => ({
     id: `tl_ce_${ce.id}`,
     event_type: "daily_log_created" as TimelineEventType,
-    child_id: ce.child_id,
+    child_id: ce.child_id ?? undefined,
     staff_id: ce.staff_id,
     home_id: ce.home_id ?? "home_oak",
     title: ce.title,
@@ -131,23 +131,27 @@ function aggregateCareEvents(): TimelineEvent[] {
 
 function aggregateMedications(): TimelineEvent[] {
   const store = getStore();
-  return (store.medicationAdministrations ?? []).map((med) => ({
-    id: `tl_med_${med.id}`,
-    event_type: "medication_administered" as TimelineEventType,
-    child_id: med.child_id,
-    staff_id: med.administered_by,
-    home_id: "home_oak",
-    title: `Medication administered: ${med.medication_name ?? "unknown"}`,
-    summary: `${med.medication_name ?? "Medication"} administered${med.actual_time ? ` at ${med.actual_time}` : ""}`,
-    linked_record_type: "medication_administration",
-    linked_record_id: med.id,
-    tags: ["medication"],
-    risk_level: "none" as TimelineRiskLevel,
-    visibility_level: "standard" as TimelineVisibility,
-    metadata: { medication_name: med.medication_name, status: med.status },
-    created_at: med.actual_time ?? med.scheduled_time ?? med.created_at ?? new Date().toISOString(),
-    created_by: med.administered_by ?? "system",
-  }));
+  return (store.medicationAdministrations ?? []).map((med) => {
+    const medicationName =
+      store.medications.find((m) => m.id === med.medication_id)?.name ?? "medication";
+    return {
+      id: `tl_med_${med.id}`,
+      event_type: "medication_administered" as TimelineEventType,
+      child_id: med.child_id,
+      staff_id: med.administered_by ?? undefined,
+      home_id: med.home_id ?? "home_oak",
+      title: `Medication administered: ${medicationName}`,
+      summary: `${medicationName} administered${med.actual_time ? ` at ${med.actual_time}` : ""}`,
+      linked_record_type: "medication_administration",
+      linked_record_id: med.id,
+      tags: ["medication"],
+      risk_level: "none" as TimelineRiskLevel,
+      visibility_level: "standard" as TimelineVisibility,
+      metadata: { medication_name: medicationName, status: med.status },
+      created_at: med.actual_time ?? med.scheduled_time ?? med.created_at ?? new Date().toISOString(),
+      created_by: med.administered_by ?? "system",
+    };
+  });
 }
 
 function aggregateMedicationErrors(): TimelineEvent[] {
@@ -173,23 +177,26 @@ function aggregateMedicationErrors(): TimelineEvent[] {
 
 function aggregateMissingEpisodes(): TimelineEvent[] {
   const store = getStore();
-  return (store.missingEpisodes ?? []).map((ep) => ({
-    id: `tl_miss_${ep.id}`,
-    event_type: (ep.return_time ? "missing_from_care_returned" : "missing_from_care_reported") as TimelineEventType,
-    child_id: ep.child_id,
-    staff_id: ep.reported_by,
-    home_id: ep.home_id ?? "home_oak",
-    title: ep.return_time ? "Returned from missing episode" : "Missing from care reported",
-    summary: `${ep.return_time ? "Returned" : "Reported missing"} — ${ep.risk_level ?? "unknown"} risk`,
-    linked_record_type: "missing_episode",
-    linked_record_id: ep.id,
-    tags: ["missing", "safeguarding", ep.risk_level ?? "unknown"],
-    risk_level: (ep.risk_level === "high" ? "critical" : ep.risk_level === "medium" ? "high" : "medium") as TimelineRiskLevel,
-    visibility_level: "safeguarding" as TimelineVisibility,
-    metadata: { risk_level: ep.risk_level },
-    created_at: ep.created_at ?? new Date().toISOString(),
-    created_by: ep.reported_by ?? "system",
-  }));
+  return (store.missingEpisodes ?? []).map((ep) => {
+    const hasReturned = Boolean(ep.date_returned);
+    return {
+      id: `tl_miss_${ep.id}`,
+      event_type: (hasReturned ? "missing_from_care_returned" : "missing_from_care_reported") as TimelineEventType,
+      child_id: ep.child_id,
+      staff_id: ep.created_by,
+      home_id: ep.home_id ?? "home_oak",
+      title: hasReturned ? "Returned from missing episode" : "Missing from care reported",
+      summary: `${hasReturned ? "Returned" : "Reported missing"} — ${ep.risk_level ?? "unknown"} risk`,
+      linked_record_type: "missing_episode",
+      linked_record_id: ep.id,
+      tags: ["missing", "safeguarding", ep.risk_level ?? "unknown"],
+      risk_level: (ep.risk_level === "high" || ep.risk_level === "critical" ? "critical" : ep.risk_level === "medium" ? "high" : "medium") as TimelineRiskLevel,
+      visibility_level: "safeguarding" as TimelineVisibility,
+      metadata: { risk_level: ep.risk_level },
+      created_at: ep.created_at ?? new Date().toISOString(),
+      created_by: ep.created_by ?? "system",
+    };
+  });
 }
 
 function aggregateRestraints(): TimelineEvent[] {
@@ -378,7 +385,7 @@ function aggregateSupervisions(): TimelineEvent[] {
 
 function aggregateTrainingRecords(): TimelineEvent[] {
   const store = getStore();
-  return (store.trainingRecords ?? []).filter((tr) => tr.status === "completed").map((tr) => ({
+  return (store.trainingRecords ?? []).filter((tr) => tr.completed_date != null).map((tr) => ({
     id: `tl_train_${tr.id}`,
     event_type: "staff_training_completed" as TimelineEventType,
     staff_id: tr.staff_id,

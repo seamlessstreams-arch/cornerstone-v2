@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUBSTANCE MISUSE SERVICE TESTS
+// CARA — SUBSTANCE MISUSE SERVICE TESTS
 // Pure-function unit tests for substance misuse metrics computation,
 // alert identification, constant validation, and CRUD fallback behaviour
 // (Supabase disabled). CHR 2015 Reg 12 (protection from harm — including

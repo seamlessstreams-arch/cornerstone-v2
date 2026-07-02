@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK REGISTER SERVICE TESTS
+// CARA — RISK REGISTER SERVICE TESTS
 // Pure-function tests for risk scoring, risk level classification,
 // risk metrics computation, risk alert identification, and constants.
 // ══════════════════════════════════════════════════════════════════════════════

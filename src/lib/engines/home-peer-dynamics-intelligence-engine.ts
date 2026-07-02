@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME PEER DYNAMICS INTELLIGENCE ENGINE
+// CARA — HOME PEER DYNAMICS INTELLIGENCE ENGINE
 // Pure deterministic engine: peer relationships, group atmosphere, risk levels.
 // CHR 2015 Reg 19: "Behaviour management — relationships between children."
 // SCCIF: "Children feel safe with each other and with staff."

@@ -1,9 +1,9 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CONTACT & FAMILY ENGAGEMENT INTELLIGENCE CARD
+// CARA — CONTACT & FAMILY ENGAGEMENT INTELLIGENCE CARD
 // Dashboard widget for contact plan compliance, family time analysis,
-// mood impact, per-child profiles, and ARIA contact intelligence.
+// mood impact, per-child profiles, and Cara contact intelligence.
 // Powered by the Contact Engagement Engine — live data (Reg 6/7).
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -20,24 +20,24 @@ import { useContactEngagement } from "@/hooks/use-contact-engagement";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high: "border-red-200 bg-red-50 text-red-800",
-  medium: "border-amber-200 bg-amber-50 text-amber-800",
-  low: "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low: "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const PRESENTATION_COLOURS: Record<string, string> = {
-  settled: "text-green-600",
+  settled: "text-[--cs-success]",
   excited: "text-blue-600",
-  anxious: "text-amber-600",
-  withdrawn: "text-red-600",
-  resistant: "text-red-600",
+  anxious: "text-[--cs-warning]",
+  withdrawn: "text-[--cs-risk]",
+  resistant: "text-[--cs-risk]",
 };
 
 // ── Component ────────────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ export function ContactEngagementCard() {
             <p className="text-[10px] text-muted-foreground">Per Child</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", intel.family_time.safe_sessions_pct === 100 ? "bg-green-50" : "bg-amber-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", intel.family_time.safe_sessions_pct === 100 ? "text-green-600" : "text-amber-600")}>
+            <p className={cn("text-lg font-bold tabular-nums", intel.family_time.safe_sessions_pct === 100 ? "text-[--cs-success]" : "text-[--cs-warning]")}>
               {intel.family_time.safe_sessions_pct}%
             </p>
             <p className="text-[10px] text-muted-foreground">Safe</p>
@@ -136,7 +136,7 @@ export function ContactEngagementCard() {
                     <span className="text-[10px]">+{child.unique_contacts - 1} others</span>
                   )}
                   {child.concern_sessions_90d > 0 && (
-                    <Badge className="text-[9px] bg-amber-100 text-amber-700">
+                    <Badge className="text-[9px] bg-[--cs-warning-bg] text-[--cs-warning]">
                       {child.concern_sessions_90d} concerns
                     </Badge>
                   )}
@@ -156,21 +156,20 @@ export function ContactEngagementCard() {
                 <p className="text-xs font-medium">Mood Impact</p>
                 <p className="text-[10px] text-muted-foreground">
                   Contact days avg {intel.mood_impact.avg_mood_contact_days}/10 vs {intel.mood_impact.avg_mood_non_contact_days}/10
+                  {intel.mood_impact.positive_impact_children > 0 ? ` · ${intel.mood_impact.positive_impact_children} positive` : ""}
+                  {intel.mood_impact.negative_impact_children > 0 ? ` · ${intel.mood_impact.negative_impact_children} negative` : ""}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1">
-              {intel.mood_impact.positive_impact_children > 0 && (
-                <Badge className="text-[9px] bg-green-100 text-green-700">
-                  {intel.mood_impact.positive_impact_children} positive
-                </Badge>
-              )}
-              {intel.mood_impact.negative_impact_children > 0 && (
-                <Badge className="text-[9px] bg-red-100 text-red-700">
-                  {intel.mood_impact.negative_impact_children} negative
-                </Badge>
-              )}
-            </div>
+            {intel.mood_impact.negative_impact_children > 0 ? (
+              <Badge className="text-[9px] bg-[--cs-risk-bg] text-[--cs-risk]">
+                {intel.mood_impact.negative_impact_children} negative
+              </Badge>
+            ) : intel.mood_impact.positive_impact_children > 0 ? (
+              <Badge className="text-[9px] bg-[--cs-success-bg] text-[--cs-success]">
+                {intel.mood_impact.positive_impact_children} positive
+              </Badge>
+            ) : null}
           </div>
         )}
 
@@ -187,17 +186,17 @@ export function ContactEngagementCard() {
             </div>
           </div>
           {c.plans_overdue_review > 0 ? (
-            <Badge className="text-[10px] bg-amber-100 text-amber-700">
+            <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">
               <AlertTriangle className="h-2.5 w-2.5 mr-0.5" />
               {c.plans_overdue_review} review overdue
             </Badge>
           ) : c.active_plans > 0 ? (
-            <Badge className="text-[10px] bg-green-100 text-green-700">
+            <Badge className="text-[10px] bg-[--cs-success-bg] text-[--cs-success]">
               <CheckCircle2 className="h-3 w-3 mr-1" />
               All current
             </Badge>
           ) : (
-            <Badge className="text-[10px] bg-gray-100 text-gray-600">
+            <Badge className="text-[10px] bg-[--cs-bg] text-[--cs-text-secondary]">
               None active
             </Badge>
           )}
@@ -225,13 +224,13 @@ export function ContactEngagementCard() {
           </div>
         )}
 
-        {/* ── ARIA Contact Intelligence ───────────────────────────────── */}
+        {/* ── Cara Contact Intelligence ───────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Contact Intelligence
+              Cara Contact Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

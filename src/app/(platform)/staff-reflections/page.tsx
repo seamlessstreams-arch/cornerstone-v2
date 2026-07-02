@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { EntryAssist } from "@/components/forms/entry-assist";
 import { Plus, Search, Filter, ArrowUpDown, ChevronDown, ChevronUp, CheckCircle2, Clock, BookOpen, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStaffName, getYPName, STAFF } from "@/lib/seed-data";
@@ -20,8 +21,8 @@ import { useStaffReflectionRecords, useCreateStaffReflectionRecord } from "@/hoo
 import type { StaffReflectionRecord, StaffReflectionType, StaffReflectionMood } from "@/types/extended";
 import { STAFF_REFLECTION_TYPE_LABEL, STAFF_REFLECTION_MOOD_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 /* ── local config (colours not serializable) ─────────────────────────────── */
 
@@ -93,12 +94,12 @@ export default function StaffReflectionsPage() {
     <PageShell
       title="Staff Reflective Logs"
       subtitle="Individual reflections on practice, incidents, and professional development"
-      ariaContext={{ pageTitle: "Staff Reflective Logs", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Staff Reflective Logs", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Staff Reflective Logs" />
           <ExportButton data={filtered} columns={exportCols} filename="staff-reflections" />
-          <AriaStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "supervision", record_id: "home_oak", home_id: "home_oak" }} />
           <Button size="sm" onClick={() => setDialogOpen(true)}><Plus className="h-4 w-4 mr-1" />New Reflection</Button>
         </div>
       }
@@ -205,7 +206,7 @@ export default function StaffReflectionsPage() {
               <div><Label>Type</Label><Select value={rfForm.type} onValueChange={(v) => setRF("type", v)}><SelectTrigger className="mt-1"><SelectValue /></SelectTrigger><SelectContent>{(Object.entries(STAFF_REFLECTION_TYPE_LABEL) as [StaffReflectionType, string][]).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent></Select></div>
               <div><Label>Mood</Label><Select value={rfForm.mood} onValueChange={(v) => setRF("mood", v)}><SelectTrigger className="mt-1"><SelectValue /></SelectTrigger><SelectContent>{(Object.entries(STAFF_REFLECTION_MOOD_LABEL) as [StaffReflectionMood, string][]).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent></Select></div>
             </div>
-            <div><Label>What Happened</Label><Textarea className="mt-1" rows={3} value={rfForm.what_happened} onChange={(e) => setRF("what_happened", e.target.value)} /></div>
+            <div><Label>What Happened</Label><Textarea className="mt-1" rows={3} value={rfForm.what_happened} onChange={(e) => setRF("what_happened", e.target.value)} /><EntryAssist value={rfForm.what_happened} onChange={(v) => setRF("what_happened", v)} sourceRecordType="staff_reflection" className="mt-1" /></div>
             <div><Label>What I Felt</Label><Textarea className="mt-1" rows={2} value={rfForm.what_i_felt} onChange={(e) => setRF("what_i_felt", e.target.value)} /></div>
             <div><Label>What I Learned</Label><Textarea className="mt-1" rows={2} value={rfForm.what_i_learned} onChange={(e) => setRF("what_i_learned", e.target.value)} /></div>
             <div><Label>What I Would Do Differently</Label><Textarea className="mt-1" rows={2} value={rfForm.what_i_would_do_differently} onChange={(e) => setRF("what_i_would_do_differently", e.target.value)} /></div>
@@ -219,7 +220,7 @@ export default function StaffReflectionsPage() {
         days={28}
         defaultCollapsed
       />
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Staff Reflective Logs — practice reflections, learning from incidents, professional development, emotional impact, supervision preparation, growth areas"
         recordType="supervision"

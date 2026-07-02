@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF RETENTION & EXIT ANALYSIS SERVICE
+// CARA — STAFF RETENTION & EXIT ANALYSIS SERVICE
 // Tracks staff turnover patterns, exit reasons, retention strategies,
 // length of service analysis. Helps managers understand why staff leave
 // and plan retention.
@@ -232,7 +232,7 @@ export function computeStaffRetentionAlerts(
   return alerts;
 }
 
-export function generateStaffRetentionAriaInsights(
+export function generateStaffRetentionCaraInsights(
   rows: StaffRetentionExitAnalysisRow[],
 ): string[] {
   const metrics = computeStaffRetentionMetrics(rows);
@@ -369,5 +369,5 @@ export async function createStaffRetentionExitAnalysis(
 export const _testing = {
   computeStaffRetentionMetrics,
   computeStaffRetentionAlerts,
-  generateStaffRetentionAriaInsights,
+  generateStaffRetentionCaraInsights,
 };

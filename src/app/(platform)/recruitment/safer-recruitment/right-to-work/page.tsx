@@ -2,8 +2,8 @@
 
 import React, { useMemo, useState } from "react";
 import { PageShell } from "@/components/layout/page-shell";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -150,10 +150,10 @@ export default function RightToWorkPage() {
     <PageShell
       title="Right to Work"
       subtitle="Verify before first day of employment — legal requirement"
-      ariaContext={{ pageTitle: "Right to Work Verification", sourceType: "staff" }}
+      caraContext={{ pageTitle: "Right to Work Verification", sourceType: "staff" }}
       actions={
         <div className="flex items-center gap-2">
-          <PrintButton title="Right to Work" subtitle="Oak House — RTW Verification" targetId="rtw-content" />
+          <PrintButton title="Right to Work" subtitle="Chamberlain House — RTW Verification" targetId="rtw-content" />
           <SmartUploadButton variant="inline" label="Upload RTW Evidence" uploadContext="Safer Recruitment — right to work evidence document upload" />
           <Button size="sm" onClick={() => setShowModal(true)}>
             <Plus className="h-3.5 w-3.5 mr-1" />
@@ -325,7 +325,7 @@ export default function RightToWorkPage() {
         </div>
       )}
       </div>{/* close #rtw-content */}
-      <AriaPanel
+      <CaraPanel
         mode="assist"
         pageContext="Right to Work Verification — right to work documents, identity checks, visa/biometric cards, share codes, expiry tracking, staff eligibility, Home Office compliance, Ofsted evidence"
         recordType="staff_training"

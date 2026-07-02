@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Nutrition & Dietary Compliance Intelligence Engine
+// Cara — Nutrition & Dietary Compliance Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF ROTA & WORKFORCE SERVICE TESTS
+// CARA — STAFF ROTA & WORKFORCE SERVICE TESTS
 // Pure-function unit tests for rota summary computation, staffing compliance,
 // absence profile aggregation, alert identification, and constant validation.
 // ══════════════════════════════════════════════════════════════════════════════

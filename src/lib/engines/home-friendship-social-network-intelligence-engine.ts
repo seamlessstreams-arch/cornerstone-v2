@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE ENGINE
+// CARA — HOME FRIENDSHIP & SOCIAL NETWORK INTELLIGENCE ENGINE
 // Monitors friendship mapping coverage, social network breadth, peer support
 // quality, social isolation prevention, and child satisfaction with friendships.
 // Evaluates how well the home supports children to develop and maintain

@@ -1,6 +1,6 @@
-# Cornerstone Intelligence Layer
+# Cara Intelligence Layer
 
-Ten integrated modules that transform Cornerstone from a forms/dashboard system into a live intelligence platform. Every module works without an AI API key — deterministic logic handles the core, with optional LLM enrichment via ARIA when configured.
+Ten integrated modules that transform Cara from a forms/dashboard system into a live intelligence platform. Every module works without an AI API key — deterministic logic handles the core, with optional LLM enrichment via Cara when configured.
 
 ---
 
@@ -10,7 +10,7 @@ Ten integrated modules that transform Cornerstone from a forms/dashboard system 
 ┌─────────────────────────────────────────────────────────────┐
 │                        UI PAGES                              │
 │  Manager Control Centre · Ofsted Evidence Room · Progress    │
-│  Reg 44 · Reg 45 · Learning Review · ARIA Oversight         │
+│  Reg 44 · Reg 45 · Learning Review · Cara Oversight         │
 │  Smart Links · Competence Passport · Voice · Provider        │
 └───────────────────────────┬─────────────────────────────────┘
                             │
@@ -66,8 +66,8 @@ Reg 45: Six-monthly quality of care review builder with evidence panels, multi-s
 
 Structured post-incident learning reviews. Captures trigger analysis, what worked/didn't, impact on child, and generates follow-up actions. "NFA" requires documented rationale. Manager approval workflow.
 
-### 6. ARIA Humanised Oversight
-**Route:** Pre-existing ARIA hub at `/intelligence/aria/`
+### 6. Cara Humanised Oversight
+**Route:** Pre-existing Cara hub at `/intelligence/cara/`
 **API:** `POST /api/intelligence/humanised-oversight`
 
 Generates draft management oversight in a warm, evidence-based tone. Falls back to a structured template when no AI provider is configured. Every output is marked as a draft requiring manager approval.
@@ -97,7 +97,7 @@ Multi-home view for Responsible Individuals. Per-home metrics, risk flags, Reg 4
 
 ## Key Design Principles
 
-1. **ARIA never replaces manager judgement.** All ARIA outputs require human approval (`requiresManagerApproval: true` — enforced at type level).
+1. **Cara never replaces manager judgement.** All Cara outputs require human approval (`requiresManagerApproval: true` — enforced at type level).
 
 2. **Works without AI.** Core logic (evidence gaps, smart links, competence warnings, fallback oversight) is deterministic. The system degrades gracefully when no API key is present.
 

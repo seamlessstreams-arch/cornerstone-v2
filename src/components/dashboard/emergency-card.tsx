@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — EMERGENCY PLANNING INTELLIGENCE CARD
+// CARA — EMERGENCY PLANNING INTELLIGENCE CARD
 // Dashboard card powered by the Emergency Intelligence Engine.
 // Reg 22 (arrangements), Reg 25 (premises), Reg 40 (notifications).
 // ══════════════════════════════════════════════════════════════════════════════
@@ -19,28 +19,28 @@ import { useEmergencyIntelligence } from "@/hooks/use-emergency-intelligence";
 // ── Styling ─────────────────────────────────────────────────────────────────
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 const STATUS_COLOURS: Record<string, string> = {
-  current: "bg-green-100 text-green-700",
-  due: "bg-amber-100 text-amber-700",
-  overdue: "bg-red-100 text-red-700",
+  current: "bg-[--cs-success-bg] text-[--cs-success]",
+  due: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  overdue: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 const OUTCOME_COLOURS: Record<string, string> = {
-  satisfactory: "bg-green-100 text-green-700",
-  needs_improvement: "bg-amber-100 text-amber-700",
-  failed: "bg-red-100 text-red-700",
+  satisfactory: "bg-[--cs-success-bg] text-[--cs-success]",
+  needs_improvement: "bg-[--cs-warning-bg] text-[--cs-warning]",
+  failed: "bg-[--cs-risk-bg] text-[--cs-risk]",
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -106,7 +106,7 @@ export function EmergencyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.protocol_followed_rate >= 95 ? "text-green-600" : o.protocol_followed_rate >= 80 ? "text-amber-600" : "text-red-600",
+              o.protocol_followed_rate >= 95 ? "text-[--cs-success]" : o.protocol_followed_rate >= 80 ? "text-[--cs-warning]" : "text-[--cs-risk]",
             )}>
               {o.protocol_followed_rate}%
             </p>
@@ -118,7 +118,7 @@ export function EmergencyCard() {
           )}>
             <p className={cn(
               "text-lg font-bold tabular-nums",
-              o.expired_plans === 0 ? "text-green-600" : "text-red-600",
+              o.expired_plans === 0 ? "text-[--cs-success]" : "text-[--cs-risk]",
             )}>
               {o.current_plans}
             </p>
@@ -139,7 +139,7 @@ export function EmergencyCard() {
                 <span className="truncate flex-1">{d.type_label}</span>
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{d.drill_count}</Badge>
-                  <Badge className={cn("text-[10px]", STATUS_COLOURS[d.status] ?? "bg-gray-100 text-gray-600")}>
+                  <Badge className={cn("text-[10px]", STATUS_COLOURS[d.status] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                     {d.status === "current" ? "Current" : d.status === "due" ? "Due" : "Overdue"}
                   </Badge>
                 </div>
@@ -164,11 +164,11 @@ export function EmergencyCard() {
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
                   <Badge variant="outline" className="text-[10px] tabular-nums">{d.response_time_minutes}m</Badge>
-                  <Badge className={cn("text-[10px]", OUTCOME_COLOURS[d.outcome] ?? "bg-gray-100 text-gray-600")}>
+                  <Badge className={cn("text-[10px]", OUTCOME_COLOURS[d.outcome] ?? "bg-[--cs-bg] text-[--cs-text-secondary]")}>
                     {d.outcome === "satisfactory" ? "OK" : d.outcome === "needs_improvement" ? "Improve" : "Failed"}
                   </Badge>
                   {d.issues_count > 0 && (
-                    <Badge className="text-[10px] bg-amber-100 text-amber-700">{d.issues_count}</Badge>
+                    <Badge className="text-[10px] bg-[--cs-warning-bg] text-[--cs-warning]">{d.issues_count}</Badge>
                   )}
                 </div>
               </div>
@@ -197,9 +197,9 @@ export function EmergencyCard() {
             </div>
             <span className={cn(
               "text-xs font-bold tabular-nums",
-              pc.plan_types_covered >= pc.plan_types_required ? "text-green-600"
-                : pc.plan_types_covered >= 3 ? "text-amber-600"
-                : "text-red-600",
+              pc.plan_types_covered >= pc.plan_types_required ? "text-[--cs-success]"
+                : pc.plan_types_covered >= 3 ? "text-[--cs-warning]"
+                : "text-[--cs-risk]",
             )}>
               {pc.plan_types_covered}/{pc.plan_types_required}
             </span>
@@ -210,7 +210,7 @@ export function EmergencyCard() {
               <p className="text-[10px] text-muted-foreground">Current</p>
             </div>
             <div>
-              <p className={cn("font-bold tabular-nums", pc.plans_review_due > 0 ? "text-amber-600" : "text-slate-700")}>
+              <p className={cn("font-bold tabular-nums", pc.plans_review_due > 0 ? "text-[--cs-warning]" : "text-slate-700")}>
                 {pc.plans_review_due}
               </p>
               <p className="text-[10px] text-muted-foreground">Review Due</p>
@@ -263,13 +263,13 @@ export function EmergencyCard() {
           </div>
         )}
 
-        {/* ── ARIA Emergency Intelligence ─────────────────────────────── */}
+        {/* ── Cara Emergency Intelligence ─────────────────────────────── */}
 
         {intel.insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Emergency Intelligence
+              Cara Emergency Intelligence
             </p>
             {intel.insights.slice(0, 3).map((insight, i) => (
               <div

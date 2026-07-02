@@ -1,5 +1,5 @@
 // ==============================================================================
-// Cornerstone Key Working Effectiveness Intelligence Engine
+// Cara Key Working Effectiveness Intelligence Engine
 //
 // Deterministic engine for evaluating key working effectiveness across
 // session quality, relationship strength, care plan integration, and

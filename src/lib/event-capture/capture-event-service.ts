@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CAPTURE EVENT SERVICE (the real write path)
+// CARA — CAPTURE EVENT SERVICE (the real write path)
 //
 // Turns "capture once, validate once, route everywhere, never duplicate" from a
 // preview into an executed write. A form submits a DRAFT; this service validates

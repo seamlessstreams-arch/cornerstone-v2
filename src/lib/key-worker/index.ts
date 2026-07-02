@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Key Worker Relationship Quality Intelligence — Public API
+// Cara Key Worker Relationship Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

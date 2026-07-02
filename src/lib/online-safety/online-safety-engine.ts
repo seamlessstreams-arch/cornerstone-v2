@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Online Safety & Digital Wellbeing Intelligence Engine
+// Cara — Online Safety & Digital Wellbeing Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

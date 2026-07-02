@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DELEGATED AUTHORITY SERVICE TESTS
+// CARA — DELEGATED AUTHORITY SERVICE TESTS
 // Pure-function unit tests for delegated authority metrics computation,
 // alert identification, constant validation, and type coverage.
 // CHR 2015 Reg 21 (privacy and access), Reg 14 (care planning),

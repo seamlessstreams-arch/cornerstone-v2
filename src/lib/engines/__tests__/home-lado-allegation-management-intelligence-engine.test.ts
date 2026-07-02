@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME LADO & ALLEGATION MANAGEMENT INTELLIGENCE ENGINE TESTS
+// CARA — HOME LADO & ALLEGATION MANAGEMENT INTELLIGENCE ENGINE TESTS
 // Tests the pure deterministic engine for LADO referral compliance, allegation
 // patterns, staff training coverage, and safeguarding intelligence.
 // CHR 2015 Sch 2: fitness of workers. WSCB LADO procedures.

@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- SELF-HARM PREVENTION PLANNING SERVICE
+// CARA -- SELF-HARM PREVENTION PLANNING SERVICE
 // Tracks self-harm prevention plans, triggers, warning signs, coping strategies,
 // safe environment actions, supervision levels, sharps and medication management,
 // CAMHS engagement, and multi-agency notification for children in residential care.
@@ -539,7 +539,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: SelfHarmPreventionPlanRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -829,6 +829,6 @@ export async function deleteSelfHarmPreventionPlan(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateSelfHarmPreventionPlan,
 };

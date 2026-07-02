@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — RISK REGISTER INTELLIGENCE CARD
+// CARA — RISK REGISTER INTELLIGENCE CARD
 // Dashboard card powered by the Quality Assurance Intelligence Engine.
 // CHR 2015 Reg 13 (risk management), Reg 40, Reg 45.
 // SCCIF: Leadership & Management — "Risks are identified, managed,
@@ -17,16 +17,16 @@ import { cn } from "@/lib/utils";
 import { useQualityAssuranceIntelligence } from "@/hooks/use-quality-assurance-intelligence";
 
 const ALERT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  high:     "border-red-200 bg-red-50 text-red-800",
-  medium:   "border-amber-200 bg-amber-50 text-amber-800",
-  low:      "border-blue-200 bg-blue-50 text-blue-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  high:     "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  medium:   "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  low:      "border-[--cs-info-soft] bg-[--cs-info-bg] text-[--cs-info]",
 };
 
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning:  "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning:  "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function RiskRegisterCard() {
@@ -66,7 +66,7 @@ export function RiskRegisterCard() {
             <p className="text-[10px] text-muted-foreground">Audits</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.overview?.actions_overdue ?? 0) > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.actions_overdue ?? 0) > 0 ? "text-red-600" : "text-green-600")}>{d?.overview?.actions_overdue ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.actions_overdue ?? 0) > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{d?.overview?.actions_overdue ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </div>
           <div className="text-center rounded-lg bg-blue-50 p-2">
@@ -74,7 +74,7 @@ export function RiskRegisterCard() {
             <p className="text-[10px] text-muted-foreground">Actions</p>
           </div>
           <div className={cn("text-center rounded-lg p-2", (d?.overview?.improvements_count ?? 0) > (d?.overview?.strengths_count ?? 0) ? "bg-amber-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.improvements_count ?? 0) > (d?.overview?.strengths_count ?? 0) ? "text-amber-600" : "text-green-600")}>{d?.overview?.improvements_count ?? 0}</p>
+            <p className={cn("text-lg font-bold tabular-nums", (d?.overview?.improvements_count ?? 0) > (d?.overview?.strengths_count ?? 0) ? "text-[--cs-warning]" : "text-[--cs-success]")}>{d?.overview?.improvements_count ?? 0}</p>
             <p className="text-[10px] text-muted-foreground">Improve</p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export function RiskRegisterCard() {
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Risk Intelligence
+              Cara Risk Intelligence
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

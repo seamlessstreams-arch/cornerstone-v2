@@ -1,3 +1,4 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 
@@ -11,11 +12,13 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const record = intelligenceDb.riGovernanceReports.create({
     home_id: body.home_id ?? "home_oak",
     report_type: body.report_type ?? "strategic_summary",
-    generated_by_aria: body.generated_by_aria ?? true,
+    generated_by_cara: body.generated_by_cara ?? true,
     content: body.content ?? {},
     status: body.status ?? "draft",
     created_by: body.created_by ?? "staff_darren",

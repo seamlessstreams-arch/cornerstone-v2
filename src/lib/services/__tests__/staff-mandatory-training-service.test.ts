@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF MANDATORY TRAINING SERVICE TESTS
+// CARA — STAFF MANDATORY TRAINING SERVICE TESTS
 // Pure-function unit tests for mandatory training metrics computation and alert
 // identification.
 // CHR 2015 Reg 33 (employment of staff), Reg 34 (fitness of workers),

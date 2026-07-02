@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Sensory & Therapeutic Environment Intelligence Engine
+// Cara Sensory & Therapeutic Environment Intelligence Engine
 //
 // Deterministic engine for evaluating sensory profiles, environmental
 // adaptations, therapeutic space usage, and space quality across the home.

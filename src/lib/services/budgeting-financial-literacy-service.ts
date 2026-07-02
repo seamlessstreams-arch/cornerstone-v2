@@ -1,5 +1,5 @@
 // ==============================================================================
-// CORNERSTONE -- BUDGETING & FINANCIAL LITERACY SKILLS SERVICE
+// CARA -- BUDGETING & FINANCIAL LITERACY SKILLS SERVICE
 // Tracks financial literacy sessions, skill area coverage, competency
 // progression, practical exercises, bank account setup, savings habits,
 // budget creation, and pathway plan linkage for children and young people
@@ -489,7 +489,7 @@ export function computeAlerts(
   return alerts;
 }
 
-export function generateAriaInsights(
+export function generateCaraInsights(
   rows: BudgetingFinancialLiteracyRow[],
 ): string[] {
   const metrics = computeMetrics(rows);
@@ -762,6 +762,6 @@ export async function deleteBudgetingFinancialLiteracy(
 export const _testing = {
   computeMetrics,
   computeAlerts,
-  generateAriaInsights,
+  generateCaraInsights,
   validateBudgetingFinancialLiteracy,
 };

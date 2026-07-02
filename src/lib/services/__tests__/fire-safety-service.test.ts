@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — FIRE SAFETY & DRILLS SERVICE TESTS
+// CARA — FIRE SAFETY & DRILLS SERVICE TESTS
 // Pure-function tests for fire safety metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

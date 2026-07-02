@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME ENRICHMENT & ACHIEVEMENT INTELLIGENCE ENGINE
+// CARA — HOME ENRICHMENT & ACHIEVEMENT INTELLIGENCE ENGINE
 // Home-level: aggregates creative projects, extracurricular clubs,
 // positive achievements, club records, and sanctions/rewards.
 // CHR 2015 Reg 9: Enjoyment and achievement.

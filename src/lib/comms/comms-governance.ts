@@ -1,9 +1,9 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE COMMS CENTRE — message governance (Phase 2)
+// CARA COMMS CENTRE — message governance (Phase 2)
 //
 // Pure, deterministic logic that turns everyday messages into accountable records:
 //
-//   1. analyseMessageLanguage()  — reuses the ARIA recording-quality scorer to nudge
+//   1. analyseMessageLanguage()  — reuses the Cara recording-quality scorer to nudge
 //      staff toward professional, child-focused, factual language BEFORE they send.
 //      It is advisory only — it never blocks a send and never changes a message.
 //
@@ -13,7 +13,7 @@
 //      as a chat message ("no hidden second record").
 //
 //   3. ACTION_EVENT_MAP — maps a chosen conversion action to the canonical
-//      Cornerstone event type + task category used by the convert endpoint, so a
+//      Cara event type + task category used by the convert endpoint, so a
 //      message becomes a real record on the event spine / task list, linked back to
 //      its source message.
 //
@@ -21,7 +21,7 @@
 // tests. The API routes own identity, persistence and audit.
 // ══════════════════════════════════════════════════════════════════════════════
 
-import { scoreRecordingQuality, type QualityScore } from "@/lib/aria/recording-quality";
+import { scoreRecordingQuality, type QualityScore } from "@/lib/cara/recording-quality";
 import type { CornerstoneEventType } from "@/types/cornerstone-event";
 import type { CommsMessageActionType, CommsLinkedRecordType } from "@/types/comms";
 import type { TaskCategory } from "@/lib/constants";
@@ -55,7 +55,7 @@ const NUDGE_GRADES: ReadonlySet<QualityScore["grade"]> = new Set([
 
 /**
  * Score a draft/sent message for professional-recording quality. Pure wrapper over
- * the shared ARIA scorer so Comms and care-recording stay consistent. Advisory only.
+ * the shared Cara scorer so Comms and care-recording stay consistent. Advisory only.
  */
 export function analyseMessageLanguage(
   text: string,
@@ -215,7 +215,7 @@ export function detectRecordableContent(text: string): RecordableDetection {
 
 export interface ActionMapping {
   /**
-   * Canonical event type written to the Cornerstone event spine, or null when the
+   * Canonical event type written to the Cara event spine, or null when the
    * action produces a task rather than a spine event.
    */
   eventType: CornerstoneEventType | null;

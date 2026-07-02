@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — STAFF SUPERVISION SESSIONS SERVICE TESTS
+// CARA — STAFF SUPERVISION SESSIONS SERVICE TESTS
 // Pure-function unit tests for supervision session metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 33 (employment of staff — supervision),

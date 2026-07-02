@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NIGHT MONITORING INTELLIGENCE HOOK
+// CARA — NIGHT MONITORING INTELLIGENCE HOOK
 // React Query wrapper for /api/v1/night-monitoring
 // ══════════════════════════════════════════════════════════════════════════════
 

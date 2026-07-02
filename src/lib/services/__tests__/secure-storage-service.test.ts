@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SECURE STORAGE & RECORDS ACCESS SERVICE TESTS
+// CARA — SECURE STORAGE & RECORDS ACCESS SERVICE TESTS
 // Pure-function tests for secure storage metrics, alert identification,
 // constant validation, and edge cases.
 // ══════════════════════════════════════════════════════════════════════════════

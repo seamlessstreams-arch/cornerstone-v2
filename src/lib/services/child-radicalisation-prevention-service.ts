@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RADICALISATION PREVENTION (PREVENT DUTY) SERVICE
+// CARA — CHILD RADICALISATION PREVENTION (PREVENT DUTY) SERVICE
 // Prevent duty compliance, Channel referrals, vulnerability indicators,
 // online radicalisation screening, ideology concerns.
 // Counter-Terrorism and Security Act 2015 (Prevent Duty).
@@ -246,7 +246,7 @@ export function computeRadicalisationAlerts(
   return alerts;
 }
 
-export function generateRadicalisationAriaInsights(
+export function generateRadicalisationCaraInsights(
   rows: ChildRadicalisationPreventionRow[],
 ): string[] {
   const metrics = computeRadicalisationMetrics(rows);
@@ -370,5 +370,5 @@ export async function createChildRadicalisationPrevention(input: {
 export const _testing = {
   computeRadicalisationMetrics,
   computeRadicalisationAlerts,
-  generateRadicalisationAriaInsights,
+  generateRadicalisationCaraInsights,
 };

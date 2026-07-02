@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — INTERNET USAGE MONITORING SERVICE
+// CARA — INTERNET USAGE MONITORING SERVICE
 // Tracks children's internet and device usage including screen time,
 // content access, social media monitoring, and online safety concerns.
 // CHR 2015 Reg 12 (health and wellbeing — online safety),

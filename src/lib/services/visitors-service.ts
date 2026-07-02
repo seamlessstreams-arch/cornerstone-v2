@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — VISITORS LOG SERVICE
+// CARA — VISITORS LOG SERVICE
 // Tracks all visitors to children's homes for safeguarding, regulatory
 // compliance (CHR 2015), fire register accuracy, and Reg 44 evidencing.
 // ══════════════════════════════════════════════════════════════════════════════

@@ -891,9 +891,9 @@ describe("computeHomeMultiAgency", () => {
     });
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
-  describe("ARIA insights", () => {
+  describe("Cara insights", () => {
     it("generates positive insight for exemplary partnership", () => {
       const r = computeHomeMultiAgency(baseInput());
       expect(r.insights.some(i => i.severity === "positive" && i.text.includes("exemplary"))).toBe(true);

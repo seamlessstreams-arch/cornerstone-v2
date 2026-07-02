@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CARE EVENT TYPES
+// CARA — CARE EVENT TYPES
 // ══════════════════════════════════════════════════════════════════════════════
 
 // ── Status & Category enums ───────────────────────────────────────────────────
@@ -171,13 +171,13 @@ export interface CareEvent {
   amended_at: string | null;
   is_current_version: boolean;
 
-  // ARIA suggestions (not final record — require human approval)
-  aria_suggested_summary: string | null;
-  aria_suggested_category: CareEventCategory | null;
-  aria_suggested_routing: RouteType[] | null;
-  aria_suggested_reg45: string | null;
-  aria_suggested_annex_a: string | null;
-  aria_suggestions_reviewed: boolean;
+  // Cara suggestions (not final record — require human approval)
+  cara_suggested_summary: string | null;
+  cara_suggested_category: CareEventCategory | null;
+  cara_suggested_routing: RouteType[] | null;
+  cara_suggested_reg45: string | null;
+  cara_suggested_annex_a: string | null;
+  cara_suggestions_reviewed: boolean;
 
   // Routing result
   routing_summary: RoutingSummary | null;

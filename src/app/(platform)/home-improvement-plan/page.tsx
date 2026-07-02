@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME IMPROVEMENT PLAN
+// CARA — HOME IMPROVEMENT PLAN
 // Post-inspection actions, quality improvement objectives, Reg 45
 // recommendations, and self-identified development goals.
 // ══════════════════════════════════════════════════════════════════════════════
@@ -32,16 +32,17 @@ import { Textarea } from "@/components/ui/textarea";
 import type { ImprovementObjective, ObjectiveSource, ObjectivePriority, ObjectiveStatus } from "@/types/extended";
 import { OBJECTIVE_SOURCE_LABEL, OBJECTIVE_STATUS_LABEL } from "@/types/extended";
 import { CareEventsPanel } from "@/components/care-events/care-events-panel";
-import { AriaPanel } from "@/components/aria/aria-panel";
-import { AriaStudioQuickActionButton } from "@/components/aria/studio-quick-action-button";
+import { CaraPanel } from "@/components/cara/cara-panel";
+import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-action-button";
 
 const SOURCE_COLOUR: Record<ObjectiveSource, string> = {
-  reg44: "bg-[var(--cs-aria-gold-bg)] text-[var(--cs-aria-gold)] border-[var(--cs-aria-gold-soft)]",
+  reg44: "bg-[var(--cs-cara-gold-bg)] text-[var(--cs-cara-gold)] border-[var(--cs-cara-gold-soft)]",
   ofsted: "bg-blue-50 text-blue-700 border-blue-200",
   reg45: "bg-indigo-50 text-indigo-700 border-indigo-200",
   self: "bg-teal-50 text-teal-700 border-teal-200",
   maintenance: "bg-orange-50 text-orange-700 border-orange-200",
   regulatory: "bg-rose-50 text-rose-700 border-rose-200",
+  org_risk: "bg-violet-50 text-violet-700 border-violet-200",
 };
 
 const PRIORITY_COLOUR: Record<ObjectivePriority, string> = {
@@ -160,7 +161,7 @@ export default function HomeImprovementPlanPage() {
     <PageShell
       title="Home Improvement Plan"
       subtitle="Post-inspection actions, quality objectives, Reg 45 recommendations, and development goals"
-      ariaContext={{ pageTitle: "Home Improvement Plan", sourceType: "home_check" }}
+      caraContext={{ pageTitle: "Home Improvement Plan", sourceType: "home_check" }}
       actions={
         <div className="flex items-center gap-2">
           <PrintButton title="Home Improvement Plan" />
@@ -168,7 +169,7 @@ export default function HomeImprovementPlanPage() {
           <Button onClick={() => setShowNew(true)}>
             <Plus className="h-4 w-4 mr-2" /> Add Objective
           </Button>
-          <AriaStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
+          <CaraStudioQuickActionButton context={{ record_type: "ofsted_evidence", record_id: "home_oak", home_id: "home_oak" }} />
         </div>
       }
     >

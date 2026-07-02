@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — TRAUMA-INFORMED CARE SERVICE TESTS
+// CARA — TRAUMA-INFORMED CARE SERVICE TESTS
 // Pure-function unit tests for trauma metrics computation,
 // alert identification, constant validation.
 // CHR 2015 Reg 6 (quality and purpose of care — therapeutic care),

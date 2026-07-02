@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — LEGAL STATUS SERVICE
+// CARA — LEGAL STATUS SERVICE
 // Manages children's legal status, court orders, care order conditions,
 // placement orders, and legal milestone tracking.
 // CHR 2015 Reg 8 (parental responsibility — legal framework),

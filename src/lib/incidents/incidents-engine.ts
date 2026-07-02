@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Incidents Intelligence Engine  (v2 — standardised)
+// Cara Incidents Intelligence Engine  (v2 — standardised)
 //
 // Deterministic engine for evaluating incident quality, compliance,
 // policy frameworks, staff readiness, and per-child incident profiles.

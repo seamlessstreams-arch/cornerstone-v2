@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SHIFT HANDOVER SERVICE
+// CARA — SHIFT HANDOVER SERVICE
 // Manages shift handover records between outgoing and incoming staff.
 // Critical for continuity of care — covers child status, incidents, tasks,
 // medication, safeguarding, and risk changes (CHR 2015 Reg 12, 13, 34).

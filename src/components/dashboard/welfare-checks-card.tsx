@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — WELFARE CHECKS CARD
+// CARA — WELFARE CHECKS CARD
 // Dashboard widget showing today's welfare check round completion,
 // consecutive-day streak, and any flagged concerns.
 // Reg 34 — Staff must safeguard children and promote their welfare.
@@ -108,10 +108,10 @@ export function WelfareChecksCard() {
             <div className={cn("text-sm font-bold tabular-nums", concernsFlagged > 0 ? "text-amber-700" : "text-emerald-700")}>{concernsFlagged}</div>
             <div className={cn("text-[9px]", concernsFlagged > 0 ? "text-amber-500" : "text-emerald-500")}>Concerns</div>
           </div>
-          <div className="rounded-xl bg-[var(--cs-aria-gold-bg)] p-2 text-center">
-            <Flame className="h-3 w-3 text-[var(--cs-aria-gold)] mx-auto mb-0.5" />
-            <div className="text-sm font-bold text-[var(--cs-aria-gold)] tabular-nums">{streak}</div>
-            <div className="text-[9px] text-[var(--cs-aria-gold)]">Day Streak</div>
+          <div className="rounded-xl bg-[var(--cs-cara-gold-bg)] p-2 text-center">
+            <Flame className="h-3 w-3 text-[var(--cs-cara-gold)] mx-auto mb-0.5" />
+            <div className="text-sm font-bold text-[var(--cs-cara-gold)] tabular-nums">{streak}</div>
+            <div className="text-[9px] text-[var(--cs-cara-gold)]">Day Streak</div>
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export function WelfareChecksCard() {
             <span className="text-[var(--cs-text-muted)]">Today&apos;s Rounds</span>
             <span className={cn(
               "font-bold tabular-nums",
-              completionPct >= 100 ? "text-emerald-600" : completionPct >= 66 ? "text-cyan-600" : "text-amber-600",
+              completionPct >= 100 ? "text-emerald-600" : completionPct >= 66 ? "text-cyan-600" : "text-[--cs-warning]",
             )}>
               {todayRounds}/3 target
             </span>

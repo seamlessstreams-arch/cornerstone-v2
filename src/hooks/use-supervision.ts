@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — SUPERVISION HOOKS
+// CARA — SUPERVISION HOOKS
 // React Query wrappers for /api/v1/supervision
 // ══════════════════════════════════════════════════════════════════════════════
 

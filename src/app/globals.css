@@ -1,42 +1,10 @@
-/* ── Avenir Next LT Pro — local font declarations ─────────────────────────── */
-/* Place licensed font files in /public/fonts/ to activate.                    */
-/* Falls back gracefully to Avenir Next → Avenir → Inter when absent.          */
-
-@font-face {
-  font-family: "Avenir Next LT Pro";
-  src: url("/fonts/AvenirNextLTPro-Regular.woff2") format("woff2"),
-       url("/fonts/AvenirNextLTPro-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Avenir Next LT Pro";
-  src: url("/fonts/AvenirNextLTPro-Medium.woff2") format("woff2"),
-       url("/fonts/AvenirNextLTPro-Medium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Avenir Next LT Pro";
-  src: url("/fonts/AvenirNextLTPro-Demi.woff2") format("woff2"),
-       url("/fonts/AvenirNextLTPro-Demi.woff") format("woff");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Avenir Next LT Pro";
-  src: url("/fonts/AvenirNextLTPro-Bold.woff2") format("woff2"),
-       url("/fonts/AvenirNextLTPro-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* ── Typeface ─────────────────────────────────────────────────────────────── */
+/* Primary: Plus Jakarta Sans (free, OFL), self-hosted at build time via      */
+/* next/font in src/app/layout.tsx (exposed as --font-jakarta). It closely    */
+/* matches the Avenir Next look the brand was designed around.                */
+/* To activate licensed Avenir Next LT Pro instead: drop the woff2 files in  */
+/* /public/fonts/ and restore the @font-face declarations from git history — */
+/* "Avenir Next LT Pro" stays first in the stack, so it wins automatically.  */
 
 /* ── Tailwind v4 import ───────────────────────────────────────────────────── */
 @import "tailwindcss";
@@ -45,18 +13,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Cornerstone Calm Design Tokens ───────────────────────────────────────── */
+/* ── Cara Calm Design Tokens ───────────────────────────────────────── */
 :root {
-  /* Font stack — Avenir with graceful fallback chain */
-  --font-sans: "Avenir Next LT Pro", "Avenir Next", Avenir, ui-sans-serif,
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Font stack — licensed Avenir wins if present, Plus Jakarta Sans is the
+     shipped face, then the system chain. */
+  --font-sans: "Avenir Next LT Pro", var(--font-jakarta, "Plus Jakarta Sans"),
+    "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* ── Cornerstone Calm palette ─────────────────────────────────────────── */
+  /* ── Cara Calm palette ─────────────────────────────────────────── */
   --cs-bg:              #f7f3ec;
   --cs-surface:         #fffaf2;
   --cs-surface-elevated:#ffffff;
-  --cs-border:          #e6dccb;
-  --cs-border-subtle:   #f0e8d8;
+  --cs-border:          #ece4d4; /* calm pass: edges recede; shadows separate */
+  --cs-border-subtle:   #f4eee1;
 
   /* Navy — deep professional tone */
   --cs-navy:            #0f1e36;
@@ -69,14 +39,14 @@
   --cs-text-muted:      #667085;
   --cs-text-gentle:     #94a3b8;
 
-  /* ARIA Intelligence accent — warm gold */
-  --cs-aria-gold:       #c89b3c;
-  --cs-aria-gold-soft:  #f5e7c6;
-  --cs-aria-gold-bg:    #fdf8ef;
-  --cs-aria-glow:       rgba(200, 155, 60, 0.28);
-  --cs-aria-shimmer:    linear-gradient(135deg, #f5e7c6 0%, #fdf8ef 50%, #f5e7c6 100%);
+  /* Cara Intelligence accent — warm gold */
+  --cs-cara-gold:       #c89b3c;
+  --cs-cara-gold-soft:  #f5e7c6;
+  --cs-cara-gold-bg:    #fdf8ef;
+  --cs-cara-glow:       rgba(200, 155, 60, 0.28);
+  --cs-cara-shimmer:    linear-gradient(135deg, #f5e7c6 0%, #fdf8ef 50%, #f5e7c6 100%);
 
-  /* ── Cornerstone teal — signature brand accent (logo growth/plant tone) ── */
+  /* ── Cara teal — signature brand accent (logo growth/plant tone) ── */
   --cs-teal:            #119488;
   --cs-teal-strong:     #0c6b62;
   --cs-teal-soft:       #c9ece6;
@@ -119,8 +89,8 @@
   --cs-radius-2xl:      2rem;
 
   /* Shadows — soft, layered */
-  --cs-shadow-soft:     0 1px 3px rgba(15, 30, 54, 0.04), 0 4px 12px rgba(15, 30, 54, 0.03);
-  --cs-shadow-card:     0 2px 8px rgba(15, 30, 54, 0.04), 0 12px 32px rgba(15, 30, 54, 0.06);
+  --cs-shadow-soft:     0 1px 2px rgba(15, 30, 54, 0.03), 0 6px 20px rgba(15, 30, 54, 0.05);
+  --cs-shadow-card:     0 2px 6px rgba(15, 30, 54, 0.04), 0 16px 40px rgba(15, 30, 54, 0.07);
   --cs-shadow-elevated: 0 4px 16px rgba(15, 30, 54, 0.06), 0 20px 48px rgba(15, 30, 54, 0.08);
   --cs-shadow-glow-gold:0 0 20px rgba(200, 155, 60, 0.15), 0 0 40px rgba(200, 155, 60, 0.08);
 
@@ -132,7 +102,7 @@
   --cs-duration-fast:   120ms;
   --cs-duration-normal: 200ms;
   --cs-duration-slow:   350ms;
-  --cs-duration-aria:   500ms;
+  --cs-duration-cara:   500ms;
 
   /* Spacing scale */
   --cs-space-xs:        0.25rem;
@@ -157,7 +127,7 @@
   --status-overdue:         var(--cs-risk);
   --status-needs-review:    var(--cs-warning);
   --status-oversight:       var(--cs-oversight);
-  --status-aria:            var(--cs-aria-gold);
+  --status-cara:            var(--cs-cara-gold);
   --status-escalated:       #db2777;
   --status-low:             var(--cs-success);
   --status-medium:          var(--cs-warning);
@@ -183,13 +153,13 @@
   --border: var(--cs-border);
   --input: var(--cs-border);
   --ring: var(--cs-teal);
-  /* Charts — Cornerstone (teal, navy) + Avisaar (amber, coral, sage) */
+  /* Charts — Cara (teal, navy) + Avisaar (amber, coral, sage) */
   --chart-1: var(--cs-teal);
   --chart-2: var(--cs-navy-muted);
   --chart-3: var(--cs-avisaar-amber);
   --chart-4: var(--cs-avisaar-coral);
   --chart-5: var(--cs-avisaar-sage);
-  --radius: 0.875rem;
+  --radius: 0.5rem; /* Cara Calm: 8px — crisp & professional, not bubbly (was 0.875rem/14px) */
   --sidebar: var(--cs-navy);
   --sidebar-foreground: rgba(255, 255, 255, 0.85);
   --sidebar-primary: var(--cs-teal);
@@ -241,7 +211,7 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Cornerstone Calm — semantic colour classes */
+  /* Cara Calm — semantic colour classes */
   --color-cs-bg: var(--cs-bg);
   --color-cs-surface: var(--cs-surface);
   --color-cs-surface-elevated: var(--cs-surface-elevated);
@@ -253,9 +223,9 @@
   --color-cs-text-secondary: var(--cs-text-secondary);
   --color-cs-text-muted: var(--cs-text-muted);
   --color-cs-text-gentle: var(--cs-text-gentle);
-  --color-cs-aria-gold: var(--cs-aria-gold);
-  --color-cs-aria-gold-soft: var(--cs-aria-gold-soft);
-  --color-cs-aria-gold-bg: var(--cs-aria-gold-bg);
+  --color-cs-cara-gold: var(--cs-cara-gold);
+  --color-cs-cara-gold-soft: var(--cs-cara-gold-soft);
+  --color-cs-cara-gold-bg: var(--cs-cara-gold-bg);
   --color-cs-teal: var(--cs-teal);
   --color-cs-teal-strong: var(--cs-teal-strong);
   --color-cs-teal-soft: var(--cs-teal-soft);
@@ -344,7 +314,7 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-/* ── Aria drawer slide ────────────────────────────────────────────────────── */
+/* ── Cara drawer slide ────────────────────────────────────────────────────── */
 @keyframes drawerSlide {
   from { transform: translateX(100%); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
@@ -353,36 +323,36 @@ body {
   animation: drawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── ARIA Magic Animations ────────────────────────────────────────────────── */
-@keyframes ariaShimmer {
+/* ── Cara Magic Animations ────────────────────────────────────────────────── */
+@keyframes caraShimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
-.aria-shimmer {
+.cara-shimmer {
   background: linear-gradient(90deg,
-    var(--cs-aria-gold-bg) 0%,
-    var(--cs-aria-gold-soft) 25%,
-    var(--cs-aria-gold-bg) 50%,
-    var(--cs-aria-gold-soft) 75%,
-    var(--cs-aria-gold-bg) 100%);
+    var(--cs-cara-gold-bg) 0%,
+    var(--cs-cara-gold-soft) 25%,
+    var(--cs-cara-gold-bg) 50%,
+    var(--cs-cara-gold-soft) 75%,
+    var(--cs-cara-gold-bg) 100%);
   background-size: 200% 100%;
-  animation: ariaShimmer 3s ease-in-out infinite;
+  animation: caraShimmer 3s ease-in-out infinite;
 }
 
-@keyframes ariaGlow {
+@keyframes caraGlow {
   0%, 100% { box-shadow: 0 0 12px rgba(200, 155, 60, 0.12); }
   50%      { box-shadow: 0 0 24px rgba(200, 155, 60, 0.22); }
 }
-.aria-glow {
-  animation: ariaGlow 3s ease-in-out infinite;
+.cara-glow {
+  animation: caraGlow 3s ease-in-out infinite;
 }
 
-@keyframes ariaPulse {
+@keyframes caraPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.7; transform: scale(0.96); }
 }
-.aria-pulse {
-  animation: ariaPulse 2s ease-in-out infinite;
+.cara-pulse {
+  animation: caraPulse 2s ease-in-out infinite;
 }
 
 @keyframes gentleFadeUp {
@@ -393,7 +363,7 @@ body {
   animation: gentleFadeUp 0.4s ease-out;
 }
 
-/* ── Cornerstone Calm Utility Classes ─────────────────────────────────────── */
+/* ── Cara Calm Utility Classes ─────────────────────────────────────── */
 .cs-card {
   background: var(--cs-surface-elevated);
   border: 1px solid var(--cs-border);
@@ -414,9 +384,9 @@ body {
   box-shadow: var(--cs-shadow-card);
 }
 
-.cs-card-aria {
-  background: var(--cs-aria-gold-bg);
-  border: 1px solid var(--cs-aria-gold-soft);
+.cs-card-cara {
+  background: var(--cs-cara-gold-bg);
+  border: 1px solid var(--cs-cara-gold-soft);
   border-radius: var(--cs-radius-xl);
   box-shadow: var(--cs-shadow-glow-gold);
 }
@@ -441,7 +411,7 @@ body {
 }
 
 .cs-focus-ring {
-  outline: 2px solid var(--cs-aria-gold);
+  outline: 2px solid var(--cs-cara-gold);
   outline-offset: 2px;
 }
 
@@ -462,32 +432,32 @@ body {
   transition-timing-function: var(--cs-ease-default);
 }
 
-/* ARIA magic entrance — used when ARIA content appears */
-@keyframes ariaMagicIn {
+/* Cara magic entrance — used when Cara content appears */
+@keyframes caraMagicIn {
   0%   { opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(2px); }
   60%  { opacity: 1; filter: blur(0); }
   100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
-.aria-magic-in {
-  animation: ariaMagicIn var(--cs-duration-aria) var(--cs-ease-default);
+.cara-magic-in {
+  animation: caraMagicIn var(--cs-duration-cara) var(--cs-ease-default);
 }
 
-/* ARIA score reveal — staggered for Child Lens score bars */
-@keyframes ariaScoreReveal {
+/* Cara score reveal — staggered for Child Lens score bars */
+@keyframes caraScoreReveal {
   from { width: 0; opacity: 0; }
   to   { opacity: 1; }
 }
-.aria-score-reveal {
-  animation: ariaScoreReveal 0.6s var(--cs-ease-out) forwards;
+.cara-score-reveal {
+  animation: caraScoreReveal 0.6s var(--cs-ease-out) forwards;
 }
 
 /* Reduced motion — respect user preferences */
 @media (prefers-reduced-motion: reduce) {
-  .aria-magic-in,
-  .aria-score-reveal,
-  .aria-shimmer,
-  .aria-glow,
-  .aria-pulse,
+  .cara-magic-in,
+  .cara-score-reveal,
+  .cara-shimmer,
+  .cara-glow,
+  .cara-pulse,
   .animate-gentle-fade-up {
     animation: none !important;
   }
@@ -496,17 +466,17 @@ body {
   }
 }
 
-/* ARIA badge — gold intelligence indicator */
-.cs-badge-aria {
+/* Cara badge — gold intelligence indicator */
+.cs-badge-cara {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   padding: 0.125rem 0.5rem;
   font-size: 0.6875rem;
   font-weight: 500;
-  color: var(--cs-aria-gold);
-  background: var(--cs-aria-gold-bg);
-  border: 1px solid var(--cs-aria-gold-soft);
+  color: var(--cs-cara-gold);
+  background: var(--cs-cara-gold-bg);
+  border: 1px solid var(--cs-cara-gold-soft);
   border-radius: 999px;
 }
 
@@ -524,7 +494,7 @@ body {
   --card-foreground: var(--cs-text);
   --popover: var(--cs-surface-elevated);
   --popover-foreground: var(--cs-text);
-  --primary: var(--cs-aria-gold);
+  --primary: var(--cs-cara-gold);
   --primary-foreground: var(--cs-navy);
   --secondary: var(--cs-surface);
   --secondary-foreground: var(--cs-text);
@@ -568,8 +538,8 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   CORNERSTONE BESPOKE IDENTITY
-   Not a template. Not a default. Distinctly Cornerstone.
+   CARA BESPOKE IDENTITY
+   Not a template. Not a default. Distinctly Cara.
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── Custom scrollbars — warm, thin, unobtrusive ──────────────────────────── */
@@ -596,28 +566,66 @@ body {
 
 /* ── Focus rings — gold, not blue ─────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--cs-aria-gold);
+  outline: 2px solid var(--cs-cara-gold);
   outline-offset: 2px;
   border-radius: var(--cs-radius-sm);
 }
 
 /* ── Text selection — warm gold ───────────────────────────────────────────── */
 ::selection {
-  background: var(--cs-aria-gold-soft);
+  background: var(--cs-cara-gold-soft);
   color: var(--cs-navy);
 }
 
-/* ── Cornerstone typography — distinctive letter-spacing and weight ────────── */
-h1, h2, h3, h4, h5, h6,
-[class*="CardTitle"],
-[class*="font-bold"] {
-  letter-spacing: -0.01em;
-  font-feature-settings: "kern" 1, "liga" 1;
+/* ── Finish details: focus rings and scrollbars ────────────────────────────── */
+@layer base {
+  /* Visible, on-brand keyboard focus everywhere (mouse clicks stay clean). */
+  :focus-visible {
+    outline: 2px solid var(--cs-teal);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Calm, slim scrollbars that match the surface palette. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(15, 30, 54, 0.18) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(15, 30, 54, 0.16);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 30, 54, 0.28);
+    background-clip: content-box;
+    border: 2px solid transparent;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
-/* Headings get the navy ink treatment */
-h1, h2, h3 {
-  color: var(--cs-navy);
+/* ── Cara typography — distinctive letter-spacing and weight ──────────
+   Inside @layer base so Tailwind utilities (text-white, tracking-wider, …)
+   can override these defaults; unlayered rules would beat every utility. */
+@layer base {
+  h1, h2, h3, h4, h5, h6,
+  [class*="CardTitle"],
+  [class*="font-bold"] {
+    letter-spacing: -0.01em;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  /* Headings get the navy ink treatment */
+  h1, h2, h3 {
+    color: var(--cs-navy);
+  }
 }
 
 /* Small text gets slightly more spacing for readability */
@@ -625,7 +633,7 @@ h1, h2, h3 {
   letter-spacing: 0.01em;
 }
 
-/* ── Cornerstone card elevation — warm floating effect ────────────────────── */
+/* ── Cara card elevation — warm floating effect ────────────────────── */
 .cs-card-float {
   transition: transform var(--cs-duration-normal) var(--cs-ease-default),
               box-shadow var(--cs-duration-normal) var(--cs-ease-default);
@@ -635,24 +643,24 @@ h1, h2, h3 {
   box-shadow: var(--cs-shadow-card);
 }
 
-/* ── Cornerstone button press — subtle tactile feedback ───────────────────── */
+/* ── Cara button press — subtle tactile feedback ───────────────────── */
 button:not(:disabled):active,
 [role="button"]:not(:disabled):active {
   transform: scale(0.98);
   transition: transform 80ms ease;
 }
 
-/* ── Cornerstone input focus — warm glow instead of harsh blue ────────────── */
+/* ── Cara input focus — warm glow instead of harsh blue ────────────── */
 input:focus,
 textarea:focus,
 select:focus,
 [contenteditable]:focus {
-  box-shadow: 0 0 0 3px var(--cs-aria-glow);
-  border-color: var(--cs-aria-gold) !important;
+  box-shadow: 0 0 0 3px var(--cs-cara-glow);
+  border-color: var(--cs-cara-gold) !important;
   outline: none;
 }
 
-/* ── Cornerstone link style — navy with gold hover ────────────────────────── */
+/* ── Cara link style — navy with gold hover ────────────────────────── */
 a:not([class]) {
   color: var(--cs-navy-muted);
   text-decoration: underline;
@@ -661,11 +669,11 @@ a:not([class]) {
   transition: color var(--cs-duration-fast) ease, text-decoration-color var(--cs-duration-fast) ease;
 }
 a:not([class]):hover {
-  color: var(--cs-aria-gold);
-  text-decoration-color: var(--cs-aria-gold);
+  color: var(--cs-cara-gold);
+  text-decoration-color: var(--cs-cara-gold);
 }
 
-/* ── Cornerstone badge pill — rounded, warm ───────────────────────────────── */
+/* ── Cara badge pill — rounded, warm ───────────────────────────────── */
 .cs-pill {
   display: inline-flex;
   align-items: center;
@@ -678,7 +686,7 @@ a:not([class]):hover {
   letter-spacing: 0.02em;
 }
 
-/* ── Cornerstone page background texture — subtle warmth ──────────────────── */
+/* ── Cara page background texture — subtle warmth ──────────────────── */
 body::before {
   content: "";
   position: fixed;
@@ -690,17 +698,13 @@ body::before {
   z-index: -1;
 }
 
-/* ── Cornerstone sidebar — deep navy gradient ─────────────────────────────── */
+/* ── Cara sidebar — deep navy gradient ─────────────────────────────── */
 .cs-sidebar-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--cs-navy) 0%,
-    #0a1628 60%,
-    #070e1a 100%
-  );
+  /* Light, high-readability sidebar (was navy). */
+  background: linear-gradient(180deg, #ffffff 0%, var(--cs-bg) 100%);
 }
 
-/* ── Cornerstone loading shimmer — gold warmth ────────────────────────────── */
+/* ── Cara loading shimmer — gold warmth ────────────────────────────── */
 @keyframes cornerstoneShimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -709,14 +713,14 @@ body::before {
   background: linear-gradient(
     90deg,
     var(--cs-surface) 25%,
-    var(--cs-aria-gold-bg) 50%,
+    var(--cs-cara-gold-bg) 50%,
     var(--cs-surface) 75%
   );
   background-size: 200% 100%;
   animation: cornerstoneShimmer 2s infinite var(--cs-ease-default);
 }
 
-/* ── Cornerstone status dot — pulsing for live/active items ───────────────── */
+/* ── Cara status dot — pulsing for live/active items ───────────────── */
 @keyframes cornerstonePulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.6; transform: scale(1.1); }
@@ -739,4 +743,22 @@ body::before {
   nav, .cs-sidebar-gradient, [class*="bottom-nav"], [class*="QuickCreateFab"] { display: none !important; }
   .cs-card-float:hover { transform: none; box-shadow: none; }
   * { color: #000 !important; background: #fff !important; }
+
+  /* Shareable report packs keep their RAG status colours when printed. These
+     selectors are more specific than the `*` reset above, so they win, and
+     print-color-adjust:exact forces the backgrounds to actually render. */
+  .cs-print-color, .cs-print-color * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .cs-print-color .cs-dot-red { background: #ef4444 !important; }
+  .cs-print-color .cs-dot-amber { background: #f59e0b !important; }
+  .cs-print-color .cs-dot-green { background: #22c55e !important; }
+  .cs-print-color .cs-dot-slate { background: #cbd5e1 !important; }
+  .cs-print-color .cs-rag-red { background: #fee2e2 !important; color: #991b1b !important; border-color: #fecaca !important; }
+  .cs-print-color .cs-rag-amber { background: #fef3c7 !important; color: #92400e !important; border-color: #fde68a !important; }
+  .cs-print-color .cs-rag-green { background: #dcfce7 !important; color: #166534 !important; border-color: #bbf7d0 !important; }
+  .cs-print-color .cs-rag-slate { background: #f1f5f9 !important; color: #334155 !important; border-color: #e2e8f0 !important; }
+  .cs-print-color .cs-tone-red { background: #fef2f2 !important; color: #991b1b !important; }
+  .cs-print-color .cs-tone-amber { background: #fffbeb !important; color: #92400e !important; }
+  .cs-print-color .cs-tone-green { background: #f0fdf4 !important; color: #166534 !important; }
+  .cs-print-color .cs-tone-blue { background: #eff6ff !important; color: #1e40af !important; }
+  .cs-print-color .cs-tone-slate { background: #f8fafc !important; color: #334155 !important; }
 }

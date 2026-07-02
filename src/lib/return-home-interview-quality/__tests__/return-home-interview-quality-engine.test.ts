@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Return Home Interview Quality Intelligence Engine Tests
+// Cara — Return Home Interview Quality Intelligence Engine Tests
 // 100+ tests covering all functions, scoring, labels, edge cases
 // ══════════════════════════════════════════════════════════════════════════════
 

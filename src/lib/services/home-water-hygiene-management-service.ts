@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME WATER HYGIENE MANAGEMENT SERVICE
+// CARA — HOME WATER HYGIENE MANAGEMENT SERVICE
 // Tracks water temperature monitoring, flushing regimes, TMV servicing,
 // showerhead descaling, dead leg checks, water sampling, and Legionella
 // compliance in accordance with HSG274 and ACOP L8.
@@ -292,7 +292,7 @@ export function identifyWaterHygieneManagementAlerts(
   return alerts;
 }
 
-export function generateWaterHygieneManagementAriaInsights(
+export function generateWaterHygieneManagementCaraInsights(
   rows: HomeWaterHygieneManagementRow[],
 ): string[] {
   const metrics = computeWaterHygieneManagementMetrics(rows);
@@ -467,5 +467,5 @@ export async function deleteHomeWaterHygieneManagement(
 export const _testing = {
   computeWaterHygieneManagementMetrics,
   identifyWaterHygieneManagementAlerts,
-  generateWaterHygieneManagementAriaInsights,
+  generateWaterHygieneManagementCaraInsights,
 };

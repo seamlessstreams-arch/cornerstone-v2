@@ -1,10 +1,10 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — COMPLIANCE RULES CARD
+// CARA — COMPLIANCE RULES CARD
 // The home's FIXED regulatory checks — hard pass/fail rules, deliberately
-// separate from ARIA's suggestions. Shows how many rules are passing/failing,
-// the failing critical/high alerts, and ARIA's read on the overall posture.
+// separate from Cara's suggestions. Shows how many rules are passing/failing,
+// the failing critical/high alerts, and Cara's read on the overall posture.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import Link from "next/link";
@@ -23,9 +23,9 @@ const SEVERITY_STYLES: Record<string, { bg: string; text: string }> = {
   low: { bg: "bg-gray-100", text: "text-gray-600" },
 };
 const INSIGHT_STYLES: Record<string, string> = {
-  critical: "border-red-200 bg-red-50 text-red-800",
-  warning: "border-amber-200 bg-amber-50 text-amber-800",
-  positive: "border-green-200 bg-green-50 text-green-800",
+  critical: "border-[--cs-risk-soft] bg-[--cs-risk-bg] text-[--cs-risk]",
+  warning: "border-[--cs-warning-soft] bg-[--cs-warning-bg] text-[--cs-warning]",
+  positive: "border-[--cs-success-soft] bg-[--cs-success-bg] text-[--cs-success]",
 };
 
 export function ComplianceRulesCard() {
@@ -76,15 +76,15 @@ export function ComplianceRulesCard() {
             <p className="text-[10px] text-[var(--cs-text-muted)]">Rules</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.passing > 0 ? "bg-green-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.passing > 0 ? "text-green-600" : "text-gray-500")}>{o.passing}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.passing > 0 ? "text-[--cs-success]" : "text-gray-500")}>{o.passing}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Passing</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.failing > 0 ? "bg-red-50" : "bg-green-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.failing > 0 ? "text-red-600" : "text-green-600")}>{o.failing}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.failing > 0 ? "text-[--cs-risk]" : "text-[--cs-success]")}>{o.failing}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Failing</p>
           </div>
           <div className={cn("text-center rounded-lg p-2.5", o.by_severity.critical > 0 ? "bg-red-50" : "bg-gray-50")}>
-            <p className={cn("text-lg font-bold tabular-nums", o.by_severity.critical > 0 ? "text-red-600" : "text-gray-500")}>{o.by_severity.critical}</p>
+            <p className={cn("text-lg font-bold tabular-nums", o.by_severity.critical > 0 ? "text-[--cs-risk]" : "text-gray-500")}>{o.by_severity.critical}</p>
             <p className="text-[10px] text-[var(--cs-text-muted)]">Critical</p>
           </div>
         </div>
@@ -112,18 +112,18 @@ export function ComplianceRulesCard() {
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-xs text-green-800">
+          <div className="flex items-center gap-2 rounded-lg border border-[--cs-success-soft] bg-[--cs-success-bg] p-3 text-xs text-[--cs-success]">
             <CheckCircle2 className="h-4 w-4 shrink-0" />
             <span>No critical or high compliance rules are failing.</span>
           </div>
         )}
 
-        {/* ── ARIA insights ─────────────────────────────────────────────── */}
+        {/* ── Cara insights ─────────────────────────────────────────────── */}
         {insights.length > 0 && (
           <div className="space-y-1.5">
             <p className="text-xs font-semibold flex items-center gap-1 text-purple-700">
               <Brain className="h-3 w-3" />
-              ARIA Compliance Posture
+              Cara Compliance Posture
             </p>
             {insights.slice(0, 2).map((insight, i) => (
               <div key={i} className={cn("rounded border p-2.5 text-xs leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Activities & Enrichment Intelligence — Public API
+// Cara Activities & Enrichment Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

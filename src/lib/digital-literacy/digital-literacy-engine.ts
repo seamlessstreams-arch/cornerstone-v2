@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone — Digital Literacy & Online Engagement Intelligence Engine
+// Cara — Digital Literacy & Online Engagement Intelligence Engine
 //
 // Pure deterministic engine. No AI, no external calls, no side-effects.
 //

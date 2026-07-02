@@ -52,13 +52,13 @@ interface CrossHomeSnapshot {
   ofsted_readiness_score: number;
   reg45_due_date: string | null;
   reg44_due_date: string | null;
-  aria_alerts: AriaAlert[];
-  aria_risk_factors: AriaRiskFactor[];
-  aria_recommendations: AriaRecommendation[];
+  cara_alerts: CaraAlert[];
+  cara_risk_factors: CaraRiskFactor[];
+  cara_recommendations: CaraRecommendation[];
   created_at: string;
 }
 
-interface AriaAlert {
+interface CaraAlert {
   id: string;
   severity: "critical" | "high" | "medium" | "low";
   message: string;
@@ -68,13 +68,13 @@ interface AriaAlert {
   created_at: string;
 }
 
-interface AriaRiskFactor {
+interface CaraRiskFactor {
   factor: string;
   severity: "critical" | "high" | "medium" | "low";
   trend: "improving" | "worsening" | "stable";
 }
 
-interface AriaRecommendation {
+interface CaraRecommendation {
   recommendation: string;
   priority: "immediate" | "this_week" | "this_month";
   home_id: string;
@@ -110,7 +110,7 @@ interface CrossHomeAlert {
   created_at: string;
 }
 
-interface AriaAnalysisResponse {
+interface CaraAnalysisResponse {
   analysis: string;
   evidence: Array<{ source: string; risk_level: string; compliance: number; incidents_7d: number }>;
   recommendations: string[];
@@ -119,14 +119,14 @@ interface AriaAnalysisResponse {
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-type TabId = "overview" | "comparison" | "risk" | "compliance" | "aria";
+type TabId = "overview" | "comparison" | "risk" | "compliance" | "cara";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "overview", label: "Overview" },
   { id: "comparison", label: "Home Comparison" },
   { id: "risk", label: "Risk Matrix" },
   { id: "compliance", label: "Compliance" },
-  { id: "aria", label: "ARIA Analysis" },
+  { id: "cara", label: "Cara Analysis" },
 ];
 
 const DEMO_ORG_ID = "org-demo-1";
@@ -160,7 +160,7 @@ const DEMO_SNAPSHOTS: CrossHomeSnapshot[] = [
     organisation_id: DEMO_ORG_ID,
     snapshot_date: "2026-05-16",
     home_id: "home-oak",
-    home_name: "Oak House",
+    home_name: "Chamberlain House",
     total_children: 3,
     total_incidents_7d: 1,
     total_incidents_30d: 4,
@@ -175,12 +175,12 @@ const DEMO_SNAPSHOTS: CrossHomeSnapshot[] = [
     ofsted_readiness_score: 88,
     reg45_due_date: "2026-06-01",
     reg44_due_date: "2026-05-28",
-    aria_alerts: [],
-    aria_risk_factors: [
+    cara_alerts: [],
+    cara_risk_factors: [
       { factor: "Night staff supervision gap", severity: "low", trend: "improving" },
     ],
-    aria_recommendations: [
-      { recommendation: "Complete night worker supervision by end of week", priority: "this_week", home_id: "home-oak", home_name: "Oak House" },
+    cara_recommendations: [
+      { recommendation: "Complete night worker supervision by end of week", priority: "this_week", home_id: "home-oak", home_name: "Chamberlain House" },
     ],
     created_at: "2026-05-16T08:00:00Z",
   },
@@ -204,17 +204,17 @@ const DEMO_SNAPSHOTS: CrossHomeSnapshot[] = [
     ofsted_readiness_score: 52,
     reg45_due_date: "2026-05-20",
     reg44_due_date: "2026-05-10",
-    aria_alerts: [
+    cara_alerts: [
       { id: "alert-1", severity: "critical", message: "Reg 44 visit overdue by 6 days", home_id: "home-willow", home_name: "Willow Lodge", category: "compliance", created_at: "2026-05-16T08:00:00Z" },
       { id: "alert-2", severity: "high", message: "2 open safeguarding concerns require RI oversight", home_id: "home-willow", home_name: "Willow Lodge", category: "safeguarding", created_at: "2026-05-16T08:00:00Z" },
       { id: "alert-3", severity: "high", message: "Recording compliance below 65% threshold", home_id: "home-willow", home_name: "Willow Lodge", category: "recording", created_at: "2026-05-16T08:00:00Z" },
     ],
-    aria_risk_factors: [
+    cara_risk_factors: [
       { factor: "Pattern of escalating incidents", severity: "high", trend: "worsening" },
       { factor: "Staff supervision below minimum", severity: "high", trend: "worsening" },
       { factor: "Management oversight lapsed", severity: "critical", trend: "worsening" },
     ],
-    aria_recommendations: [
+    cara_recommendations: [
       { recommendation: "Urgent: Schedule RI visit to Willow Lodge within 48 hours", priority: "immediate", home_id: "home-willow", home_name: "Willow Lodge" },
       { recommendation: "Review safeguarding concerns with designated officer", priority: "immediate", home_id: "home-willow", home_name: "Willow Lodge" },
       { recommendation: "Implement supervision recovery plan for all staff", priority: "this_week", home_id: "home-willow", home_name: "Willow Lodge" },
@@ -241,9 +241,9 @@ const DEMO_SNAPSHOTS: CrossHomeSnapshot[] = [
     ofsted_readiness_score: 94,
     reg45_due_date: "2026-06-15",
     reg44_due_date: "2026-06-02",
-    aria_alerts: [],
-    aria_risk_factors: [],
-    aria_recommendations: [
+    cara_alerts: [],
+    cara_risk_factors: [],
+    cara_recommendations: [
       { recommendation: "Continue current practices - exemplary performance", priority: "this_month", home_id: "home-birch", home_name: "Birch Cottage" },
     ],
     created_at: "2026-05-16T08:00:00Z",
@@ -267,7 +267,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Incidents (7 days)",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 1, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 1, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 5, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 0, status: "green" },
     ],
@@ -275,7 +275,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Incidents (30 days)",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 4, status: "amber" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 4, status: "amber" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 14, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 2, status: "green" },
     ],
@@ -283,7 +283,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Open Safeguarding Concerns",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 0, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 0, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 2, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 0, status: "green" },
     ],
@@ -291,7 +291,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Recording Compliance %",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 92, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 92, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 61, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 97, status: "green" },
     ],
@@ -299,7 +299,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Supervision Compliance %",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 95, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 95, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 58, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 100, status: "green" },
     ],
@@ -307,7 +307,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Ofsted Readiness Score",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 88, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 88, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 52, status: "red" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 94, status: "green" },
     ],
@@ -315,7 +315,7 @@ const DEMO_COMPARISON: ComparisonRow[] = [
   {
     metric: "Key Work Sessions Overdue",
     values: [
-      { home_id: "home-oak", home_name: "Oak House", value: 0, status: "green" },
+      { home_id: "home-oak", home_name: "Chamberlain House", value: 0, status: "green" },
       { home_id: "home-willow", home_name: "Willow Lodge", value: 3, status: "amber" },
       { home_id: "home-birch", home_name: "Birch Cottage", value: 0, status: "green" },
     ],
@@ -380,9 +380,9 @@ export default function CrossHomeIntelligencePage() {
   const [comparison, setComparison] = useState<ComparisonRow[]>(DEMO_COMPARISON);
   const [alerts, setAlerts] = useState<CrossHomeAlert[]>(DEMO_ALERTS);
   const [loading, setLoading] = useState(false);
-  const [ariaQuery, setAriaQuery] = useState("");
-  const [ariaResponse, setAriaResponse] = useState<AriaAnalysisResponse | null>(null);
-  const [ariaLoading, setAriaLoading] = useState(false);
+  const [caraQuery, setCaraQuery] = useState("");
+  const [caraResponse, setCaraResponse] = useState<CaraAnalysisResponse | null>(null);
+  const [caraLoading, setCaraLoading] = useState(false);
   const [generatingSnapshot, setGeneratingSnapshot] = useState(false);
 
   // ── Data Fetching ──────────────────────────────────────────────────────────
@@ -391,10 +391,10 @@ export default function CrossHomeIntelligencePage() {
     setLoading(true);
     try {
       const [overviewRes, snapshotsRes, comparisonRes, alertsRes] = await Promise.all([
-        fetch(`/api/aria/cross-home?organisationId=${DEMO_ORG_ID}&action=overview`),
-        fetch(`/api/aria/cross-home?organisationId=${DEMO_ORG_ID}&action=snapshots`),
-        fetch(`/api/aria/cross-home?organisationId=${DEMO_ORG_ID}&action=comparison`),
-        fetch(`/api/aria/cross-home?organisationId=${DEMO_ORG_ID}&action=alerts`),
+        fetch(`/api/cara/cross-home?organisationId=${DEMO_ORG_ID}&action=overview`),
+        fetch(`/api/cara/cross-home?organisationId=${DEMO_ORG_ID}&action=snapshots`),
+        fetch(`/api/cara/cross-home?organisationId=${DEMO_ORG_ID}&action=comparison`),
+        fetch(`/api/cara/cross-home?organisationId=${DEMO_ORG_ID}&action=alerts`),
       ]);
 
       if (overviewRes.ok) {
@@ -427,7 +427,7 @@ export default function CrossHomeIntelligencePage() {
   const handleGenerateSnapshot = async () => {
     setGeneratingSnapshot(true);
     try {
-      const res = await fetch("/api/aria/cross-home", {
+      const res = await fetch("/api/cara/cross-home", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "generate_snapshot", organisationId: DEMO_ORG_ID }),
@@ -442,24 +442,24 @@ export default function CrossHomeIntelligencePage() {
     }
   };
 
-  const handleAriaAnalyse = async (query: string) => {
+  const handleCaraAnalyse = async (query: string) => {
     if (!query.trim()) return;
-    setAriaLoading(true);
-    setAriaResponse(null);
+    setCaraLoading(true);
+    setCaraResponse(null);
     try {
-      const res = await fetch("/api/aria/cross-home", {
+      const res = await fetch("/api/cara/cross-home", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "aria_analyse", organisationId: DEMO_ORG_ID, query }),
+        body: JSON.stringify({ action: "cara_analyse", organisationId: DEMO_ORG_ID, query }),
       });
       if (res.ok) {
         const d = await res.json();
-        if (d.ok && d.data) setAriaResponse(d.data);
+        if (d.ok && d.data) setCaraResponse(d.data);
       }
     } catch {
       // Silent fallback
     } finally {
-      setAriaLoading(false);
+      setCaraLoading(false);
     }
   };
 
@@ -478,7 +478,7 @@ export default function CrossHomeIntelligencePage() {
         {/* Header with Globe icon and refresh */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5" style={{ color: "var(--cs-aria-gold)" }} />
+            <Globe className="h-5 w-5" style={{ color: "var(--cs-cara-gold)" }} />
             <span className="text-sm" style={{ color: "var(--cs-text-secondary)" }}>
               Multi-home aggregated intelligence
             </span>
@@ -497,7 +497,7 @@ export default function CrossHomeIntelligencePage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-1 p-1 rounded-lg" style={{ backgroundColor: "var(--cs-aria-gold-bg, #f5f0e8)" }}>
+        <div className="flex gap-1 p-1 rounded-lg" style={{ backgroundColor: "var(--cs-cara-gold-bg, #f5f0e8)" }}>
           {TABS.map((tab) => (
             <button
               key={tab.id}
@@ -529,8 +529,8 @@ export default function CrossHomeIntelligencePage() {
             comparison={comparison}
             snapshots={snapshots}
             onGenerateAnalysis={() => {
-              setActiveTab("aria");
-              handleAriaAnalyse("Compare all homes and identify areas of concern");
+              setActiveTab("cara");
+              handleCaraAnalyse("Compare all homes and identify areas of concern");
             }}
           />
         )}
@@ -540,20 +540,20 @@ export default function CrossHomeIntelligencePage() {
         {activeTab === "compliance" && (
           <ComplianceTab snapshots={snapshots} />
         )}
-        {activeTab === "aria" && (
-          <AriaAnalysisTab
-            query={ariaQuery}
-            setQuery={setAriaQuery}
-            response={ariaResponse}
-            loading={ariaLoading}
-            onSubmit={handleAriaAnalyse}
+        {activeTab === "cara" && (
+          <CaraAnalysisTab
+            query={caraQuery}
+            setQuery={setCaraQuery}
+            response={caraResponse}
+            loading={caraLoading}
+            onSubmit={handleCaraAnalyse}
           />
         )}
 
         {/* Footer */}
         <div className="text-center py-4 border-t" style={{ borderColor: "var(--cs-border)" }}>
           <p className="text-xs" style={{ color: "var(--cs-text-muted)" }}>
-            ARIA Cross-home Intelligence provides oversight support. Professional judgement must inform all decisions.
+            Cara Cross-home Intelligence provides oversight support. Professional judgement must inform all decisions.
           </p>
         </div>
       </div>
@@ -725,9 +725,9 @@ function OverviewTab({
               </div>
 
               {/* Risk factors */}
-              {home.aria_risk_factors.length > 0 && (
+              {home.cara_risk_factors.length > 0 && (
                 <div className="pt-2 border-t space-y-1">
-                  {home.aria_risk_factors.slice(0, 2).map((rf, i) => (
+                  {home.cara_risk_factors.slice(0, 2).map((rf, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs">
                       {trendIcon(rf.trend)}
                       <span style={{ color: "var(--cs-text-secondary)" }}>{rf.factor}</span>
@@ -764,7 +764,7 @@ function ComparisonTab({
         </h3>
         <Button size="sm" onClick={onGenerateAnalysis}>
           <Sparkles className="h-4 w-4 mr-1" />
-          Generate ARIA Analysis
+          Generate Cara Analysis
         </Button>
       </div>
 
@@ -940,9 +940,9 @@ function RiskMatrixTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
                     </Badge>
                   </div>
                   {/* Top 3 risk factors */}
-                  {home.aria_risk_factors.length > 0 ? (
+                  {home.cara_risk_factors.length > 0 ? (
                     <div className="space-y-1">
-                      {home.aria_risk_factors.slice(0, 3).map((rf, i) => (
+                      {home.cara_risk_factors.slice(0, 3).map((rf, i) => (
                         <div key={i} className="flex items-center gap-2 text-sm">
                           {trendIcon(rf.trend)}
                           <span style={{ color: "var(--cs-text-secondary)" }}>{rf.factor}</span>
@@ -984,7 +984,7 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Calendar className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+              <Calendar className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
               Regulation 44 Visits
             </CardTitle>
           </CardHeader>
@@ -1006,7 +1006,7 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <FileText className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+              <FileText className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
               Regulation 45 Reviews
             </CardTitle>
           </CardHeader>
@@ -1030,7 +1030,7 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Eye className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+            <Eye className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
             Staff Supervision Compliance
           </CardTitle>
         </CardHeader>
@@ -1058,7 +1058,7 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Activity className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
+            <Activity className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
             Recording Compliance Trends (30 days)
           </CardTitle>
         </CardHeader>
@@ -1145,9 +1145,9 @@ function ComplianceTab({ snapshots }: { snapshots: CrossHomeSnapshot[] }) {
   );
 }
 
-// ── ARIA Analysis Tab ────────────────────────────────────────────────────────
+// ── Cara Analysis Tab ────────────────────────────────────────────────────────
 
-function AriaAnalysisTab({
+function CaraAnalysisTab({
   query,
   setQuery,
   response,
@@ -1156,7 +1156,7 @@ function AriaAnalysisTab({
 }: {
   query: string;
   setQuery: (q: string) => void;
-  response: AriaAnalysisResponse | null;
+  response: CaraAnalysisResponse | null;
   loading: boolean;
   onSubmit: (q: string) => void;
 }) {
@@ -1166,8 +1166,8 @@ function AriaAnalysisTab({
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Sparkles className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
-            Ask ARIA about your organisation
+            <Sparkles className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
+            Ask Cara about your organisation
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -1222,9 +1222,9 @@ function AriaAnalysisTab({
       {loading && (
         <Card>
           <CardContent className="p-8 text-center">
-            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-3" style={{ color: "var(--cs-aria-gold)" }} />
+            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-3" style={{ color: "var(--cs-cara-gold)" }} />
             <p className="text-sm" style={{ color: "var(--cs-text-secondary)" }}>
-              ARIA is analysing cross-home intelligence...
+              Cara is analysing cross-home intelligence...
             </p>
           </CardContent>
         </Card>
@@ -1236,8 +1236,8 @@ function AriaAnalysisTab({
           <Card>
             <CardHeader>
               <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                <Sparkles className="h-4 w-4" style={{ color: "var(--cs-aria-gold)" }} />
-                ARIA Analysis
+                <Sparkles className="h-4 w-4" style={{ color: "var(--cs-cara-gold)" }} />
+                Cara Analysis
               </CardTitle>
               <p className="text-xs" style={{ color: "var(--cs-text-muted)" }}>
                 Generated {new Date(response.generated_at).toLocaleString()}
@@ -1289,9 +1289,9 @@ function AriaAnalysisTab({
                     <div
                       key={i}
                       className="flex items-start gap-3 p-2 rounded-md border"
-                      style={{ borderColor: "var(--cs-border)", backgroundColor: "var(--cs-aria-gold-bg, #faf8f4)" }}
+                      style={{ borderColor: "var(--cs-border)", backgroundColor: "var(--cs-cara-gold-bg, #faf8f4)" }}
                     >
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: "var(--cs-aria-gold, #b8860b)" }}>
+                      <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: "var(--cs-cara-gold, #b8860b)" }}>
                         {i + 1}
                       </span>
                       <span className="text-sm" style={{ color: "var(--cs-text-secondary)" }}>{rec}</span>
@@ -1338,12 +1338,12 @@ function AriaAnalysisTab({
       {!response && !loading && (
         <Card>
           <CardContent className="p-12 text-center">
-            <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-30" style={{ color: "var(--cs-aria-gold)" }} />
+            <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-30" style={{ color: "var(--cs-cara-gold)" }} />
             <p className="text-sm" style={{ color: "var(--cs-text-muted)" }}>
-              Ask ARIA a question or use one of the quick queries above to get started.
+              Ask Cara a question or use one of the quick queries above to get started.
             </p>
             <p className="text-xs mt-2" style={{ color: "var(--cs-text-muted)" }}>
-              ARIA will analyse data across all homes in your organisation.
+              Cara will analyse data across all homes in your organisation.
             </p>
           </CardContent>
         </Card>

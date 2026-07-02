@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME FAMILY ENGAGEMENT INTELLIGENCE ENGINE
+// CARA — HOME FAMILY ENGAGEMENT INTELLIGENCE ENGINE
 // Home-level: analyses family time sessions and family relationship records
 // to assess contact quality, child voice capture, social worker notification,
 // relationship trajectories, and placement stability through family links.

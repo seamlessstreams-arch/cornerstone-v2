@@ -1,3 +1,4 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { intelligenceDb } from "@/lib/intelligence/store";
 import type { LiversOutcomeRecord } from "@/types/extended";
@@ -18,8 +19,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json() as Partial<LiversOutcomeRecord> & { user_role?: string };
-  const role = resolveLiversRole(req, body.user_role);
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data as Partial<LiversOutcomeRecord> & { user_role?: string };
+  const role = await resolveLiversRole(req, body.user_role);
 
   if (!canPerformLiversAction(role, "outcome:create")) {
     return NextResponse.json({ error: "Forbidden for your role" }, { status: 403 });

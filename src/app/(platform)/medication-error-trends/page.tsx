@@ -1,7 +1,7 @@
 "use client";
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — MEDICATION ERROR TRENDS (detail page)
+// CARA — MEDICATION ERROR TRENDS (detail page)
 // Temporal + repeat-pattern view of medication safety, with learning-loop closure.
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -60,7 +60,7 @@ export default function MedicationErrorTrendsPage() {
       subtitle="Temporal and repeat-pattern early warning for medicines safety — and whether the home's learning loop is closing"
       icon={<Pill className="h-5 w-5" />}
       showQuickCreate={false}
-      ariaContext={{ pageTitle: "Medication Error Trends", sourceType: "general" }}
+      caraContext={{ pageTitle: "Medication Error Trends", sourceType: "general" }}
     >
       {isLoading || !intel ? (
         <div className="flex items-center justify-center py-24">
@@ -99,11 +99,11 @@ export default function MedicationErrorTrendsPage() {
             />
           </div>
 
-          {/* ── ARIA insights ────────────────────────────────────────────── */}
+          {/* ── Cara insights ────────────────────────────────────────────── */}
           {(intel.insights ?? []).length > 0 && (
             <div className="space-y-2">
               <h2 className="text-sm font-semibold flex items-center gap-1.5 text-purple-700">
-                <Brain className="h-4 w-4" /> ARIA Medication Safety Intelligence
+                <Brain className="h-4 w-4" /> Cara Medication Safety Intelligence
               </h2>
               {(intel.insights ?? []).map((insight, i) => (
                 <div key={i} className={cn("rounded-xl border p-3 text-sm leading-relaxed", INSIGHT_STYLES[insight.severity] ?? INSIGHT_STYLES.positive)}>

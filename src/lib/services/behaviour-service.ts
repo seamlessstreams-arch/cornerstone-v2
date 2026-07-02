@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — BEHAVIOUR SUPPORT SERVICE
+// CARA — BEHAVIOUR SUPPORT SERVICE
 // Manages behaviour recording (CHR 2015 Reg 19), physical intervention tracking
 // (Reg 20), de-escalation analysis, rewards/sanctions, and ABC pattern analysis.
-// Powers ARIA's behaviour intelligence and regulatory compliance.
+// Powers Cara's behaviour intelligence and regulatory compliance.
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient, isSupabaseEnabled } from "@/lib/supabase/server";

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME GRIEF & BEREAVEMENT SUPPORT INTELLIGENCE ENGINE
+// CARA — HOME GRIEF & BEREAVEMENT SUPPORT INTELLIGENCE ENGINE
 // Tracks grief and bereavement support quality — loss identification,
 // bereavement counselling access, memory work facilitation, therapeutic grief
 // interventions, and anniversary/trigger date management.

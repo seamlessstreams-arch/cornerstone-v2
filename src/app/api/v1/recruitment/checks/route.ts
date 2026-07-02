@@ -1,5 +1,9 @@
+import { readJsonBody } from "@/lib/http/read-json";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/store";
+import { requirePermissionAsync } from "@/lib/auth-guard";
+import { PERMISSIONS } from "@/lib/permissions";
+import { createRecruitmentAuditRecord, persistRecruitmentCheck } from "@/lib/supabase/recruitment-persist";
 
 // ── GET /api/v1/recruitment/checks?candidate_id= ──────────────────────────────
 
@@ -45,7 +49,12 @@ export async function GET(req: NextRequest) {
 // ── PATCH /api/v1/recruitment/checks ─────────────────────────────────────────
 
 export async function PATCH(req: NextRequest) {
-  const body = await req.json();
+  const auth = await requirePermissionAsync(req, PERMISSIONS.MANAGE_RECRUITMENT);
+  if (auth instanceof NextResponse) return auth;
+
+  const __parsed = await readJsonBody(req);
+  if (!__parsed.ok) return __parsed.response;
+  const body = __parsed.data;
   const { id, candidate_id, status, verified_by, verified_at, received_date,
     requested_date, certificate_number, document_type, expiry_date,
     concern_flag, concern_notes, override_reason, risk_mitigation, notes, owner } = body;
@@ -74,10 +83,11 @@ export async function PATCH(req: NextRequest) {
   if (!updated) {
     return NextResponse.json({ error: "Check not found" }, { status: 404 });
   }
+  void persistRecruitmentCheck(updated); // best-effort write-through (no-op when off)
 
   // Write audit entry
   if (candidate_id) {
-    db.recruitmentAudit.create({
+    createRecruitmentAuditRecord({
       candidate_id,
       actor_id: "staff_darren",
       event_type: `check_${status ?? "updated"}`,

@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: true, data: result.data });
   }
 
-  // ARIA prompts (client-side generation — no DB needed)
+  // Cara prompts (client-side generation — no DB needed)
   if (type === "prompts") {
     const recordType = searchParams.get("recordType") as any;
     const recordSummary = searchParams.get("summary") ?? "";
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     const {
       homeId, recordType, recordId, recordReference,
       oversightText, qualityScore, qualityDimensions,
-      ariaPrompted, ariaPromptUsed, ariaSuggestions,
+      caraPrompted, caraPromptUsed, caraSuggestions,
       actionsIdentified, regulationRefs, oversightBy,
     } = body;
 
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     const result = await createOversightNote({
       homeId, recordType, recordId, recordReference,
       oversightText, qualityScore, qualityDimensions,
-      ariaPrompted, ariaPromptUsed, ariaSuggestions,
+      caraPrompted, caraPromptUsed, caraSuggestions,
       actionsIdentified, regulationRefs, oversightBy,
     });
     if (!result.ok) return NextResponse.json({ error: result.error }, { status: 500 });

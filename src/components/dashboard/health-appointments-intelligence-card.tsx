@@ -73,7 +73,7 @@ export function HealthAppointmentsIntelligenceCard({ childId }: HealthAppointmen
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`/api/aria/health-appointments?childId=${childId}`);
+        const res = await fetch(`/api/cara/health-appointments?childId=${childId}`);
         const json = await res.json();
         if (json.success) setData(json.data);
       } catch (err) {
@@ -154,7 +154,7 @@ export function HealthAppointmentsIntelligenceCard({ childId }: HealthAppointmen
                 )}>
                   <AlertTriangle className={cn(
                     "h-3.5 w-3.5 shrink-0 mt-0.5",
-                    isHigh ? "text-red-600" : "text-amber-600",
+                    isHigh ? "text-[--cs-risk]" : "text-[--cs-warning]",
                   )} />
                   <div className="flex-1">
                     <span className={isHigh ? "text-red-700" : "text-amber-700"}>
@@ -198,8 +198,8 @@ export function HealthAppointmentsIntelligenceCard({ childId }: HealthAppointmen
                 key={i}
                 className={cn(
                   "text-[9px]",
-                  flag.status === "not_met" ? "bg-red-100 text-red-700 border-red-200" :
-                  "bg-amber-100 text-amber-700 border-amber-200",
+                  flag.status === "not_met" ? "bg-[--cs-risk-bg] text-[--cs-risk] border-red-200" :
+                  "bg-[--cs-warning-bg] text-[--cs-warning] border-amber-200",
                 )}
                 title={flag.detail}
               >
@@ -224,7 +224,7 @@ export function HealthAppointmentsIntelligenceCard({ childId }: HealthAppointmen
 // ── Sub-component ───────────────────────────────────────────────────────────
 
 function MiniScore({ label, score }: { label: string; score: number }) {
-  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-red-600";
+  const color = score >= 75 ? "text-emerald-600" : score >= 50 ? "text-[--cs-warning]" : "text-[--cs-risk]";
   return (
     <div className="text-center">
       <span className={cn("text-sm font-bold", color)}>{score}</span>

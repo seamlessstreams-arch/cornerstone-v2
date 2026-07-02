@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CALM EMPTY STATE
+// CARA — CALM EMPTY STATE
 // Centred, calm, not sad. "Nothing here yet" style, not error style.
 // Optional action button.
 // ══════════════════════════════════════════════════════════════════════════════

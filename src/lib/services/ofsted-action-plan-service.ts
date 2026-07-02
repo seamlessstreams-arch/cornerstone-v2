@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — OFSTED ACTION PLAN SERVICE
+// CARA — OFSTED ACTION PLAN SERVICE
 // Tracks Ofsted inspection findings, recommendations, requirements, and
 // progress against action plans. Ensures all requirements are addressed
 // within specified timeframes with evidence of improvement.

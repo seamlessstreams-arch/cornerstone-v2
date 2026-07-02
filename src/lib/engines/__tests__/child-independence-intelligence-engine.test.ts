@@ -373,7 +373,7 @@ describe("computeChildIndependenceIntelligence", () => {
     expect(result.headline).toContain("no pathway plan");
   });
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
+  // ── Cara Insights ─────────────────────────────────────────────────────
 
   it("generates critical insight for at-risk status", () => {
     const record = makeRecord({

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME BEDWETTING & ENURESIS SUPPORT INTELLIGENCE ENGINE TESTS
+// CARA — HOME BEDWETTING & ENURESIS SUPPORT INTELLIGENCE ENGINE TESTS
 // Comprehensive test suite: unit + integration
 // ══════════════════════════════════════════════════════════════════════════════
 

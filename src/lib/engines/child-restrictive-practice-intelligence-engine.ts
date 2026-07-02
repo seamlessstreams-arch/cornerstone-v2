@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — CHILD RESTRICTIVE PRACTICE INTELLIGENCE ENGINE
+// CARA — CHILD RESTRICTIVE PRACTICE INTELLIGENCE ENGINE
 // Per-child: restraint analysis — frequency, duration, escalation patterns,
 // debrief compliance, injury tracking, notification compliance, review status.
 // CHR 2015 Reg 19, 20, 35. SCCIF: "Safety of children."
@@ -367,7 +367,7 @@ export function computeChildRestrictivePractice(input: ChildRestrictivePracticeI
   const insights: ChildRestrictivePracticeResult["insights"] = [];
 
   if (r30d.length >= 3 || frequencyTrend === "increasing") {
-    insights.push({ severity: "critical", text: `ARIA detects ${r90d.length} restraint episodes in 90 days${frequencyTrend === "increasing" ? " with an escalating trend" : ""}. Under Reg 19/20, Ofsted will scrutinise whether the home is using restraint as a last resort and whether the current behaviour support plan is adequate.` });
+    insights.push({ severity: "critical", text: `Cara detects ${r90d.length} restraint episodes in 90 days${frequencyTrend === "increasing" ? " with an escalating trend" : ""}. Under Reg 19/20, Ofsted will scrutinise whether the home is using restraint as a last resort and whether the current behaviour support plan is adequate.` });
   }
   if (childInjuryCount > 0) {
     insights.push({ severity: "critical", text: `${childInjuryCount} injury/injuries sustained by ${child_name} during restraint episodes. This is a priority safeguarding indicator — inspectors will examine proportionality, technique, and post-incident care.` });

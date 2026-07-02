@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// Cornerstone Sleep Hygiene Quality Intelligence — Public API
+// Cara Sleep Hygiene Quality Intelligence — Public API
 // ══════════════════════════════════════════════════════════════════════════════
 
 export {

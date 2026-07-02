@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — DATA PROTECTION SERVICE TESTS
+// CARA — DATA PROTECTION SERVICE TESTS
 // Pure-function unit tests for data protection metrics computation,
 // alert identification, and constant validation.
 // CHR 2015 Reg 37 (privacy and confidentiality),

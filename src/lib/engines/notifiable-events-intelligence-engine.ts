@@ -1,8 +1,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — NOTIFIABLE EVENTS INTELLIGENCE ENGINE
+// CARA — NOTIFIABLE EVENTS INTELLIGENCE ENGINE
 // Pure deterministic engine for Reg 40 notifiable events analysis.
 // Analyses notification compliance, event distribution, per-child frequency,
-// and generates ARIA intelligence insights.
+// and generates Cara intelligence insights.
 // ══════════════════════════════════════════════════════════════════════════════
 
 export interface NotifiableEventInput {
@@ -65,7 +65,7 @@ export interface NotifiableEventAlert {
   message: string;
 }
 
-export interface AriaNotifiableInsight {
+export interface CaraNotifiableInsight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -76,7 +76,7 @@ export interface NotifiableEventsIntelligenceResult {
   child_profiles: ChildEventProfile[];
   recent_events: RecentEvent[];
   alerts: NotifiableEventAlert[];
-  insights: AriaNotifiableInsight[];
+  insights: CaraNotifiableInsight[];
 }
 
 export interface RecentEvent {
@@ -293,8 +293,8 @@ export function computeNotifiableEventsIntelligence(input: EngineInput): Notifia
     });
   }
 
-  // ── ARIA Insights ──────────────────────────────────────────────────────
-  const insights: AriaNotifiableInsight[] = [];
+  // ── Cara Insights ──────────────────────────────────────────────────────
+  const insights: CaraNotifiableInsight[] = [];
 
   // Critical: pending notifications
   if (pending > 0) {

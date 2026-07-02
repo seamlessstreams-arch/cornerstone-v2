@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — HOME INSURANCE COMPLIANCE SERVICE
+// CARA — HOME INSURANCE COMPLIANCE SERVICE
 // Insurance policy tracking, renewal management, coverage verification,
 // claim tracking, gap analysis, and regulatory compliance.
 // CHR 2015 Reg 25 (business continuity — insurance as operational requirement),
@@ -321,7 +321,7 @@ export function computeInsuranceAlerts(
   return alerts;
 }
 
-export function generateInsuranceAriaInsights(
+export function generateInsuranceCaraInsights(
   rows: HomeInsuranceComplianceRow[],
 ): string[] {
   const metrics = computeInsuranceMetrics(rows);
@@ -381,5 +381,5 @@ export function generateInsuranceAriaInsights(
 export const _testing = {
   computeInsuranceMetrics,
   computeInsuranceAlerts,
-  generateInsuranceAriaInsights,
+  generateInsuranceCaraInsights,
 };

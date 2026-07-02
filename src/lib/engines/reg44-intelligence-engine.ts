@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════════════════════
-// CORNERSTONE — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE
+// CARA — REG 44 INDEPENDENT VISITOR INTELLIGENCE ENGINE
 //
 // Pure deterministic engine — no DB calls, no side effects, no LLM calls.
 // Analyses visit frequency, recommendation follow-through, Ofsted reporting
@@ -87,7 +87,7 @@ export interface Reg44Alert {
   message: string;
 }
 
-export interface AriaReg44Insight {
+export interface CaraReg44Insight {
   severity: "critical" | "warning" | "positive";
   text: string;
 }
@@ -97,7 +97,7 @@ export interface Reg44IntelligenceResult {
   visit_profiles: VisitComplianceProfile[];
   recommendation_analysis: RecommendationAnalysis;
   alerts: Reg44Alert[];
-  insights: AriaReg44Insight[];
+  insights: CaraReg44Insight[];
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -282,8 +282,8 @@ export function computeReg44Intelligence(input: Reg44IntelligenceInput): Reg44In
     });
   }
 
-  // ── ARIA Insights ─────────────────────────────────────────────────────
-  const insights: AriaReg44Insight[] = [];
+  // ── Cara Insights ─────────────────────────────────────────────────────
+  const insights: CaraReg44Insight[] = [];
 
   // Critical: visit overdue
   if (daysSinceLastVisit > 35) {

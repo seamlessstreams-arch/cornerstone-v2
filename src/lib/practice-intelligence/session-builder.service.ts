@@ -8,8 +8,8 @@
 // ══════════════════════════════════════════════════════════════════════════════
 
 import { createServerClient } from "@/lib/supabase/server";
-import { generateStudioContent } from "@/lib/aria-studio/ai-provider.service";
-import { EXTENDED_FRAMEWORK_PROMPTS, TONE_PROMPTS, ARIA_STUDIO_SYSTEM_PROMPT } from "@/lib/aria-studio/prompts";
+import { generateStudioContent } from "@/lib/cara-studio/ai-provider.service";
+import { EXTENDED_FRAMEWORK_PROMPTS, TONE_PROMPTS, CARA_STUDIO_SYSTEM_PROMPT } from "@/lib/cara-studio/prompts";
 import type {
   GeneratedSession,
   SessionContent,
@@ -84,7 +84,7 @@ export async function generateSession(opts: {
   let evidenceContext = "";
   if (sb && opts.childId) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: sources } = await (sb.from("aria_studio_sources") as any)
+    const { data: sources } = await (sb.from("cara_studio_sources") as any)
       .select("source_type, title, summary, content, source_date")
       .eq("home_id", hid)
       .eq("child_id", opts.childId)
@@ -124,7 +124,7 @@ export async function generateSession(opts: {
   const tonePrompt = opts.tone ? (TONE_PROMPTS[opts.tone as keyof typeof TONE_PROMPTS] ?? "") : TONE_PROMPTS.therapeutic;
 
   const systemPrompt = [
-    ARIA_STUDIO_SYSTEM_PROMPT,
+    CARA_STUDIO_SYSTEM_PROMPT,
     "",
     "--- SESSION TYPE ---",
     typePrompt,
