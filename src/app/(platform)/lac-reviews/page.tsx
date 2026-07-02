@@ -35,10 +35,10 @@ const TYPE_META: Record<LACReviewType, { label: string; color: string }> = {
 };
 
 const OUTCOME_META: Record<LACReviewOutcome, { label: string; color: string }> = {
-  placement_continues: { label: "Placement Continues",  color: "bg-green-100 text-green-700" },
-  placement_change:    { label: "Placement Change",     color: "bg-red-100 text-red-700" },
-  care_plan_amended:   { label: "Care Plan Amended",    color: "bg-amber-100 text-amber-700" },
-  actions_agreed:      { label: "Actions Agreed",       color: "bg-blue-100 text-blue-700" },
+  placement_continues: { label: "Placement Continues",  color: "bg-[--cs-success-bg] text-[--cs-success]" },
+  placement_change:    { label: "Placement Change",     color: "bg-[--cs-risk-bg] text-[--cs-risk]" },
+  care_plan_amended:   { label: "Care Plan Amended",    color: "bg-[--cs-warning-bg] text-[--cs-warning]" },
+  actions_agreed:      { label: "Actions Agreed",       color: "bg-[--cs-info-bg] text-[--cs-info]" },
   return_home:         { label: "Return Home Plan",     color: "bg-purple-100 text-purple-700" },
 };
 
@@ -136,7 +136,7 @@ export default function LACReviewsPage() {
             { label: "Total Reviews",   value: stats.total,          icon: <Gavel className="h-4 w-4" />,          color: "text-blue-600" },
             { label: "Pending Actions",  value: stats.pendingActions, icon: <AlertTriangle className="h-4 w-4" />,  color: "text-amber-600" },
             { label: "Next Review",      value: stats.nextReview,     icon: <Calendar className="h-4 w-4" />,       color: "text-purple-600" },
-            { label: "All Stable",       value: stats.allStable ? "Yes" : "No", icon: <CheckCircle2 className="h-4 w-4" />, color: stats.allStable ? "text-green-600" : "text-red-600" },
+            { label: "All Stable",       value: stats.allStable ? "Yes" : "No", icon: <CheckCircle2 className="h-4 w-4" />, color: stats.allStable ? "text-[--cs-success]" : "text-[--cs-risk]" },
           ].map((s) => (
             <Card key={s.label}>
               <CardContent className="p-3 flex items-center gap-3">
@@ -167,7 +167,7 @@ export default function LACReviewsPage() {
                     <p>Last: {latest?.date || "—"} ({latest ? TYPE_META[latest.review_type].label : "—"})</p>
                     <p>Next: {latest?.next_review_date || "—"}</p>
                     <div className="flex items-center justify-between">
-                      <span>Stability: <span className={cn("font-medium", latest?.placement_stability === "stable" ? "text-green-600" : "text-amber-600")}>{latest?.placement_stability || "—"}</span></span>
+                      <span>Stability: <span className={cn("font-medium", latest?.placement_stability === "stable" ? "text-[--cs-success]" : "text-amber-600")}>{latest?.placement_stability || "—"}</span></span>
                       {pending > 0 && <span className="text-amber-600">{pending} actions pending</span>}
                     </div>
                   </div>
@@ -274,7 +274,7 @@ export default function LACReviewsPage() {
                         <div className="space-y-1">
                           {r.actions_agreed.map((a, i) => (
                             <div key={i} className="flex items-center gap-2 text-xs">
-                              {a.completed ? <CheckCircle2 className="h-3.5 w-3.5 text-green-600" /> : <Clock className="h-3.5 w-3.5 text-amber-600" />}
+                              {a.completed ? <CheckCircle2 className="h-3.5 w-3.5 text-[--cs-success]" /> : <Clock className="h-3.5 w-3.5 text-amber-600" />}
                               <span className={a.completed ? "line-through text-muted-foreground" : ""}>{a.action}</span>
                               <span className="text-muted-foreground">({a.owner})</span>
                               <Badge variant="outline" className="text-xs">Due: {a.due_date}</Badge>
