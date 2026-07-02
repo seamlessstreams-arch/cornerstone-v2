@@ -48,16 +48,16 @@ import { CaraStudioQuickActionButton } from "@/components/cara/studio-quick-acti
 
 // ── RAG colour helpers ───────────────────────────────────────────────────────
 const ragColour = (rag: RagRating): string => {
-  if (rag === "green") return "bg-emerald-100 text-emerald-800 border-emerald-200";
-  if (rag === "amber") return "bg-amber-100 text-amber-800 border-amber-200";
-  return "bg-rose-100 text-rose-800 border-rose-200";
+  if (rag === "green") return "bg-[--cs-success-bg] text-[--cs-success] border-[--cs-success-soft]";
+  if (rag === "amber") return "bg-[--cs-warning-bg] text-[--cs-warning] border-[--cs-warning-soft]";
+  return "bg-[--cs-risk-bg] text-[--cs-risk] border-[--cs-risk-soft]";
 };
 
 const scoreColour = (score: number): string => {
-  if (score >= 4.5) return "text-emerald-700";
-  if (score >= 3.5) return "text-emerald-600";
-  if (score >= 2.5) return "text-amber-600";
-  return "text-rose-600";
+  if (score >= 4.5) return "text-[--cs-success]";
+  if (score >= 3.5) return "text-[--cs-info]";
+  if (score >= 2.5) return "text-[--cs-warning]";
+  return "text-[--cs-risk]";
 };
 
 const formatPretty = (iso: string): string => {
@@ -274,7 +274,7 @@ export default function HandoverQualityAuditPage() {
           <div className="flex items-center gap-2 text-xs text-[var(--cs-text-secondary)] uppercase tracking-wide">
             <CheckCircle2 className="h-4 w-4" /> Green-rated handovers
           </div>
-          <div className="mt-2 text-3xl font-semibold text-emerald-700">
+          <div className="mt-2 text-3xl font-semibold text-[--cs-success]">
             {summary.green}
             <span className="text-base font-normal text-[var(--cs-text-muted)]">
               {" "}
@@ -389,15 +389,15 @@ export default function HandoverQualityAuditPage() {
                     <span className="flex items-center gap-1">
                       {a.child_voice_reflected ? (
                         <>
-                          <Eye className="h-3.5 w-3.5 text-emerald-600" />
-                          <span className="text-emerald-700">
+                          <Eye className="h-3.5 w-3.5 text-[--cs-success]" />
+                          <span className="text-[--cs-success]">
                             Child voice reflected
                           </span>
                         </>
                       ) : (
                         <>
-                          <EyeOff className="h-3.5 w-3.5 text-amber-600" />
-                          <span className="text-amber-700">
+                          <EyeOff className="h-3.5 w-3.5 text-[--cs-warning]" />
+                          <span className="text-[--cs-warning]">
                             Child voice gap
                           </span>
                         </>
@@ -435,8 +435,8 @@ export default function HandoverQualityAuditPage() {
                         className={cn(
                           "mt-1 text-sm font-medium",
                           a.childrens_safety_info_covered
-                            ? "text-emerald-700"
-                            : "text-rose-700",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {a.childrens_safety_info_covered ? "Yes" : "No"}
@@ -450,8 +450,8 @@ export default function HandoverQualityAuditPage() {
                         className={cn(
                           "mt-1 text-sm font-medium",
                           a.risk_info_covered
-                            ? "text-emerald-700"
-                            : "text-rose-700",
+                            ? "text-[--cs-success]"
+                            : "text-[--cs-risk]",
                         )}
                       >
                         {a.risk_info_covered ? "Yes" : "No"}
@@ -505,34 +505,34 @@ export default function HandoverQualityAuditPage() {
 
                   {/* Strengths / Gaps */}
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3">
-                      <h4 className="text-sm font-semibold text-emerald-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[--cs-success-soft] bg-[--cs-success-bg] p-3">
+                      <h4 className="text-sm font-semibold text-[--cs-success] flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4" /> Strengths observed
                       </h4>
                       {a.strengths_observed.length > 0 ? (
-                        <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-emerald-900">
+                        <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-[--cs-success]">
                           {a.strengths_observed.map((s, i) => (
                             <li key={i}>{s}</li>
                           ))}
                         </ul>
                       ) : (
-                        <p className="mt-2 text-sm text-emerald-800 italic">
+                        <p className="mt-2 text-sm text-[--cs-success] italic">
                           None recorded.
                         </p>
                       )}
                     </div>
-                    <div className="rounded-md border border-amber-200 bg-amber-50 p-3">
-                      <h4 className="text-sm font-semibold text-amber-900 flex items-center gap-2">
+                    <div className="rounded-md border border-[--cs-warning-soft] bg-[--cs-warning-bg] p-3">
+                      <h4 className="text-sm font-semibold text-[--cs-warning] flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4" /> Gaps identified
                       </h4>
                       {a.gaps_identified.length > 0 ? (
-                        <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-amber-900">
+                        <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-[--cs-warning]">
                           {a.gaps_identified.map((g, i) => (
                             <li key={i}>{g}</li>
                           ))}
                         </ul>
                       ) : (
-                        <p className="mt-2 text-sm text-amber-800 italic">
+                        <p className="mt-2 text-sm text-[--cs-warning] italic">
                           No gaps recorded.
                         </p>
                       )}
@@ -603,18 +603,18 @@ export default function HandoverQualityAuditPage() {
                   </div>
 
                   {/* Shareable team observations */}
-                  <div className="rounded-md border border-emerald-200 bg-emerald-50/60 p-3">
-                    <h4 className="text-sm font-semibold text-emerald-900 flex items-center gap-2">
+                  <div className="rounded-md border border-[--cs-success-soft] bg-[--cs-success-bg] p-3">
+                    <h4 className="text-sm font-semibold text-[--cs-success] flex items-center gap-2">
                       <Megaphone className="h-4 w-4" /> Shared with the team
                     </h4>
                     {a.shareable_observations.length > 0 ? (
-                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-emerald-900">
+                      <ul className="mt-2 list-disc pl-5 space-y-1 text-sm text-[--cs-success]">
                         {a.shareable_observations.map((s, i) => (
                           <li key={i}>{s}</li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-2 text-sm text-emerald-800 italic">
+                      <p className="mt-2 text-sm text-[--cs-success] italic">
                         Nothing published from this audit yet.
                       </p>
                     )}
